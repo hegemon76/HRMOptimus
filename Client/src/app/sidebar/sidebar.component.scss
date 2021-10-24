@@ -1,0 +1,19 @@
+@import "/src/assets/styles/color";
+.sidebar {
+  background-color: $main;
+  width: 250px;
+  height: 100vh;
+  padding: 25px;
+  box-sizing: border-box;
+  nav {
+    a {
+      display: block;
+      color: #fff;
+      text-transform: uppercase;
+      text-decoration: none;
+      line-height: 1;
+      font-size: 20px;
+      margin: 15px 0;
+    }
+  }
+}
