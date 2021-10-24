@@ -1,0 +1,7 @@
+@import "./topbar/topbar.component";
+@import "./content/content.component";
+
+.main-wrapper {
+  width: calc(100vw - 250px);
+  height: 100vh;
+}
