@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HRMOptimus.WebAPI", "src\HR
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Client", "Client\", "{01F2E1F0-21C1-4838-A7FF-BD9B52CD86D6}"
 	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_55904"
 		Debug.AspNetCompiler.PhysicalPath = "Client\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_55904\"
@@ -32,7 +32,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Client", "Client\", "{01F2E
 		SlnRelativePath = "Client\"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRMOptimus.Persistance", "src\HRMOptimus.Persistance\HRMOptimus.Persistance.csproj", "{7B6BF4A4-4657-40F6-BE3C-553DC193C740}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HRMOptimus.Persistance", "src\HRMOptimus.Persistance\HRMOptimus.Persistance.csproj", "{7B6BF4A4-4657-40F6-BE3C-553DC193C740}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9C64930C-06A7-44E9-A9C2-79BC3F026FD4}"
 EndProject
