@@ -7,6 +7,7 @@ import { MainComponent } from './main/main.component';
 import { TopbarComponent } from './main/topbar/topbar.component';
 import { ContentComponent } from './main/content/content.component';
 import { WorktimeComponent } from './main/content/worktime/worktime.component';
+import { WorkersComponent } from './main/content/workers/workers.component';
 import { VacationComponent } from './main/content/vacation/vacation.component';
 import { VariablesService } from './variables.service';
 import { FullCalendarModule } from '@fullcalendar/angular';
@@ -19,7 +20,7 @@ FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
   dayGridPlugin,
   timeGridPlugin,
-  interactionPlugin
+  interactionPlugin,
 ]);
 
 @NgModule({
@@ -31,14 +32,16 @@ FullCalendarModule.registerPlugins([
     ContentComponent,
     WorktimeComponent,
     VacationComponent,
-    DashboardComponent
+    DashboardComponent,
+    WorkersComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot([
       { path: '', component: DashboardComponent },
       { path: 'worktime', component: WorktimeComponent },
-      { path: 'vacation', component: VacationComponent }
+      { path: 'vacation', component: VacationComponent },
+      { path: 'workers', component: WorkersComponent }
     ]),
     FullCalendarModule
   ],
