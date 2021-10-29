@@ -1,1 +1,11 @@
-<full-calendar [options]="calendarOptions"></full-calendar>
+<div class="worktime-calendar">
+  <input
+    class="placeholder"
+    type="text"
+    placeholder="TUTAJ WPISUJESZ NAZWĘ TASKA"
+  />
+  <full-calendar
+    [ngClass]="'calendar'"
+    [options]="calendarOptions"
+  ></full-calendar>
+</div>
