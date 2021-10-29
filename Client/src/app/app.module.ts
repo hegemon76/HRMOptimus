@@ -14,13 +14,16 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import listPlugin from '@fullcalendar/list';
 import { DashboardComponent } from './main/content/dashboard/dashboard.component';
+import { SidebarAltComponent } from './sidebar-alt/sidebar-alt.component';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
   dayGridPlugin,
   timeGridPlugin,
   interactionPlugin,
+  listPlugin
 ]);
 
 @NgModule({
@@ -33,7 +36,8 @@ FullCalendarModule.registerPlugins([
     WorktimeComponent,
     VacationComponent,
     DashboardComponent,
-    WorkersComponent
+    WorkersComponent,
+    SidebarAltComponent
   ],
   imports: [
     BrowserModule,
