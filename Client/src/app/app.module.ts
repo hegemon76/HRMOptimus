@@ -14,6 +14,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import listPlugin from '@fullcalendar/list';
 import { DashboardComponent } from './main/content/dashboard/dashboard.component';
 
 FullCalendarModule.registerPlugins([
@@ -21,6 +22,7 @@ FullCalendarModule.registerPlugins([
   dayGridPlugin,
   timeGridPlugin,
   interactionPlugin,
+  listPlugin
 ]);
 
 @NgModule({

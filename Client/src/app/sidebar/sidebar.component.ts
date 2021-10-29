@@ -7,10 +7,13 @@ import { AppRoutingModule } from '../app-routing.module';
 })
 export class SidebarComponent implements OnInit {
   constructor() {}
-  ngOnInit(): void {}
-}
 
-
-function test(){
-  alert("XD");
+  ngOnInit(): void {
+    const navItems = document.querySelectorAll('nav a');
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        item.classList.toggle('opened');
+      });
+    });
+  }
 }

@@ -6,4 +6,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'HRM Optima';
+  switch = false;
+
+  switchTest() {
+    if (this.switch) {
+      this.switch = false;
+    } else {
+      this.switch = true;
+    }
+    console.log(this.switch);
+  }
 }
