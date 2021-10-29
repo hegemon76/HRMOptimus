@@ -1,4 +1,10 @@
 <div class="container">
-  <app-sidebar-alt></app-sidebar-alt>
+  <app-sidebar
+    class="sidebar"
+    [ngClass]="{ 'sidebar-alt': switch }"
+  ></app-sidebar>
   <app-main></app-main>
 </div>
+<button class="switch" (click)="switchTest()" [ngClass]="{ changed: switch }">
+  Switch
+</button>
