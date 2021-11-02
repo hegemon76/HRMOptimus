@@ -15,8 +15,7 @@ namespace HRMOptimus.Domain.Entities
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
         public DateTime? Deadline { get; set; }
-        public Status Status { get; set; }
-        public ICollection<Employee> ProjectMembers  { get; set; } 
+        public ICollection<Employee> ProjectMembers { get; set; }
         public ICollection<WorkRecord> WorkRekords { get; set; }
     }
 }

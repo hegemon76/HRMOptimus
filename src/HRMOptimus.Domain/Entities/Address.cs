@@ -1,5 +1,4 @@
 ﻿using HRMOptimus.Domain.Common;
-using HRMOptimus.Domain.Enums;
 
 namespace HRMOptimus.Domain.Entities
 {
@@ -10,7 +9,8 @@ namespace HRMOptimus.Domain.Entities
         public string City { get; set; }
         public string Street { get; set; }
         public string BuildingNumber { get; set; }
-        public Country Country { get; set; }
+        public string HouseNumber { get; set; }
+        public string Country { get; set; }
         public Employee Employee { get; set; }
     }
 }
