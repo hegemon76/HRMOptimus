@@ -1,3 +1,4 @@
+import { identifierModuleUrl } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 
@@ -20,6 +21,7 @@ export class WorktimeComponent implements OnInit {
   calendar: Array<CalendarItem[]> = [];
   
   constructor() {}
+  
   ngOnInit(): void 
   {
     this.calendar = this.createCalendar(this.date);
@@ -67,12 +69,19 @@ export class WorktimeComponent implements OnInit {
 
   createCalendarItem(data: moment.Moment, className: string) {
     const dayName = data.format('ddd');
+    const id = "XD";
     return {
       day: data.format('D'),
       dayName,
       className,
-      isWeekend: dayName === 'ndz' || dayName === 'sob'
+      isWeekend: dayName === 'ndz' || dayName === 'sob',
+      id,
     };
+  }
+
+  dupa(){
+    var id = "ddd"
+    return id;
   }
 
   public nextmonth() {
@@ -84,5 +93,14 @@ export class WorktimeComponent implements OnInit {
     this.date.subtract(1, 'months');
     this.calendar = this.createCalendar(this.date);
   }
+
+  test(event: Event){
+    let elementId: string = (event.target as Element).id;
+
+
+    console.log(elementId);
+    
+  }
+ 
 }
 

@@ -16,6 +16,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import { DashboardComponent } from './main/content/dashboard/dashboard.component';
+import { WorkdayComponent } from './main/content/worktime/workday.component';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -35,7 +36,8 @@ FullCalendarModule.registerPlugins([
     WorktimeComponent,
     VacationComponent,
     DashboardComponent,
-    WorkersComponent
+    WorkersComponent,
+    WorkdayComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +45,8 @@ FullCalendarModule.registerPlugins([
       { path: '', component: DashboardComponent },
       { path: 'worktime', component: WorktimeComponent },
       { path: 'vacation', component: VacationComponent },
-      { path: 'workers', component: WorkersComponent }
+      { path: 'workers', component: WorkersComponent },
+      { path: 'workday', component: WorkdayComponent }
     ]),
     FullCalendarModule
   ],
