@@ -1,0 +1,12 @@
+<img src="/assets/images/logo-alt.svg" alt="" class="logo" />
+
+<form #loginForm="ngForm" (ngSubmit)="checkIfUserExists(loginForm.value)">
+  <input type="text" name="login" [ngModel]="user.login" placeholder="Login" />
+  <input
+    type="password"
+    name="password"
+    [ngModel]="user.password"
+    placeholder="Hasło"
+  />
+  <input type="submit" value="Zaloguj się" />
+</form>

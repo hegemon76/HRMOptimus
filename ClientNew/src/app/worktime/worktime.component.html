@@ -2,7 +2,7 @@
   <i class="fas fa-user"></i><span class="workerName">Damian Czerwiński</span
   ><i class="fas fa-chevron-down"></i>
 </div>
-<div id="main" class="flex-container flex-center">
+<div class="flex-container flex-center">
   <button (click)="previousmonth()"><i class="fas fa-angle-left"></i></button>
   <h4>
     <b>{{ date.format("MMMM") }} {{ date.format("YYYY") }}</b>
@@ -14,8 +14,8 @@
   <div class="flex-container flex-center">
     <div
       id="{{ day.id }}"
-      routerLink="/workday"
-      (click)="test($event)"
+      routerLink="day/{{ day.id }}"
+      [state]="{ id: day.id, name: day.dayName, weekend: day.isWeekend }"
       class="calendar-days"
       [class.weekend]="day.isWeekend"
       [ngClass]="day.className"

@@ -1,0 +1,40 @@
+<div class="sidebar-wrapper">
+  <a href="/">
+    <div class="logo"></div>
+  </a>
+  <nav>
+    <a routerLink="/">
+      <li><i class="fa fa-fw fa-home"></i> Start</li>
+    </a>
+    <a routerLink="/workers">
+      <li><i class="fas fa-user"></i> Pracownicy</li>
+    </a>
+    <a routerLink="/worktime">
+      <li><i class="far fa-calendar-alt"></i> Czas pracy</li>
+    </a>
+    <a routerLink="/vacation">
+      <li>
+        <i class="fas fa-plane"></i><span>Urlopy</span>
+        <button (click)="openSubmenu($event)" class="arrow"></button>
+      </li>
+      <ul class="submenu">
+        <a href=""
+          ><li>
+            <span class="text">Limity</span>
+          </li>
+        </a>
+        <a href=""
+          ><li>
+            <span class="text">Nieobecności</span>
+          </li>
+        </a>
+        <a href="">
+          <li>
+            <span class="text">Grafik urlopowy</span>
+          </li>
+        </a>
+      </ul>
+    </a>
+  </nav>
+  <button class="switcher" (click)="changeWebsiteMode()">Switcher</button>
+</div>
