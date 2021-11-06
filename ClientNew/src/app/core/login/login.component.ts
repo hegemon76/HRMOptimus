@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { WorkersService } from '../../workers/workers.service';
+
+interface User {
+  login: string;
+  password: string;
+}
 
 @Component({
   selector: 'app-login',
@@ -6,23 +12,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  constructor() {}
+  constructor(private workersService: WorkersService) {}
 
   ngOnInit(): void {}
 
-  user = {
-    login: 'admin',
-    password: 'admin'
-  };
+  user = {} as User;
 
   checkIfUserExists(user) {
-    console.log(user.login + '' + user.password);
-    if (user.login == 'admin' && user.password == 'admin') {
-      console.log('ok');
-      localStorage.setItem('user', 'admin');
-    } else {
-      console.log('nie');
-    }
-    console.log(localStorage.getItem('user'));
+    this.workersService.checkIfUserExists(user);
   }
 }

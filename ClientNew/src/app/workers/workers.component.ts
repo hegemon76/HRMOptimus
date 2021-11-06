@@ -9,4 +9,12 @@ export class WorkersComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  checkUser(login, password) {
+    if (login == 'admin' && password == 'admin') {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
