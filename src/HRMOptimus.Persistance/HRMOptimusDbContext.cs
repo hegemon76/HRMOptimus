@@ -1,6 +1,7 @@
 ﻿using HRMOptimus.Application.Common.Interfaces;
 using HRMOptimus.Domain.Common;
 using HRMOptimus.Domain.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HRMOptimus.Persistance
 {
-    public class HRMOptimusDbContext : DbContext, IHRMOptimusDbContext
+    public class HRMOptimusDbContext : IdentityDbContext<ApplicationUser>, IHRMOptimusDbContext
     {
         public HRMOptimusDbContext(DbContextOptions<HRMOptimusDbContext> options)
             : base(options)
@@ -53,6 +54,7 @@ namespace HRMOptimus.Persistance
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(HRMOptimusDbContext).Assembly);
             modelBuilder.SeedData();
         }
