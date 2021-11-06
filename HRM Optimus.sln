@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HRMOptimus.WebAPI", "src\HR
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Client", "Client\", "{01F2E1F0-21C1-4838-A7FF-BD9B52CD86D6}"
 	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_55904"
 		Debug.AspNetCompiler.PhysicalPath = "Client\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_55904\"
