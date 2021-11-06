@@ -37,4 +37,9 @@ export class SidebarComponent implements OnInit {
   openSubmenu(e) {
     e.target.parentElement.parentElement.classList.toggle('opened');
   }
+
+  destroyUser() {
+    localStorage.removeItem('user');
+    window.location.reload();
+  }
 }

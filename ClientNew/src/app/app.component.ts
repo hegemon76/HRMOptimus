@@ -11,13 +11,15 @@ export class AppComponent {
   isVerifiedUser = false;
 
   ngOnInit() {
-    // this.checkIsUser();
+    this.checkIsUser();
   }
 
-  // checkIsUser() {
-  //   console.log(localStorage.getItem('user'));
-  //   if (localStorage.getItem('user') != null) {
-  //     this.isVerifiedUser = true;
-  //   }
-  // }
+  checkIsUser() {
+    if (
+      localStorage.getItem('user') != null &&
+      localStorage.getItem('user') != undefined
+    ) {
+      this.isVerifiedUser = true;
+    }
+  }
 }
