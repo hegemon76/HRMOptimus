@@ -3,15 +3,27 @@ using Microsoft.AspNetCore.Identity;
 using System.Threading;
 using System.Threading.Tasks;
 using HRMOptimus.Domain.Entities;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
+using HRMOptimus.Application.Common.Interfaces;
+using System.Linq;
 
-namespace HRMOptimus.Application.User.Query.Login
+namespace HRMOptimus.Application.Account.Query.Login
 {
     public class LoginQueryHandler : IRequestHandler<LoginQuery, LoginVm>
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
-        public LoginQueryHandler(SignInManager<ApplicationUser> signInManager)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IHRMOptimusDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public LoginQueryHandler(SignInManager<ApplicationUser> signInManager, IHttpContextAccessor httpContextAccessor, 
+            IHRMOptimusDbContext context, UserManager<ApplicationUser> userManager)
         {
             _signInManager = signInManager;
+            _httpContextAccessor = httpContextAccessor;
+            _context = context;
+            _userManager = userManager;
         }
 
         public async Task<LoginVm> Handle(LoginQuery request, CancellationToken cancellationToken)
@@ -20,10 +32,13 @@ namespace HRMOptimus.Application.User.Query.Login
 
             if (result.Succeeded)
             {
-                return new LoginVm("test", "test2", "21");
-            }
+                var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value.ToString();
+                var user = _userManager.FindByIdAsync(userId);
+                var employee = _context.Employees.FirstOrDefault(x => x.Id == user.Result.EmployeeId);
 
-            return new LoginVm("test", "test2", "21");
+                return new LoginVm(employee.FirstName, employee.LastName,userId, employee.Id.ToString());
+            }
+            return null;
         }
     }
 }
