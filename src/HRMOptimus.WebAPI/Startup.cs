@@ -57,6 +57,8 @@ namespace HRMOptimus.WebAPI
             app.UseRouting();
 
             app.UseCors("CorsPolicy");
+
+            app.UseAuthentication();
             
             app.UseAuthorization();
 
