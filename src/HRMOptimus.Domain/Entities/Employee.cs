@@ -12,7 +12,7 @@ namespace HRMOptimus.Domain.Entities
         public string FullName {  get; set; }
         public DateTime? BirthDate { get; set; }
         public int LeaveDaysLeft { get; set; }
-        public decimal WorkingTime { get; set; }
+        public TimeSpan WorkingTime { get; set; }
         public int ContractId { get; set; }
         public Contract Contract { get; set; }
         public int AddressId { get; set; }
