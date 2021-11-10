@@ -58,7 +58,11 @@ namespace HRMOptimus.Application.Account.Command.Registration
                         BirthDate = request.Registration.BirthDate,
                         LeaveDaysLeft = (int)contract.LeaveDays,
                         Contract = contract,
-                        Address = address
+                        Address = address,
+                        Projects = new List<Project>(),
+                        WorkRecords = new List<WorkRecord>(),
+                        LeavesRegister = new List<LeaveRegister>()
+                        
                     };
                     employee.ComputeFullName();
 
