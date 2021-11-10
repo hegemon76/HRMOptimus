@@ -13,7 +13,7 @@ namespace HRMOptimus.WebAPI.Controllers
         {
             var id = await Mediator.Send(new RegistrationCommand() { Registration = model });
 
-            return OK(id);
+            return id;
         }
 
         [HttpPost]
