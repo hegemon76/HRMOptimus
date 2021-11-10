@@ -24,63 +24,73 @@ namespace HRMOptimus.Application.Account.Command.Registration
 
         public async Task<string> Handle(RegistrationCommand request, CancellationToken cancellationToken)
         {
-            var user = _userManager.FindByEmailAsync(request.Registration.Email);
-            if (user.Result == null)
+            try
             {
-                Contract contract = new Contract()
+
+                var user = _userManager.FindByEmailAsync(request.Registration.Email);
+                if (user == null)
                 {
-                    Name = request.Registration.Name,
-                    LeaveDays = request.Registration.LeaveDays,
-                    Payment = request.Registration.Payment,
-                    Rate = request.Registration.Rate,
-                    WorkTime = request.Registration.WorkTime,
-                    ContractType = request.Registration.ContractType
-                };
+                    Contract contract = new Contract()
+                    {
+                        Name = request.Registration.Name,
+                        LeaveDays = request.Registration.LeaveDays,
+                        Payment = request.Registration.Payment,
+                        Rate = request.Registration.Rate,
+                        WorkTime = request.Registration.WorkTime,
+                        ContractType = request.Registration.ContractType
+                    };
 
-                Address address = new Address()
-                {
-                    ZipCode = request.Registration.ZipCode,
-                    City = request.Registration.City,
-                    Street = request.Registration.Street,
-                    BuildingNumber = request.Registration.BuildingNumber,
-                    HouseNumber = request.Registration.HouseNumber,
-                    Country = request.Registration.Country
-                };
+                    Address address = new Address()
+                    {
+                        ZipCode = request.Registration.ZipCode,
+                        City = request.Registration.City,
+                        Street = request.Registration.Street,
+                        BuildingNumber = request.Registration.BuildingNumber,
+                        HouseNumber = request.Registration.HouseNumber,
+                        Country = request.Registration.Country
+                    };
 
 
-                Employee employee = new Employee()
-                {
-                    FirstName = request.Registration.Email,
-                    LastName = request.Registration.LastName,
-                    BirthDate = request.Registration.BirthDate,
-                    Contract = contract,
-                    Address = address
-                };
+                    Employee employee = new Employee()
+                    {
+                        FirstName = request.Registration.Email,
+                        LastName = request.Registration.LastName,
+                        BirthDate = request.Registration.BirthDate,
+                        LeaveDaysLeft = (int)contract.LeaveDays,
+                        Contract = contract,
+                        Address = address
+                    };
+                    employee.ComputeFullName();
 
-                contract.Employee = employee;
-                address.Employee = employee;
+                    contract.Employee = employee;
+                    address.Employee = employee;
 
-                _context.Contracts.Add(contract);
-                _context.Addresses.Add(address);
+                    _context.Contracts.Add(contract);
+                    _context.Addresses.Add(address);
 
-                employee.ContractId = contract.Id;
-                employee.AddressId = address.Id;
+                    employee.ContractId = contract.Id;
+                    employee.AddressId = address.Id;
 
-                _context.Employees.Add(employee);
+                    _context.Employees.Add(employee);
 
-                var newUser = new ApplicationUser()
-                {
-                    UserName = request.Registration.Email,
-                    Email = request.Registration.Email,
-                    EmployeeId = employee.Id,
-                    Employee = employee,
-                    Enabled = true
-                };
-                await _userManager.CreateAsync(newUser, request.Registration.Password);
-                await _context.SaveChangesAsync(cancellationToken);
-                return newUser.Id;
+                    var newUser = new ApplicationUser()
+                    {
+                        UserName = request.Registration.Email,
+                        Email = request.Registration.Email,
+                        EmployeeId = employee.Id,
+                        Employee = employee,
+                        Enabled = true
+                    };
+                    await _userManager.CreateAsync(newUser, request.Registration.Password);
+                    await _context.SaveChangesAsync(cancellationToken);
+                    return newUser.Id;
+                }
+                return null;
             }
-            return "Something went wrong";
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
         }
     }
 }

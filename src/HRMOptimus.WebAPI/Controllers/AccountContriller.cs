@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 
 namespace HRMOptimus.WebAPI.Controllers
 {
-    
     public class AccountContriller : BaseController
     {
         [HttpPost]
@@ -13,6 +12,7 @@ namespace HRMOptimus.WebAPI.Controllers
         public async Task<ActionResult<string>> Register(RegistrationVm model)
         {
             var id = await Mediator.Send(new RegistrationCommand() { Registration = model });
+
             return id;
         }
 
@@ -20,7 +20,8 @@ namespace HRMOptimus.WebAPI.Controllers
         [Route("api/login")]
         public async Task<ActionResult<LoginVm>> Login(string username, string email, string password)
         {
-            var user = await Mediator.Send(new LoginQuery() { Email= email, Password = password, Username = username});
+            var user = await Mediator.Send(new LoginQuery() { Email = email, Password = password, Username = username });
+
             return user;
         }
     }
