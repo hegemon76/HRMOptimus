@@ -27,7 +27,7 @@ namespace HRMOptimus.Application.Account.Command.Registration
             try
             {
 
-                var user = _userManager.FindByEmailAsync(request.Registration.Email);
+                var user = await _userManager.FindByEmailAsync(request.Registration.Email);
                 if (user == null)
                 {
                     Contract contract = new Contract()
@@ -56,12 +56,13 @@ namespace HRMOptimus.Application.Account.Command.Registration
                         FirstName = request.Registration.Email,
                         LastName = request.Registration.LastName,
                         BirthDate = request.Registration.BirthDate,
+                        WorkingTime = 0,
                         LeaveDaysLeft = (int)contract.LeaveDays,
                         Contract = contract,
                         Address = address,
                         Projects = new List<Project>(),
-                        WorkRecords = new List<WorkRecord>(),
-                        LeavesRegister = new List<LeaveRegister>()
+                        WorkRecords = new List<Domain.Entities.WorkRecord>(),
+                        LeavesRegister = new List<Domain.Entities.LeaveRegister>()
                         
                     };
                     employee.ComputeFullName();

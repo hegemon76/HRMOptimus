@@ -19,8 +19,6 @@ namespace HRMOptimus.Application.Account.Command.Registration
         public string LastName { get; set; }
         public string FullName { get; set; }
         public DateTime? BirthDate { get; set; }
-        public int LeaveDaysLeft { get; set; }
-        public decimal WorkingTime { get; set; }
 
         //contract
         public string Name { get; set; }
