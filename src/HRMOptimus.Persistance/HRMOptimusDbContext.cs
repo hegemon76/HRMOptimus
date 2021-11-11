@@ -19,6 +19,7 @@ namespace HRMOptimus.Persistance
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Contract> Contracts { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<LeaveRegister> LeavesRegister { get; set; }
         public DbSet<WorkRecord> WorkRecords { get; set; }
 

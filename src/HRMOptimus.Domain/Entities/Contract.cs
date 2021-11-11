@@ -6,7 +6,7 @@ namespace HRMOptimus.Domain.Entities
     public class Contract: EntityBase
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string ContractName { get; set; }
         public decimal LeaveDays { get; set; }
         public decimal Payment { get; set; }
         public decimal Rate { get; set; }
