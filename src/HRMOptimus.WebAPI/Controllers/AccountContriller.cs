@@ -16,7 +16,7 @@ namespace HRMOptimus.WebAPI.Controllers
             return id;
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("api/login")]
         public async Task<ActionResult<LoginVm>> Login(string username, string email, string password)
         {
