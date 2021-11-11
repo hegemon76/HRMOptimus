@@ -1,4 +1,3 @@
-import { identifierModuleUrl } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 
@@ -24,7 +23,6 @@ export class WorktimeComponent implements OnInit {
   ngOnInit(): void {
     this.calendar = this.createCalendar(this.date);
   }
-
   createCalendar(month: moment.Moment) {
     const daysInMonth = month.daysInMonth();
     const startOfMonth = month.startOf('month').format('ddd');
@@ -39,28 +37,23 @@ export class WorktimeComponent implements OnInit {
     const daysBefore = weekdaysShort.indexOf(startOfMonth);
     const daysAfter =
       weekdaysShort.length - 1 - weekdaysShort.indexOf(endOfMonth);
-
     const clone = month.startOf('months').clone();
     if (daysBefore > 0) {
       clone.subtract(daysBefore, 'days');
     }
-
     for (let i = 0; i < daysBefore; i++) {
       calendar.push(this.createCalendarItem(clone, 'previous-month'));
       clone.add(1, 'days');
     }
-
     for (let i = 0; i < daysInMonth; i++) {
       calendar.push(this.createCalendarItem(clone, 'in-month'));
       clone.add(1, 'days');
       console.log(this.createCalendarItem(clone, 'in-month'));
     }
-
     for (let i = 0; i < daysAfter; i++) {
       calendar.push(this.createCalendarItem(clone, 'next-month'));
       clone.add(1, 'days');
     }
-
     return calendar.reduce(
       (pre: Array<CalendarItem[]>, curr: CalendarItem) => {
         if (pre[pre.length - 1].length < weekdaysShort.length) {
@@ -73,7 +66,6 @@ export class WorktimeComponent implements OnInit {
       [[]]
     );
   }
-
   createCalendarItem(data: moment.Moment, className: string) {
     const dayName = data.format('ddd');
     return {
@@ -84,25 +76,33 @@ export class WorktimeComponent implements OnInit {
       isWeekend: dayName === 'ndz' || dayName === 'sob'
     };
   }
-
-  // dupa() {
-  //   var id = 'ddd';
-  //   return id;
-  // }
-
   public nextmonth() {
     this.date.add(1, 'months');
     this.calendar = this.createCalendar(this.date);
   }
-
   public previousmonth() {
     this.date.subtract(1, 'months');
     this.calendar = this.createCalendar(this.date);
   }
-
-  test(event: Event) {
-    // let elementId: string = (event.target as Element).id;
-    let elementId: string = (event.target as Element).id;
-    console.log(elementId);
-  }
 }
+
+// calendar = [];
+// today = moment().locale('pl');
+// startDay = this.today
+//   .clone()
+//   .startOf('month')
+//   .startOf('week');
+// endDay = this.today
+//   .clone()
+//   .endOf('month')
+//   .endOf('week');
+// date = this.startDay.clone().subtract(1, 'day');
+
+// this.calendar = this.createCalendar(this.date);
+// while (this.date.isBefore(this.endDay, 'day'))
+//   this.calendar.push({
+//     days: Array(7)
+//       .fill(0)
+//       .map(() => this.date.add(1, 'day').clone())
+//   });
+// console.log(this.calendar);
