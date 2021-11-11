@@ -2,7 +2,7 @@
 
 namespace HRMOptimus.Application.WorkRecord.Command.AddWorkRecord
 {
-    class WorkRecordVm
+    public class WorkRecordVm
     {
         public string Name { get; set; }
         public DateTime WorkStart { get; set; }

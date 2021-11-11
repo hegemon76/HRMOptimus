@@ -1,27 +1,21 @@
-﻿using HRMOptimus.Domain.Entities;
-using HRMOptimus.Domain.Enums;
+﻿using HRMOptimus.Domain.Enums;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HRMOptimus.Application.Account.Command.Registration
 {
     public class RegistrationVm
     {
-        public string Username { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
 
         //employee
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string FullName { get; set; }
         public DateTime? BirthDate { get; set; }
+        public Genre Genre { get; set; }
 
         //contract
-        public string Name { get; set; }
+        public string ContractName { get; set; }
         public decimal LeaveDays { get; set; }
         public decimal Payment { get; set; }
         public decimal Rate { get; set; }
@@ -29,7 +23,6 @@ namespace HRMOptimus.Application.Account.Command.Registration
         public ContractType ContractType { get; set; }
 
         //address
-
         public string ZipCode { get; set; }
         public string City { get; set; }
         public string Street { get; set; }
