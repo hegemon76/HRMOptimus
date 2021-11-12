@@ -1,4 +1,5 @@
-﻿using HRMOptimus.Application.Account.Command.Registration;
+﻿using HRMOptimus.Application.Account.Command.Logout;
+using HRMOptimus.Application.Account.Command.Registration;
 using HRMOptimus.Application.Account.Query.Login;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -23,6 +24,15 @@ namespace HRMOptimus.WebAPI.Controllers
             var user = await Mediator.Send(new LoginQuery() { Email = email, Password = password, Username = username });
 
             return user;
+        }
+
+        [HttpPost]
+        [Route("api/logout")]
+        public async Task<ActionResult<string>> Logout(LogoutVm logoutVm)
+        {
+            var msg = await Mediator.Send(new LogoutCommand() {});
+
+            return msg;
         }
     }
 }
