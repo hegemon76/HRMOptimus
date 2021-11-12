@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { WorkersService } from '../../workers/workers.service';
 
 interface User {
-  login: string;
+  email: string;
   password: string;
 }
 
@@ -19,6 +19,9 @@ export class LoginComponent implements OnInit {
   user = {} as User;
 
   checkIfUserExists(user) {
-    this.workersService.checkIfUserExists(user);
+    this.workersService.checkIfUserExists(user).subscribe(res => {
+      console.log(user.email);
+      console.log(res);
+    });
   }
 }
