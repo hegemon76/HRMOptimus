@@ -12,7 +12,7 @@ namespace HRMOptimus.Application.Account.Command.Registration
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime? BirthDate { get; set; }
-        public Genre Genre { get; set; }
+        public Gender Genre { get; set; }
 
         //contract
         public string ContractName { get; set; }

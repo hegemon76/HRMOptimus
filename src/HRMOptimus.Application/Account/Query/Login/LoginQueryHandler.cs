@@ -28,7 +28,7 @@ namespace HRMOptimus.Application.Account.Query.Login
 
         public async Task<LoginVm> Handle(LoginQuery request, CancellationToken cancellationToken)
         {
-            var result = await _signInManager.PasswordSignInAsync(request.Email.ToUpper(), request.Password, false, false);
+            var result = await _signInManager.PasswordSignInAsync(request.Email, request.Password, false, false);
 
             if (result.Succeeded)
             {
@@ -36,7 +36,7 @@ namespace HRMOptimus.Application.Account.Query.Login
                 var user = _userManager.FindByIdAsync(userId);
                 var employee = _context.Employees.FirstOrDefault(x => x.Id == user.Result.EmployeeId);
 
-                return new LoginVm(employee.FirstName, employee.LastName, employee.Genre, userId, employee.Id.ToString());
+                return new LoginVm(employee.FirstName, employee.LastName, employee.Gender, userId, employee.Id.ToString());
             }
             return null;
         }

@@ -2,5 +2,5 @@
 
 namespace HRMOptimus.Application.Account.Query.Login
 {
-    public record LoginVm(string firstName, string lastName, Genre genre ,string id, string employeeId);
+    public record LoginVm(string firstName, string lastName, Gender gender ,string id, string employeeId);
 }

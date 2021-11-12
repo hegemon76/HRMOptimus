@@ -241,7 +241,7 @@ namespace HRMOptimus.Persistance.Migrations
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Genre")
+                    b.Property<int>("Gender")
                         .HasColumnType("int");
 
                     b.Property<string>("InactivatedBy")
@@ -375,8 +375,8 @@ namespace HRMOptimus.Persistance.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("Duration")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<TimeSpan>("Duration")
+                        .HasColumnType("time");
 
                     b.Property<int?>("EmployeeId")
                         .HasColumnType("int");

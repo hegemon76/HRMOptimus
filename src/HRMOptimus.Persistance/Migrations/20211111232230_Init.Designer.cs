@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HRMOptimus.Persistance.Migrations
 {
     [DbContext(typeof(HRMOptimusDbContext))]
-    [Migration("20211111161912_AddGenre")]
-    partial class AddGenre
+    [Migration("20211111232230_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -99,12 +99,6 @@ namespace HRMOptimus.Persistance.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -114,21 +108,6 @@ namespace HRMOptimus.Persistance.Migrations
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("Enabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("InactivatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("InactivatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("LastModifiedOn")
-                        .HasColumnType("datetime2");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -165,7 +144,8 @@ namespace HRMOptimus.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("EmployeeId")
+                        .IsUnique();
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -184,6 +164,9 @@ namespace HRMOptimus.Persistance.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ContractName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ContractType")
                         .HasColumnType("int");
@@ -212,9 +195,6 @@ namespace HRMOptimus.Persistance.Migrations
                     b.Property<decimal>("LeaveDays")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("Payment")
                         .HasColumnType("decimal(18,2)");
 
@@ -239,6 +219,9 @@ namespace HRMOptimus.Persistance.Migrations
                     b.Property<int>("AddressId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ApplicationUserId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("BirthDate")
                         .HasColumnType("datetime2");
 
@@ -260,7 +243,7 @@ namespace HRMOptimus.Persistance.Migrations
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Genre")
+                    b.Property<int>("Gender")
                         .HasColumnType("int");
 
                     b.Property<string>("InactivatedBy")
@@ -278,8 +261,8 @@ namespace HRMOptimus.Persistance.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LeaveDaysLeft")
-                        .HasColumnType("int");
+                    b.Property<decimal>("LeaveDaysLeft")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("WorkingTime")
                         .HasColumnType("decimal(18,2)");
@@ -394,8 +377,8 @@ namespace HRMOptimus.Persistance.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("Duration")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<TimeSpan>("Duration")
+                        .HasColumnType("time");
 
                     b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
@@ -585,8 +568,8 @@ namespace HRMOptimus.Persistance.Migrations
             modelBuilder.Entity("HRMOptimus.Domain.Entities.ApplicationUser", b =>
                 {
                     b.HasOne("HRMOptimus.Domain.Entities.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId")
+                        .WithOne("ApplicationUser")
+                        .HasForeignKey("HRMOptimus.Domain.Entities.ApplicationUser", "EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -701,6 +684,8 @@ namespace HRMOptimus.Persistance.Migrations
 
             modelBuilder.Entity("HRMOptimus.Domain.Entities.Employee", b =>
                 {
+                    b.Navigation("ApplicationUser");
+
                     b.Navigation("LeavesRegister");
 
                     b.Navigation("WorkRecords");
