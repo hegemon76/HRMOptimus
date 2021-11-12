@@ -4,8 +4,6 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,13 +24,12 @@ namespace HRMOptimus.Application.Account.Command.Registration
         {
             try
             {
-
                 var user = await _userManager.FindByEmailAsync(request.Registration.Email);
                 if (user == null)
                 {
                     Contract contract = new Contract()
                     {
-                        Name = request.Registration.Name,
+                        ContractName = request.Registration.ContractName,
                         LeaveDays = request.Registration.LeaveDays,
                         Payment = request.Registration.Payment,
                         Rate = request.Registration.Rate,
@@ -50,22 +47,20 @@ namespace HRMOptimus.Application.Account.Command.Registration
                         Country = request.Registration.Country
                     };
 
-
                     Employee employee = new Employee()
                     {
-                        FirstName = request.Registration.Email,
+                        FirstName = request.Registration.FirstName,
                         LastName = request.Registration.LastName,
                         BirthDate = request.Registration.BirthDate,
                         WorkingTime = 0,
                         LeaveDaysLeft = (int)contract.LeaveDays,
                         Contract = contract,
                         Address = address,
+                        FullName = $"{request.Registration.FirstName} {request.Registration.LastName}",
                         Projects = new List<Project>(),
                         WorkRecords = new List<Domain.Entities.WorkRecord>(),
                         LeavesRegister = new List<Domain.Entities.LeaveRegister>()
-                        
                     };
-                    employee.ComputeFullName();
 
                     contract.Employee = employee;
                     address.Employee = employee;
@@ -84,10 +79,12 @@ namespace HRMOptimus.Application.Account.Command.Registration
                         Email = request.Registration.Email,
                         EmployeeId = employee.Id,
                         Employee = employee,
-                        Enabled = true
                     };
+
                     await _userManager.CreateAsync(newUser, request.Registration.Password);
+                    
                     await _context.SaveChangesAsync(cancellationToken);
+
                     return newUser.Id;
                 }
                 return null;
