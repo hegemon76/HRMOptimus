@@ -11,13 +11,14 @@ interface Worker {
 })
 export class WorkersService {
   proxy = 'https://dry-taiga-05632.herokuapp.com/';
-  url = 'https://localhost:5001/api/login';
+  baseUrl = 'https://localhost:5001/';
+  url = 'api/login';
 
   constructor(private http: HttpClient) {}
   checkIfUserExists(user): Observable<any> {
     return this.http
-      .get(this.proxy + this.url, {
-        params: {
+      .post(this.baseUrl + this.url, {
+        body: {
           email: user.email,
           password: user.password
         }

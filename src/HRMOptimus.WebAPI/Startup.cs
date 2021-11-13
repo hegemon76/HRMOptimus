@@ -29,12 +29,9 @@ namespace HRMOptimus.WebAPI
             
             services.AddControllersWithViews(options =>
              options.Filters.Add<ApiExceptionFilterAttribute>());
+
+            services.usecors();
             
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyMethod().AllowAnyHeader().WithOrigins("https://localhost:4200"));
-            });
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -56,7 +53,11 @@ namespace HRMOptimus.WebAPI
 
             app.UseRouting();
 
-            app.UseCors("CorsPolicy");
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyMethod().AllowAnyHeader().WithOrigins("https://localhost:4200"));
+            });
 
             app.UseAuthentication();
             
