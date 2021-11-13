@@ -56,11 +56,7 @@ namespace HRMOptimus.WebAPI
 
             app.UseRouting();
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyMethod().AllowAnyHeader().WithOrigins("https://localhost:4200"));
-            });
+            app.UseCors("CorsPolicy");
 
             app.UseAuthentication();
             

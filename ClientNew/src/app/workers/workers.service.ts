@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 interface Worker {
   email: string;
@@ -16,13 +16,12 @@ export class WorkersService {
 
   constructor(private http: HttpClient) {}
   checkIfUserExists(user): Observable<any> {
+    var body = {
+      email: 'bahrynowski.jakub@gmail.com',
+      password: 'Zaq1234!'
+    };
     return this.http
-      .post(this.baseUrl + this.url, {
-        body: {
-          email: user.email,
-          password: user.password
-        }
-      })
+      .post(this.baseUrl + this.url, body)
       .pipe(map((res: any) => res));
   }
 }
