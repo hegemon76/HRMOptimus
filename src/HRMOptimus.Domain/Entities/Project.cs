@@ -2,6 +2,7 @@
 using HRMOptimus.Domain.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HRMOptimus.Domain.Entities
 {
@@ -10,7 +11,9 @@ namespace HRMOptimus.Domain.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
         public decimal HoursBudget { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
         public decimal HoursWorked { get; set; }
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
