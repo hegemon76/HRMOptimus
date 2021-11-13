@@ -29,9 +29,12 @@ namespace HRMOptimus.WebAPI
             
             services.AddControllersWithViews(options =>
              options.Filters.Add<ApiExceptionFilterAttribute>());
-
-            services.usecors();
             
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:4200"));
+            });
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

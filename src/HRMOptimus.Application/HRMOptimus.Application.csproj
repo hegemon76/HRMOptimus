@@ -5,9 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="WorkRecord\Query\**" />
-    <EmbeddedResource Remove="WorkRecord\Query\**" />
-    <None Remove="WorkRecord\Query\**" />
+    <Compile Remove="Account\Query\**" />
+    <EmbeddedResource Remove="Account\Query\**" />
+    <None Remove="Account\Query\**" />
   </ItemGroup>
 
   <ItemGroup>
