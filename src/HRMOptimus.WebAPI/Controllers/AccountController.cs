@@ -1,5 +1,5 @@
-﻿using HRMOptimus.Application.Account.Command.Registration;
-using HRMOptimus.Application.Account.Query.Login;
+﻿using HRMOptimus.Application.Account.Command.Login;
+using HRMOptimus.Application.Account.Command.Registration;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -16,11 +16,11 @@ namespace HRMOptimus.WebAPI.Controllers
             return id;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("api/login")]
-        public async Task<ActionResult<LoginVm>> Login([FromBody] LoginQuery dto)
+        public async Task<ActionResult<LoginVm>> Login([FromBody] LoginCommand dto)
         {
-            var user = await Mediator.Send(new LoginQuery() { Email = dto.Email, Password = dto.Password });
+            var user = await Mediator.Send(new LoginCommand() { Email = dto.Email, Password = dto.Password });
 
             return user;
         }

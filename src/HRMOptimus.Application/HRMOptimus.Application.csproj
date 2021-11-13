@@ -17,4 +17,8 @@
     <ProjectReference Include="..\HRMOptimus.Domain\HRMOptimus.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Account\Query\" />
+  </ItemGroup>
+
 </Project>
