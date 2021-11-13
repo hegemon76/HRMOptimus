@@ -17,7 +17,7 @@ namespace HRMOptimus.Application.Account.Command.Login
         private readonly IHRMOptimusDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public LoginCommandHandler(SignInManager<ApplicationUser> signInManager, IHttpContextAccessor httpContextAccessor, 
+        public LoginCommandHandler(SignInManager<ApplicationUser> signInManager, IHttpContextAccessor httpContextAccessor,
             IHRMOptimusDbContext context, UserManager<ApplicationUser> userManager)
         {
             _signInManager = signInManager;
@@ -36,7 +36,8 @@ namespace HRMOptimus.Application.Account.Command.Login
                 var user = _userManager.FindByIdAsync(userId);
                 var employee = _context.Employees.FirstOrDefault(x => x.Id == user.Result.EmployeeId);
 
-                return new LoginVm() {
+                return new LoginVm()
+                {
                     EmployeeId = employee.Id,
                     FirstName = employee.FirstName,
                     Gender = employee.Gender,
