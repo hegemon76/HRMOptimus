@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { WorkersService } from '../../workers/workers.service';
-
-interface User {
-  login: string;
-  password: string;
-}
+import {HttpClient} from '@angular/common/http';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -12,13 +8,27 @@ interface User {
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  constructor(private workersService: WorkersService) {}
+  url = 'https://localhost:5001/api/login';
+  form: FormGroup;
+  model: any = {};
+  constructor(
+    private http: HttpClient,
+    private formBuilder: FormBuilder,
+    ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      email: '',
+      password: '',
+    });
+  }
 
-  user = {} as User;
+  login() {
+    console.log("12333");
 
-  checkIfUserExists(user) {
-    this.workersService.checkIfUserExists(user);
+    this.http.post(this.url,this.form.getRawValue()).subscribe(()=>{
+      console.log("123");
+    }
+    );
   }
 }

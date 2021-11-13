@@ -26,15 +26,15 @@ namespace HRMOptimus.Application.WorkRecord.Query.DayWorkRecords
 
         public async Task<DayWorkRecordsVm> Handle(DayWorkRecordsQuery request, CancellationToken cancellationToken)
         {
-            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value.ToString();
-            var user = _userManager.FindByIdAsync(userId);
+            //var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value.ToString();
+            //var user = _userManager.FindByIdAsync(userId);
 
             var workRecords = await _context.WorkRecords
                 //.Where(x => x.EmployeeId == user.Result.EmployeeId)
                 .Where(x => x.WorkStart.Date == request.DayWork.Date)
-                
-               //.Include(x => x.Project)
-               //.Include(x=>x.Employee)
+
+                //.Include(x => x.Project)
+                //.Include(x=>x.Employee)
                 .ToListAsync();
 
             return new DayWorkRecordsVm(workRecords, request.DayWork);
