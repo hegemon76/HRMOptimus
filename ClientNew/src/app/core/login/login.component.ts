@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WorkersService } from '../../workers/workers.service';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 interface User {
   email: string;
@@ -20,7 +22,6 @@ export class LoginComponent implements OnInit {
 
   checkIfUserExists(user) {
     this.workersService.checkIfUserExists(user).subscribe(res => {
-      console.log(user.email);
       console.log(res);
     });
   }
