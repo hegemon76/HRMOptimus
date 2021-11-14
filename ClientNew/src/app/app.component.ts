@@ -11,7 +11,7 @@ export class AppComponent {
   isVerifiedUser = false;
 
   ngOnInit() {
-    // this.checkIsUser();
+    this.checkIsUser();
   }
 
   checkIsUser() {
