@@ -13,7 +13,7 @@ namespace HRMOptimus.Application.Account.Command.Registration
 
         public string LastName { get; set; }
         public DateTime? BirthDate { get; set; }
-        public Gender Gender { get; set; }
+        public string Gender { get; set; }
 
         //contract
         public string ContractName { get; set; }
@@ -22,7 +22,7 @@ namespace HRMOptimus.Application.Account.Command.Registration
         public decimal Payment { get; set; }
         public decimal Rate { get; set; }
         public int WorkTime { get; set; }
-        public ContractType ContractType { get; set; }
+        public string ContractType { get; set; }
 
         //address
         public string ZipCode { get; set; }

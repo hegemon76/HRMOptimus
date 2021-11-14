@@ -1,5 +1,6 @@
 ﻿using HRMOptimus.Application.Common.Interfaces;
 using HRMOptimus.Domain.Entities;
+using HRMOptimus.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -35,7 +36,7 @@ namespace HRMOptimus.Application.Account.Command.Registration
                         Payment = request.Registration.Payment,
                         Rate = request.Registration.Rate,
                         WorkTime = request.Registration.WorkTime,
-                        ContractType = request.Registration.ContractType
+                        ContractType = Enum.TryParse(request.Registration.ContractType, out ContractType contractType) ? contractType : ContractType.UoP
                     };
 
                     Address address = new Address()
@@ -48,7 +49,7 @@ namespace HRMOptimus.Application.Account.Command.Registration
                         Country = request.Registration.Country
                     };
 
-                    Employee employee = new Employee()
+                    var employee = new Domain.Entities.Employee()
                     {
                         FirstName = request.Registration.FirstName,
                         LastName = request.Registration.LastName,
@@ -56,7 +57,7 @@ namespace HRMOptimus.Application.Account.Command.Registration
                         WorkingTime = 0,
                         LeaveDaysLeft = (int)contract.LeaveDays,
                         Contract = contract,
-                        Gender = request.Registration.Gender,
+                        Gender = Enum.TryParse(request.Registration.Gender, out Gender gender) ? gender : Gender.Man,
                         Address = address,
                         FullName = $"{request.Registration.FirstName} {request.Registration.LastName}",
                         Projects = new List<Domain.Entities.Project>(),

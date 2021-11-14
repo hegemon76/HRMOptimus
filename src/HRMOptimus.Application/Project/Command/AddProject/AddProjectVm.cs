@@ -13,6 +13,6 @@ namespace HRMOptimus.Application.Project.Command.AddProject
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
         public DateTime? Deadline { get; set; }
-        public ICollection<Employee> ProjectMembers { get; set; }
+        public ICollection<Domain.Entities.Employee> ProjectMembers { get; set; }
     }
 }
