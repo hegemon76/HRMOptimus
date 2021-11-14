@@ -1,0 +1,13 @@
+<div class="top-bar">
+  <div [ngClass]="{toggled : logoutWrapperToggled}" class="user-info" (mouseenter)="logoutWrapperToggled = true"
+    (mouseleave)="logoutWrapperToggled = false">
+    <img [src]="user.gender == 0 ? '/assets/images/male-avatar.svg' : '/assets/images/female-avatar.svg'">
+    <p>{{user.firstName}} {{user.lastName}}</p>
+    <div class="buttons-wrapper" *ngIf="logoutWrapperToggled">
+      <div class="edit">
+        <button class="edit-btn">EDIT</button>
+      </div>
+      <app-logout class="logout"></app-logout>
+    </div>
+  </div>
+</div>
