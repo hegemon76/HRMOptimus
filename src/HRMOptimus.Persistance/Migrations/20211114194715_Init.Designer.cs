@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HRMOptimus.Persistance.Migrations
 {
     [DbContext(typeof(HRMOptimusDbContext))]
-    [Migration("20211111232230_Init")]
+    [Migration("20211114194715_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -217,9 +217,6 @@ namespace HRMOptimus.Persistance.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AddressId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ApplicationUserId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("BirthDate")

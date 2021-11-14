@@ -72,6 +72,7 @@ namespace HRMOptimus.Application.Account.Command.Registration
 
                     employee.ContractId = contract.Id;
                     employee.AddressId = address.Id;
+                    _context.Employees.Add(employee);
 
                     var newUser = new ApplicationUser()
                     {
@@ -79,10 +80,6 @@ namespace HRMOptimus.Application.Account.Command.Registration
                         Email = request.Registration.Email,
                         Employee = employee,
                     };
-
-                    employee.ApplicationUser = newUser;
-
-                    _context.Employees.Add(employee);
 
                     await _userManager.CreateAsync(newUser, request.Registration.Password);
 

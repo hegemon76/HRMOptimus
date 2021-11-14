@@ -217,9 +217,6 @@ namespace HRMOptimus.Persistance.Migrations
                     b.Property<int>("AddressId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ApplicationUserId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("BirthDate")
                         .HasColumnType("datetime2");
 

@@ -25,7 +25,6 @@ namespace HRMOptimus.Domain.Entities
         public Contract Contract { get; set; }
         public int AddressId { get; set; }
         public Address Address { get; set; }
-        public Guid ApplicationUserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public ICollection<Project> Projects { get; set; }
         public ICollection<WorkRecord> WorkRecords { get; set; }
