@@ -28,72 +28,72 @@ namespace HRMOptimus.Application.Account.Command.Registration
                 var user = await _userManager.FindByEmailAsync(request.Registration.Email);
                 if (user == null)
                 {
-                        Contract contract = new Contract()
-                        {
-                            ContractName = request.Registration.ContractName,
-                            LeaveDays = request.Registration.LeaveDays,
-                            Payment = request.Registration.Payment,
-                            Rate = request.Registration.Rate,
-                            WorkTime = request.Registration.WorkTime,
-                            ContractType = request.Registration.ContractType
-                        };
+                    Contract contract = new Contract()
+                    {
+                        ContractName = request.Registration.ContractName,
+                        LeaveDays = request.Registration.LeaveDays,
+                        Payment = request.Registration.Payment,
+                        Rate = request.Registration.Rate,
+                        WorkTime = request.Registration.WorkTime,
+                        ContractType = request.Registration.ContractType
+                    };
 
-                        Address address = new Address()
-                        {
-                            ZipCode = request.Registration.ZipCode,
-                            City = request.Registration.City,
-                            Street = request.Registration.Street,
-                            BuildingNumber = request.Registration.BuildingNumber,
-                            HouseNumber = request.Registration.HouseNumber,
-                            Country = request.Registration.Country
-                        };
+                    Address address = new Address()
+                    {
+                        ZipCode = request.Registration.ZipCode,
+                        City = request.Registration.City,
+                        Street = request.Registration.Street,
+                        BuildingNumber = request.Registration.BuildingNumber,
+                        HouseNumber = request.Registration.HouseNumber,
+                        Country = request.Registration.Country
+                    };
 
-                        Employee employee = new Employee()
-                        {
-                            FirstName = request.Registration.FirstName,
-                            LastName = request.Registration.LastName,
-                            BirthDate = request.Registration.BirthDate,
-                            WorkingTime = 0,
-                            LeaveDaysLeft = (int)contract.LeaveDays,
-                            Contract = contract,
-                            Address = address,
-                            FullName = $"{request.Registration.FirstName} {request.Registration.LastName}",
-                            Projects = new List<Project>(),
-                            WorkRecords = new List<Domain.Entities.WorkRecord>(),
-                            LeavesRegister = new List<Domain.Entities.LeaveRegister>()
-                        };
+                    Employee employee = new Employee()
+                    {
+                        FirstName = request.Registration.FirstName,
+                        LastName = request.Registration.LastName,
+                        BirthDate = request.Registration.BirthDate,
+                        WorkingTime = 0,
+                        LeaveDaysLeft = (int)contract.LeaveDays,
+                        Contract = contract,
+                        Gender = request.Registration.Gender,
+                        Address = address,
+                        FullName = $"{request.Registration.FirstName} {request.Registration.LastName}",
+                        Projects = new List<Domain.Entities.Project>(),
+                        WorkRecords = new List<Domain.Entities.WorkRecord>(),
+                        LeavesRegister = new List<Domain.Entities.LeaveRegister>()
+                    };
 
-                        contract.Employee = employee;
-                        address.Employee = employee;
+                    contract.Employee = employee;
+                    address.Employee = employee;
 
-                        _context.Contracts.Add(contract);
-                        _context.Addresses.Add(address);
+                    _context.Contracts.Add(contract);
+                    _context.Addresses.Add(address);
 
-                        employee.ContractId = contract.Id;
-                        employee.AddressId = address.Id;
+                    employee.ContractId = contract.Id;
+                    employee.AddressId = address.Id;
 
+                    var newUser = new ApplicationUser()
+                    {
+                        UserName = request.Registration.Email,
+                        Email = request.Registration.Email,
+                        Employee = employee,
+                    };
 
-                        var newUser = new ApplicationUser()
-                        {
-                            UserName = request.Registration.Email,
-                            Email = request.Registration.Email,
-                            Employee = employee,
-                        };
+                    employee.ApplicationUser = newUser;
 
-                        employee.ApplicationUser = newUser;
+                    _context.Employees.Add(employee);
 
-                        _context.Employees.Add(employee);
+                    await _userManager.CreateAsync(newUser, request.Registration.Password);
 
-                        await _userManager.CreateAsync(newUser, request.Registration.Password);
+                    await _context.SaveChangesAsync(cancellationToken);
 
-                        await _context.SaveChangesAsync(cancellationToken);
-                        
-                        if (newUser.PasswordHash == null)
-                            throw new Exception("Password has to be at least 8 and one special char");
+                    if (newUser.PasswordHash == null)
+                        throw new Exception("Password has to be at least 8 and one special char");
 
-                        return newUser.Id;
+                    return newUser.Id;
                 }
-                else 
+                else
                     throw new Exception("That address email is taken");
             }
             catch (Exception ex)

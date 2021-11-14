@@ -7,7 +7,7 @@ namespace HRMOptimus.Application.Common.Interfaces
 {
     public interface IHRMOptimusDbContext
     {
-        public DbSet<Project> Projects { get; set; }
+        public DbSet<Domain.Entities.Project> Projects { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Contract> Contracts { get; set; }
         public DbSet<Employee> Employees { get; set; }
