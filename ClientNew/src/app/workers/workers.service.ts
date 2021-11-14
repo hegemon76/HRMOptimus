@@ -1,55 +1,46 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 interface Worker {
-  login: string;
+  email: string;
   password: string;
-  name: string;
-  surname: string;
-  isAdmin: boolean;
 }
 @Injectable({
   providedIn: 'root'
 })
 export class WorkersService {
-  private subject = new Subject<any>();
+  proxy = 'https://dry-taiga-05632.herokuapp.com/';
+  url = 'https://localhost:5001/api/login';
 
-  workers: Array<Worker> = [
-    {
-      login: 'jakub',
-      password: 'jakub',
-      name: 'Jakub',
-      surname: 'Bahrynowski',
-      isAdmin: false
-    },
-    {
-      login: 'damian',
-      password: 'damian',
-      name: 'Damian',
-      surname: 'Czerwiński',
-      isAdmin: false
-    },
-    {
-      login: 'karol',
-      password: 'karol',
-      name: 'Karol',
-      surname: 'Dura',
-      isAdmin: false
-    },
-    {
-      login: 'adrian',
-      password: 'adrian',
-      name: 'Adrian',
-      surname: 'Dawid',
-      isAdmin: false
-    }
-  ];
-  constructor() {}
-  checkIfUserExists(user) {
-    this.workers.map(worker => {
-      if (worker.login == user.login && worker.password == user.password) {
-        localStorage.setItem('user', worker.name);
-        window.location.reload();
-      }
-    });
+  constructor(private http: HttpClient) {}
+
+  checkIfUserExists(user): Observable<any> {
+    //   var body = {
+    //     email: user.email,
+    //     password: user.password
+    //   };
+    //   console.log(body);
+    //   return this.http
+    //     .post(this.url, body, {
+    //       headers: {
+    //         'Content-Type': 'application/json'
+    //       }
+    //     })
+    //     .pipe(map((res: any) => res));
+    // }
+    var body = {
+      title: 'foo',
+      body: 'bar',
+      userId: 1
+    };
+    console.log(body);
+    return this.http
+      .post('https://jsonplaceholder.typicode.com/posts', body, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .pipe(map((res: any) => res));
   }
 }
