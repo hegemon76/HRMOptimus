@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using HRMOptimus.Application.Common.Interfaces;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace HRMOptimus.Application.Account.Command.Login
 {
@@ -32,17 +33,17 @@ namespace HRMOptimus.Application.Account.Command.Login
 
             if (result.Succeeded)
             {
-                var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value.ToString();
-                var user = _userManager.FindByIdAsync(userId);
-                var employee = _context.Employees.FirstOrDefault(x => x.Id == user.Result.EmployeeId);
+                var user2 = await _userManager.FindByEmailAsync(request.Email);
+                Employee employee = _context.Employees
+                    .FirstOrDefault(x => x.Id == user2.EmployeeId);
 
                 return new LoginVm()
                 {
-                    EmployeeId = employee.Id,
                     FirstName = employee.FirstName,
-                    Gender = employee.Gender,
                     LastName = employee.LastName,
-                    Id = userId,
+                    Gender = employee.Gender,
+                    Id = user2.Id.ToString(),
+                    EmployeeId = employee.Id
                 };
             }
             return null;
