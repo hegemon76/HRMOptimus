@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EmployeesService } from './employees.service';
 
 @Component({
   selector: 'app-employees',
@@ -6,15 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./employees.component.scss']
 })
 export class employeesComponent implements OnInit {
-  constructor() {}
+  employees: any[];
+  searchedEmployee: string;
 
-  ngOnInit(): void {}
+  constructor(private employeesService: EmployeesService) {}
 
-  checkUser(login, password) {
-    if (login == 'admin' && password == 'admin') {
-      return true;
-    } else {
-      return false;
-    }
+  ngOnInit(): void {
+    this.employeesService.getEmployees().subscribe(res => {
+      this.employees = res.employees.$values;
+    });
   }
 }

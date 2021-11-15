@@ -9,36 +9,15 @@ interface Worker {
 @Injectable({
   providedIn: 'root'
 })
-export class employeesService {
-  proxy = 'https://dry-taiga-05632.herokuapp.com/';
-  url = 'https://localhost:5001/api/login';
-
+export class EmployeesService {
+  getEmployeesurl = 'https://localhost:5001/api/employees';
   constructor(private http: HttpClient) {}
 
-  checkIfUserExists(user): Observable<any> {
-    //   var body = {
-    //     email: user.email,
-    //     password: user.password
-    //   };
-    //   console.log(body);
-    //   return this.http
-    //     .post(this.url, body, {
-    //       headers: {
-    //         'Content-Type': 'application/json'
-    //       }
-    //     })
-    //     .pipe(map((res: any) => res));
-    // }
-    var body = {
-      title: 'foo',
-      body: 'bar',
-      userId: 1
-    };
-    console.log(body);
+  getEmployees(): Observable<any> {
     return this.http
-      .post('https://jsonplaceholder.typicode.com/posts', body, {
+      .get(this.getEmployeesurl, {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'applicastion/json'
         }
       })
       .pipe(map((res: any) => res));
