@@ -9,7 +9,7 @@ interface Worker {
 @Injectable({
   providedIn: 'root'
 })
-export class WorkersService {
+export class employeesService {
   proxy = 'https://dry-taiga-05632.herokuapp.com/';
   url = 'https://localhost:5001/api/login';
 
