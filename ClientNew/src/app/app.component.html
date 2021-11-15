@@ -1,5 +1,7 @@
 <div *ngIf="!isVerifiedUser" class="login-wrapper">
   <app-login class="login wrapper-center"></app-login>
 </div>
-<div *ngIf="isVerifiedUser" class="root-wrapper" [ngClass]="{ dark: darkMode, light: !darkMode }"></div> 
+<div *ngIf="isVerifiedUser" class="root-wrapper" [ngClass]="{ dark: darkMode, light: !darkMode }">
+</div>
 <app-sidebar class="sidebar"></app-sidebar>
+<app-main class="main"></app-main>

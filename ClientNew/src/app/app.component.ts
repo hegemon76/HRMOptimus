@@ -8,10 +8,12 @@ import { Component, ViewEncapsulation } from '@angular/core';
 })
 export class AppComponent {
   darkMode = true;
-  isVerifiedUser = false;
+  isVerifiedUser = true;
 
   ngOnInit() {
-    this.checkIsUser();
+    // this.checkIsUser();
+
+    localStorage.removeItem('user');
   }
 
   checkIsUser() {
