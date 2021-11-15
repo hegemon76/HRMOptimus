@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 interface User {
   firstName: string;
   lastName: string;
-  gender: number;
+  gender: string;
   employeeId: number;
   id: string;
 }

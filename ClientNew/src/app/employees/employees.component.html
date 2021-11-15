@@ -1,0 +1,14 @@
+<div class="employees-wrapper">
+  <div class="search-wrapper">
+    <input class="form-control" type="text" placeholder="Szukaj pracownika" name="searchText"
+      [(ngModel)]="searchedEmployee">
+  </div>
+  <div class="list-wrapper">
+    <div class="employees-list" *ngIf="(employees | filter: searchedEmployee).length > 0">
+      <div class="single-employee" *ngFor="let employee of employees | filter: searchedEmployee; let i = index">
+        <img [src]="employee.gender == 0 ? '/assets/images/male-avatar.svg' : '/assets/images/female-avatar.svg'">
+        <p>{{employee.firstName}} {{employee.lastName}}</p>
+      </div>
+    </div>
+  </div>
+</div>
