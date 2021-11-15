@@ -1,5 +1,6 @@
 ﻿using HRMOptimus.Application.WorkRecord.Command.AddWorkRecord;
 using HRMOptimus.Application.WorkRecord.Query.DayWorkRecords;
+using HRMOptimus.Application.WorkRecord.Query.MonthDaysRecords;
 using HRMOptimus.Application.WorkRecord.Query.WorkRecordDetails;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,16 +11,16 @@ namespace HRMOptimus.WebAPI.Controllers
     public class WorkRecordController : BaseController
     {
         [HttpPost]
-        [Route("api/workRecord/add")]
-        public async Task<ActionResult<int>> AddNewWorkRecord ([FromBody] WorkRecordVm model)
+        [Route("api/workrecord/add")]
+        public async Task<ActionResult<int>> AddNewWorkRecord([FromBody] AddWorkRecordVm model)
         {
-            var id = await Mediator.Send(new AddWorkRecordCommand() { WorkRecordVm = model });
+            var id = await Mediator.Send(new AddWorkRecordCommand() { AddWorkRecordVm = model });
 
             return id;
         }
 
         [HttpGet]
-        [Route("api/workRecord/")]
+        [Route("api/workrecord/details/")]
         public async Task<ActionResult<WorkRecordDetailsVm>> WorkRecordDetails(int workRecordId)
         {
             var workRecord = await Mediator.Send(new WorkRecordDetailsQuery() { WorkRecordId = workRecordId });
@@ -28,21 +29,21 @@ namespace HRMOptimus.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/workRecords/")]
+        [Route("api/workrecord/day/")]
         public async Task<ActionResult<DayWorkRecordsVm>> WorkDayRecords(DateTime dayWork)
         {
-            var workRecords = await Mediator.Send(new DayWorkRecordsQuery() { DayWork = dayWork });
+            var dayWorkRecords = await Mediator.Send(new DayWorkRecordsQuery() { DayWork = dayWork });
 
-            return workRecords;
+            return dayWorkRecords;
         }
 
-        //[HttpGet]
-        //[Route("api/dayWorkRecords/")]
-        //public async Task<ActionResult<DayWorkRecordsVm>> WorkMonthDays(DateTime day)
-        //{
-        //    var workRecords = await Mediator.Send(new DayWorkRecordsQuery() { DayWork = day });
+        [HttpGet]
+        [Route("api/workrecord/month/")]
+        public async Task<ActionResult<MonthDaysRecordsVm>> MonthDaysRecords(DateTime dateFrom, DateTime dateTo)
+        {
+            var monthWorkRecords = await Mediator.Send(new MonthDaysRecordsQuery() { DateFrom = dateFrom, DateTo = dateTo });
 
-        //    return workRecords;
-        //}
+            return monthWorkRecords;
+        }
     }
 }

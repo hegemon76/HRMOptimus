@@ -10,12 +10,14 @@ namespace HRMOptimus.Application.Account.Command.Registration
 
         //employee
         public string FirstName { get; set; }
+
         public string LastName { get; set; }
         public DateTime? BirthDate { get; set; }
-        public Gender Genre { get; set; }
+        public Gender Gender { get; set; }
 
         //contract
         public string ContractName { get; set; }
+
         public decimal LeaveDays { get; set; }
         public decimal Payment { get; set; }
         public decimal Rate { get; set; }
@@ -24,6 +26,7 @@ namespace HRMOptimus.Application.Account.Command.Registration
 
         //address
         public string ZipCode { get; set; }
+
         public string City { get; set; }
         public string Street { get; set; }
         public string BuildingNumber { get; set; }

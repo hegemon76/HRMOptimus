@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace HRMOptimus.Application.LeaveRegister.Query.GetLeavesRegisterByEmployeeId
 {
-    class GetLeavesRegisterByEmployeeIdQueryHandler : IRequestHandler<GetLeavesRegisterByEmployeeIdQuery, List<LeavesRegisterListVm>>
+    internal class GetLeavesRegisterByEmployeeIdQueryHandler : IRequestHandler<GetLeavesRegisterByEmployeeIdQuery, List<LeavesRegisterListVm>>
     {
         private readonly IHRMOptimusDbContext _context;
 
@@ -19,11 +19,12 @@ namespace HRMOptimus.Application.LeaveRegister.Query.GetLeavesRegisterByEmployee
         {
             _context = context;
         }
+
         public async Task<List<LeavesRegisterListVm>> Handle(GetLeavesRegisterByEmployeeIdQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                Employee employee = await _context.Employees.Include(x => x.LeavesRegister)
+                var employee = await _context.Employees.Include(x => x.LeavesRegister)
                     .FirstOrDefaultAsync(u => u.Id == request.EmployeeId);
 
                 if (employee != null && employee.LeavesRegister != null)
@@ -38,7 +39,7 @@ namespace HRMOptimus.Application.LeaveRegister.Query.GetLeavesRegisterByEmployee
                              IsApproved = x.IsApproved,
                              IsRejected = x.IsRejected
                          }).ToListAsync();
-                    
+
                     return leavesList;
                 }
                 return null;

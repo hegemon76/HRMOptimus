@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace HRMOptimus.Persistance
 {
@@ -17,8 +19,12 @@ namespace HRMOptimus.Persistance
             services.AddDbContext<HRMOptimusDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("ConnectionStringName")));
 
-            
-                //.AddDefaultTokenProviders();
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+            });
+
+            //.AddDefaultTokenProviders();
 
             //services.AddAuthentication(options =>
             //{
@@ -27,7 +33,7 @@ namespace HRMOptimus.Persistance
             //    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             //})
 
-            // Adding Jwt Bearer  
+            // Adding Jwt Bearer
             //.AddJwtBearer(options =>
             //{
             //    options.SaveToken = true;

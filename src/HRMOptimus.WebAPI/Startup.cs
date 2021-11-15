@@ -1,4 +1,5 @@
 using HRMOptimus.Application;
+using HRMOptimus.Application.Common.Middleware;
 using HRMOptimus.Infrastructure;
 using HRMOptimus.Persistance;
 using HRMOptimus.WebAPI.Filters;
@@ -26,10 +27,10 @@ namespace HRMOptimus.WebAPI
             services.AddApplication();
             services.AddPersistance(Configuration);
             services.AddInfrastructure();
-            
+
             services.AddControllersWithViews(options =>
              options.Filters.Add<ApiExceptionFilterAttribute>());
-            
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
@@ -51,6 +52,9 @@ namespace HRMOptimus.WebAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HRMOptimus.WebAPI v1"));
             }
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+
+            app.UseMiddleware<RequestTimeMiddleware>();
 
             app.UseHttpsRedirection();
 
@@ -59,7 +63,7 @@ namespace HRMOptimus.WebAPI
             app.UseCors("CorsPolicy");
 
             app.UseAuthentication();
-            
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

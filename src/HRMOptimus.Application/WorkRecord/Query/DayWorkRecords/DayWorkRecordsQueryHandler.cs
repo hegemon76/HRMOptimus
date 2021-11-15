@@ -1,4 +1,5 @@
 ﻿using HRMOptimus.Application.Common.Interfaces;
+using HRMOptimus.Application.WorkRecord.Query.WorkRecordDetails;
 using HRMOptimus.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -32,9 +33,8 @@ namespace HRMOptimus.Application.WorkRecord.Query.DayWorkRecords
             var workRecords = await _context.WorkRecords
                 //.Where(x => x.EmployeeId == user.Result.EmployeeId)
                 .Where(x => x.WorkStart.Date == request.DayWork.Date)
-
-                //.Include(x => x.Project)
-                //.Include(x=>x.Employee)
+                //.Select(x => new WorkRecordVm(x.Name, x.WorkStart, x.WorkEnd, x.Duration
+                //))
                 .ToListAsync();
 
             return new DayWorkRecordsVm(workRecords, request.DayWork);

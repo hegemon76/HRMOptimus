@@ -25,10 +25,10 @@ namespace HRMOptimus.Application.WorkRecord.Query.WorkRecordDetails
 
         public async Task<WorkRecordDetailsVm> Handle(WorkRecordDetailsQuery request, CancellationToken cancellationToken)
         {
-            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value.ToString();
-            var user = _userManager.FindByIdAsync(userId);
+            //var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value.ToString();
+            //var user = _userManager.FindByIdAsync(userId);
 
-            var workRecord =await _context.WorkRecords
+            var workRecord = await _context.WorkRecords
                 .Include(x => x.Employee)
                 .Include(x => x.Project)
                 .FirstOrDefaultAsync(x => x.Id == request.WorkRecordId);
