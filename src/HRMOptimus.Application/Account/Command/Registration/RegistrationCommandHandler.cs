@@ -1,13 +1,11 @@
 ﻿using HRMOptimus.Application.Common.Interfaces;
 using HRMOptimus.Domain.Entities;
-using HRMOptimus.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Transactions;
 
 namespace HRMOptimus.Application.Account.Command.Registration
 {
@@ -36,7 +34,7 @@ namespace HRMOptimus.Application.Account.Command.Registration
                         Payment = request.Registration.Payment,
                         Rate = request.Registration.Rate,
                         WorkTime = request.Registration.WorkTime,
-                        ContractType = Enum.TryParse(request.Registration.ContractType, out ContractType contractType) ? contractType : ContractType.UoP
+                        ContractType = request.Registration.ContractType
                     };
 
                     Address address = new Address()
@@ -57,7 +55,7 @@ namespace HRMOptimus.Application.Account.Command.Registration
                         WorkingTime = 0,
                         LeaveDaysLeft = (int)contract.LeaveDays,
                         Contract = contract,
-                        Gender = Enum.TryParse(request.Registration.Gender, out Gender gender) ? gender : Gender.Man,
+                        Gender = request.Registration.Gender,
                         Address = address,
                         FullName = $"{request.Registration.FirstName} {request.Registration.LastName}",
                         Projects = new List<Domain.Entities.Project>(),

@@ -23,16 +23,14 @@ namespace HRMOptimus.Application.Employee.Query.EmployeeDetails
             if (request.EmployeeId == null)
             {
                 _employee = await _context.Employees
-                    //.Include(x => x.Address)
-                    //.Include(x => x.Contract)
-                    //.Include(x => x.ApplicationUser)
+                    .Include(x => x.Address)
+                    .Include(x => x.Contract)
                     .FirstOrDefaultAsync(x => x.FullName.ToLower().Contains(request.Name.ToLower()));
             }
             else
                 _employee = await _context.Employees
-                   //.Include(x => x.Address)
-                   //.Include(x => x.Contract)
-                   //.Include(x => x.ApplicationUser)
+                   .Include(x => x.Address)
+                   .Include(x => x.Contract)
                    .FirstOrDefaultAsync(x => x.Id == request.EmployeeId);
 
             return new EmployeeDetailsVm(_employee);
