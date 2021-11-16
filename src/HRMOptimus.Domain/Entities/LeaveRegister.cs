@@ -10,7 +10,6 @@ namespace HRMOptimus.Domain.Entities
         public DateTime DateTo { get; set; }
         public int? EmployeeId { get; set; }
         public Employee Employee { get; set; }
-
         public bool IsApproved { get; set; }
         public bool IsRejected { get; set; }
     }

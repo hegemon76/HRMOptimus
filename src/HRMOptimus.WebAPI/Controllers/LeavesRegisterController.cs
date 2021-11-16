@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using HRMOptimus.Application.LeaveRegister.Command.AddLeaveRegister;
+﻿using HRMOptimus.Application.LeaveRegister.Command.AddLeaveRegister;
 using HRMOptimus.Application.LeaveRegister.Query.GetLeavesRegisterByEmployeeId;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace HRMOptimus.WebAPI.Controllers
 {
@@ -23,7 +21,7 @@ namespace HRMOptimus.WebAPI.Controllers
         [Route("api/leavesRegister/getByEmployeeId")]
         public async Task<List<LeavesRegisterListVm>> GetByEmployeeId(int employeeId)
         {
-            List<LeavesRegisterListVm> leavesRegister = await Mediator.Send(new GetLeavesRegisterByEmployeeIdQuery() { EmployeeId = employeeId });
+            var leavesRegister = await Mediator.Send(new GetLeavesRegisterByEmployeeIdQuery() { EmployeeId = employeeId });
 
             return leavesRegister;
         }
