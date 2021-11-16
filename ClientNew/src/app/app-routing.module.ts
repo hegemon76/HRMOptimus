@@ -8,9 +8,9 @@ const routes: Routes = [
       import('./worktime/worktime.module').then(m => m.WorktimeModule)
   },
   {
-    path: 'workers',
+    path: 'employees',
     loadChildren: () =>
-      import('./workers/workers.module').then(m => m.WorkersModule)
+      import('./employees/employees.module').then(m => m.employeesModule)
   }
 ];
 
