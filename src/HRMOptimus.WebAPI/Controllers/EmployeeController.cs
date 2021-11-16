@@ -1,6 +1,7 @@
 ﻿using HRMOptimus.Application.Employee.Query.EmployeeDetails;
 using HRMOptimus.Application.Employee.Query.Employees;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace HRMOptimus.WebAPI.Controllers
@@ -9,7 +10,7 @@ namespace HRMOptimus.WebAPI.Controllers
     {
         [HttpGet]
         [Route("api/employees")]
-        public async Task<ActionResult<EmployeesVm>> GetEmployees()
+        public async Task<ActionResult<List<EmployeeVm>>> GetEmployees()
         {
             var employees = await Mediator.Send(new EmployeesQuery());
 

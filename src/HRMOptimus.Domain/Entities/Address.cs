@@ -11,6 +11,5 @@ namespace HRMOptimus.Domain.Entities
         public string BuildingNumber { get; set; }
         public string HouseNumber { get; set; }
         public string Country { get; set; }
-        public Employee Employee { get; set; }
     }
 }
