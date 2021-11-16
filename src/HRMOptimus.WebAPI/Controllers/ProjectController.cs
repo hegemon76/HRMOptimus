@@ -1,7 +1,9 @@
 ﻿using HRMOptimus.Application.Project.Command.AddProject;
+using HRMOptimus.Application.Project.Command.RemoveProject;
 using HRMOptimus.Application.Project.Query.ProjectDetails;
 using HRMOptimus.Application.Project.Query.Projects;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace HRMOptimus.WebAPI.Controllers
@@ -28,11 +30,20 @@ namespace HRMOptimus.WebAPI.Controllers
 
         [HttpGet]
         [Route("api/projects")]
-        public async Task<ActionResult<ProjectsVm>> GetProjects()
+        public async Task<ActionResult<List<ProjectVm>>> GetProjects()
         {
-            var projectDetails = await Mediator.Send(new ProjectsQuery());
+            var projects = await Mediator.Send(new ProjectsQuery());
 
-            return projectDetails;
+            return projects;
+        }
+
+        [HttpDelete]
+        [Route("api/project/delete/")]
+        public async Task<ActionResult> RemoveProject(int projectId)
+        {
+            await Mediator.Send(new RemoveProjectCommand() { ProjectId = projectId });
+
+            return NoContent();
         }
     }
 }
