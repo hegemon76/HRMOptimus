@@ -2,7 +2,70 @@
   <app-login class="login"></app-login>
 </div>
 <div *ngIf="isVerifiedUser" class="root-wrapper" [ngClass]="{ dark: darkMode, light: !darkMode }">
-  <app-header class="header"></app-header>
-  <app-sidebar class="sidebar"></app-sidebar>
-  <app-main class="main"></app-main>
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+      <mat-toolbar>
+        <div class="logo"></div>
+      </mat-toolbar>
+      <mat-nav-list>
+        <nav>
+          <a routerLink="/">
+            <li><i class="fa fa-fw fa-home"></i> Start</li>
+          </a>
+          <a routerLink="/employees">
+            <li><i class="fas fa-user"></i> Pracownicy</li>
+          </a>
+          <a routerLink="/worktime">
+            <li><i class="far fa-calendar-alt"></i> Czas pracy</li>
+          </a>
+          <a>
+            <li><i routerLink="/" class="fas fa-plane"></i><span routerLink="/">Urlopy</span>
+              <button (click)="openSubmenu($event)" class="arrow"></button></li>
+            <ul class="submenu"><a>
+                <li><span class="text">Limity</span></li>
+              </a>
+              <a>
+                <li>
+                  <span class="text">Nieobecności</span>
+                </li>
+              </a>
+              <a>
+                <li>
+                  <span class="text">Grafik urlopowy</span>
+                </li>
+              </a>
+            </ul>
+          </a>
+          <a class="dark-mode">
+            <li>
+              <span class="text">
+                <mat-slide-toggle [(ngModel)]="checked" (change)="changeWebsiteMode()">Tryb ciemny</mat-slide-toggle>
+              </span>
+            </li>
+          </a>
+        </nav>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <mat-toolbar color="primary">
+        <button class="menu-btn" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+          *ngIf="isHandset$ | async">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <div [ngClass]="{toggled : logoutWrapperToggled}" class="user-info" (mouseenter)="logoutWrapperToggled = true"
+          (mouseleave)="logoutWrapperToggled = false">
+          <img [src]="user.gender == 0 ? '/assets/images/male-avatar.svg' : '/assets/images/female-avatar.svg'">
+          <p>{{user.firstName}} {{user.lastName}}</p>
+          <div class="buttons-wrapper" *ngIf="logoutWrapperToggled">
+            <div class="edit">
+              <button class="edit-btn">Edytuj</button>
+            </div>
+            <app-logout class="logout"></app-logout>
+          </div>
+        </div>
+      </mat-toolbar>
+      <app-main class="main"></app-main>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>
