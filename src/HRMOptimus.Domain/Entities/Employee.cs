@@ -14,13 +14,8 @@ namespace HRMOptimus.Domain.Entities
         public string FullName { get; set; }
         public Gender Gender { get; set; }
         public DateTime? BirthDate { get; set; }
-
-        [Column(TypeName = "decimal(18,2)")]
         public decimal LeaveDaysLeft { get; set; }
-
-        [Column(TypeName = "decimal(18,2)")]
         public decimal WorkingTime { get; set; }
-
         public int ContractId { get; set; }
         public Contract Contract { get; set; }
         public int AddressId { get; set; }

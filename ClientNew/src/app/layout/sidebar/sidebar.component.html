@@ -12,9 +12,9 @@
     <a routerLink="/worktime">
       <li><i class="far fa-calendar-alt"></i> Czas pracy</li>
     </a>
-    <a routerLink="/vacation">
+    <a>
       <li>
-        <i class="fas fa-plane"></i><span>Urlopy</span>
+        <i routerLink="/" class="fas fa-plane"></i><span>Urlopy</span>
         <button (click)="openSubmenu($event)" class="arrow"></button>
       </li>
       <ul class="submenu">

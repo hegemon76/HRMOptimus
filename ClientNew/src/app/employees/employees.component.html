@@ -8,6 +8,10 @@
       <div class="single-employee" *ngFor="let employee of employees | filter: searchedEmployee; let i = index">
         <img [src]="employee.gender == 0 ? '/assets/images/male-avatar.svg' : '/assets/images/female-avatar.svg'">
         <p>{{employee.firstName}} {{employee.lastName}}</p>
+        <div class="buttons">
+          <button class="edit-user"><i class="fas fa-cog"></i></button>
+          <button class="delete-user"><i class="fas fa-minus-circle"></i></button>
+        </div>
       </div>
     </div>
   </div>
