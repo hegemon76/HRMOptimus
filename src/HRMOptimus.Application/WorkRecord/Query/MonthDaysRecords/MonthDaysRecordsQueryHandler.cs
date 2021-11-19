@@ -34,8 +34,7 @@ namespace HRMOptimus.Application.WorkRecord.Query.MonthDaysRecords
 
             var workRecords = await _context.WorkRecords
                 .Where(x => x.WorkStart.Date >= request.DateFrom.Date || x.WorkStart.Date <= request.DateTo.Date && x.Enabled)
-                .Select(x => new WorkRecordVm(x.Name, x.WorkStart, x.WorkEnd, x.Duration
-                ))
+                .Select(x => new WorkRecordVm(x.Name, x.WorkStart, x.WorkEnd, x.Duration))
                 .ToListAsync();
 
             List<DaysWorkRecordsVm> daysWorksRekords = new List<DaysWorkRecordsVm>();

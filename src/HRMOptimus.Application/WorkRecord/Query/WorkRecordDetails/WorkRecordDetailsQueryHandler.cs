@@ -1,4 +1,5 @@
-﻿using HRMOptimus.Application.Common.Interfaces;
+﻿using HRMOptimus.Application.Common.Exceptions;
+using HRMOptimus.Application.Common.Interfaces;
 using HRMOptimus.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -31,7 +32,10 @@ namespace HRMOptimus.Application.WorkRecord.Query.WorkRecordDetails
             var workRecord = await _context.WorkRecords
                 .Include(x => x.Employee)
                 .Include(x => x.Project)
-                .FirstOrDefaultAsync(x => x.Id == request.WorkRecordId);
+                .FirstOrDefaultAsync(x => x.Id == request.WorkRecordId && x.Enabled);
+
+            if (workRecord == null)
+                throw new NotFoundException("There is no work record with Id: " + request.WorkRecordId);
 
             return new WorkRecordDetailsVm(workRecord.Name, workRecord.WorkStart, workRecord.WorkEnd,
                 workRecord.Duration, workRecord.Project.Name, workRecord.Employee.FullName);

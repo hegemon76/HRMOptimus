@@ -1,14 +1,9 @@
 ﻿using HRMOptimus.Application.Common.Interfaces;
 using HRMOptimus.Domain.Entities;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Text;
-using Newtonsoft.Json;
-using System.Text.Json.Serialization;
 
 namespace HRMOptimus.Persistance
 {
@@ -18,13 +13,6 @@ namespace HRMOptimus.Persistance
         {
             services.AddDbContext<HRMOptimusDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("ConnectionStringName")));
-
-            services.AddMvc().AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-            });
-
-            //.AddDefaultTokenProviders();
 
             //services.AddAuthentication(options =>
             //{
