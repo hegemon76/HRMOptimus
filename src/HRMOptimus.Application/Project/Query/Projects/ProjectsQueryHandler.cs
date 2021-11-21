@@ -2,13 +2,14 @@
 using HRMOptimus.Application.Project.Query.ProjectDetails;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace HRMOptimus.Application.Project.Query.Projects
 {
-    public class ProjectsQueryHandler : IRequestHandler<ProjectsQuery, ProjectsVm>
+    public class ProjectsQueryHandler : IRequestHandler<ProjectsQuery, List<ProjectVm>>
     {
         private readonly IHRMOptimusDbContext _context;
 
@@ -17,15 +18,14 @@ namespace HRMOptimus.Application.Project.Query.Projects
             _context = context;
         }
 
-        public async Task<ProjectsVm> Handle(ProjectsQuery request, CancellationToken cancellationToken)
+        public async Task<List<ProjectVm>> Handle(ProjectsQuery request, CancellationToken cancellationToken)
         {
             var projects = await _context.Projects
-                .Include(x => x.ProjectMembers)
-                .Select(x => new ProjectDetailsVm(x.Name, x.Description, x.HoursBudget, x.HoursWorked, x.DateFrom,
-                    x.DateTo, x.Deadline, x.ProjectMembers))
+                .Where(x => x.Enabled)
+                .Select(x => new ProjectVm(x.Name, x.Description, x.HoursBudget, x.DateFrom, x.DateTo))
                 .ToListAsync();
 
-            return new ProjectsVm(projects);
+            return projects;
         }
     }
 }

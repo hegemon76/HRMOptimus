@@ -1,5 +1,6 @@
 ﻿using HRMOptimus.Application.Common.Interfaces;
 using HRMOptimus.Domain.Entities;
+using HRMOptimus.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -37,8 +38,7 @@ namespace HRMOptimus.Application.LeaveRegister.Command.AddLeaveRegister
                         DateTo = request.AddLeaveRegisterVm.WorkEnd,
                         EmployeeId = request.AddLeaveRegisterVm.EmployeeId,
                         Employee = user,
-                        IsApproved = false,
-                        IsRejected = false
+                        IsApproved = IsApproved.UnChecked
                     };
 
                     user.LeaveDaysLeft -= duration.Days;

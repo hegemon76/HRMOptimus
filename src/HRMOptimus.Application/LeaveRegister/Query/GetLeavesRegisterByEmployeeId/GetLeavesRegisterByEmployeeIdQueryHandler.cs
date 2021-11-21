@@ -37,7 +37,6 @@ namespace HRMOptimus.Application.LeaveRegister.Query.GetLeavesRegisterByEmployee
                              DateTo = x.DateTo,
                              Duration = x.Duration,
                              IsApproved = x.IsApproved,
-                             IsRejected = x.IsRejected
                          }).ToListAsync();
 
                     return leavesList;

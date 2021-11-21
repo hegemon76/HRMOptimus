@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
+  checked = false;
+  darkMode = true;
+
   constructor() {}
 
   ngOnInit(): void {
@@ -31,6 +34,9 @@ export class SidebarComponent implements OnInit {
       document.querySelector('html').dataset.theme = localStorage.getItem(
         'theme'
       );
+      if (localStorage.getItem('theme') == 'dark') {
+        this.checked = true;
+      }
     }
   }
 

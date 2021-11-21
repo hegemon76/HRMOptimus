@@ -1,5 +1,5 @@
-﻿using HRMOptimus.Application.Common.Interfaces;
-using HRMOptimus.Application.Project.Query.ProjectDetails;
+﻿using HRMOptimus.Application.Common.Exceptions;
+using HRMOptimus.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -22,18 +22,28 @@ namespace HRMOptimus.Application.Employee.Query.EmployeeDetails
         {
             if (request.EmployeeId == null)
             {
+                var fullName = request.Name.ToLower();
+
                 _employee = await _context.Employees
+                    .Where(x => x.Enabled)
                     .Include(x => x.Address)
                     .Include(x => x.Contract)
-                    .FirstOrDefaultAsync(x => x.FullName.ToLower().Contains(request.Name.ToLower()));
+                    .Include(x => x.ApplicationUser)
+                    .FirstOrDefaultAsync(x => x.FullName.ToLower().Contains(fullName));
             }
             else
                 _employee = await _context.Employees
+                   .Where(x => x.Enabled)
                    .Include(x => x.Address)
                    .Include(x => x.Contract)
+                   .Include(x => x.ApplicationUser)
                    .FirstOrDefaultAsync(x => x.Id == request.EmployeeId);
 
-            return new EmployeeDetailsVm(_employee);
+            if (_employee == null)
+                throw new NotFoundException("There is no Employee with Id: " + request.EmployeeId + " or FullName: " + request.Name);
+
+            return new EmployeeDetailsVm(_employee.FirstName, _employee.LastName, _employee.FullName, _employee.Gender, _employee.BirthDate,
+        _employee.LeaveDaysLeft, _employee.WorkingTime, _employee.Contract, _employee.Address, _employee.ApplicationUser.Email, _employee.ApplicationUser.PhoneNumber);
         }
     }
 }

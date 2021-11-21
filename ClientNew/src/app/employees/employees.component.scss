@@ -19,7 +19,7 @@
       color: var(--font);
       background: var(--single-employee);
 
-      ::placeholder{
+      ::placeholder {
         color: #fff;
       }
     }
@@ -32,7 +32,8 @@
     background-color: var(--main-contrast);
 
     .single-employee {
-      display: flex;
+      display: grid;
+      grid-template-columns: 100px 200px 200px 100px auto;
       align-items: center;
       background-color: var(--single-employee);
       color: var(--font);
@@ -50,8 +51,12 @@
         margin-right: 40px;
       }
 
+      a {
+        color: var(--font);
+      }
+
       .buttons {
-        margin-left: auto;       
+        margin-left: auto;
       }
 
       .delete-user {

@@ -1,6 +1,5 @@
 ﻿using HRMOptimus.Domain.Common;
 using HRMOptimus.Domain.Enums;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HRMOptimus.Domain.Entities
 {
@@ -12,7 +11,6 @@ namespace HRMOptimus.Domain.Entities
         public decimal Payment { get; set; }
         public decimal Rate { get; set; }
         public int WorkTime { get; set; }
-        public Employee Employee { get; set; }
         public ContractType ContractType { get; set; }
     }
 }
