@@ -1,7 +1,4 @@
-<div class="sidebar-wrapper">
-  <a href="/">
-    <div class="logo"></div>
-  </a>
+<mat-nav-list>
   <nav>
     <a routerLink="/">
       <li><i class="fa fa-fw fa-home"></i> Start</li>
@@ -13,28 +10,29 @@
       <li><i class="far fa-calendar-alt"></i> Czas pracy</li>
     </a>
     <a>
-      <li>
-        <i routerLink="/" class="fas fa-plane"></i><span>Urlopy</span>
-        <button (click)="openSubmenu($event)" class="arrow"></button>
-      </li>
-      <ul class="submenu">
-        <a href="">
-          <li>
-            <span class="text">Limity</span>
-          </li>
+      <li><i routerLink="/" class="fas fa-plane"></i><span routerLink="/">Urlopy</span>
+        <button (click)="openSubmenu($event)" class="arrow"></button></li>
+      <ul class="submenu"><a>
+          <li><span class="text">Limity</span></li>
         </a>
-        <a href="">
+        <a>
           <li>
             <span class="text">Nieobecności</span>
           </li>
         </a>
-        <a href="">
+        <a>
           <li>
             <span class="text">Grafik urlopowy</span>
           </li>
         </a>
       </ul>
     </a>
+    <a class="dark-mode">
+      <li>
+        <span class="text">
+          <mat-slide-toggle [checked]="checked" (change)="changeWebsiteMode()">Tryb ciemny</mat-slide-toggle>
+        </span>
+      </li>
+    </a>
   </nav>
-  <button class="switcher" (click)="changeWebsiteMode()">Switcher</button>
-</div>
+</mat-nav-list>

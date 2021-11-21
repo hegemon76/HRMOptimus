@@ -14,7 +14,7 @@ export class employeesComponent implements OnInit {
 
   ngOnInit(): void {
     this.employeesService.getEmployees().subscribe(res => {
-      this.employees = res.employees.$values;
+      this.employees = res;
     });
   }
 }

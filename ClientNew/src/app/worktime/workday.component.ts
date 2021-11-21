@@ -15,7 +15,6 @@ export class WorkdayComponent implements OnInit {
   day = {} as Day;
   constructor() {}
   ngOnInit(): void {
-    console.log(history.state);
     this.day.id = history.state.id;
     this.day.dayName = history.state.name;
     this.day.isWeekend = history.state.weekend;
