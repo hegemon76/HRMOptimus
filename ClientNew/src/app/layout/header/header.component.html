@@ -1,13 +1,17 @@
-<div class="top-bar">
+<mat-toolbar color="primary">
+  <button class="menu-btn" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+    *ngIf="isHandset$ | async">
+    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+  </button>
   <div [ngClass]="{toggled : logoutWrapperToggled}" class="user-info" (mouseenter)="logoutWrapperToggled = true"
     (mouseleave)="logoutWrapperToggled = false">
     <img [src]="user.gender == 0 ? '/assets/images/male-avatar.svg' : '/assets/images/female-avatar.svg'">
     <p>{{user.firstName}} {{user.lastName}}</p>
     <div class="buttons-wrapper" *ngIf="logoutWrapperToggled">
       <div class="edit">
-        <button class="edit-btn">EDIT</button>
+        <button class="edit-btn">Edytuj</button>
       </div>
       <app-logout class="logout"></app-logout>
     </div>
   </div>
-</div>
+</mat-toolbar>

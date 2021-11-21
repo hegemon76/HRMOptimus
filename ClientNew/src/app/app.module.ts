@@ -23,7 +23,19 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MainComponent,
     HeaderComponent
   ],
-  imports: [BrowserModule, AppRoutingModule, MatSlideToggleModule, AccountModule, BrowserAnimationsModule, LayoutModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    MatSlideToggleModule,
+    AccountModule,
+    BrowserAnimationsModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
