@@ -1,4 +1,5 @@
-﻿using HRMOptimus.Application.Employee.Query.EmployeeDetails;
+﻿using HRMOptimus.Application.Employee.Command.RemoveEmployee;
+using HRMOptimus.Application.Employee.Query.EmployeeDetails;
 using HRMOptimus.Application.Employee.Query.Employees;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -24,6 +25,15 @@ namespace HRMOptimus.WebAPI.Controllers
             var employee = await Mediator.Send(new EmployeeDetailsQuery() { EmployeeId = employeeId, Name = name });
 
             return employee;
+        }
+
+        [HttpDelete]
+        [Route("api/employee/delete/")]
+        public async Task<ActionResult> RemoveEmployee(int employeeId)
+        {
+            await Mediator.Send(new RemoveEmployeeCommand() { EmployeeId = employeeId });
+
+            return NoContent();
         }
     }
 }
