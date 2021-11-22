@@ -1,5 +1,6 @@
 ﻿using HRMOptimus.Application.Common.Interfaces;
 using HRMOptimus.Domain.Entities;
+using HRMOptimus.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace HRMOptimus.Application.LeaveRegister.Command.AddLeaveRegister
 {
-    class AddLeaveRegisterCommandHandler : IRequestHandler<AddLeaveRegisterCommand, int>
+    internal class AddLeaveRegisterCommandHandler : IRequestHandler<AddLeaveRegisterCommand, int>
     {
         private readonly IHRMOptimusDbContext _context;
 
@@ -19,13 +20,14 @@ namespace HRMOptimus.Application.LeaveRegister.Command.AddLeaveRegister
         {
             _context = context;
         }
+
         public async Task<int> Handle(AddLeaveRegisterCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 var duration = request.AddLeaveRegisterVm.WorkEnd - request.AddLeaveRegisterVm.WorkStart;
 
-                Employee user = await _context.Employees.Include(leaves => leaves.LeavesRegister)
+                var user = await _context.Employees.Include(leaves => leaves.LeavesRegister)
                     .FirstOrDefaultAsync(x => x.Id == request.AddLeaveRegisterVm.EmployeeId);
                 if (user != null)
                 {
@@ -36,8 +38,7 @@ namespace HRMOptimus.Application.LeaveRegister.Command.AddLeaveRegister
                         DateTo = request.AddLeaveRegisterVm.WorkEnd,
                         EmployeeId = request.AddLeaveRegisterVm.EmployeeId,
                         Employee = user,
-                        IsApproved = false,
-                        IsRejected = false
+                        IsApproved = IsApproved.UnChecked
                     };
 
                     user.LeaveDaysLeft -= duration.Days;

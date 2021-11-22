@@ -48,7 +48,6 @@ export class WorktimeComponent implements OnInit {
     for (let i = 0; i < daysInMonth; i++) {
       calendar.push(this.createCalendarItem(clone, 'in-month'));
       clone.add(1, 'days');
-      console.log(this.createCalendarItem(clone, 'in-month'));
     }
     for (let i = 0; i < daysAfter; i++) {
       calendar.push(this.createCalendarItem(clone, 'next-month'));
@@ -85,24 +84,3 @@ export class WorktimeComponent implements OnInit {
     this.calendar = this.createCalendar(this.date);
   }
 }
-
-// calendar = [];
-// today = moment().locale('pl');
-// startDay = this.today
-//   .clone()
-//   .startOf('month')
-//   .startOf('week');
-// endDay = this.today
-//   .clone()
-//   .endOf('month')
-//   .endOf('week');
-// date = this.startDay.clone().subtract(1, 'day');
-
-// this.calendar = this.createCalendar(this.date);
-// while (this.date.isBefore(this.endDay, 'day'))
-//   this.calendar.push({
-//     days: Array(7)
-//       .fill(0)
-//       .map(() => this.date.add(1, 'day').clone())
-//   });
-// console.log(this.calendar);

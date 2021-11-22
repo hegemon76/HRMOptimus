@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HRMOptimus.Domain.Enums;
+using System;
 
 namespace HRMOptimus.Application.LeaveRegister.Query.GetLeavesRegisterByEmployeeId
 {
@@ -12,7 +9,6 @@ namespace HRMOptimus.Application.LeaveRegister.Query.GetLeavesRegisterByEmployee
         public int Duration { get; set; }
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
-        public bool IsApproved { get; set; }
-        public bool IsRejected { get; set; }
+        public IsApproved IsApproved { get; set; }
     }
 }

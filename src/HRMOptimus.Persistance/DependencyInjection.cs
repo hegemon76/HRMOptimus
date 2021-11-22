@@ -1,12 +1,9 @@
 ﻿using HRMOptimus.Application.Common.Interfaces;
 using HRMOptimus.Domain.Entities;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Text;
 
 namespace HRMOptimus.Persistance
 {
@@ -17,9 +14,6 @@ namespace HRMOptimus.Persistance
             services.AddDbContext<HRMOptimusDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("ConnectionStringName")));
 
-            
-                //.AddDefaultTokenProviders();
-
             //services.AddAuthentication(options =>
             //{
             //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -27,7 +21,7 @@ namespace HRMOptimus.Persistance
             //    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             //})
 
-            // Adding Jwt Bearer  
+            // Adding Jwt Bearer
             //.AddJwtBearer(options =>
             //{
             //    options.SaveToken = true;

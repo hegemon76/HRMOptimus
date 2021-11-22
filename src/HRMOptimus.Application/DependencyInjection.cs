@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using HRMOptimus.Application.Common.Middleware;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -10,6 +11,8 @@ namespace HRMOptimus.Application
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddScoped<RequestTimeMiddleware>();
+            services.AddScoped<ErrorHandlingMiddleware>();
 
             return services;
         }
