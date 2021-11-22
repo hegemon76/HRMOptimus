@@ -17,11 +17,11 @@ namespace HRMOptimus.WebAPI.Controllers
             return id;
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("api/login")]
-        public async Task<ActionResult<LoginVm>> Login([FromBody] LoginCommand dto)
+        public async Task<ActionResult<LoginVm>> Login([FromBody] LoginQuery dto)
         {
-            var user = await Mediator.Send(new LoginCommand() { Email = dto.Email, Password = dto.Password });
+            var user = await Mediator.Send(new LoginQuery() { Email = dto.Email, Password = dto.Password });
 
             return user;
         }
@@ -30,7 +30,7 @@ namespace HRMOptimus.WebAPI.Controllers
         [Route("api/logout")]
         public async Task<ActionResult<string>> Logout(LogoutVm logoutVm)
         {
-            var msg = await Mediator.Send(new LogoutCommand());
+            var msg = await Mediator.Send(new LogoutCommand() {});
 
             return msg;
         }
