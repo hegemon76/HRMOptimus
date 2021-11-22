@@ -9,5 +9,6 @@ namespace HRMOptimus.Application.Account.Command.Login
         public Gender Gender { get; set; }
         public string Id { get; set; }
         public int EmployeeId { get; set; }
+        public string Token { get; set; }
     }
 }
