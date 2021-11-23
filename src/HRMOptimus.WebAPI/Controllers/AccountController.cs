@@ -12,27 +12,21 @@ namespace HRMOptimus.WebAPI.Controllers
         [Route("api/register")]
         public async Task<ActionResult<string>> Register([FromBody] RegistrationVm model)
         {
-            var id = await Mediator.Send(new RegistrationCommand() { Registration = model});
-
-            return id;
+            return await Mediator.Send(new RegistrationCommand() { Registration = model });
         }
 
         [HttpPost]
         [Route("api/login")]
         public async Task<ActionResult<LoginVm>> Login([FromBody] LoginCommand dto)
         {
-            var user = await Mediator.Send(new LoginCommand() { Email = dto.Email, Password = dto.Password });
-
-            return user;
+            return await Mediator.Send(new LoginCommand() { Email = dto.Email, Password = dto.Password });
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("api/logout")]
-        public async Task<ActionResult<string>> Logout(LogoutVm logoutVm)
+        public async Task<ActionResult<string>> Logout()
         {
-            var msg = await Mediator.Send(new LogoutCommand());
-
-            return msg;
+            return await Mediator.Send(new LogoutCommand() { });
         }
     }
 }

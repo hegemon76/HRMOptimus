@@ -25,14 +25,14 @@ namespace HRMOptimus.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddApplication();
+            services.AddApplication(Configuration);
             services.AddPersistance(Configuration);
             services.AddInfrastructure();
 
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:4200"));
+                    builder => builder.AllowAnyMethod().AllowAnyHeader().AllowCredentials().WithOrigins("http://localhost:4200"));
             });
 
             services.AddSwaggerGen(c =>
