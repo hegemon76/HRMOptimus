@@ -21,9 +21,9 @@ namespace HRMOptimus.Application.Project.Command.RemoveProject
             var project = await _context.Projects.FirstOrDefaultAsync(x => x.Id == request.ProjectId);
 
             if (project == null)
-                throw new NotFoundException("There is no work record with Id: " + request.ProjectId);
+                throw new NotFoundException("There is no project with Id: " + request.ProjectId);
 
-            project.Enabled = false;
+            _context.Projects.Remove(project);
             await _context.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;

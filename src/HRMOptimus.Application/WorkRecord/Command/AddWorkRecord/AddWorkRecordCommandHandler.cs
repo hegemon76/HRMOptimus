@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HRMOptimus.Application.WorkRecord.Command.AddWorkRecord
 {
-    internal class AddWorkRecordCommandHandler : IRequestHandler<AddWorkRecordCommand, int>
+    public class AddWorkRecordCommandHandler : IRequestHandler<AddWorkRecordCommand, int>
     {
         private readonly IHRMOptimusDbContext _context;
 
