@@ -1,12 +1,33 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { employeesComponent } from './employees.component';
-import { employeesRoutingModule } from '../employees/employees-routing.module';
+import {
+  DeleteEmployeeDialog,
+  EmployeesComponent
+} from './employees.component';
+import { EmployeesRoutingModule } from '../employees/employees-routing.module';
 import { FilterPipe } from './employeesFilter.pipe';
 import { FormsModule } from '@angular/forms';
+import { EmployeeEditComponent } from './employee-edit/employee-edit.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [employeesComponent, FilterPipe],
-  imports: [CommonModule, employeesRoutingModule, FormsModule]
+  declarations: [
+    EmployeesComponent,
+    FilterPipe,
+    EmployeeEditComponent,
+    DeleteEmployeeDialog
+  ],
+  imports: [
+    CommonModule,
+    EmployeesRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatAutocompleteModule,
+    MatDialogModule
+  ]
 })
 export class employeesModule {}
