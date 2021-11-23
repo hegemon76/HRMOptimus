@@ -25,11 +25,11 @@ namespace HRMOptimus.Application.Employee.Query.Employees
         {
             var baseQuery = _context
                 .Employees
+                .Where(r => r.Enabled)
                 .Include(x => x.ApplicationUser)
                 .Where(r => request.Query.SearchPhrase == null
                     || (r.FullName.ToLower().Contains(request.Query.SearchPhrase.ToLower())
-                    || r.ApplicationUser.Email.ToLower().Contains(request.Query.SearchPhrase.ToLower()))
-                    && r.Enabled);
+                    || r.ApplicationUser.Email.ToLower().Contains(request.Query.SearchPhrase.ToLower())));
 
             if (!string.IsNullOrEmpty(request.Query.SortBy))
             {
