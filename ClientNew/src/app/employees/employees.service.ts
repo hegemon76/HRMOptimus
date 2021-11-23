@@ -11,7 +11,7 @@ interface Worker {
 })
 export class EmployeesService {
   getEmployeesurl =
-    'https://localhost:5001/api/employees?PageNumber=1&PageSize=30&SortBy=FullName&SortDirection=1';
+    'https://localhost:5001/api/employees?PageNumber=1&PageSize=1000&SortBy=FullName&SortDirection=1';
   getEmployeeUrl = 'https://localhost:5001/api/employee/details';
   deleteEmployeeUrl = 'https://localhost:5001/api/employee/delete';
   constructor(private http: HttpClient) {}
