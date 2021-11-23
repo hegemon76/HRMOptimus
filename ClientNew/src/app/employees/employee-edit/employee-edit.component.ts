@@ -7,12 +7,6 @@ import { map, startWith } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Employee } from '../models/employeeInterface';
 
-// interface Employee {
-//   firstName: string;
-//   lastName: string;
-//   id?: number;
-// }
-
 @Component({
   selector: 'app-employee-edit',
   templateUrl: './employee-edit.component.html',

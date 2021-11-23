@@ -5,6 +5,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA
 } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Employee } from '../models/employeeInterface';
 
 export interface DialogData {
@@ -22,8 +23,13 @@ export class EmployeesListComponent implements OnInit {
 
   constructor(
     private employeesService: EmployeesService,
+    private router: Router,
     public dialog: MatDialog
-  ) {}
+  ) {
+    // this.router.routeReuseStrategy.shouldReuseRoute = function() {
+    //   return false;
+    // };
+  }
 
   ngOnInit(): void {
     this.employeesService.getEmployees().subscribe(res => {
@@ -38,7 +44,13 @@ export class EmployeesListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result == true) {
-        this.employeesService.deleteEmployee(id).subscribe();
+        this.employeesService.deleteEmployee(id).subscribe(() => {
+          this.router
+            .navigateByUrl('', { skipLocationChange: true })
+            .then(() => {
+              this.router.navigate(['/employees']);
+            });
+        });
       }
     });
   }
