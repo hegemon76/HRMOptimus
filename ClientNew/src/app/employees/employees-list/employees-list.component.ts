@@ -1,28 +1,35 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { EmployeesService } from './employees.service';
+import { EmployeesService } from '../employees.service';
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA
 } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { Employee } from '../models/employeeInterface';
 
 export interface DialogData {
   fullName: string;
 }
 
 @Component({
-  selector: 'app-employees',
-  templateUrl: './employees.component.html',
-  styleUrls: ['./employees.component.scss']
+  selector: 'app-employees-list',
+  templateUrl: './employees-list.component.html',
+  styleUrls: ['./employees-list.component.scss']
 })
-export class EmployeesComponent implements OnInit {
-  employees: any[];
+export class EmployeesListComponent implements OnInit {
+  employees: Employee[];
   searchedEmployee: string;
 
   constructor(
     private employeesService: EmployeesService,
+    private router: Router,
     public dialog: MatDialog
-  ) {}
+  ) {
+    // this.router.routeReuseStrategy.shouldReuseRoute = function() {
+    //   return false;
+    // };
+  }
 
   ngOnInit(): void {
     this.employeesService.getEmployees().subscribe(res => {
@@ -37,7 +44,13 @@ export class EmployeesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result == true) {
-        this.employeesService.deleteEmployee(id).subscribe();
+        this.employeesService.deleteEmployee(id).subscribe(() => {
+          this.router
+            .navigateByUrl('', { skipLocationChange: true })
+            .then(() => {
+              this.router.navigate(['/employees']);
+            });
+        });
       }
     });
   }

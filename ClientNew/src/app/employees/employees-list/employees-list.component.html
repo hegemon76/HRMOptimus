@@ -7,7 +7,7 @@
     <div class="employees-list" *ngIf="(employees | filter: searchedEmployee).length > 0">
       <div class="single-employee" *ngFor="let employee of employees | filter: searchedEmployee; let i = index">
         <img [src]="employee.gender == 0 ? '/assets/images/male-avatar.svg' : '/assets/images/female-avatar.svg'">
-        <p>{{employee.firstName}} {{employee.lastName}}</p>
+        <p>{{employee.fullName}}</p>
         <a href="mailto:employee.email">{{employee.email}}</a>
         <a href="tel:employee.phoneNumber">{{employee.phoneNumber}}</a>
         <div class="buttons">

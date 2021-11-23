@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   DeleteEmployeeDialog,
-  EmployeesComponent
-} from './employees.component';
-import { EmployeesRoutingModule } from '../employees/employees-routing.module';
+  EmployeesListComponent
+} from './employees-list/employees-list.component';
+import { EmployeesRoutingModule } from './employees-routing.module';
 import { FilterPipe } from './employeesFilter.pipe';
 import { FormsModule } from '@angular/forms';
 import { EmployeeEditComponent } from './employee-edit/employee-edit.component';
@@ -15,7 +15,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
-    EmployeesComponent,
+    EmployeesListComponent,
     FilterPipe,
     EmployeeEditComponent,
     DeleteEmployeeDialog
