@@ -2,7 +2,7 @@
 using HRMOptimus.Application.WorkRecord.Query.WorkRecordDetails;
 using HRMOptimus.Domain.Entities;
 using MediatR;
-using Microsoft.AspNetCore.Http;
+//using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -15,24 +15,21 @@ namespace HRMOptimus.Application.WorkRecord.Query.DayWorkRecords
 {
     public class DayWorkRecordsQueryHandler : IRequestHandler<DayWorkRecordsQuery, List<WorkRecordVm>>
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IHRMOptimusDbContext _context;
+        private readonly IUserContextService _userContextService;
 
-        public DayWorkRecordsQueryHandler(IHRMOptimusDbContext context, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager)
+        public DayWorkRecordsQueryHandler(IHRMOptimusDbContext context,IUserContextService userContextService)
         {
             _context = context;
-            _httpContextAccessor = httpContextAccessor;
-            _userManager = userManager;
+            _userContextService = userContextService;
         }
 
         public async Task<List<WorkRecordVm>> Handle(DayWorkRecordsQuery request, CancellationToken cancellationToken)
         {
-            //var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value.ToString();
-            //var user = _userManager.FindByIdAsync(userId);
+            var userId = _userContextService.GetEmployeeId;
 
             var workRecords = await _context.WorkRecords
-                //.Where(x => x.EmployeeId == user.Result.EmployeeId)
+                .Where(x => x.EmployeeId == userId)
                 .Where(x => x.WorkStart.Date == request.DayWork.Date && x.Enabled)
                 .Select(x => new WorkRecordVm(x.Name, x.WorkStart, x.WorkEnd, x.Duration))
                 .ToListAsync();

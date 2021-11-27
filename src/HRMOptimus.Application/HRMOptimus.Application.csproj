@@ -6,8 +6,11 @@
 
   <ItemGroup>
     <Compile Remove="Account\Query\**" />
+    <Compile Remove="Employee\Command\**" />
     <EmbeddedResource Remove="Account\Query\**" />
+    <EmbeddedResource Remove="Employee\Command\**" />
     <None Remove="Account\Query\**" />
+    <None Remove="Employee\Command\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,6 +18,7 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.11" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.14.1" />
@@ -24,10 +28,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HRMOptimus.Domain\HRMOptimus.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Employee\Command\AddEmployee\" />
   </ItemGroup>
 
 </Project>

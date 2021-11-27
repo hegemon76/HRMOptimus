@@ -17,13 +17,12 @@ namespace HRMOptimus.Application.Common.Services
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
         }
 
-        public string CreateToken(string userId, string employeeId)
+        public string CreateToken(string userId, string employeeId, string fullName)
         {
-            var claims = new List<Claim>
-            {
-                new Claim("UserId", userId),
-            new Claim("EmployeeId", employeeId)
-            };
+            var claims = new List<Claim>();
+            claims.Add(new Claim("UserId", userId));
+            claims.Add(new Claim("EmployeeId", employeeId));
+            claims.Add(new Claim("FullName", fullName));
 
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
 

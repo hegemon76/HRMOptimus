@@ -1,6 +1,7 @@
 ﻿using HRMOptimus.Application.Common.Interfaces;
 using HRMOptimus.Domain.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace HRMOptimus.Application.LeaveRegister.Query.GetLeavesRegisterByEmployee
     {
         private readonly IHRMOptimusDbContext _context;
 
-        public GetLeavesRegisterByEmployeeIdQueryHandler(IHRMOptimusDbContext context)
+        public GetLeavesRegisterByEmployeeIdQueryHandler(IHRMOptimusDbContext context, IUserContextService userContextService)
         {
             _context = context;
         }
