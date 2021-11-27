@@ -3,7 +3,6 @@ using HRMOptimus.Application.Employee.Command.RemoveEmployee;
 using HRMOptimus.Application.Employee.Query.EmployeeDetails;
 using HRMOptimus.Application.Employee.Query.Employees;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace HRMOptimus.WebAPI.Controllers
