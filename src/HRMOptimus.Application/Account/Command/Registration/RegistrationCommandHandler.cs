@@ -63,9 +63,6 @@ namespace HRMOptimus.Application.Account.Command.Registration
                         LeavesRegister = new List<Domain.Entities.LeaveRegister>()
                     };
 
-                    //contract.Employee = employee;
-                    // address.Employee = employee;
-
                     _context.Contracts.Add(contract);
                     _context.Addresses.Add(address);
 
