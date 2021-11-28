@@ -12,5 +12,6 @@ namespace HRMOptimus.Domain.Entities
         public int? EmployeeId { get; set; }
         public Employee Employee { get; set; }
         public IsApproved IsApproved { get; set; }
+        public LeaveRegisterType LeaveRegisterType { get; set; }
     }
 }

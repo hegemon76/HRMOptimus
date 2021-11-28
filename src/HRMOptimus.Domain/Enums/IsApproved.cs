@@ -4,6 +4,7 @@
     {
         Approved,
         Rejected,
-        UnChecked
+        UnChecked,
+        Deleted
     }
 }
