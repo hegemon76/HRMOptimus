@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using HRMOptimus.Domain.Enums;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -17,12 +18,14 @@ namespace HRMOptimus.Application.Common.Services
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
         }
 
-        public string CreateToken(string userId, string employeeId, string fullName)
+        public string CreateToken(string userId, string employeeId, string fullName, string gender)
         {
             var claims = new List<Claim>();
             claims.Add(new Claim("userId", userId));
             claims.Add(new Claim("employeeId", employeeId));
             claims.Add(new Claim("fullName", fullName));
+            claims.Add(new Claim("gender", gender));
+
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
 
             var tokenDescriptor = new SecurityTokenDescriptor
