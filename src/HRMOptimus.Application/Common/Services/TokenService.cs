@@ -20,9 +20,9 @@ namespace HRMOptimus.Application.Common.Services
         public string CreateToken(string userId, string employeeId, string fullName)
         {
             var claims = new List<Claim>();
-            claims.Add(new Claim("UserId", userId));
-            claims.Add(new Claim("EmployeeId", employeeId));
-            claims.Add(new Claim("FullName", fullName));
+            claims.Add(new Claim("userId", userId));
+            claims.Add(new Claim("employeeId", employeeId));
+            claims.Add(new Claim("fullName", fullName));
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
 
             var tokenDescriptor = new SecurityTokenDescriptor
