@@ -6,11 +6,8 @@
 
   <ItemGroup>
     <Compile Remove="Account\Query\**" />
-    <Compile Remove="Employee\Command\**" />
     <EmbeddedResource Remove="Account\Query\**" />
-    <EmbeddedResource Remove="Employee\Command\**" />
     <None Remove="Account\Query\**" />
-    <None Remove="Employee\Command\**" />
   </ItemGroup>
 
   <ItemGroup>

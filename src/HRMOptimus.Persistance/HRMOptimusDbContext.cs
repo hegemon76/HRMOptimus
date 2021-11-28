@@ -57,7 +57,7 @@ namespace HRMOptimus.Persistance
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(HRMOptimusDbContext).Assembly);
-            modelBuilder.SeedData();
+           // modelBuilder.SeedData();
         }
     }
 }
