@@ -7,6 +7,8 @@ namespace HRMOptimus.Application.LeaveRegister.Query.GetLeavesRegisterByEmployee
     {
         public int Id { get; set; }
         public int Duration { get; set; }
+        public int LeaveDaysByContract { get; set; }
+        public int LeaveDaysLeft { get; set; }
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
         public IsApproved IsApproved { get; set; }
