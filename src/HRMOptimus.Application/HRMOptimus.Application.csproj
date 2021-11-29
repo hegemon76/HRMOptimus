@@ -26,5 +26,8 @@
   <ItemGroup>
     <ProjectReference Include="..\HRMOptimus.Domain\HRMOptimus.Domain.csproj" />
   </ItemGroup>
-
+	
+	<ItemGroup>
+		<Folder Include="logs\" />
+	</ItemGroup>
 </Project>

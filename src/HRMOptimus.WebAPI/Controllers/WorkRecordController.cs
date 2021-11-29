@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace HRMOptimus.WebAPI.Controllers
 {
+    [ApiController]
     public class WorkRecordController : BaseController
     {
         [HttpPost]
