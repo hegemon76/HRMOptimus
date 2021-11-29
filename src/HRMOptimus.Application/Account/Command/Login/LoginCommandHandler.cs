@@ -36,7 +36,7 @@ namespace HRMOptimus.Application.Account.Command.Login
                     FirstName = employee.FirstName,
                     LastName = employee.LastName,
                     Gender = employee.Gender,
-                    Token = _tokenService.CreateToken(user.Id, employee.Id.ToString(), employee.FullName)
+                    Token = _tokenService.CreateToken(user.Id, employee.Id.ToString(), employee.FullName, ((int)employee.Gender).ToString())
                 };
             }
             return null;

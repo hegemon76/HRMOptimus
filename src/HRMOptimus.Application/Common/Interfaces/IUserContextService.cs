@@ -7,7 +7,6 @@ namespace HRMOptimus.Application.Common.Interfaces
     {
         public string GetUserId { get; }
         public int? GetEmployeeId { get; }
-        public string GetUserFullName { get; }
         public List<ClaimsPrincipal> Roles { get; }
     }
 }
