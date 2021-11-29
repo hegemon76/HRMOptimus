@@ -4,8 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 interface User {
-  firstName: string;
-  lastName: string;
+  fullName: string;
   gender: string;
   employeeId: number;
   id: string;
@@ -33,8 +32,9 @@ export class AccountService {
     );
   }
   createUser(res) {
-    this.user = res;
-    localStorage.setItem('user', JSON.stringify(this.user));
+    this.user = JSON.parse(atob(res.token.split('.')[1]));
+    localStorage.setItem('user', atob(res.token.split('.')[1]));
+    localStorage.setItem('token', res.token);
     window.location.reload();
   }
   getUser() {

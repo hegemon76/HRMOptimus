@@ -1,0 +1,21 @@
+<div class="vacation-container">
+  <app-calendar></app-calendar>
+  <mat-card class="pending">
+    <h6>Zadeklarowane urlopy</h6>
+    <div *ngFor="let vac of employeeVacation">
+      <div *ngIf="vac.isApproved == 2">
+        <span>od {{vac.dateFrom | date:"dd-MM-YYYY"}} </span>
+        <span>do {{vac.dateTo | date:"dd-MM-YYYY"}}</span>
+      </div>
+    </div>
+  </mat-card>
+  <mat-card class="accepted">
+    <h6>Zaakceptowane urlopy</h6>
+    <div *ngFor="let vac of employeeVacation">
+      <div *ngIf="vac.isApproved == 0">
+        <span>od {{vac.dateFrom | date:"dd-MM-YYYY"}} </span>
+        <span>do {{vac.dateTo | date:"dd-MM-YYYY"}}</span>
+      </div>
+    </div>
+  </mat-card>
+</div>
