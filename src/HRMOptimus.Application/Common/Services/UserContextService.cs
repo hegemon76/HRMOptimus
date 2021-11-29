@@ -1,14 +1,11 @@
 ﻿using HRMOptimus.Application.Common.Interfaces;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Net.Http.Headers;
 using System;
-using System.Net.Http.Headers;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Net.Http.Headers;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace HRMOptimus.Application.Common.Services
 {
@@ -21,14 +18,15 @@ namespace HRMOptimus.Application.Common.Services
 
         public UserContextService(IHttpContextAccessor httpContextAccessor)
         {
-            _token = httpContextAccessor.HttpContext.Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ","");
+            _token = httpContextAccessor.HttpContext.Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
             decodeToken();
         }
+
         private void decodeToken()
         {
             var handler = new JwtSecurityTokenHandler();
             var jsonToken = handler.ReadJwtToken(_token);
-            _employeeId = int.Parse(jsonToken.Payload.First(claim => claim.Key== "EmployeeId").Value.ToString());
+            _employeeId = int.Parse(jsonToken.Payload.First(claim => claim.Key == "EmployeeId").Value.ToString());
             _userId = jsonToken.Payload.First(claim => claim.Key == "UserId").Value.ToString();
         }
 

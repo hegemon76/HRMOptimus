@@ -2,5 +2,5 @@
 
 namespace HRMOptimus.Application.WorkRecord.Query.DayWorkRecords
 {
-    public record WorkRecordVm(string Name, DateTime WorkStart, DateTime WorkStop, TimeSpan Duration);
+    public record WorkRecordVm(int Id, string Name, DateTime WorkStart, DateTime WorkStop, TimeSpan Duration);
 }

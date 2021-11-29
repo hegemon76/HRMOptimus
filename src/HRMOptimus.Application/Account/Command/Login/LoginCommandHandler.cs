@@ -11,7 +11,6 @@ namespace HRMOptimus.Application.Account.Command.Login
 {
     public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginVm>
     {
-        // private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly TokenService _tokenService;
 
         private readonly IHRMOptimusDbContext _context;
@@ -30,8 +29,7 @@ namespace HRMOptimus.Application.Account.Command.Login
             var result = await _userManager.CheckPasswordAsync(user, request.Password);
             if (result == true)
             {
-                Domain.Entities.Employee employee = _context.Employees
-                    .FirstOrDefault(x => x.Id == user.EmployeeId);
+                var employee = _context.Employees.FirstOrDefault(x => x.Id == user.EmployeeId);
 
                 return new LoginVm()
                 {
