@@ -18,7 +18,7 @@ export class VacationComponent implements OnInit {
 
   ngOnInit(): void {
     this.employee = JSON.parse(localStorage.getItem('user'));
-    this.getEmployeeVacation(this.employee.EmployeeId).then(res =>
+    this.getEmployeeVacation(this.employee.employeeId).then(res =>
       this.fillCalendar()
     );
   }
@@ -26,6 +26,7 @@ export class VacationComponent implements OnInit {
   getEmployeeVacation(id) {
     return new Promise((resolve, reject) => {
       this.vacationService.getEmployeeVacations(id).subscribe(res => {
+        console.log(res);
         this.employeeVacation = res;
       });
       resolve('done');

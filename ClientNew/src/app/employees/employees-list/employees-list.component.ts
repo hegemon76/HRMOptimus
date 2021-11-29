@@ -6,7 +6,7 @@ import {
   MAT_DIALOG_DATA
 } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Employee } from '../models/employeeInterface';
+import { Employee } from '../../models/EmployeeInterface';
 
 export interface DialogData {
   fullName: string;

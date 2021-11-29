@@ -1,3 +1,4 @@
+import { environment } from '../enviroment';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -7,8 +8,8 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class VacationService {
-  getEmployeeVacationsUrl =
-    'https://localhost:5001/api/leavesRegister/getByEmployeeId';
+  baseUrl = environment.baseUrl;
+  getEmployeeVacationsUrl = `${this.baseUrl}leavesRegister/getByEmployeeId`;
 
   constructor(private http: HttpClient) {}
 
@@ -19,8 +20,7 @@ export class VacationService {
           employeeId: id
         },
         headers: new HttpHeaders({
-          Authorization:
-            'Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiJkYjJkNGRmMi02YjZjLTRhNmMtODJiZC1kNTEyYWFkODBkNmUiLCJFbXBsb3llZUlkIjoiMSIsIkZ1bGxOYW1lIjoiSmFrdWIgQmFocnlub3dza2kiLCJuYmYiOjE2MzgxMDk3OTksImV4cCI6MTYzODcxNDU5OSwiaWF0IjoxNjM4MTA5Nzk5fQ.zifVQJl4buZ9vHn2fDykBSC3sc-MqDF_A4AdGBS5wKA8eFf8_vRFFH_v9vx7zD5urUWFo2FCbTKrwo3A7c4YJQ'
+          Authorization: `Bearer ${localStorage.getItem('token')}`
         })
       })
       .pipe(map((res: any) => res));
