@@ -26,6 +26,7 @@ namespace HRMOptimus.Application.LeaveRegister.Query.GetLeavesRegisterByEmployee
             try
             {
                 var employee = await _context.Employees.Include(x => x.LeavesRegister)
+                    .Include(p => p.Contract)
                     .FirstOrDefaultAsync(u => u.Id == request.EmployeeId);
 
                 if (employee != null && employee.LeavesRegister != null)
@@ -36,6 +37,8 @@ namespace HRMOptimus.Application.LeaveRegister.Query.GetLeavesRegisterByEmployee
                              Id = x.Id,
                              DateFrom = x.DateFrom,
                              DateTo = x.DateTo,
+                             LeaveDaysLeft = (int)employee.LeaveDaysLeft,
+                             LeaveDaysByContract = (int)employee.Contract.LeaveDays,
                              Duration = x.Duration,
                              IsApproved = x.IsApproved,
                          }).ToListAsync();
