@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace HRMOptimus.WebAPI.Controllers
 {
+    [ApiController]
     public class EmployeeController : BaseController
     {
         [HttpGet]

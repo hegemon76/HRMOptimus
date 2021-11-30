@@ -1,10 +1,6 @@
 ﻿using HRMOptimus.Application.Common.Interfaces;
 using HRMOptimus.Application.WorkRecord.Query.DayWorkRecords;
-using HRMOptimus.Application.WorkRecord.Query.WorkRecordDetails;
-using HRMOptimus.Domain.Entities;
 using MediatR;
-//using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,19 +13,19 @@ namespace HRMOptimus.Application.WorkRecord.Query.MonthDaysRecords
     public class MonthDaysRecordsQueryHandler : IRequestHandler<MonthDaysRecordsQuery, List<DaysWorkRecordsVm>>
     {
         private readonly IHRMOptimusDbContext _context;
-        private readonly IUserContextService _userContextService;
+        // private readonly IUserContextService _userContextService;
 
-        public MonthDaysRecordsQueryHandler(IHRMOptimusDbContext context, IUserContextService userContextService)
+        public MonthDaysRecordsQueryHandler(IHRMOptimusDbContext context)
         {
             _context = context;
-            _userContextService = userContextService;
+            // _userContextService = userContextService;
         }
 
         public async Task<List<DaysWorkRecordsVm>> Handle(MonthDaysRecordsQuery request, CancellationToken cancellationToken)
         {
             var workRecords = await _context.WorkRecords
-                .Where(x => x.WorkStart.Date >= request.DateFrom.Date || x.WorkStart.Date <= request.DateTo.Date && x.Enabled)
-                .Select(x => new WorkRecordVm(x.Name, x.WorkStart, x.WorkEnd, x.Duration))
+                .Where(x => (x.WorkStart.Date >= request.DateFrom.Date || x.WorkStart.Date <= request.DateTo.Date))
+                .Select(x => new WorkRecordVm(x.Id, x.Name, x.WorkStart, x.WorkEnd, x.Duration))
                 .ToListAsync();
 
             List<DaysWorkRecordsVm> daysWorksRekords = new List<DaysWorkRecordsVm>();
@@ -47,6 +43,8 @@ namespace HRMOptimus.Application.WorkRecord.Query.MonthDaysRecords
                 {
                     dayWorkRecords.Add(workRecords[i]);
                     workedTime += workRecords[i].Duration;
+                    if (i == workRecords.Count - 1)
+                        daysWorksRekords.Add(new DaysWorkRecordsVm(dayWorkRecords, workRecords[i].WorkStart.Date, workedTime));
                 }
                 else
                 {
