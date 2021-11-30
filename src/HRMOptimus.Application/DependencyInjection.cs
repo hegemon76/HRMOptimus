@@ -1,14 +1,13 @@
-﻿using HRMOptimus.Application.Common.Interfaces;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using HRMOptimus.Application.Account.Command.Registration;
+using HRMOptimus.Application.Common.Interfaces;
 using HRMOptimus.Application.Common.Middleware;
 using HRMOptimus.Application.Common.Services;
 using MediatR;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using System.Reflection;
-using System.Text;
 
 namespace HRMOptimus.Application
 {
@@ -16,6 +15,7 @@ namespace HRMOptimus.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddControllers().AddFluentValidation();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddScoped<RequestTimeMiddleware>();
@@ -26,6 +26,8 @@ namespace HRMOptimus.Application
             {
                 configuration.GetSection("TokenKey").Bind(config);
             });
+
+            services.AddScoped<IValidator<RegistrationVm>, RegistrationVmValidator>();
 
             return services;
         }
