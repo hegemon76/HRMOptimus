@@ -14,15 +14,20 @@ interface CalendarItem {
   templateUrl: './worktime.component.html',
   styleUrls: ['./worktime.component.scss']
 })
+
 export class WorktimeComponent implements OnInit {
   date = moment().locale('pl');
   calendar: Array<CalendarItem[]> = [];
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
     this.calendar = this.createCalendar(this.date);
+
+    console.log(this.calendar)
+
   }
+
   createCalendar(month: moment.Moment) {
     const daysInMonth = month.daysInMonth();
     const startOfMonth = month.startOf('month').format('ddd');
@@ -68,7 +73,7 @@ export class WorktimeComponent implements OnInit {
   createCalendarItem(data: moment.Moment, className: string) {
     const dayName = data.format('ddd');
     return {
-      id: data.format('DD') + data.format('MM') + data.format('YYYY'),
+      id: data.format('YYYY') + "-" + data.format('MM') + "-" + data.format('DD'),
       day: data.format('D'),
       dayName,
       className,
