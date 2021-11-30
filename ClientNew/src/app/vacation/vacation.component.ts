@@ -3,6 +3,7 @@ import { VacationService } from './vacation.service';
 import { formatDate } from '@angular/common';
 import { map, filter } from 'rxjs/operators';
 import { CalendarComponent } from '../shared/calendar/calendar.component';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-vacation',
@@ -11,12 +12,20 @@ import { CalendarComponent } from '../shared/calendar/calendar.component';
 })
 export class VacationComponent implements OnInit {
   @ViewChild(CalendarComponent) calendar: CalendarComponent;
+  form: FormGroup;
   employee: any;
   employeeVacation: any[];
 
-  constructor(private vacationService: VacationService) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private vacationService: VacationService
+  ) {}
 
   ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      email: '',
+      password: ''
+    });
     this.employee = JSON.parse(localStorage.getItem('user'));
     this.getEmployeeVacation(this.employee.employeeId).then(res =>
       this.fillCalendar()
@@ -69,5 +78,9 @@ export class VacationComponent implements OnInit {
         });
       }
     }, 100);
+  }
+
+  addVacation() {
+    console.log('test');
   }
 }

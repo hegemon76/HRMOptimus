@@ -11,6 +11,7 @@ import { AccountService } from './account/account.service';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
+<<<<<<< HEAD
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
 
@@ -41,6 +42,15 @@ export class AppComponent {
   ngOnInit() {
     this.checkIsUser();
     this.user = this.accountService.getUser();
+=======
+  darkMode = true;
+  isVerifiedUser = true;
+
+  ngOnInit() {
+    // this.checkIsUser();
+
+    localStorage.removeItem('user');
+>>>>>>> e71cf1a96e22c3097d2355caa133dd8cb9ac0b5a
   }
 
   checkIsUser() {
