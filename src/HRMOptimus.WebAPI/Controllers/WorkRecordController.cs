@@ -2,7 +2,6 @@
 using HRMOptimus.Application.WorkRecord.Command.RemoveWorkRecord;
 using HRMOptimus.Application.WorkRecord.Query.DayWorkRecords;
 using HRMOptimus.Application.WorkRecord.Query.MonthDaysRecords;
-using HRMOptimus.Application.WorkRecord.Query.WorkRecordDetails;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -23,17 +22,8 @@ namespace HRMOptimus.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/workrecord/details/")]
-        public async Task<ActionResult<WorkRecordDetailsVm>> WorkRecordDetails(int workRecordId)
-        {
-            var workRecord = await Mediator.Send(new WorkRecordDetailsQuery() { WorkRecordId = workRecordId });
-
-            return workRecord;
-        }
-
-        [HttpGet]
         [Route("api/workrecord/day/")]
-        public async Task<ActionResult<List<WorkRecordVm>>> WorkDayRecords(DateTime dayWork)
+        public async Task<ActionResult<List<WorkRecordsDetailsVm>>> WorkDayRecords(DateTime dayWork)
         {
             var dayWorkRecords = await Mediator.Send(new DayWorkRecordsQuery() { DayWork = dayWork });
 
