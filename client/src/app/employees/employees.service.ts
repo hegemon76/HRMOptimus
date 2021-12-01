@@ -1,19 +1,17 @@
+import { environment } from '../enviroment';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-interface Worker {
-  email: string;
-  password: string;
-}
+
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeesService {
-  getEmployeesurl =
-    'https://localhost:5001/api/employees?PageNumber=1&PageSize=1000&SortBy=FullName&SortDirection=1';
-  getEmployeeUrl = 'https://localhost:5001/api/employee/details';
-  deleteEmployeeUrl = 'https://localhost:5001/api/employee/delete';
+  baseUrl = environment.baseUrl;
+  getEmployeesurl = `${this.baseUrl}employees?PageNumber=1&PageSize=1000&SortBy=FullName&SortDirection=1`;
+  getEmployeeUrl = `${this.baseUrl}employee/details`;
+  deleteEmployeeUrl = `${this.baseUrl}employee/delete`;
   constructor(private http: HttpClient) {}
 
   getEmployees(): Observable<any> {

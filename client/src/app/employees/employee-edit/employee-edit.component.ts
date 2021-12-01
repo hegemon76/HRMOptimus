@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { map, startWith } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { Employee } from '../models/employeeInterface';
+import { Employee } from '../../models/EmployeeInterface';
 
 @Component({
   selector: 'app-employee-edit',

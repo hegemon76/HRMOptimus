@@ -6,7 +6,7 @@ import {
   MAT_DIALOG_DATA
 } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Employee } from '../models/employeeInterface';
+import { Employee } from '../../models/EmployeeInterface';
 
 export interface DialogData {
   fullName: string;
@@ -25,11 +25,7 @@ export class EmployeesListComponent implements OnInit {
     private employeesService: EmployeesService,
     private router: Router,
     public dialog: MatDialog
-  ) {
-    // this.router.routeReuseStrategy.shouldReuseRoute = function() {
-    //   return false;
-    // };
-  }
+  ) {}
 
   ngOnInit(): void {
     this.employeesService.getEmployees().subscribe(res => {
