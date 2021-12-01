@@ -1,4 +1,4 @@
-import { environment } from '../enviroment';
+import { environment } from '../environment';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -11,6 +11,7 @@ export class VacationService {
   baseUrl = environment.baseUrl;
   getEmployeeVacationsUrl = `${this.baseUrl}leavesRegister/getByEmployeeId`;
   addVacationUrl = `${this.baseUrl}leavesRegister/add`;
+  updateVacationUrl = `${this.baseUrl}leavesRegister/changeStatus`;
 
   constructor(private http: HttpClient) {}
 
@@ -26,15 +27,31 @@ export class VacationService {
       })
       .pipe(map((res: any) => res));
   }
-  addVacation(id): Observable<any> {
+  addVacation(value): Observable<any> {
     return this.http
       .post(this.addVacationUrl, {
-        body: {
-          leaveStart: '2021-11-22T06:11:32.701Z',
-          leaveEnd: '2021-11-25T06:11:32.701Z',
-          employeeId: 1,
-          leaveRegisterType: 0
-        }
+        leaveStart: value.leaveStart,
+        leaveEnd: value.leaveEnd,
+        employeeId: value.employeeId,
+        leaveRegisterType: value.leaveRegisterType
+      })
+      .pipe(map((res: any) => res));
+  }
+  approveVacation(vacationId, employeeId): Observable<any> {
+    return this.http
+      .put(this.updateVacationUrl, {
+        recordId: vacationId,
+        employeeId: employeeId,
+        status: 0
+      })
+      .pipe(map((res: any) => res));
+  }
+  rejectVacation(vacationId, employeeId): Observable<any> {
+    return this.http
+      .put(this.updateVacationUrl, {
+        recordId: vacationId,
+        employeeId: employeeId,
+        status: 1
       })
       .pipe(map((res: any) => res));
   }

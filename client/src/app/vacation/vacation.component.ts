@@ -3,7 +3,10 @@ import { VacationService } from './vacation.service';
 import { formatDate } from '@angular/common';
 import { map, filter } from 'rxjs/operators';
 import { CalendarComponent } from '../shared/calendar/calendar.component';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ThemePalette } from '@angular/material/core';
+import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-vacation',
@@ -15,18 +18,51 @@ export class VacationComponent implements OnInit {
   form: FormGroup;
   employee: any;
   employeeVacation: any[];
+  options: any[] = [
+    {
+      value: 0,
+      label: 'Chorobowy'
+    },
+    {
+      value: 1,
+      label: 'Na żądanie'
+    },
+    {
+      value: 2,
+      label: 'Macieżyński'
+    },
+    {
+      value: 3,
+      label: 'Tecieżyński'
+    },
+    {
+      value: 4,
+      label: 'Bezpłatny'
+    }
+  ];
+  color: ThemePalette = 'primary';
+  color2: ThemePalette = 'accent';
+  mode: ProgressSpinnerMode = 'determinate';
+  value = 100;
 
   constructor(
     private formBuilder: FormBuilder,
-    private vacationService: VacationService
-  ) {}
+    private vacationService: VacationService,
+    private router: Router
+  ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
+      return false;
+    };
+  }
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      email: '',
-      password: ''
-    });
     this.employee = JSON.parse(localStorage.getItem('user'));
+    this.form = this.formBuilder.group({
+      leaveRegisterType: ['', Validators.required],
+      leaveStart: ['', Validators.required],
+      leaveEnd: ['', Validators.required],
+      employeeId: this.employee.employeeId
+    });
     this.getEmployeeVacation(this.employee.employeeId).then(res =>
       this.fillCalendar()
     );
@@ -81,6 +117,44 @@ export class VacationComponent implements OnInit {
   }
 
   addVacation() {
-    console.log('test');
+    if (this.form.valid) {
+      var vacationFormatted = {
+        leaveRegisterType: this.form.getRawValue().leaveRegisterType,
+        leaveStart:
+          formatDate(
+            this.form.getRawValue().leaveStart,
+            'YYYY-MM-dd',
+            'en-US'
+          ) + 'T00:00:00.000Z',
+        leaveEnd:
+          formatDate(this.form.getRawValue().leaveEnd, 'YYYY-MM-dd', 'en-US') +
+          'T23:59:59.404Z',
+        employeeId: this.form.getRawValue().employeeId
+      };
+      console.log(vacationFormatted);
+      this.vacationService.addVacation(vacationFormatted).subscribe(res => {
+        this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/vacation']);
+        });
+      });
+    }
+  }
+  approveVacation(vacationId, employeeId) {
+    this.vacationService
+      .approveVacation(vacationId, employeeId)
+      .subscribe(res => {
+        this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/vacation']);
+        });
+      });
+  }
+  rejectVacation(vacationId, employeeId) {
+    this.vacationService
+      .rejectVacation(vacationId, employeeId)
+      .subscribe(res => {
+        this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/vacation']);
+        });
+      });
   }
 }

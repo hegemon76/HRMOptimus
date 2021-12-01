@@ -43,7 +43,6 @@
   font-size: 20px;
   cursor: pointer;
   margin-top: 7px;
-  color: var(--font);
 }
 
 .flex-container {
@@ -66,10 +65,8 @@ h4 {
 button,
 h4 {
   border: none;
-  background: var(--main-contrast);
   margin-bottom: 20px;
-  margin-top: 50px;
-  color: var(--font);
+  background-color: #fff;
 }
 
 b {

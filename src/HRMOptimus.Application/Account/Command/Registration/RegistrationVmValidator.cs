@@ -19,6 +19,21 @@ namespace HRMOptimus.Application.Account.Command.Registration
                     if (emailInUse)
                         context.AddFailure("Email", "That email is taken");
                 });
+            RuleFor(x => x.Password)
+                .Custom((value, context) =>
+                {
+                    bool isUpperCase = false;
+                    for (int i = 0; i < value.Length; i++)
+                    {
+                        if (value[i] > 64 && value[i] < 91)
+                        {
+                            isUpperCase = true;
+                            i = value.Length;
+                        }
+                    }
+                    if (!isUpperCase)
+                        context.AddFailure("Password", "Password needs at least 1 upper letter");
+                });
         }
     }
 }
