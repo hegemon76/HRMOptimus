@@ -1,5 +1,5 @@
 <h2 mat-dialog-title>Czy napewno chcesz usunąć pracownika {{data.fullName}}?</h2>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Usuń</button>
+  <button class="cancel" mat-button mat-dialog-close>Anuluj</button>
+  <button class="delete" mat-button [mat-dialog-close]="true" cdkFocusInitial>Usuń</button>
 </mat-dialog-actions>
