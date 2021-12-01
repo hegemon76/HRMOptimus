@@ -30,6 +30,7 @@ export class EmployeesListComponent implements OnInit {
   ngOnInit(): void {
     this.employeesService.getEmployees().subscribe(res => {
       this.employees = res.items;
+      console.log(this.employees);
     });
   }
 
