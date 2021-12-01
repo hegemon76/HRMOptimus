@@ -55,7 +55,8 @@ export class EmployeesListComponent implements OnInit {
 
 @Component({
   selector: 'delete-employee-dialog',
-  templateUrl: 'delete-employee-dialog.html'
+  templateUrl: 'delete-employee-dialog.html',
+  styleUrls: ['./employees-list.component.scss']
 })
 export class DeleteEmployeeDialog {
   constructor(

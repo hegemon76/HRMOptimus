@@ -15,7 +15,7 @@
         <mat-card-title>{{employee.lastName}}</mat-card-title>
         <mat-card-subtitle>{{employee.firstName}}</mat-card-subtitle>
         <mat-card-content>
-          <p class="date">Data urodzenia: {{employee.birthDate | date: 'dd MM YYYY'}}</p>
+          <p class="date">Data urodzenia: {{employee.birthDate | date: 'dd MM YYYY'}}.r</p>
         </mat-card-content>
       </div>
       <div class="contact-wrapper">
@@ -54,7 +54,7 @@
           </tr>
           <tr>
             <td>Data podpisania umowy: </td>
-            <td>{{employee.contract.createdOn | date: 'dd MM YYYY' }}</td>
+            <td>{{employee.contract.createdOn | date: 'dd MM YYYY' }}.r</td>
           </tr>
           <tr>
             <td>Ilośc dni urlopowych: </td>

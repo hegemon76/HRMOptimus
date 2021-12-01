@@ -36,7 +36,7 @@
 
     .head {
       display: grid;
-      grid-template-columns: 100px 200px 200px 200px 100px auto;
+      grid-template-columns: 200px 300px 300px 300px 200px auto;
       align-items: center;
       padding: 10px;
       font-weight: bold;
@@ -50,7 +50,7 @@
     }
     .single-employee {
       display: grid;
-      grid-template-columns: 100px 200px 200px 200px 100px auto;
+      grid-template-columns: 200px 300px 300px 300px 200px auto;
       align-items: center;
       background-color: var(--single-employee);
       color: var(--font);
@@ -116,5 +116,26 @@
     //   transform: scale(1.1);
     //   transition: 0.4s;
     // }
+  }
+}
+
+mat-dialog-actions {
+  button {
+    margin: 0 0 0 10px;
+    background-color: transparent;
+    border: 0;
+    width: 80px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+  }
+  .cancel {
+    text-decoration: underline;
+  }
+  .delete {
+    background-color: #c91e45;
+    color: #fff;
   }
 }
