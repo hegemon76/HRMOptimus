@@ -44,6 +44,7 @@ export class VacationComponent implements OnInit {
   color2: ThemePalette = 'accent';
   mode: ProgressSpinnerMode = 'determinate';
   value = 100;
+  value2 = (27 / 40) * 100;
 
   constructor(
     private formBuilder: FormBuilder,

@@ -30,6 +30,7 @@ export class EmployeesListComponent implements OnInit {
   ngOnInit(): void {
     this.employeesService.getEmployees().subscribe(res => {
       this.employees = res.items;
+      console.log(this.employees);
     });
   }
 
@@ -54,7 +55,8 @@ export class EmployeesListComponent implements OnInit {
 
 @Component({
   selector: 'delete-employee-dialog',
-  templateUrl: 'delete-employee-dialog.html'
+  templateUrl: 'delete-employee-dialog.html',
+  styleUrls: ['./employees-list.component.scss']
 })
 export class DeleteEmployeeDialog {
   constructor(
