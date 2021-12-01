@@ -27,6 +27,7 @@ namespace HRMOptimus.Application.Employee.Query.Employees
                 .Employees
                 .Where(r => r.Enabled)
                 .Include(x => x.ApplicationUser)
+                .Include(x => x.Contract)
                 .Where(r => request.Query.SearchPhrase == null
                     || (r.FullName.ToLower().Contains(request.Query.SearchPhrase.ToLower())
                     || r.ApplicationUser.Email.ToLower().Contains(request.Query.SearchPhrase.ToLower())));
@@ -48,7 +49,7 @@ namespace HRMOptimus.Application.Employee.Query.Employees
             var employees = await baseQuery
                 .Skip(request.Query.PageSize * (request.Query.PageNumber - 1))
                 .Take(request.Query.PageSize)
-                .Select(x => new EmployeeVm(x.Id, x.FirstName, x.LastName, x.FullName, x.Gender, x.BirthDate, x.ApplicationUser.Email, x.ApplicationUser.PhoneNumber))
+                .Select(x => new EmployeeVm(x.Id, x.FirstName, x.LastName, x.FullName, x.Gender, x.BirthDate, x.ApplicationUser.Email, x.ApplicationUser.PhoneNumber, x.Contract.ContractName))
                 .ToListAsync();
 
             var totalItemsCount = employees.Count();

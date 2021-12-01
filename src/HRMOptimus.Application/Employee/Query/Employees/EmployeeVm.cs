@@ -3,5 +3,6 @@ using System;
 
 namespace HRMOptimus.Application.Employee.Query.Employees
 {
-    public record EmployeeVm(int Id, string FirstName, string LastName, string FullName, Gender Gender, DateTime? BirthDate, string Email, string PhoneNumber);
+    public record EmployeeVm(int Id, string FirstName, string LastName, string FullName, Gender Gender,
+        DateTime? BirthDate, string Email, string PhoneNumber, string ContractName);
 }
