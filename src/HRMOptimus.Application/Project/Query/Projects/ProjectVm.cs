@@ -2,6 +2,6 @@
 
 namespace HRMOptimus.Application.Project.Query.Projects
 {
-    public record ProjectVm(string Name, string Description, decimal HoursWorked, DateTime DateFrom,
+    public record ProjectVm(int Id, string Name, string Description, decimal HoursWorked, DateTime DateFrom,
         DateTime DateTo);
 }

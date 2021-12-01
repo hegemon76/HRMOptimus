@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace HRMOptimus.Application.Project.Command.AddProject
+namespace HRMOptimus.Application.Project.Command.UpdateProject
 {
-    public class AddProjectVm
+    public class UpdateProjectVm
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal HoursBudget { get; set; }
