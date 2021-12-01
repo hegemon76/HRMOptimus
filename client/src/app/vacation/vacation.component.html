@@ -1,4 +1,5 @@
 <div class="vacation-container">
+<<<<<<< HEAD
   <mat-card class="container">
     <form [formGroup]="form" (submit)="addVacation()">
       <mat-form-field appearance="fill">
@@ -69,6 +70,42 @@
             </div>
           </div>
         </div>
+=======
+  <form [formGroup]="form" (submit)="addVacation()">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Nazwa</mat-label>
+      <input matInput placeholder="Nazwa">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Od</mat-label>
+      <input matInput [matDatepicker]="picker">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Do</mat-label>
+      <input matInput [matDatepicker]="picker">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </form>
+  <app-calendar></app-calendar>
+  <mat-card class="pending">
+    <h6>Zadeklarowane urlopy</h6>
+    <div *ngFor="let vac of employeeVacation">
+      <div *ngIf="vac.isApproved == 2">
+        <span>od {{vac.dateFrom | date:"dd-MM-YYYY"}} </span>
+        <span>do {{vac.dateTo | date:"dd-MM-YYYY"}}</span>
+      </div>
+    </div>
+  </mat-card>
+  <mat-card class="accepted">
+    <h6>Zaakceptowane urlopy</h6>
+    <div *ngFor="let vac of employeeVacation">
+      <div *ngIf="vac.isApproved == 0">
+        <span>od {{vac.dateFrom | date:"dd-MM-YYYY"}} </span>
+        <span>do {{vac.dateTo | date:"dd-MM-YYYY"}}</span>
+>>>>>>> 5270fcd57c57f6d6b7f5c20cce7c2ddcb7cd9170
       </div>
     </div>
   </mat-card>

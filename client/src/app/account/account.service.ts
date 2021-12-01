@@ -1,22 +1,16 @@
+import { environment } from '../enviroment';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-
-interface User {
-  firstName: string;
-  lastName: string;
-  gender: string;
-  employeeId: number;
-  id: string;
-}
-
+import { User } from '../models/UserInterface';
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
-  loginUrl = 'https://localhost:5001/api/login';
-  logoutUrl = 'https://localhost:5001/api/logut';
+  baseUrl = environment.baseUrl;
+  loginUrl: string = `${this.baseUrl}login`;
+  logoutUrl: string = `${this.baseUrl}logut`;
   user: User;
 
   constructor(private http: HttpClient) {}
