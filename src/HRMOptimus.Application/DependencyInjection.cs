@@ -4,6 +4,7 @@ using HRMOptimus.Application.Account.Command.Registration;
 using HRMOptimus.Application.Common.Interfaces;
 using HRMOptimus.Application.Common.Middleware;
 using HRMOptimus.Application.Common.Services;
+using HRMOptimus.Application.Project.Command.UpdateProject;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +29,7 @@ namespace HRMOptimus.Application
             });
 
             services.AddScoped<IValidator<RegistrationVm>, RegistrationVmValidator>();
+            services.AddScoped<IValidator<UpdateProjectVm>, UpdateProjectVmValidator>();
 
             return services;
         }

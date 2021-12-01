@@ -18,8 +18,6 @@ namespace HRMOptimus.Application.Project.Command.UpdateProject
         public async Task<Unit> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
         {
             var project = await _context.Projects.FindAsync(request.UpdateProjectVm.Id);
-            if (project == null)
-                throw new NotFoundException("There is no project");
 
             project.Name = request.UpdateProjectVm.Name;
             project.DateFrom = request.UpdateProjectVm.DateFrom;
