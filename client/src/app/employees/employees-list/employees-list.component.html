@@ -1,22 +1,37 @@
 <div class="employees-wrapper">
-  <div class="search-wrapper">
-    <input class="form-control" type="text" placeholder="Szukaj pracownika" name="searchText"
-      [(ngModel)]="searchedEmployee">
-  </div>
-  <div class="list-wrapper">
-    <div class="employees-list" *ngIf="(employees | filter: searchedEmployee).length > 0">
-      <div class="single-employee" *ngFor="let employee of employees | filter: searchedEmployee; let i = index">
-        <img [src]="employee.gender == 0 ? '/assets/images/male-avatar.svg' : '/assets/images/female-avatar.svg'">
-        <p>{{employee.fullName}}</p>
-        <a href="mailto:employee.email">{{employee.email}}</a>
-        <a href="tel:employee.phoneNumber">{{employee.phoneNumber}}</a>
-        <div class="buttons">
-          <button class="edit-user" routerLink="edit/{{employee.id}}" [state]={id:employee.id}><i
-              class="fas fa-cog"></i></button>
-          <button class="delete-user" mat-raised-button (click)="openDialog(employee.fullName, employee.id)"><i
-              class="fas fa-minus-circle"></i></button>
+  <mat-card>
+    <div class="search-wrapper">
+      <!-- <input class="form-control" type="text" placeholder="Szukaj pracownika" name="searchText"
+        [(ngModel)]="searchedEmployee"> -->
+      <mat-form-field appearance="fill">
+        <mat-label>Szukaj pracownika</mat-label>
+        <input matInput placeholder="Szukaj pracownika" name="searchText" [(ngModel)]="searchedEmployee">
+      </mat-form-field>
+    </div>
+    <div class="list-wrapper">
+      <div class="employees-list" *ngIf="(employees | filter: searchedEmployee).length > 0">
+        <div class="head">
+          <span class="img"></span>
+          <span class="name">Imię i nazwisko</span>
+          <span class="position">Stanowisko</span>
+          <span class="email">E-mail</span>
+          <span class="phone">Telefon</span>
+          <span class="actions">Akcje</span>
+        </div>
+        <div class="single-employee" *ngFor="let employee of employees | filter: searchedEmployee; let i = index">
+          <img [src]="employee.gender == 0 ? '/assets/images/male-avatar.svg' : '/assets/images/female-avatar.svg'">
+          <p>{{employee.fullName}}</p>
+          <p>{{employee.contractName}}</p>
+          <a href="mailto:employee.email">{{employee.email}}</a>
+          <a href="tel:employee.phoneNumber">{{employee.phoneNumber}}</a>
+          <div class="buttons">
+            <button class="edit-user" routerLink="edit/{{employee.id}}" [state]={id:employee.id}><i
+                class="fas fa-cog"></i></button>
+            <button class="delete-user" mat-raised-button (click)="openDialog(employee.fullName, employee.id)"><i
+                class="fas fa-minus-circle"></i></button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </mat-card>
 </div>
