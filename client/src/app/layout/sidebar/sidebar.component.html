@@ -1,4 +1,3 @@
-<<<<<<< HEAD:ClientNew/src/app/layout/sidebar/sidebar.component.html
 <mat-nav-list>
   <nav>
     <a routerLink="/">
@@ -37,33 +36,3 @@
     </a>
   </nav>
 </mat-nav-list>
-=======
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list>
-      <a mat-list-item href="#">Link 1</a>
-      <a mat-list-item href="#">Link 2</a>
-      <a routerLink="/worktime" mat-list-item>Link 3</a>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <span>Client</span>
-    </mat-toolbar>
-        <app-main class="main"></app-main>
-  </mat-sidenav-content>
-
-</mat-sidenav-container>
->>>>>>> e71cf1a96e22c3097d2355caa133dd8cb9ac0b5a:ClientNew/src/app/core/sidebar/sidebar.component.html
