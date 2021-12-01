@@ -25,25 +25,28 @@ namespace HRMOptimus.Application.LeaveRegister.Command.AddLeaveRegister
         {
             try
             {
-                var duration = request.AddLeaveRegisterVm.WorkEnd - request.AddLeaveRegisterVm.WorkStart;
+                var duration = request.AddLeaveRegisterVm.LeaveEnd.Date - request.AddLeaveRegisterVm.LeaveStart.Date;
 
-                var user = await _context.Employees.Include(leaves => leaves.LeavesRegister)
+                var employee = await _context.Employees.Include(leaves => leaves.LeavesRegister)
                     .FirstOrDefaultAsync(x => x.Id == request.AddLeaveRegisterVm.EmployeeId);
-                if (user != null)
+                if (employee != null)
                 {
                     Domain.Entities.LeaveRegister leaveRegister = new Domain.Entities.LeaveRegister()
                     {
                         Duration = duration.Days,
-                        DateFrom = request.AddLeaveRegisterVm.WorkStart,
-                        DateTo = request.AddLeaveRegisterVm.WorkEnd,
+                        DateFrom = request.AddLeaveRegisterVm.LeaveStart.Date,
+                        DateTo = request.AddLeaveRegisterVm.LeaveEnd.Date,
                         EmployeeId = request.AddLeaveRegisterVm.EmployeeId,
-                        Employee = user,
-                        IsApproved = IsApproved.UnChecked
+                        Employee = employee,
+                        IsApproved = IsApproved.UnChecked,
+                        LeaveRegisterType = request.AddLeaveRegisterVm.LeaveRegisterType
                     };
 
-                    user.LeaveDaysLeft -= duration.Days;
-                    user.LeavesRegister.Add(leaveRegister);
+                    employee.LeaveDaysLeft -= duration.Days;
+                    employee.LeavesRegister.Add(leaveRegister);
                     _context.LeavesRegister.Add(leaveRegister);
+
+                    _context.Employees.Update(employee);
 
                     await _context.SaveChangesAsync(cancellationToken);
                     return leaveRegister.Id;

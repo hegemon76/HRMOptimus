@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using HRMOptimus.Domain.Enums;
 
 namespace HRMOptimus.Application.LeaveRegister.Command.ChangeStatusLeaveRegister
 {
@@ -27,9 +28,21 @@ namespace HRMOptimus.Application.LeaveRegister.Command.ChangeStatusLeaveRegister
 
                 if (user != null && leaveRegister != null)
                 {
+                    if (request.ChangeStatusLeaveRegisterVm.Status == leaveRegister.IsApproved)
+                        return 0;
+
+                    if (request.ChangeStatusLeaveRegisterVm.Status != IsApproved.Approved && leaveRegister.IsApproved == IsApproved.Approved)
+                    {
+                        user.LeaveDaysLeft += leaveRegister.Duration;
+                    }
+                    else if (request.ChangeStatusLeaveRegisterVm.Status == IsApproved.Approved && leaveRegister.IsApproved != IsApproved.Approved)
+                    {
+                        user.LeaveDaysLeft -= leaveRegister.Duration;
+                    }
+
                     leaveRegister.IsApproved = request.ChangeStatusLeaveRegisterVm.Status;
                     await _context.SaveChangesAsync(cancellationToken);
-                    return 1;
+                    return leaveRegister.Id;
                 }
                 return 0;
             }

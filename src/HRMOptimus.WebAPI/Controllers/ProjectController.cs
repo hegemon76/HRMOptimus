@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace HRMOptimus.WebAPI.Controllers
 {
+    [ApiController]
     public class ProjectController : BaseController
     {
         [HttpPost]

@@ -309,6 +309,9 @@ namespace HRMOptimus.Persistance.Migrations
                     b.Property<int>("IsApproved")
                         .HasColumnType("int");
 
+                    b.Property<int>("LeaveRegisterType")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("EmployeeId");

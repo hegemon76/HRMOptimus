@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace HRMOptimus.WebAPI.Controllers
 {
     [Route("/api/leavesRegister")]
+    [ApiController]
     public class LeavesRegisterController : BaseController
     {
         [HttpPost]
@@ -22,6 +23,7 @@ namespace HRMOptimus.WebAPI.Controllers
         [Route("getByEmployeeId")]
         public async Task<List<LeavesRegisterListVm>> GetByEmployeeId(int employeeId)
         {
+            var token = this.HttpContext.Request.Headers.ContainsKey("HeaderAuthorization");
             return await Mediator.Send(new GetLeavesRegisterByEmployeeIdQuery() { EmployeeId = employeeId });
         }
 
@@ -29,14 +31,14 @@ namespace HRMOptimus.WebAPI.Controllers
         [Route("delete")]
         public async Task<int> DeleteById(DeleteLeaveRegisterVm registerId)
         {
-            return await Mediator.Send(new DeleteLeaveRegisterCommand() {  DeleteLeaveRegisterVm = registerId});
+            return await Mediator.Send(new DeleteLeaveRegisterCommand() { DeleteLeaveRegisterVm = registerId });
         }
 
         [HttpPut]
         [Route("changeStatus")]
         public async Task<int> ChangeStatusById(ChangeStatusLeaveRegisterVm changeStatus)
         {
-            return await Mediator.Send(new ChangeStatusLeaveRegisterCommand() {  ChangeStatusLeaveRegisterVm = changeStatus});
+            return await Mediator.Send(new ChangeStatusLeaveRegisterCommand() { ChangeStatusLeaveRegisterVm = changeStatus });
         }
     }
 }
