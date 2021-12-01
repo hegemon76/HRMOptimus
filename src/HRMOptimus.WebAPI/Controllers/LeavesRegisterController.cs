@@ -21,7 +21,7 @@ namespace HRMOptimus.WebAPI.Controllers
 
         [HttpGet]
         [Route("getByEmployeeId")]
-        public async Task<List<LeavesRegisterListVm>> GetByEmployeeId(int employeeId)
+        public async Task<LeavesRegisterVm> GetByEmployeeId(int employeeId)
         {
             var token = this.HttpContext.Request.Headers.ContainsKey("HeaderAuthorization");
             return await Mediator.Send(new GetLeavesRegisterByEmployeeIdQuery() { EmployeeId = employeeId });

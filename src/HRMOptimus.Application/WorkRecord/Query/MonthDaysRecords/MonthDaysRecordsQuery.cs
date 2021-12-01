@@ -8,5 +8,6 @@ namespace HRMOptimus.Application.WorkRecord.Query.MonthDaysRecords
     {
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
+
     }
 }

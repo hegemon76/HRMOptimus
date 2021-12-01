@@ -18,7 +18,8 @@ namespace HRMOptimus.Application.Common.Services
         public UserContextService(IHttpContextAccessor httpContextAccessor)
         {
             _token = httpContextAccessor.HttpContext.Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
-            decodeToken();
+            if (!string.IsNullOrWhiteSpace(_token))
+                decodeToken();
         }
 
         private void decodeToken()
