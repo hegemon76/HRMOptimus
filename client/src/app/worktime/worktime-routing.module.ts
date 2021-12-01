@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { WorktimeComponent } from './worktime.component';
-import { WorkdayComponent } from './workday.component';
+import { WorkdayComponent } from './workday/workday.component';
 
 const routes: Routes = [
   {
