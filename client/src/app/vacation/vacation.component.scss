@@ -1,0 +1,124 @@
+.vacation-container {
+  padding: 24px;
+  box-sizing: border-box;
+  .container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: calc(65% - 12px) calc(35% - 12px);
+    grid-gap: 24px;
+    form {
+      grid-column: 1/3;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+
+      mat-form-field,
+      button {
+        width: 25%;
+        padding: 0 5px;
+        box-sizing: border-box;
+        border: 0;
+      }
+      button {
+        cursor: pointer;
+        height: 60px;
+        background-color: var(--main);
+        color: #fff;
+        font-weight: bold;
+      }
+    }
+    .wrapper {
+      display: grid;
+
+      .limits {
+        display: grid;
+        grid-template-columns: repeat(2, 150px);
+        grid-template-rows: 32px auto;
+        justify-items: center;
+        align-items: center;
+
+        h6 {
+          grid-column: 1/3;
+          text-align: left;
+          justify-self: left;
+          margin-bottom: 0;
+          padding-left: 0;
+        }
+
+        .spinner-wrapper {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          p {
+            position: absolute;
+            top: calc(50px - 16px);
+            left: calc(50% - 25px);
+            z-index: 2;
+            font-size: 32px;
+            font-weight: bold;
+            width: 50px;
+            line-height: 32px;
+            text-align: center;
+          }
+        }
+      }
+
+      h6 {
+        font-weight: bold;
+        padding-left: 30px;
+        line-height: 24px;
+        margin-bottom: 20px;
+      }
+      span {
+        display: inline-block;
+        margin: 10px 5px;
+      }
+      .pending {
+        position: relative;
+        &:before {
+          content: "";
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          display: block;
+          background-color: #fcf4a3;
+          position: absolute;
+        }
+      }
+      .accepted {
+        position: relative;
+        &:before {
+          content: "";
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          display: block;
+          background-color: #d9ffbf;
+          position: absolute;
+        }
+      }
+      .single-vacation {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .actions {
+          button {
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            margin: 0 5px;
+            background-color: transparent;
+            border: 0;
+            padding: 0;
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}

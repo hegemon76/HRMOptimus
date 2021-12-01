@@ -33,8 +33,9 @@ export class AccountService {
     );
   }
   createUser(res) {
-    this.user = res;
-    localStorage.setItem('user', JSON.stringify(this.user));
+    this.user = JSON.parse(atob(res.token.split('.')[1]));
+    localStorage.setItem('user', atob(res.token.split('.')[1]));
+    localStorage.setItem('token', res.token);
     window.location.reload();
   }
   getUser() {

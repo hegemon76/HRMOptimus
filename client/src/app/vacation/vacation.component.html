@@ -1,0 +1,75 @@
+<div class="vacation-container">
+  <mat-card class="container">
+    <form [formGroup]="form" (submit)="addVacation()">
+      <mat-form-field appearance="fill">
+        <mat-label>Typ urlopu</mat-label>
+        <mat-select formControlName="leaveRegisterType" required>
+          <mat-option *ngFor="let option of options" [value]="option.value"> {{option.label}} </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Od</mat-label>
+        <input formControlName="leaveStart" matInput [matDatepicker]="pickerStart" required>
+        <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+        <mat-datepicker #pickerStart></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Do</mat-label>
+        <input formControlName="leaveEnd" matInput [matDatepicker]="pickerEnd" required>
+        <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+        <mat-datepicker #pickerEnd></mat-datepicker>
+      </mat-form-field>
+      <input hidden formControlName="employeeId">
+      <button type="submit">Dodaj urlop</button>
+    </form>
+    <app-calendar></app-calendar>
+    <div class="wrapper">
+      <div class="limits">
+        <h6>Ilość dni urlopowych</h6>
+        <div class="spinner-wrapper">
+          <mat-progress-spinner [color]="color" [mode]="mode" [value]="value">
+          </mat-progress-spinner>
+          <p>40</p>
+          <span>Limit</span>
+        </div>
+        <div class="spinner-wrapper">
+          <mat-progress-spinner [color]="color2" [mode]="mode" [value]="value">
+          </mat-progress-spinner>
+          <p>10</p>
+          <span>Zaplanowane</span>
+        </div>
+      </div>
+      <div class="pending">
+        <h6>Zadeklarowane urlopy</h6>
+        <div *ngFor="let vac of employeeVacation">
+          <div class="single-vacation" *ngIf="vac.isApproved == 2">
+            <div class="dates">
+              <span>od {{vac.dateFrom | date:"dd-MM-YYYY"}} </span>
+              <span>do {{vac.dateTo | date:"dd-MM-YYYY"}}</span>
+            </div>
+            <div class="actions">
+              <button (click)="approveVacation(vac.id,employee.employeeId)"><img
+                  src="/assets/images/check-square-solid.svg" alt=""></button>
+              <button (click)="rejectVacation(vac.id,employee.employeeId)"><img
+                  src="/assets/images/minus-square-solid.svg" alt=""></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="accepted">
+        <h6>Zaakceptowane urlopy</h6>
+        <div *ngFor="let vac of employeeVacation">
+          <div class="single-vacation" *ngIf="vac.isApproved == 0">
+            <div class="dates">
+              <span>od {{vac.dateFrom | date:"dd-MM-YYYY"}} </span>
+              <span>do {{vac.dateTo | date:"dd-MM-YYYY"}}</span>
+            </div>
+            <div class="actions">
+              <button><img src="/assets/images/minus-square-solid.svg" alt=""></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>
