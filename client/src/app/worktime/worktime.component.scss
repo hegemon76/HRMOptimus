@@ -1,7 +1,7 @@
 .calendar-days {
   width: 140px;
   height: 80px;
-  background: rgb(238, 237, 237);
+  background: rgb(231, 231, 231);
   padding: 3px;
   margin: 3px;
   border-radius: 10px;
@@ -9,10 +9,9 @@
   cursor: pointer;
   font-weight: bold;
 
-
   &.previous-month,
   &.next-month {
-    color: grey;
+    color: rgb(190, 190, 190);
   }
 
   &.weekend {
@@ -24,7 +23,18 @@
     }
   }
 
-  &.weekend:hover{
+  &.today {
+    background-color: rgb(148, 185, 139);
+    color: #fff;
+  }
+
+  &.today:hover {
+    background-color: rgb(169, 204, 160);
+    color: #fff;
+  }
+
+
+  &.weekend:hover {
     background-color: rgb(56, 197, 56);
   }
 
@@ -36,11 +46,11 @@
   }
 }
 
-.calendar-days:hover{
-  background-color: rgb(192, 192, 192);;
+.calendar-days:hover {
+  background-color: rgb(192, 192, 192);
 }
 
-.next-btn{
+.next-btn {
   font-size: 20px;
   cursor: pointer;
   margin-top: 7px;

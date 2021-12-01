@@ -8,8 +8,8 @@
 <div *ngFor="let calendarItem of calendar; let i = index">
   <div class="flex-container flex-center">
     <div id="{{ day.id }}" routerLink="day/{{ day.id }}"
-      [state]="{ id: day.id, name: day.dayName, weekend: day.isWeekend }" class="calendar-days"
-      [class.weekend]="day.isWeekend" [ngClass]="day.className" *ngFor="let day of calendarItem">
+      [state]="{ id: day.id, name: day.dayName, weekend: day.isWeekend }" class="calendar-days {{day.className}}"
+      [class.weekend]="day.isWeekend" [ngClass]="{'today': day.id === today}" *ngFor="let day of calendarItem">
       <span class="day">{{ day.day }}</span>
     </div>
   </div>
