@@ -29,13 +29,13 @@
         <div class="spinner-wrapper">
           <mat-progress-spinner [color]="color" [mode]="mode" [value]="value">
           </mat-progress-spinner>
-          <p>40</p>
+          <p>{{employeeVacationLimit}}</p>
           <span>Limit</span>
         </div>
         <div class="spinner-wrapper">
           <mat-progress-spinner [color]="color2" [mode]="mode" [value]="value2">
           </mat-progress-spinner>
-          <p>27</p>
+          <p>{{employeeVacationLeft}}</p>
           <span>Pozostałe</span>
         </div>
       </div>
@@ -65,7 +65,19 @@
               <span>do {{vac.dateTo | date:"dd-MM-YYYY"}}</span>
             </div>
             <div class="actions">
-              <button><img src="/assets/images/minus-square-solid.svg" alt=""></button>
+              <button (click)="rejectVacation(vac.id,employee.employeeId)"><img
+                  src="/assets/images/minus-square-solid.svg" alt=""></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="rejected">
+        <h6>Odrzucone urlopy</h6>
+        <div *ngFor="let vac of employeeVacation">
+          <div class="single-vacation" *ngIf="vac.isApproved == 1">
+            <div class="dates">
+              <span>od {{vac.dateFrom | date:"dd-MM-YYYY"}} </span>
+              <span>do {{vac.dateTo | date:"dd-MM-YYYY"}}</span>
             </div>
           </div>
         </div>

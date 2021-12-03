@@ -12,6 +12,7 @@ export class EmployeesService {
   getEmployeesurl = `${this.baseUrl}employees?PageNumber=1&PageSize=1000&SortBy=FullName&SortDirection=1`;
   getEmployeeUrl = `${this.baseUrl}employee/details`;
   deleteEmployeeUrl = `${this.baseUrl}employee/delete`;
+  addEmployeeUrl = `${this.baseUrl}register`;
   constructor(private http: HttpClient) {}
 
   getEmployees(): Observable<any> {
@@ -44,6 +45,12 @@ export class EmployeesService {
           employeeId: id
         }
       })
+      .pipe(map((res: any) => res));
+  }
+
+  addEmployee(form): Observable<any> {
+    return this.http
+      .post(this.addEmployeeUrl, form)
       .pipe(map((res: any) => res));
   }
 }

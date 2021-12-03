@@ -1,6 +1,7 @@
     <mat-card class="employee-data" *ngIf="isEmployeeLoaded">
       <div class="search-wrapper">
-        <mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Wybierz pracownika...</mat-label>
           <input type="select" placeholder="Wybierz pracownika..." aria-label="Number" matInput [matAutocomplete]="auto"
             [formControl]="myControl">
         </mat-form-field>

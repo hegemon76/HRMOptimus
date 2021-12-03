@@ -1,0 +1,7 @@
+<div class="employee-add-wrapper">
+  <ng-template #container>
+  </ng-template>
+  <button (click)="addComponent()" class="add-row">+ Następny pracownik</button>
+  <button *ngIf="components.length == 1" (click)="addEmployees()" class="add-row">Dodaj pracownika</button>
+  <button *ngIf="components.length > 1" (click)="addEmployees()" class="add-row">Dodaj pracowników</button>
+</div>

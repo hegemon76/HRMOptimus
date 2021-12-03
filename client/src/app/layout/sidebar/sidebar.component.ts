@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AccountService } from '../../account/account.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,11 +9,13 @@ import { Component, OnInit } from '@angular/core';
 export class SidebarComponent implements OnInit {
   checked = false;
   darkMode = true;
+  user: any;
 
-  constructor() {}
+  constructor(private accountService: AccountService) {}
 
   ngOnInit(): void {
     this.checkWebsiteMode();
+    this.user = this.accountService.getUser();
   }
 
   changeWebsiteMode() {

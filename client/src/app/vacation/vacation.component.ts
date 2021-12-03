@@ -17,6 +17,8 @@ export class VacationComponent implements OnInit {
   @ViewChild(CalendarComponent) calendar: CalendarComponent;
   form: FormGroup;
   employee: any;
+  employeeVacationLimit: any;
+  employeeVacationLeft: any;
   employeeVacation: any[];
   options: any[] = [
     {
@@ -51,9 +53,9 @@ export class VacationComponent implements OnInit {
     private vacationService: VacationService,
     private router: Router
   ) {
-    this.router.routeReuseStrategy.shouldReuseRoute = function() {
-      return false;
-    };
+    // this.router.routeReuseStrategy.shouldReuseRoute = function() {
+    //   return false;
+    // };
   }
 
   ngOnInit(): void {
@@ -72,8 +74,9 @@ export class VacationComponent implements OnInit {
   getEmployeeVacation(id) {
     return new Promise((resolve, reject) => {
       this.vacationService.getEmployeeVacations(id).subscribe(res => {
-        console.log(res);
-        this.employeeVacation = res;
+        this.employeeVacationLimit = res.leaveDaysByContract;
+        this.employeeVacationLeft = res.leaveDaysLeft;
+        this.employeeVacation = res.leaveRecords;
       });
       resolve('done');
     });
@@ -87,6 +90,8 @@ export class VacationComponent implements OnInit {
           var colorToFill;
           if (d.isApproved == 2) {
             colorToFill = '#fcf4a3';
+          } else if (d.isApproved == 1) {
+            colorToFill = '#d38891';
           } else if (d.isApproved == 0) {
             colorToFill = '#d9ffbf';
           }
@@ -132,7 +137,6 @@ export class VacationComponent implements OnInit {
           'T23:59:59.404Z',
         employeeId: this.form.getRawValue().employeeId
       };
-      console.log(vacationFormatted);
       this.vacationService.addVacation(vacationFormatted).subscribe(res => {
         this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
           this.router.navigate(['/vacation']);

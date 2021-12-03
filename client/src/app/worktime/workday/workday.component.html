@@ -6,7 +6,7 @@
 <div class="workday-wrapper">
   <div class="info-wrapper">
     <div class="day-info">
-      <p><span>Pracownik:</span> {{user.firstName}} {{user.lastName}}</p>
+      <p><span>Pracownik:</span> {{user.fullName}}</p>
       <p><span>Dzień:</span> {{ id }} </p>
     </div>
     <button (click)="addElement()" class="add">+ Dodaj pozycję</button>
@@ -38,7 +38,7 @@
     </mat-form-field>
     <mat-form-field class="example-full-width" appearance="fill" class="details">
       <mat-label>Opis</mat-label>
-      <textarea matInput></textarea>
+      <textarea matInput value="{{day.name}}"></textarea>
     </mat-form-field>
   </div>
   <div #parent> </div>

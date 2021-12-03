@@ -50,11 +50,13 @@ export class EmployeeEditComponent implements OnInit {
       this.areEmployeesLoaded = true;
     });
 
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map(value => (typeof value === 'string' ? value : value.name)),
-      map(name => (name ? this.optionsFilter(name) : this.options.slice()))
-    );
+    setTimeout(() => {
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(''),
+        map(value => (typeof value === 'string' ? value : value.name)),
+        map(name => (name ? this.optionsFilter(name) : this.options.slice()))
+      );
+    }, 1000);
   }
 
   fillOptions(res) {
