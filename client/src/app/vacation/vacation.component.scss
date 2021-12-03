@@ -99,6 +99,18 @@
           position: absolute;
         }
       }
+      .rejected {
+        position: relative;
+        &:before {
+          content: "";
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          display: block;
+          background-color: #d38891;
+          position: absolute;
+        }
+      }
       .single-vacation {
         display: flex;
         justify-content: space-between;

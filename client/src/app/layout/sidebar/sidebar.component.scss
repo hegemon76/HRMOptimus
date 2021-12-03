@@ -17,4 +17,26 @@
   z-index: 1;
 }
 
-
+mat-nav-list {
+  button {
+    height: 100%;
+    background-position: center;
+  }
+  span {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+  i {
+    text-align: left;
+    min-width: 32px;
+  }
+  .submenu {
+    li {
+      padding-left: 20px;
+      font-size: 14px;
+      background-color: var(--hovers);
+    }
+  }
+}

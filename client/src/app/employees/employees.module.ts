@@ -14,13 +14,24 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import {
+  EmployeeAddComponent,
+  FillFormDialog
+} from './employee-add/employee-add.component';
+import { EmployeeAddSingleFormComponent } from './employee-add/employee-add-single-form/employee-add-single-form.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
     EmployeesListComponent,
     FilterPipe,
     EmployeeEditComponent,
-    DeleteEmployeeDialog
+    DeleteEmployeeDialog,
+    EmployeeAddComponent,
+    EmployeeAddSingleFormComponent,
+    FillFormDialog
   ],
   imports: [
     CommonModule,
@@ -31,7 +42,10 @@ import { MatInputModule } from '@angular/material/input';
     MatAutocompleteModule,
     MatDialogModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
 export class employeesModule {}

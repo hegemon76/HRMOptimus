@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
+import { toChildArray } from 'preact';
 
 interface CalendarItem {
   id: string;
@@ -14,15 +15,20 @@ interface CalendarItem {
   templateUrl: './worktime.component.html',
   styleUrls: ['./worktime.component.scss']
 })
+
 export class WorktimeComponent implements OnInit {
   date = moment().locale('pl');
   calendar: Array<CalendarItem[]> = [];
+  today;
+  all = true;
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
     this.calendar = this.createCalendar(this.date);
+    this.today = moment().format('yyyy-MM-DD');
   }
+
   createCalendar(month: moment.Moment) {
     const daysInMonth = month.daysInMonth();
     const startOfMonth = month.startOf('month').format('ddd');
@@ -33,10 +39,14 @@ export class WorktimeComponent implements OnInit {
         .weekday(dow)
         .format('ddd')
     );
+
     const calendar: CalendarItem[] = [];
+
     const daysBefore = weekdaysShort.indexOf(startOfMonth);
+
     const daysAfter =
       weekdaysShort.length - 1 - weekdaysShort.indexOf(endOfMonth);
+
     const clone = month.startOf('months').clone();
     if (daysBefore > 0) {
       clone.subtract(daysBefore, 'days');
@@ -68,7 +78,7 @@ export class WorktimeComponent implements OnInit {
   createCalendarItem(data: moment.Moment, className: string) {
     const dayName = data.format('ddd');
     return {
-      id: data.format('DD') + data.format('MM') + data.format('YYYY'),
+      id: data.format('YYYY') + "-" + data.format('MM') + "-" + data.format('DD'),
       day: data.format('D'),
       dayName,
       className,

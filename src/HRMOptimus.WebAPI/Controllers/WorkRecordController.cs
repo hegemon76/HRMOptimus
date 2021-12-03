@@ -1,5 +1,6 @@
 ﻿using HRMOptimus.Application.WorkRecord.Command.AddWorkRecord;
 using HRMOptimus.Application.WorkRecord.Command.RemoveWorkRecord;
+using HRMOptimus.Application.WorkRecord.Command.UpdateWorkRecord;
 using HRMOptimus.Application.WorkRecord.Query.DayWorkRecords;
 using HRMOptimus.Application.WorkRecord.Query.MonthDaysRecords;
 using Microsoft.AspNetCore.Mvc;
@@ -14,11 +15,20 @@ namespace HRMOptimus.WebAPI.Controllers
     {
         [HttpPost]
         [Route("api/workrecord/add")]
-        public async Task<ActionResult<int>> AddNewWorkRecord([FromBody] AddWorkRecordVm model)
+        public async Task<ActionResult<int>> AddWorkRecord([FromBody] AddWorkRecordVm model)
         {
             var id = await Mediator.Send(new AddWorkRecordCommand() { AddWorkRecordVm = model });
 
             return id;
+        }
+
+        [HttpPut]
+        [Route("api/workrecord/update")]
+        public async Task<ActionResult> UpdateWorkRecord([FromBody] UpdateWorkRecordVm model)
+        {
+            await Mediator.Send(new UpdateWorkRecordCommand() { UpdateWorkRecordVm = model });
+
+            return Ok();
         }
 
         [HttpGet]

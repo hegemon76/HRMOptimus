@@ -6,8 +6,11 @@
 
   <ItemGroup>
     <Compile Remove="Account\Query\**" />
+    <Compile Remove="logs\**" />
     <EmbeddedResource Remove="Account\Query\**" />
+    <EmbeddedResource Remove="logs\**" />
     <None Remove="Account\Query\**" />
+    <None Remove="logs\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,8 +30,4 @@
   <ItemGroup>
     <ProjectReference Include="..\HRMOptimus.Domain\HRMOptimus.Domain.csproj" />
   </ItemGroup>
-	
-	<ItemGroup>
-		<Folder Include="logs\" />
-	</ItemGroup>
 </Project>

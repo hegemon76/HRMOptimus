@@ -1,0 +1,83 @@
+ <mat-card class="single-employyee-add">
+   <form [formGroup]="form" action="">
+     <h6>Dane osobowe:</h6>
+     <mat-form-field appearance="fill">
+       <mat-label>Imię</mat-label>
+       <input matInput formControlName="firstName">
+     </mat-form-field>
+     <mat-form-field appearance="fill">
+       <mat-label>Nazwisko</mat-label>
+       <input matInput formControlName="lastName">
+     </mat-form-field>
+     <mat-form-field appearance="fill">
+       <mat-label>Płeć</mat-label>
+       <mat-select formControlName="gender">
+         <mat-option value="0">Mężczyzna</mat-option>
+         <mat-option value="1">Kobieta</mat-option>
+       </mat-select>
+     </mat-form-field>
+     <mat-form-field appearance="fill">
+       <mat-label>Data urodzenia</mat-label>
+       <input matInput [matDatepicker]="picker" formControlName="birthDate">
+       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+       <mat-datepicker #picker></mat-datepicker>
+     </mat-form-field>
+     <h6>Dane kontaktowe:</h6>
+     <mat-form-field appearance="fill">
+       <mat-label>E-mail</mat-label>
+       <input matInput formControlName="email">
+     </mat-form-field>
+     <mat-form-field appearance="fill">
+       <mat-label>Telefon</mat-label>
+       <input matInput formControlName="phoneNumber">
+     </mat-form-field>
+     <h6>Adres:</h6>
+     <mat-form-field appearance="fill">
+       <mat-label>Ulica</mat-label>
+       <input matInput formControlName="street">
+     </mat-form-field>
+     <mat-form-field appearance="fill">
+       <mat-label>Numer Budynku</mat-label>
+       <input matInput formControlName="buildingNumber">
+     </mat-form-field>
+     <mat-form-field appearance="fill">
+       <mat-label>Numer mieszkania</mat-label>
+       <input matInput formControlName="houseNumber">
+     </mat-form-field>
+     <mat-form-field appearance="fill">
+       <mat-label>Kod pocztowy</mat-label>
+       <input matInput formControlName="zipCode">
+     </mat-form-field>
+     <mat-form-field appearance="fill">
+       <mat-label>Miejscowość</mat-label>
+       <input matInput formControlName="city">
+     </mat-form-field>
+     <mat-form-field appearance="fill">
+       <mat-label>Kraj</mat-label>
+       <input matInput formControlName="country">
+     </mat-form-field>
+     <h6>Stanowisko:</h6>
+     <mat-form-field appearance="fill">
+       <mat-label>Stanowisko</mat-label>
+       <input matInput formControlName="contractName">
+     </mat-form-field>
+     <mat-form-field appearance="fill">
+       <mat-label>Rodzaj umowy</mat-label>
+       <mat-select formControlName="contractType">
+         <mat-option value="0">Umowa zlecenie</mat-option>
+         <mat-option value="1">Umowa o pracę</mat-option>
+         <mat-option value="2">B2B</mat-option>
+       </mat-select>
+     </mat-form-field>
+     <mat-form-field appearance="fill">
+       <mat-label>Ilość dni urlopowych</mat-label>
+       <input matInput formControlName="leaveDays">
+     </mat-form-field>
+     <h6>Hasło:</h6>
+     <mat-form-field appearance="fill">
+       <mat-label>Hasło</mat-label>
+       <input type="password" matInput formControlName="password">
+     </mat-form-field>
+   </form>
+   <button (click)="remove()"><img src="/assets/images/minus-square-solid.svg" alt=""></button>
+ </mat-card>
