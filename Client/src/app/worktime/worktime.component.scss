@@ -1,0 +1,176 @@
+.calendar-days {
+  width: 140px;
+  height: 80px;
+  background: rgb(231, 231, 231);
+  padding: 3px;
+  margin: 3px;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: bold;
+
+  &.previous-month,
+  &.next-month {
+    color: rgb(190, 190, 190);
+  }
+
+  &.weekend {
+    background-color: rgb(37, 168, 37);
+    color: white;
+
+    .day {
+      line-height: 80px;
+    }
+
+    .hours {
+      display: none;
+    }
+
+    .time {
+      display: none;
+    }
+  }
+
+  &.today {
+    border: 2px solid rgb(117, 117, 117);
+  }
+
+  &.weekend:hover {
+    background-color: rgb(56, 197, 56);
+  }
+
+  .day {
+    font-weight: bold;
+    font-size: 14px;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 35px;
+  }
+
+  .hours {
+    font-size: 10px;
+    color: gray;
+  }
+
+  .time {
+    font-size: 10px;
+    color: gray;
+  }
+}
+
+.calendar-days:hover {
+  background-color: rgb(192, 192, 192);
+}
+
+.next-btn {
+  font-size: 20px;
+  cursor: pointer;
+  margin-top: 7px;
+  color: var(--font);
+}
+
+.flex-container {
+  display: flex;
+}
+
+.flex-center {
+  align-items: center;
+  justify-content: center;
+}
+
+h4 {
+  font-weight: bold;
+}
+
+#main {
+  margin-top: 40px;
+}
+
+button,
+h4 {
+  border: none;
+  background: var(--main-contrast);
+  margin-bottom: 20px;
+  margin-top: 50px;
+  color: var(--font);
+}
+
+b {
+  text-transform: capitalize;
+  font-size: 20px;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.days-details {
+  width: auto;
+  max-width: 1015px;
+  height: auto;
+  max-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin: 0px auto;
+  margin-bottom: 10px;
+
+  p {
+    margin: 5px auto;
+    width: 45px;
+    padding: auto;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0px auto;
+    text-align: center;
+  }
+}
+
+.legend {
+  width: auto;
+  max-width: 70%;
+  height: auto;
+  max-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+
+  .box {
+    width: 15px;
+    height: 15px;
+    margin: 5px;
+    border-radius: 10px;
+  }
+
+  p {
+    margin-right: 25px;
+  }
+
+  .today {
+    background-color: rgb(117, 117, 117);
+  }
+
+  .week {
+    background-color: rgb(37, 168, 37);
+  }
+
+  .vacation {
+    background-color: cornflowerblue;
+  }
+
+  .work-on-premise {
+    background-color: rgb(226, 164, 105);
+  }
+
+  .work-remote {
+    background-color: rgb(209, 240, 160);
+  }
+}

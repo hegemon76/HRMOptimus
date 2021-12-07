@@ -1,56 +1,40 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
+import { AppRoutingModule } from './app-routing.module';
+import { AccountModule } from './account/account.module';
 import { AppComponent } from './app.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { MainComponent } from './main/main.component';
-import { TopbarComponent } from './main/topbar/topbar.component';
-import { ContentComponent } from './main/content/content.component';
-import { WorktimeComponent } from './main/content/worktime/worktime.component';
-import { WorkersComponent } from './main/content/workers/workers.component';
-import { VacationComponent } from './main/content/vacation/vacation.component';
-import { VariablesService } from './variables.service';
-import { FullCalendarModule } from '@fullcalendar/angular';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import listPlugin from '@fullcalendar/list';
-import { DashboardComponent } from './main/content/dashboard/dashboard.component';
-import { WorkdayComponent } from './main/content/worktime/workday.component';
-
-FullCalendarModule.registerPlugins([
-  // register FullCalendar plugins
-  dayGridPlugin,
-  timeGridPlugin,
-  interactionPlugin,
-  listPlugin
-]);
-
+import { HeaderComponent } from './layout/header/header.component';
+import { SidebarComponent } from './layout/sidebar/sidebar.component';
+import { MainComponent } from './layout/main/main.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 @NgModule({
   declarations: [
     AppComponent,
     SidebarComponent,
     MainComponent,
-    TopbarComponent,
-    ContentComponent,
-    WorktimeComponent,
-    VacationComponent,
-    DashboardComponent,
-    WorkersComponent,
-    WorkdayComponent
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot([
-      { path: '', component: DashboardComponent },
-      { path: 'worktime', component: WorktimeComponent },
-      { path: 'vacation', component: VacationComponent },
-      { path: 'workers', component: WorkersComponent },
-      { path: 'workday', component: WorkdayComponent }
-    ]),
-    FullCalendarModule
+    AppRoutingModule,
+    MatSlideToggleModule,
+    AccountModule,
+    BrowserAnimationsModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule
   ],
-  providers: [VariablesService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -1,0 +1,66 @@
+    <mat-card class="employee-data" *ngIf="isEmployeeLoaded">
+      <div class="search-wrapper">
+        <mat-form-field appearance="fill">
+          <mat-label>Wybierz pracownika...</mat-label>
+          <input type="select" placeholder="Wybierz pracownika..." aria-label="Number" matInput [matAutocomplete]="auto"
+            [formControl]="myControl">
+        </mat-form-field>
+        <button (click)="changeUser()">Zmień</button>
+      </div>
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let option of filteredOptions  | async" [value]="option"> {{option.firstName}}
+          {{option.lastName}}</mat-option>
+      </mat-autocomplete>
+      <img [src]="employee.gender == 0 ? '/assets/images/male-avatar.svg' : '/assets/images/female-avatar.svg'">
+      <div class="name-rapper">
+        <mat-card-title>{{employee.lastName}}</mat-card-title>
+        <mat-card-subtitle>{{employee.firstName}}</mat-card-subtitle>
+        <mat-card-content>
+          <p class="date">Data urodzenia: {{employee.birthDate | date: 'dd MM YYYY'}}.r</p>
+        </mat-card-content>
+      </div>
+      <div class="contact-wrapper">
+        <a href="mailto:{{employee.email}}">{{employee.email}}</a>
+        <a href="tel:{{employee.phoneNumber}}">{{employee.phoneNumber}}</a>
+      </div>
+      <div class="other-data">
+        <h4>Adres:</h4>
+        <table>
+          <tr>
+            <td>Ulica: </td>
+            <td>{{employee.address.street}}</td>
+          </tr>
+          <tr>
+            <td>Numer budynku: </td>
+            <td>{{employee.address.buildingNumber}}</td>
+          </tr>
+          <tr>
+            <td>Miasto: </td>
+            <td>{{employee.address.city}}</td>
+          </tr>
+          <tr>
+            <td>Kod pocztowy: </td>
+            <td>{{employee.address.zipCode}}</td>
+          </tr>
+          <tr>
+            <td>Kraj: </td>
+            <td>{{employee.address.country}}</td>
+          </tr>
+        </table>
+        <h4>Umowa:</h4>
+        <table>
+          <tr>
+            <td>Nazwa umowy: </td>
+            <td>{{employee.contract.contractName}}</td>
+          </tr>
+          <tr>
+            <td>Data podpisania umowy: </td>
+            <td>{{employee.contract.createdOn | date: 'dd MM YYYY' }}.r</td>
+          </tr>
+          <tr>
+            <td>Ilośc dni urlopowych: </td>
+            <td>{{employee.contract.leaveDays}} dni</td>
+          </tr>
+        </table>
+      </div>
+    </mat-card>

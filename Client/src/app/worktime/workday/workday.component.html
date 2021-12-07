@@ -1,0 +1,45 @@
+<div class="header">
+  <span>Edytuj czas pracy</span>
+  <button class="back" routerLink="/worktime"><i class="fas fa-times"></i></button>
+  <button class="save">Zapisz</button>
+</div>
+<div class="workday-wrapper">
+  <div class="info-wrapper">
+    <div class="day-info">
+      <p><span>Pracownik:</span> {{user.fullName}}</p>
+      <p><span>Dzień:</span> {{ id }} </p>
+    </div>
+    <button (click)="addElement()" class="add">+ Dodaj pozycję</button>
+  </div>
+  <app-entry *ngIf="entriesCount == 0"></app-entry>
+  <div class="times" *ngFor="let day of workDays">
+    <button (click)="deleteWorkDayEntry($event)" id="{{day.id}}" class="deleteEntry"><i class="fas fa-times"></i>
+    </button>
+    <mat-form-field class="example-form-field hoursFrom" appearance="fill">
+      <mat-label>Godz. od</mat-label>
+      <input matInput type="text" value="{{day.workStart | date:'hh:mm'}}">
+    </mat-form-field>
+    <mat-form-field class="example-form-field hoursTo" appearance="fill">
+      <mat-label>Godz. do</mat-label>
+      <input matInput type="text" value="{{day.workStop | date:'hh:mm'}}">
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="type">
+      <mat-label>Tryb</mat-label>
+      <mat-select>
+        <mat-option value="zdalna">Praca zdalna</mat-option>
+        <mat-option value="biuro">Praca w biurze</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="project">
+      <mat-label>Projekt</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let project of projects" [value]="project.name">{{project.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill" class="details">
+      <mat-label>Opis</mat-label>
+      <textarea matInput value="{{day.name}}"></textarea>
+    </mat-form-field>
+  </div>
+  <div #parent> </div>
+</div>

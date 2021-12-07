@@ -1,10 +1,18 @@
-<div class="container">
-  <app-sidebar
-    class="sidebar"
-    [ngClass]="{ 'sidebar-alt': switch }"
-  ></app-sidebar>
-  <app-main></app-main>
+<div *ngIf="!isVerifiedUser" class="login-wrapper">
+  <app-login class="login"></app-login>
 </div>
-<button class="switch" (click)="switchTest()" [ngClass]="{ changed: switch }">
-  Switch
-</button>
+<div *ngIf="isVerifiedUser" class="root-wrapper" [ngClass]="{ dark: darkMode, light: !darkMode }">
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+      <div class="logo"></div>
+      <app-sidebar></app-sidebar>
+    </mat-sidenav>
+    <mat-sidenav-content class="content">
+      <app-header></app-header>
+      <app-main class="main"></app-main>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+<!-- <app-sidebar class="sidebar"></app-sidebar>
+<app-main class="main"></app-main> -->
