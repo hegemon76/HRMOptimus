@@ -1,9 +1,12 @@
 ﻿using HRMOptimus.Application.Common.Interfaces;
 using HRMOptimus.Domain.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace HRMOptimus.Persistance
 {
@@ -13,33 +16,29 @@ namespace HRMOptimus.Persistance
         {
             services.AddDbContext<HRMOptimusDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("ConnectionStringName")));
-
-            //services.AddAuthentication(options =>
-            //{
-            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            //})
-
-            // Adding Jwt Bearer
-            //.AddJwtBearer(options =>
-            //{
-            //    options.SaveToken = true;
-            //    options.RequireHttpsMetadata = false;
-            //    options.TokenValidationParameters = new TokenValidationParameters()
-            //    {
-            //        ValidateIssuer = true,
-            //        ValidateAudience = true,
-            //        ValidAudience = configuration["JWT:ValidAudience"],
-            //        ValidIssuer = configuration["JWT:ValidIssuer"],
-            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
-            //    };
-            //});
-
+          
             services.AddScoped<IHRMOptimusDbContext>(provider => provider.GetService<HRMOptimusDbContext>());
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<HRMOptimusDbContext>();
+            services.AddIdentityCore<ApplicationUser>(cfg =>
+            {
+                cfg.User.RequireUniqueEmail = true;
+            }
+            ).AddRoles<IdentityRole>()
+            .AddUserManager<UserManager<ApplicationUser>>()
+            .AddEntityFrameworkStores<HRMOptimusDbContext>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+               .AddJwtBearer(options =>
+               {
+                   options.TokenValidationParameters = new TokenValidationParameters
+                   {
+                       ValidateIssuerSigningKey = true,
+                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["TokenKey"])),
+                       ValidateIssuer = false,
+                       ValidateAudience = false,
+                   };
+
+               });
 
             return services;
         }

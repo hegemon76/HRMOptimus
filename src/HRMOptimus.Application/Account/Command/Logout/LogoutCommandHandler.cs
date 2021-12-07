@@ -8,15 +8,11 @@ namespace HRMOptimus.Application.Account.Command.Logout
 {
     public class LogoutCommandHandler : IRequestHandler<LogoutCommand, string>
     {
-        private readonly SignInManager<ApplicationUser> _signInManager;
-
-        public LogoutCommandHandler(SignInManager<ApplicationUser> signInManager)
+        public LogoutCommandHandler()
         {
-            _signInManager = signInManager;
         }
         public async Task<string> Handle(LogoutCommand request, CancellationToken cancellationToken)
         {
-            await _signInManager.SignOutAsync();
             return "Logged off";
         }
     }

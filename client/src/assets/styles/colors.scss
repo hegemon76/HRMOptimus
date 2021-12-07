@@ -1,0 +1,24 @@
+[data-theme="light"] {
+  --main: #0b3675;
+  --main-contrast: #f0f0f0;
+  --topbar: whitesmoke;
+  --font: black;
+  --buttons: #1869ff;
+  --buttons-hover: #0058fc;
+  --shadows: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  --hovers: rgba(25, 25, 51, 0.479);
+  --single-employee: #fff;
+  --input-border: rgb(245, 242, 242);
+}
+[data-theme="dark"] {
+  --main: #12191d;
+  --main-contrast: #363636;
+  --topbar: rgb(31, 31, 31);
+  --font: #fff;
+  --buttons: rgb(2, 196, 2);
+  --buttons-hover: rgb(0, 230, 0);
+  --shadows: rgba(0, 0, 0, 0.2) 0px 7px 29px 0px;
+  --hovers: rgba(5, 5, 5, 0.479);
+  --single-employee: #4d4d4d;
+  --input-border: rgb(133, 133, 133);
+}

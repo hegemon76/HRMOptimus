@@ -1,8 +1,8 @@
 ﻿using HRMOptimus.Application.WorkRecord.Command.AddWorkRecord;
 using HRMOptimus.Application.WorkRecord.Command.RemoveWorkRecord;
+using HRMOptimus.Application.WorkRecord.Command.UpdateWorkRecord;
 using HRMOptimus.Application.WorkRecord.Query.DayWorkRecords;
 using HRMOptimus.Application.WorkRecord.Query.MonthDaysRecords;
-using HRMOptimus.Application.WorkRecord.Query.WorkRecordDetails;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,29 +10,30 @@ using System.Threading.Tasks;
 
 namespace HRMOptimus.WebAPI.Controllers
 {
+    [ApiController]
     public class WorkRecordController : BaseController
     {
         [HttpPost]
         [Route("api/workrecord/add")]
-        public async Task<ActionResult<int>> AddNewWorkRecord([FromBody] AddWorkRecordVm model)
+        public async Task<ActionResult<int>> AddWorkRecord([FromBody] AddWorkRecordVm model)
         {
             var id = await Mediator.Send(new AddWorkRecordCommand() { AddWorkRecordVm = model });
 
             return id;
         }
 
-        [HttpGet]
-        [Route("api/workrecord/details/")]
-        public async Task<ActionResult<WorkRecordDetailsVm>> WorkRecordDetails(int workRecordId)
+        [HttpPut]
+        [Route("api/workrecord/update")]
+        public async Task<ActionResult> UpdateWorkRecord([FromBody] UpdateWorkRecordVm model)
         {
-            var workRecord = await Mediator.Send(new WorkRecordDetailsQuery() { WorkRecordId = workRecordId });
+            await Mediator.Send(new UpdateWorkRecordCommand() { UpdateWorkRecordVm = model });
 
-            return workRecord;
+            return Ok();
         }
 
         [HttpGet]
         [Route("api/workrecord/day/")]
-        public async Task<ActionResult<List<WorkRecordVm>>> WorkDayRecords(DateTime dayWork)
+        public async Task<ActionResult<List<WorkRecordsDetailsVm>>> WorkDayRecords(DateTime dayWork)
         {
             var dayWorkRecords = await Mediator.Send(new DayWorkRecordsQuery() { DayWork = dayWork });
 

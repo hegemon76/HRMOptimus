@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48" height="48" viewBox="0 0 48 48">
+  <defs>
+    <clipPath id="clip-path">
+      <circle id="Ellipse_5" data-name="Ellipse 5" cx="24" cy="24" r="24"/>
+    </clipPath>
+  </defs>
+  <g id="avatar-svgrepo-com" transform="translate(-0.001)">
+    <circle id="Ellipse_4" data-name="Ellipse 4" cx="24" cy="24" r="24" transform="translate(0.001 0)" fill="#a6d9ea"/>
+    <g id="Group_7" data-name="Group 7" transform="translate(0.001 0)">
+      <g id="Group_6" data-name="Group 6" clip-path="url(#clip-path)">
+        <path id="Path_15" data-name="Path 15" d="M48.486,32.416A8.07,8.07,0,0,0,42.264,33.8c-2.864,2.173-1.343,5.264-4.108,7.733s-2.37,4.69-.839,7.406-1.93,3.985-.954,7.3c.946,3.212,4.311,4.855,4.311,4.855H55.732s4.856-3.59,5.1-6.207-2.484-3.92-1.694-5.747a5.923,5.923,0,0,0-.97-6.392c-2.239-2.469-.5-2.984-2.191-6.4C54.033,32.409,51.2,31.554,48.486,32.416Z" transform="translate(-24.145 -21.464)" fill="#471b18"/>
+        <g id="Group_5" data-name="Group 5" transform="translate(10.406 13.453)">
+          <path id="Path_16" data-name="Path 16" d="M56.475,107.33c-1.547-2.929-11.494-4.766-11.494-4.766s-9.947,1.838-11.494,4.766c-1.144,4.064-2.1,9.228-2.1,9.228H58.575A45.2,45.2,0,0,0,56.475,107.33Z" transform="translate(-31.387 -82.011)" fill="#f1c9a5"/>
+          <path id="Path_17" data-name="Path 17" d="M72.387,102.564s9.947,1.838,11.494,4.766a45.2,45.2,0,0,1,2.1,9.228H72.387Z" transform="translate(-58.793 -82.011)" fill="#e4b692"/>
+          <rect id="Rectangle_23" data-name="Rectangle 23" width="5.416" height="9.063" transform="translate(10.886 14.599)" fill="#f1c9a5"/>
+          <rect id="Rectangle_24" data-name="Rectangle 24" width="2.707" height="9.063" transform="translate(13.594 14.599)" fill="#e4b692"/>
+          <path id="Path_18" data-name="Path 18" d="M64.219,88.806c.487,1.4,2.453,2.2,3.9,2.2a4.864,4.864,0,0,0,1.519-.248V84.606H64.219Z" transform="translate(-53.333 -70.007)" fill="#ddac8c" opacity="0.1"/>
+          <path id="Path_19" data-name="Path 19" d="M65.312,49.454c0-5.661-3.117-8.88-6.963-8.88s-6.963,3.219-6.963,8.88S54.5,59.7,58.35,59.7,65.312,55.115,65.312,49.454Z" transform="translate(-44.756 -40.574)" fill="#f1c9a5"/>
+          <path id="Path_20" data-name="Path 20" d="M86.292,67.18c-1.262-.141-2.114-1.586-1.9-3.227s1.406-2.861,2.669-2.722,2.112,1.585,1.9,3.227S87.554,67.319,86.292,67.18Z" transform="translate(-66.796 -54.375)" fill="#e4b692"/>
+          <path id="Path_21" data-name="Path 21" d="M46.618,64.459c-.213-1.642.638-3.087,1.9-3.227s2.459,1.08,2.671,2.722-.64,3.086-1.9,3.227S46.83,66.1,46.618,64.459Z" transform="translate(-41.546 -54.375)" fill="#f1c9a5"/>
+          <path id="Path_22" data-name="Path 22" d="M79.35,49.454c0-5.661-3.117-8.88-6.963-8.88V59.7C76.232,59.7,79.35,55.115,79.35,49.454Z" transform="translate(-58.793 -40.574)" fill="#e4b692"/>
+        </g>
+        <path id="Path_23" data-name="Path 23" d="M46.9,126.345H63.764v-9.14H46.9Z" transform="translate(-31.347 -78.345)" fill="#fff"/>
+        <path id="Path_24" data-name="Path 24" d="M43.347,118.031l-1.573-13.265c-3.519.552-7.507,2.559-8.287,4.036-1.144,4.064-2.1,9.228-2.1,9.228Z" transform="translate(-20.981 -70.03)" fill="#fe393e"/>
+        <path id="Path_25" data-name="Path 25" d="M79.336,118.1h11.29a45.2,45.2,0,0,0-2.1-9.228c-1.269-2.261-6.286-3.486-8.034-4Z" transform="translate(-53.032 -70.102)" fill="#fe393e"/>
+        <path id="Path_26" data-name="Path 26" d="M52.286,40.323s-1.5,3.237-3.614,4.255c-3.331,1.605-.441,4.056-.829,7.324-.35,2.949-3.775,4.294-1.777,7.465-3.473.684-3.307-1.065-3.307-1.065s-.332-9.106-.414-9.315,1.989-5.845,1.989-5.845l2.98-6.382,5.33-1.079Z" transform="translate(-28.304 -23.85)" fill="#471b18"/>
+        <path id="Path_27" data-name="Path 27" d="M69.06,40.273a2.988,2.988,0,0,0,2.725,2.763c2.558.221,2.89,2.095,2.392,3.783s-.719,2.628.663,3.954-.166,6.447-.166,6.447L79.759,54.8s-1.085-4.112-.5-6.4-2.045-3.923-2.708-5.581-3.992-7.639-6.686-7.185-2.423,3.317-2.423,3.317Z" transform="translate(-45.078 -23.801)" fill="#471b18"/>
+      </g>
+    </g>
+  </g>
+</svg>

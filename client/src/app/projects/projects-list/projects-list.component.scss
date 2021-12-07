@@ -1,0 +1,121 @@
+.projects-wrapper {
+  padding: 24px;
+  box-sizing: border-box;
+  .search-wrapper {
+    width: 100%;
+    margin-bottom: 20px;
+
+    mat-form-field {
+      width: 100%;
+    }
+
+    input {
+      width: 100%;
+    }
+  }
+
+  .list-wrapper {
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+
+    .head {
+      display: grid;
+      grid-template-columns: 10% 20% 30% auto;
+      align-items: center;
+      padding: 10px;
+      font-weight: bold;
+      background-color: var(--main);
+      color: #fff;
+      height: 60px;
+      .actions {
+        margin-left: auto;
+        padding-right: 20px;
+      }
+    }
+    .single-project {
+      display: grid;
+      grid-template-columns: 10% 20% 30% auto;
+      align-items: center;
+      background-color: var(--single-employee);
+      color: var(--font);
+      padding: 10px;
+      width: 100%;
+      margin: 0 auto;
+      border-radius: 10px;
+      transition: 0.4s;
+
+      &:nth-of-type(odd) {
+        background-color: #f0f0f0;
+      }
+
+      .buttons {
+        margin-left: auto;
+      }
+
+      .delete-project {
+        border: 0px;
+        background-color: transparent;
+        // background: var(--single-employee);
+        margin-left: auto;
+        padding: 15px;
+        cursor: pointer;
+        transition: 0.4s;
+
+        i {
+          color: red;
+          font-size: 20px;
+          text-align: right;
+        }
+      }
+
+      .edit-project {
+        border: 0px;
+        background-color: transparent;
+        // background: var(--single-employee);
+        margin-left: auto;
+        padding: 15px;
+        cursor: pointer;
+        transition: 0.4s;
+      }
+
+      i {
+        color: var(--font);
+        font-size: 20px;
+        text-align: right;
+      }
+    }
+  }
+}
+
+.project-add {
+  cursor: pointer;
+  width: 200px;
+  height: 45.5px;
+  margin: 20px 0 20px auto;
+  display: block;
+  border: 0;
+  background-color: var(--main);
+  color: #fff;
+}
+
+mat-dialog-actions {
+  button {
+    margin: 0 0 0 10px;
+    background-color: transparent;
+    border: 0;
+    width: 80px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+  }
+  .cancel {
+    text-decoration: underline;
+  }
+  .delete {
+    background-color: #c91e45;
+    color: #fff;
+  }
+}
