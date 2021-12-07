@@ -5,12 +5,35 @@
     <button (click)="nextmonth()"><i class="fas fa-angle-right next-btn"></i></button>
   </h4>
 </div>
+<div class="days-details">
+  <p>pon.</p>
+  <p>wt.</p>
+  <p>śr.</p>
+  <p>czw.</p>
+  <p>pt.</p>
+  <p>sob.</p>
+  <p>niedz.</p>
+</div>
 <div *ngFor="let calendarItem of calendar; let i = index">
   <div class="flex-container flex-center">
     <div id="{{ day.id }}" routerLink="day/{{ day.id }}"
       [state]="{ id: day.id, name: day.dayName, weekend: day.isWeekend }" class="calendar-days {{day.className}}"
       [class.weekend]="day.isWeekend" [ngClass]="{'today': day.id === today}" *ngFor="let day of calendarItem">
       <span class="day">{{ day.day }}</span>
+      <p class="hours">08:00 - 16:00</p>
+      <p class="time">(08:00)</p>
     </div>
   </div>
+</div>
+<div class="legend">
+  <div class="today box"></div>
+  <p>Dzisiaj</p>
+  <div class="week box"></div>
+  <p>Dzień wolny</p>
+  <div class="vacation box"></div>
+  <p>Urlop</p>
+  <div class="work-on-premise box"></div>
+  <p>Praca biurowa</p>
+  <div class="work-remote box"></div>
+  <p>Praca zdalna</p>
 </div>
