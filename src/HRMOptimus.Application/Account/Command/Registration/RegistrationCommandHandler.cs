@@ -1,14 +1,16 @@
 ﻿using HRMOptimus.Application.Common.Interfaces;
 using HRMOptimus.Domain.Entities;
+using HRMOptimus.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HRMOptimus.Application.Account.Command.Registration
 {
-    public class RegistrationCommandHandler : IRequestHandler<RegistrationCommand, string>
+    public class RegistrationCommandHandler : IRequestHandler<RegistrationCommand, IActionResult>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IHRMOptimusDbContext _context;
@@ -19,7 +21,7 @@ namespace HRMOptimus.Application.Account.Command.Registration
             _context = context;
         }
 
-        public async Task<string> Handle(RegistrationCommand request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Handle(RegistrationCommand request, CancellationToken cancellationToken)
         {
             Contract contract = new Contract()
             {
@@ -72,11 +74,14 @@ namespace HRMOptimus.Application.Account.Command.Registration
                 Employee = employee,
             };
 
-            await _userManager.CreateAsync(newUser, request.Registration.Password);
+            var user = await _userManager.CreateAsync(newUser, request.Registration.Password);
+
+            if(user.Succeeded)
+                await _userManager.AddToRoleAsync(newUser, UserRoles.Administrator.ToString());
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return newUser.Id;
+            return new OkResult();
         }
     }
 }
