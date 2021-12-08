@@ -1,12 +1,9 @@
 ﻿using HRMOptimus.Application.Common.Interfaces;
-using HRMOptimus.Domain.Entities;
 using HRMOptimus.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,15 +22,26 @@ namespace HRMOptimus.Application.LeaveRegister.Command.AddLeaveRegister
         {
             try
             {
-                var duration = request.AddLeaveRegisterVm.LeaveEnd.Date - request.AddLeaveRegisterVm.LeaveStart.Date;
+                var daysList = Enumerable.Range(0, 1 + request.AddLeaveRegisterVm.LeaveEnd.Date
+                    .Subtract(request.AddLeaveRegisterVm.LeaveStart.Date).Days)
+                    .Select(offset => request.AddLeaveRegisterVm.LeaveStart.Date.AddDays(offset))
+                    .ToArray();
 
+                int duration = 0;
+
+                foreach (var item in daysList)
+                {
+                    if (item.DayOfWeek != DayOfWeek.Saturday && item.DayOfWeek != DayOfWeek.Sunday)
+                        duration += 1;
+                }
                 var employee = await _context.Employees.Include(leaves => leaves.LeavesRegister)
                     .FirstOrDefaultAsync(x => x.Id == request.AddLeaveRegisterVm.EmployeeId);
+
                 if (employee != null)
                 {
                     Domain.Entities.LeaveRegister leaveRegister = new Domain.Entities.LeaveRegister()
                     {
-                        Duration = duration.Days,
+                        Duration = duration,
                         DateFrom = request.AddLeaveRegisterVm.LeaveStart.Date,
                         DateTo = request.AddLeaveRegisterVm.LeaveEnd.Date,
                         EmployeeId = request.AddLeaveRegisterVm.EmployeeId,
@@ -42,7 +50,7 @@ namespace HRMOptimus.Application.LeaveRegister.Command.AddLeaveRegister
                         LeaveRegisterType = request.AddLeaveRegisterVm.LeaveRegisterType
                     };
 
-                    employee.LeaveDaysLeft -= duration.Days;
+                    employee.LeaveDaysLeft -= duration;
                     employee.LeavesRegister.Add(leaveRegister);
                     _context.LeavesRegister.Add(leaveRegister);
 
