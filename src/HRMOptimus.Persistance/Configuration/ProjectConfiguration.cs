@@ -13,6 +13,9 @@ namespace HRMOptimus.Persistance.Configuration
             builder.Property(t => t.Description)
                 .HasMaxLength(150)
                 .IsRequired(false);
+            builder.Property(t => t.ColorLabel)
+               .HasMaxLength(50)
+               .IsRequired(false);
             builder.Property(t => t.HoursBudget)
                 .HasPrecision(18, 2);
             builder.Property(t => t.HoursWorked)
