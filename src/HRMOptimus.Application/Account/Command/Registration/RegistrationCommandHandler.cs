@@ -77,7 +77,7 @@ namespace HRMOptimus.Application.Account.Command.Registration
             var user = await _userManager.CreateAsync(newUser, request.Registration.Password);
 
             if(user.Succeeded)
-                await _userManager.AddToRoleAsync(newUser, UserRoles.Administrator.ToString());
+                await _userManager.AddToRoleAsync(newUser, request.Registration.Role);
 
             await _context.SaveChangesAsync(cancellationToken);
 

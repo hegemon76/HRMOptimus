@@ -1,4 +1,5 @@
 ﻿using HRMOptimus.Domain.Enums;
+using Microsoft.AspNetCore.Identity;
 using System;
 
 namespace HRMOptimus.Application.Account.Command.Registration
@@ -33,5 +34,8 @@ namespace HRMOptimus.Application.Account.Command.Registration
         public string BuildingNumber { get; set; }
         public string HouseNumber { get; set; }
         public string Country { get; set; }
+
+        //role
+        public string Role { get; set; }
     }
 }
