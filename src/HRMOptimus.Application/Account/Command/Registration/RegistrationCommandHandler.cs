@@ -1,6 +1,5 @@
 ﻿using HRMOptimus.Application.Common.Interfaces;
 using HRMOptimus.Domain.Entities;
-using HRMOptimus.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
@@ -76,7 +75,7 @@ namespace HRMOptimus.Application.Account.Command.Registration
             var user = await _userManager.CreateAsync(newUser, request.Registration.Password);
 
             if (user.Succeeded)
-                await _userManager.AddToRoleAsync(newUser, UserRoles.Administrator.ToString());
+                await _userManager.AddToRoleAsync(newUser, request.Registration.Role);
 
             await _context.SaveChangesAsync(cancellationToken);
 
