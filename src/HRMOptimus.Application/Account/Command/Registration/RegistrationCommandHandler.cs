@@ -6,11 +6,10 @@ using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 
 namespace HRMOptimus.Application.Account.Command.Registration
 {
-    public class RegistrationCommandHandler : IRequestHandler<RegistrationCommand, IActionResult>
+    public class RegistrationCommandHandler : IRequestHandler<RegistrationCommand, Unit>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IHRMOptimusDbContext _context;
@@ -21,7 +20,7 @@ namespace HRMOptimus.Application.Account.Command.Registration
             _context = context;
         }
 
-        public async Task<IActionResult> Handle(RegistrationCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(RegistrationCommand request, CancellationToken cancellationToken)
         {
             Contract contract = new Contract()
             {
@@ -76,12 +75,12 @@ namespace HRMOptimus.Application.Account.Command.Registration
 
             var user = await _userManager.CreateAsync(newUser, request.Registration.Password);
 
-            if(user.Succeeded)
+            if (user.Succeeded)
                 await _userManager.AddToRoleAsync(newUser, UserRoles.Administrator.ToString());
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return new OkResult();
+            return Unit.Value;
         }
     }
 }

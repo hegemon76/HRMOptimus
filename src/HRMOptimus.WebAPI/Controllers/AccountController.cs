@@ -13,7 +13,9 @@ namespace HRMOptimus.WebAPI.Controllers
         [Route("api/register")]
         public async Task<IActionResult> Register([FromBody] RegistrationVm model)
         {
-            return await Mediator.Send(new RegistrationCommand() { Registration = model });
+            await Mediator.Send(new RegistrationCommand() { Registration = model });
+
+            return Ok();
         }
 
         [HttpPost]

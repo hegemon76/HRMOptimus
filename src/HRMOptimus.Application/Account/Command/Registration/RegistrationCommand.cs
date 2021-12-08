@@ -1,11 +1,9 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
 
 namespace HRMOptimus.Application.Account.Command.Registration
 {
-    public class RegistrationCommand : IRequest<IActionResult>
+    public class RegistrationCommand : IRequest
     {
         public RegistrationVm Registration { get; set; }
-
     }
 }
