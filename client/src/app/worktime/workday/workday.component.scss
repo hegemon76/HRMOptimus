@@ -31,41 +31,37 @@
   .back:hover {
     color: red;
   }
+}
 
-  .save {
-    float: right;
-    background-color: #1869ff;
-    color: #fff;
-    border: none;
-    font-weight: bold;
-    height: 30px;
-    margin-top: 10px;
-    border-radius: 5px;
-    margin-right: 10px;
-    cursor: pointer;
-    font-size: 12px;
-  }
-
-  .save:hover {
-    background-color: #0058fc;
-  }
+.save {
+  float: right;
+  background-color: #1869ff;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  height: 35px;
+  margin-top: 10px;
+  border-radius: 5px;
+  margin-right: 10px;
+  cursor: pointer;
+  font-size: 12px;
+  width: 70px;
 }
 
 .add {
-  width: auto;
-  height: 30px;
+  float: right;
+  background-color: #1869ff;
+  color: #fff;
   border: none;
-  background-color: transparent;
-  color: #1869ff;
   font-weight: bold;
-  font-size: 16px;
+  height: 35px;
+  margin-top: 10px;
+  border-radius: 5px;
+  margin-right: 10px;
   cursor: pointer;
-  margin-left: auto;
-  margin-top: 50px;
-}
-
-.add:hover {
-  color: #0058fc;
+  font-size: 12px;
+  width: 150px;
+  display: none;
 }
 
 .workday-wrapper {
@@ -75,34 +71,31 @@
   padding: 50px;
   border-radius: 10px;
   margin: 50px;
-}
 
-.info-wrapper {
-  width: auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  margin-bottom: 50px;
+  .constForm {
+    margin-bottom: 50px;
+  }
 }
 
 .day-info {
-  width: auto;
-  max-width: 500px;
+  width: 1470px;
   height: auto;
   border-radius: 10px;
   background-color: rgb(238, 231, 231);
   float: left;
   padding: 5px;
+  margin-bottom: 10px;
 
   p {
     color: black;
     padding: 10px;
     width: auto;
-    min-width: 210px;
+    min-width: 260px;
     margin: 10px;
     background: rgb(255, 255, 255);
     border-radius: 5px;
+    float: left;
+    text-align: center;
 
     span {
       font-weight: bold;
@@ -111,71 +104,43 @@
 }
 
 .times {
-  width: auto;
-  min-width: 300px;
+  width: 1470px;
   border-radius: 10px;
-  margin-left: auto;
   background-color: rgb(238, 231, 231);
   border-radius: 10px;
-  margin-left: auto;
-  height: auto;
-  max-width: 480px;
-  margin-bottom: 50px;
+  margin-bottom: 10px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  height: auto;
   padding-top: 25px;
   padding-bottom: 5px;
+  padding-left: 20px;
 
   .mat-form-field {
-    margin: 0px;
-    padding: 0px;
-  }
-
-  .matInput {
-    background: red;
+    margin-left: 10px;
+    margin-right: 10px;
   }
 
   .hoursFrom {
-    width: auto;
-    min-width: 100px;
-    max-width: 210px;
-    margin-left: 10px;
-    margin-right: 10px;
+    width: 150px;
   }
 
   .hoursTo {
-    width: auto;
-    min-width: 100px;
-    max-width: 210px;
-    margin-left: 10px;
-    margin-right: 10px;
+    width: 150px;
   }
 
   .type {
-    min-width: 260px;
-    width: 90%;
-    max-width: 420px;
+    width: 250px;
   }
 
   .project {
-    min-width: 260px;
-    width: 90%;
-    max-width: 420px;
+    width: 250px;
   }
 
   .details {
-    min-width: 260px;
-    width: 90%;
-    max-width: 420px;
+    width: 470px;
   }
 }
 
 .deleteEntry {
-  display: block;
-  margin-left: auto;
   background-color: red;
   color: #fff;
   font-weight: bold;
@@ -185,10 +150,26 @@
   width: 30px;
   height: 30px;
   cursor: pointer;
-  transform: translate(235px, -190px);
-  position: absolute;
+  margin-left: auto;
+  margin-right: 30px;
+  margin-top: 15px;
 }
 
 .deleteEntry:hover {
   background-color: rgb(209, 0, 0);
+}
+
+.addEntry {
+  background-color: #1869ff;
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+  border: 0px;
+  border-radius: 5px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: 30px;
+  margin-top: 15px;
 }
