@@ -22,7 +22,7 @@ namespace HRMOptimus.Application.Project.Query.Projects
         {
             var projects = await _context.Projects
                 .Where(x => x.Enabled)
-                .Select(x => new ProjectVm(x.Id, x.Name, x.Description, x.HoursBudget, x.DateFrom, x.DateTo))
+                .Select(x => new ProjectVm(x.Id, x.Name, x.Description, x.HoursBudget, x.DateFrom, x.DateTo, x.ColorLabel))
                 .ToListAsync();
 
             return projects;

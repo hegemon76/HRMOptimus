@@ -25,6 +25,10 @@ namespace HRMOptimus.Application.Common.Services
             claims.Add(new Claim("employeeId", employeeId));
             claims.Add(new Claim("fullName", fullName));
             claims.Add(new Claim("gender", gender));
+            //foreach (var item in roles)
+            //{
+            //    claims.Add(new Claim())
+            //}
 
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
 

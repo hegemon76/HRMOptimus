@@ -1,6 +1,7 @@
 ﻿using HRMOptimus.Application.Common.Interfaces;
 using HRMOptimus.Domain.Common;
 using HRMOptimus.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -57,6 +58,12 @@ namespace HRMOptimus.Persistance
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(HRMOptimusDbContext).Assembly);
+            modelBuilder.Entity<IdentityRole>().HasData(
+                new IdentityRole { Name = Domain.Enums.UserRoles.Administrator.ToString(), NormalizedName = Domain.Enums.UserRoles.Administrator.ToString() },
+                new IdentityRole { Name = Domain.Enums.UserRoles.User.ToString(), NormalizedName = Domain.Enums.UserRoles.User.ToString() },
+                 new IdentityRole { Name = Domain.Enums.UserRoles.ProjectManager.ToString(), NormalizedName = Domain.Enums.UserRoles.ProjectManager.ToString() },
+                  new IdentityRole { Name = Domain.Enums.UserRoles.HumanResources.ToString(), NormalizedName = Domain.Enums.UserRoles.HumanResources.ToString() }
+                );
         }
     }
 }

@@ -4,14 +4,16 @@ using HRMOptimus.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HRMOptimus.Persistance.Migrations
 {
     [DbContext(typeof(HRMOptimusDbContext))]
-    partial class HRMOptimusDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211208193619_AddUserRoles")]
+    partial class AddUserRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -326,9 +328,6 @@ namespace HRMOptimus.Persistance.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ColorLabel")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -466,31 +465,17 @@ namespace HRMOptimus.Persistance.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3af114be-8f82-4752-88af-3d34051bebad",
-                            ConcurrencyStamp = "01de7f98-39f9-4ee3-934b-cdbdee0a5d65",
+                            Id = "9fa26e58-9b8e-4cd7-b6cb-71c1b2fb36a9",
+                            ConcurrencyStamp = "f54d403a-a147-46c5-97ce-9656c80b0ce3",
                             Name = "Administrator",
                             NormalizedName = "Administrator"
                         },
                         new
                         {
-                            Id = "a217c93d-3b8d-4f4d-bbd3-f1b4bb781d91",
-                            ConcurrencyStamp = "3d3fd3bf-c57e-483a-9e77-862f3bf6c6f5",
+                            Id = "b00726e3-9ff9-448b-ba0f-ff6a36ab3890",
+                            ConcurrencyStamp = "c80bfe47-22c6-474c-ae88-efd589fcdc3b",
                             Name = "User",
                             NormalizedName = "User"
-                        },
-                        new
-                        {
-                            Id = "b69d7a8b-94f0-4186-8f22-016f1277a39a",
-                            ConcurrencyStamp = "e2d3fda9-b016-4e90-aa42-02e631c2ef9e",
-                            Name = "ProjectManager",
-                            NormalizedName = "ProjectManager"
-                        },
-                        new
-                        {
-                            Id = "24399647-63b5-43f6-9d61-63a10fb8ed7a",
-                            ConcurrencyStamp = "61349dbe-0989-4046-8dfc-88ba95070fe5",
-                            Name = "HumanResources",
-                            NormalizedName = "HumanResources"
                         });
                 });
 
