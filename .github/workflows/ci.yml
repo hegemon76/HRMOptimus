@@ -1,10 +1,18 @@
-﻿name: CI
+name: CI
 
 on:
   push:
-    branches: [ dev ]
+    branches:
+    - karol
+    - adrian
+    - jakub
+    - damian
+    - frontend
+    - backend
+    
   pull_request:
-    branches: [ dev ]
+    branches:
+    - dev
 
 jobs:
   build:
