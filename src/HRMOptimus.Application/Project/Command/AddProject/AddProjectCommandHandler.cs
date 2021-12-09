@@ -25,6 +25,7 @@ namespace HRMOptimus.Application.Project.Command.AddProject
                 Description = request.AddProjectVm.Description,
                 ProjectMembers = request.AddProjectVm.ProjectMembers,
                 HoursBudget = request.AddProjectVm.HoursBudget,
+                ColorLabel = request.AddProjectVm.ColorLabel,
             };
             _context.Projects.Add(project);
 
