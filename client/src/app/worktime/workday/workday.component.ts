@@ -3,7 +3,7 @@ import { WorktimeService } from '../worktime.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { AccountService } from '../../account/account.service';
-import { EntryComponent } from '../entry/entry.component'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 interface Day {
   id: string;
@@ -29,31 +29,45 @@ export class WorkdayComponent implements OnInit {
   day = {} as Day;
   id;
   user;
-
+  duration = 0;
+  durationTime;
+  form: FormGroup;
+  saveChanges = false
   entriesCount;
-
-  dayName = "test"
-  projectId = 9
-  emploeeId = 1
-  workStart = "2021-11-29 12:57:08";
-  workEnd = "2021-11-29 12:57:08";
 
   constructor(
     private workdayService: WorktimeService,
     private route: ActivatedRoute,
     private router: Router,
     private accountService: AccountService,
-    private componentFactoryResolver: ComponentFactoryResolver
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      dayName: [''],
+      workStart: [''],
+      workEnd: [''],
+      projectName: ['']
+    });
+
     this.id = this.route.snapshot.paramMap.get('id');
     this.user = this.accountService.getUser();
 
     this.workdayService.getWorkday(this.id).subscribe(res => {
+
+      res.map((r) => {
+        r["selected"] = r.projectName
+      })
+
+      res.map((a) => {
+        this.duration += parseInt(a.duration.split(':')[0]) * 3600 + parseInt(a.duration.split(':')[1]) * 60 + parseInt(a.duration.split(':')[2])
+      })
+
       this.workDays = res;
 
-      console.log(this.workDays);
+      this.durationTime = new Date(this.duration * 1000);
 
       this.entriesCount = this.workDays.length
     })
@@ -63,9 +77,8 @@ export class WorkdayComponent implements OnInit {
     })
   }
 
-  addElement() {
-    let childComponent = this.componentFactoryResolver.resolveComponentFactory(EntryComponent);
-    this.componentRef = this.target.createComponent(childComponent);
+  checkForChanges() {
+    this.saveChanges = true;
   }
 
   deleteWorkDayEntry(event) {
@@ -82,11 +95,8 @@ export class WorkdayComponent implements OnInit {
     });
   }
 
-  saveChanges() {
-
-    //warunek który sprawdzi czy dany wpis istnieje jeśli tak wykonane zostanie zapytanie PUT
-
-    this.workdayService.addWorkDayRecord(this.dayName, this.workStart, this.workEnd, this.projectId, this.emploeeId).subscribe(() => {
+  addEntry() {
+    this.workdayService.addWorkDayRecord(this.form.getRawValue(), this.user.employeeId, this.id).subscribe(() => {
       this.router
         .navigateByUrl('', { skipLocationChange: true })
         .then(() => {

@@ -4,8 +4,7 @@
     {
         SickLeave,
         CasualLeave,
-        MaternityLeave,
-        PaternityLeave,
+        Caring,
         UnpaidLeave
     }
 }

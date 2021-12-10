@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HRMOptimus.Application.Account.Command.Registration
 {
-    public class RegistrationCommandHandler : IRequestHandler<RegistrationCommand, string>
+    public class RegistrationCommandHandler : IRequestHandler<RegistrationCommand, Unit>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IHRMOptimusDbContext _context;
@@ -19,7 +19,7 @@ namespace HRMOptimus.Application.Account.Command.Registration
             _context = context;
         }
 
-        public async Task<string> Handle(RegistrationCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(RegistrationCommand request, CancellationToken cancellationToken)
         {
             Contract contract = new Contract()
             {
@@ -72,11 +72,14 @@ namespace HRMOptimus.Application.Account.Command.Registration
                 Employee = employee,
             };
 
-            await _userManager.CreateAsync(newUser, request.Registration.Password);
+            var user = await _userManager.CreateAsync(newUser, request.Registration.Password);
+
+            if (user.Succeeded)
+                await _userManager.AddToRoleAsync(newUser, request.Registration.Role);
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return newUser.Id;
+            return Unit.Value;
         }
     }
 }

@@ -26,7 +26,6 @@ namespace HRMOptimus.WebAPI
                     {
                         await context.Database.MigrateAsync();
                     }
-                    //await seeder.SeedAsync(context);
                 }
                 catch (Exception e)
                 {
