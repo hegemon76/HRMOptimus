@@ -10,8 +10,6 @@ namespace HRMOptimus.Persistance.Configuration
             builder.Property(t => t.Name)
                 .HasMaxLength(150)
                 .IsRequired(false);
-            builder.Property(t => t.Duration)
-                .HasPrecision(18, 2);
         }
     }
 }

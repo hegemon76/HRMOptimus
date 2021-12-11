@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace HRMOptimus.WebAPI.Controllers
 {
     [ApiController]
-    [Route("api/workrecord")]
+    [Route("api/workrecord/")]
     public class WorkRecordController : BaseController
     {
         [HttpPost]
