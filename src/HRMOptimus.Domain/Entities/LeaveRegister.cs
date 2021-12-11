@@ -1,11 +1,11 @@
-﻿using HRMOptimus.Domain.Enums;
+﻿using HRMOptimus.Domain.Common;
+using HRMOptimus.Domain.Enums;
 using System;
 
 namespace HRMOptimus.Domain.Entities
 {
-    public class LeaveRegister
+    public class LeaveRegister : EntityBase
     {
-        public int Id { get; set; }
         public int Duration { get; set; }
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
