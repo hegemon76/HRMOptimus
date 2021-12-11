@@ -11,10 +11,11 @@ using System.Threading.Tasks;
 namespace HRMOptimus.WebAPI.Controllers
 {
     [ApiController]
+    [Route("api/workrecord/")]
     public class WorkRecordController : BaseController
     {
         [HttpPost]
-        [Route("api/workrecord/add")]
+        [Route("add")]
         public async Task<ActionResult<int>> AddWorkRecord([FromBody] AddWorkRecordVm model)
         {
             var id = await Mediator.Send(new AddWorkRecordCommand() { AddWorkRecordVm = model });
@@ -23,7 +24,7 @@ namespace HRMOptimus.WebAPI.Controllers
         }
 
         [HttpPut]
-        [Route("api/workrecord/update")]
+        [Route("update")]
         public async Task<ActionResult> UpdateWorkRecord([FromBody] UpdateWorkRecordVm model)
         {
             await Mediator.Send(new UpdateWorkRecordCommand() { UpdateWorkRecordVm = model });
@@ -32,8 +33,8 @@ namespace HRMOptimus.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/workrecord/day/")]
-        public async Task<ActionResult<List<WorkRecordsDetailsVm>>> WorkDayRecords(DateTime dayWork)
+        [Route("day")]
+        public async Task<ActionResult<List<WorkRecordDetailsVm>>> WorkDayRecords(DateTime dayWork)
         {
             var dayWorkRecords = await Mediator.Send(new DayWorkRecordsQuery() { DayWork = dayWork });
 
@@ -41,7 +42,7 @@ namespace HRMOptimus.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/workrecord/month/")]
+        [Route("month")]
         public async Task<ActionResult<List<DaysWorkRecordsVm>>> MonthDaysRecords(DateTime dateFrom, DateTime dateTo)
         {
             var daysWorkRecords = await Mediator.Send(new MonthDaysRecordsQuery() { DateFrom = dateFrom, DateTo = dateTo });
@@ -50,7 +51,7 @@ namespace HRMOptimus.WebAPI.Controllers
         }
 
         [HttpDelete]
-        [Route("api/workrecord/delete/")]
+        [Route("delete")]
         public async Task<ActionResult> RemoveWorkRecord(int workRecordId)
         {
             await Mediator.Send(new RemoveWorkRecordCommand() { WorkRecordId = workRecordId });

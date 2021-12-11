@@ -6,7 +6,6 @@ namespace HRMOptimus.Domain.Entities
 {
     public class Project : EntityBase
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal HoursBudget { get; set; }

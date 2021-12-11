@@ -1,8 +1,8 @@
-import { environment } from '../environment';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,7 @@ export class VacationService {
       })
       .pipe(map((res: any) => res));
   }
-  addVacation(value): Observable<any> {
+  addVacation(value: any): Observable<any> {
     return this.http
       .post(this.addVacationUrl, {
         leaveStart: value.leaveStart,
