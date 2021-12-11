@@ -27,7 +27,7 @@ namespace HRMOptimus.Application.Account.Command.Login
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
             var result = await _userManager.CheckPasswordAsync(user, request.Password);
-            if (result == true)
+            if (result)
             {
                 var employee = _context.Employees.FirstOrDefault(x => x.Id == user.EmployeeId);
 
