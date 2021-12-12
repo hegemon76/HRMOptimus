@@ -1,15 +1,15 @@
-import { EntityBase } from "./entity-base.model"
+import { EntityBase } from './entity-base.model';
+import { Gender } from '../enums/gender';
 
-  export class Employee extends EntityBase {
-    FirstName: string | undefined
-    LastName: string | undefined
-    FullName: string | undefined
-    Gender: Gender | undefined
-    BirthDate: Date | undefined
-    LeaveDaysLeft: number | undefined
-    WorkingTime: number | undefined
-    ContractId: number | undefined
-    AddressId: number | undefined
-    ApplicationUser: string | undefined
-  }
-
+export class Employee extends EntityBase {
+  firstName: string | undefined;
+  lastName: string | undefined;
+  fullName: string | undefined;
+  gender: Gender | undefined;
+  birthDate: Date | undefined;
+  leaveDaysLeft: number | undefined;
+  workingTime: number | undefined;
+  contractId: number | undefined;
+  addressId: number | undefined;
+  applicationUser: string | undefined;
+}

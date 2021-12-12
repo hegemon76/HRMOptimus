@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent } from './_components/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -10,22 +10,30 @@ const routes: Routes = [
   {
     path: 'worktime',
     loadChildren: () =>
-      import('./worktime/worktime.module').then(m => m.WorktimeModule)
+      import('./_components/worktime/worktime.module').then(
+        m => m.WorktimeModule
+      )
   },
   {
     path: 'employees',
     loadChildren: () =>
-      import('./employees/employees.module').then(m => m.employeesModule)
+      import('./_components/employees/employees.module').then(
+        m => m.employeesModule
+      )
   },
   {
     path: 'vacation',
     loadChildren: () =>
-      import('./vacation/vacation.module').then(m => m.VacationModule)
+      import('./_components/vacation/vacation.module').then(
+        m => m.VacationModule
+      )
   },
   {
     path: 'projects',
     loadChildren: () =>
-      import('./projects/projects.module').then(m => m.ProjectsModule)
+      import('./_components/projects/projects.module').then(
+        m => m.ProjectsModule
+      )
   }
 ];
 
