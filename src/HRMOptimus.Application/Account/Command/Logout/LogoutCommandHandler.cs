@@ -1,6 +1,4 @@
-﻿using HRMOptimus.Domain.Entities;
-using MediatR;
-using Microsoft.AspNetCore.Identity;
+﻿using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,6 +9,7 @@ namespace HRMOptimus.Application.Account.Command.Logout
         public LogoutCommandHandler()
         {
         }
+
         public async Task<string> Handle(LogoutCommand request, CancellationToken cancellationToken)
         {
             return "Logged off";

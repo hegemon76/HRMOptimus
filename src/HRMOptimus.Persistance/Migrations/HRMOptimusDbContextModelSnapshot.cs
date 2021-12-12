@@ -293,6 +293,12 @@ namespace HRMOptimus.Persistance.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("DateFrom")
                         .HasColumnType("datetime2");
 
@@ -306,8 +312,23 @@ namespace HRMOptimus.Persistance.Migrations
                     b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Enabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("InactivatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("InactivatedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("IsApproved")
                         .HasColumnType("int");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("LeaveRegisterType")
                         .HasColumnType("int");
@@ -327,7 +348,8 @@ namespace HRMOptimus.Persistance.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ColorLabel")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -466,29 +488,29 @@ namespace HRMOptimus.Persistance.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3af114be-8f82-4752-88af-3d34051bebad",
-                            ConcurrencyStamp = "01de7f98-39f9-4ee3-934b-cdbdee0a5d65",
+                            Id = "f61dafe4-35b5-41aa-805e-b7502cb4f74b",
+                            ConcurrencyStamp = "611442a2-b444-468c-a20f-f972b3bada7c",
                             Name = "Administrator",
                             NormalizedName = "Administrator"
                         },
                         new
                         {
-                            Id = "a217c93d-3b8d-4f4d-bbd3-f1b4bb781d91",
-                            ConcurrencyStamp = "3d3fd3bf-c57e-483a-9e77-862f3bf6c6f5",
+                            Id = "30ff9a2d-7f90-4889-a71c-641e3e97fa4a",
+                            ConcurrencyStamp = "2c61c78c-4f77-46e8-8c72-55b656290262",
                             Name = "User",
                             NormalizedName = "User"
                         },
                         new
                         {
-                            Id = "b69d7a8b-94f0-4186-8f22-016f1277a39a",
-                            ConcurrencyStamp = "e2d3fda9-b016-4e90-aa42-02e631c2ef9e",
+                            Id = "af5f79a0-8373-48cd-b4c3-c0fa8d7c5e0f",
+                            ConcurrencyStamp = "7736198e-1467-4d62-aaa2-686479f12c84",
                             Name = "ProjectManager",
                             NormalizedName = "ProjectManager"
                         },
                         new
                         {
-                            Id = "24399647-63b5-43f6-9d61-63a10fb8ed7a",
-                            ConcurrencyStamp = "61349dbe-0989-4046-8dfc-88ba95070fe5",
+                            Id = "a6db8101-03cb-4a1f-9289-7e4d081e0304",
+                            ConcurrencyStamp = "88c43f78-ba97-4357-a6f1-4ef4a520db0b",
                             Name = "HumanResources",
                             NormalizedName = "HumanResources"
                         });
