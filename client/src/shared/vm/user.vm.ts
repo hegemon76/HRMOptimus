@@ -4,4 +4,5 @@ export class UserVm {
   fullName: string | undefined;
   gender: Gender | undefined;
   token: string | undefined;
+  role: string | undefined;
 }

@@ -18,19 +18,16 @@ export class AccountService {
   tryLogin(form): Observable<any> {
     return this.http.post(this.loginUrl, form).pipe(
       map((res: any) => {
-        if (res != null) {
-          this.createUser(res);
-        } else {
+        try {
+          this.user = JSON.parse(atob(res.token.split('.')[1]));
+          localStorage.setItem('user', atob(res.token.split('.')[1]));
+          localStorage.setItem('token', res.token);
+          window.location.reload();
+        } catch {
           console.log('nope');
         }
       })
     );
-  }
-  createUser(res) {
-    this.user = JSON.parse(atob(res.token.split('.')[1]));
-    localStorage.setItem('user', atob(res.token.split('.')[1]));
-    localStorage.setItem('token', res.token);
-    window.location.reload();
   }
   getUser() {
     return JSON.parse(localStorage.getItem('user'));

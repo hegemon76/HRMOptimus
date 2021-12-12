@@ -14,6 +14,7 @@ import { UserVm } from '../shared/vm/user.vm';
 export class AppComponent {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
+  user: UserVm;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -35,22 +36,7 @@ export class AppComponent {
       });
   }
 
-  isVerifiedUser = false;
-  user: UserVm;
-  logoutWrapperToggled = false;
-
   ngOnInit() {
-    this.checkIsUser();
     this.user = this.accountService.getUser();
-    console.log(this.user);
-  }
-
-  checkIsUser() {
-    if (
-      localStorage.getItem('user') != null &&
-      localStorage.getItem('user') != undefined
-    ) {
-      this.isVerifiedUser = true;
-    }
   }
 }
