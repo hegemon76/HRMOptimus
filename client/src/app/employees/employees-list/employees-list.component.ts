@@ -1,12 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { EmployeesService } from '../employees.service';
+import { EmployeesService } from '../../_services/employees.service';
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA
 } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Employee } from '../../models/EmployeeInterface';
+import { EmployeeVm } from '../../../shared/vm/employee.vm';
 
 export interface DialogData {
   fullName: string;
@@ -18,7 +18,7 @@ export interface DialogData {
   styleUrls: ['./employees-list.component.scss']
 })
 export class EmployeesListComponent implements OnInit {
-  employees: Employee[];
+  employees: EmployeeVm[];
   searchedEmployee: string;
 
   constructor(

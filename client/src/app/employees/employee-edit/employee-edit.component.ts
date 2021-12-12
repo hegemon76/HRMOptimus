@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { EmployeesService } from './../employees.service';
+import { EmployeesService } from '../../_services/employees.service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { map, startWith } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { Employee } from '../../models/EmployeeInterface';
+import { EmployeeVm } from '../../../shared/vm/employee.vm';
 
 @Component({
   selector: 'app-employee-edit',
@@ -15,15 +15,15 @@ import { Employee } from '../../models/EmployeeInterface';
 export class EmployeeEditComponent implements OnInit {
   employeeId;
   employeeToChange;
-  employee = {} as Employee;
-  allEmployees: Employee[];
+  employee: EmployeeVm;
+  allEmployees: EmployeeVm[];
   isEmployeeLoaded = false;
   areEmployeesLoaded = false;
 
   myControl = new FormControl();
   searchedEmployee: string;
-  options: Employee[] = [];
-  filteredOptions: Observable<Employee[]>;
+  options: any[] = [];
+  filteredOptions: Observable<EmployeeVm[]>;
 
   constructor(
     private employessService: EmployeesService,
@@ -69,11 +69,11 @@ export class EmployeeEditComponent implements OnInit {
     });
   }
 
-  displayFn(option: Employee): string {
+  displayFn(option: EmployeeVm): string {
     return option ? option.firstName + ' ' + option.lastName : '';
   }
 
-  optionsFilter(name: string): Employee[] {
+  optionsFilter(name: string): EmployeeVm[] {
     const filterValue = name.toLowerCase();
 
     return this.options.filter(option =>

@@ -1,8 +1,15 @@
-import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver, ComponentRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+  ComponentFactoryResolver,
+  ComponentRef
+} from '@angular/core';
 import { WorktimeService } from '../worktime.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-import { AccountService } from '../../account/account.service';
+import { AccountService } from '../../_services/account.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 interface Day {
@@ -16,11 +23,9 @@ interface Day {
 @Component({
   selector: 'app-workday',
   templateUrl: './workday.component.html',
-  styleUrls: ['./workday.component.scss'],
+  styleUrls: ['./workday.component.scss']
 })
-
 export class WorkdayComponent implements OnInit {
-
   @ViewChild('parent', { read: ViewContainerRef }) target: ViewContainerRef;
   private componentRef: ComponentRef<any>;
 
@@ -32,7 +37,7 @@ export class WorkdayComponent implements OnInit {
   duration = 0;
   durationTime;
   form: FormGroup;
-  saveChanges = false
+  saveChanges = false;
   entriesCount;
 
   constructor(
@@ -42,7 +47,7 @@ export class WorkdayComponent implements OnInit {
     private accountService: AccountService,
     private componentFactoryResolver: ComponentFactoryResolver,
     private formBuilder: FormBuilder
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -56,25 +61,27 @@ export class WorkdayComponent implements OnInit {
     this.user = this.accountService.getUser();
 
     this.workdayService.getWorkday(this.id).subscribe(res => {
+      res.map(r => {
+        r['selected'] = r.projectName;
+      });
 
-      res.map((r) => {
-        r["selected"] = r.projectName
-      })
-
-      res.map((a) => {
-        this.duration += parseInt(a.duration.split(':')[0]) * 3600 + parseInt(a.duration.split(':')[1]) * 60 + parseInt(a.duration.split(':')[2])
-      })
+      res.map(a => {
+        this.duration +=
+          parseInt(a.duration.split(':')[0]) * 3600 +
+          parseInt(a.duration.split(':')[1]) * 60 +
+          parseInt(a.duration.split(':')[2]);
+      });
 
       this.workDays = res;
 
       this.durationTime = new Date(this.duration * 1000);
 
-      this.entriesCount = this.workDays.length
-    })
+      this.entriesCount = this.workDays.length;
+    });
 
     this.workdayService.getProjects().subscribe(res => {
       this.projects = res;
-    })
+    });
   }
 
   checkForChanges() {
@@ -87,21 +94,19 @@ export class WorkdayComponent implements OnInit {
     var value = idAttr.nodeValue;
 
     this.workdayService.deleteWorkDayEntries(value).subscribe(() => {
-      this.router
-        .navigateByUrl('', { skipLocationChange: true })
-        .then(() => {
-          this.router.navigate([`worktime/day/${this.id}`]);
-        });
+      this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
+        this.router.navigate([`worktime/day/${this.id}`]);
+      });
     });
   }
 
   addEntry() {
-    this.workdayService.addWorkDayRecord(this.form.getRawValue(), this.user.employeeId, this.id).subscribe(() => {
-      this.router
-        .navigateByUrl('', { skipLocationChange: true })
-        .then(() => {
+    this.workdayService
+      .addWorkDayRecord(this.form.getRawValue(), this.user.employeeId, this.id)
+      .subscribe(() => {
+        this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
           this.router.navigate([`worktime/day/${this.id}`]);
         });
-    });
+      });
   }
 }

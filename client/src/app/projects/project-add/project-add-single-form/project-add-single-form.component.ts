@@ -1,5 +1,4 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -10,10 +9,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class ProjectAddSingleFormComponent implements OnInit {
   @Output() rm = new EventEmitter();
   form: FormGroup;
+  color: string = '#000000';
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
+      colorLabel: ['', Validators.required],
       name: ['', Validators.required],
       description: ['', Validators.required],
       dateFrom: ['', Validators.required],

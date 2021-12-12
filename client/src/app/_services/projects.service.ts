@@ -16,20 +16,16 @@ export class ProjectsService {
   constructor(private http: HttpClient) {}
 
   getProjects(): Observable<any> {
-    return this.http.get(this.getProjectsUrl).pipe(map((res: any) => res));
+    return this.http.get(this.getProjectsUrl);
   }
   addProject(form): Observable<any> {
-    return this.http
-      .post(this.addProjectUrl, form)
-      .pipe(map((res: any) => res));
+    return this.http.post(this.addProjectUrl, form);
   }
   removeProject(id): Observable<any> {
-    return this.http
-      .delete(this.deleteProjectUrl, {
-        params: {
-          projectId: id
-        }
-      })
-      .pipe(map((res: any) => res));
+    return this.http.delete(this.deleteProjectUrl, {
+      params: {
+        projectId: id
+      }
+    });
   }
 }

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from '../../account/account.service';
+import { AccountService } from '../../_services/account.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { UserVm } from '../../../shared/vm/user.vm';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +16,7 @@ export class HeaderComponent implements OnInit {
     private breakpointObserver: BreakpointObserver
   ) {}
 
-  user: any;
+  user: UserVm;
   logoutWrapperToggled = false;
 
   ngOnInit(): void {

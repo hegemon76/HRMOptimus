@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { User } from '../models/UserInterface';
+import { UserVm } from '../../shared/vm/user.vm';
 import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class AccountService {
   baseUrl = environment.baseUrl;
   loginUrl: string = `${this.baseUrl}login`;
   logoutUrl: string = `${this.baseUrl}logut`;
-  user: User;
+  user: UserVm;
 
   constructor(private http: HttpClient) {}
 

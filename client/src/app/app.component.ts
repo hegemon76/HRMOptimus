@@ -2,7 +2,8 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { delay } from 'rxjs/operators';
 import { MatSidenav } from '@angular/material/sidenav';
-import { AccountService } from './account/account.service';
+import { AccountService } from './_services/account.service';
+import { UserVm } from '../shared/vm/user.vm';
 
 @Component({
   selector: 'app-root',
@@ -35,12 +36,13 @@ export class AppComponent {
   }
 
   isVerifiedUser = false;
-  user: any;
+  user: UserVm;
   logoutWrapperToggled = false;
 
   ngOnInit() {
     this.checkIsUser();
     this.user = this.accountService.getUser();
+    console.log(this.user);
   }
 
   checkIsUser() {

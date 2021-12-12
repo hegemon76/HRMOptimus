@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { VacationService } from './vacation.service';
+import { VacationService } from '../_services/vacation.service';
 import { formatDate } from '@angular/common';
-import { map, filter } from 'rxjs/operators';
 import { CalendarComponent } from '../shared/calendar/calendar.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ThemePalette } from '@angular/material/core';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
+import { EmployeeVm } from '../../shared/vm/employee.vm';
 
 @Component({
   selector: 'app-vacation',
@@ -17,8 +17,8 @@ export class VacationComponent implements OnInit {
   @ViewChild(CalendarComponent) calendar: CalendarComponent;
   form: FormGroup;
   employee: any;
-  employeeVacationLimit: any;
-  employeeVacationLeft: any;
+  employeeVacationLimit: number;
+  employeeVacationLeft: number;
   employeeVacation: any[];
   options: any[] = [
     {
@@ -52,11 +52,7 @@ export class VacationComponent implements OnInit {
     private formBuilder: FormBuilder,
     private vacationService: VacationService,
     private router: Router
-  ) {
-    // this.router.routeReuseStrategy.shouldReuseRoute = function() {
-    //   return false;
-    // };
-  }
+  ) {}
 
   ngOnInit(): void {
     this.employee = JSON.parse(localStorage.getItem('user'));

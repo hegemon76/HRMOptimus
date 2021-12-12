@@ -1,6 +1,9 @@
  <mat-card class="single-project-add">
    <form [formGroup]="form" action="">
-     <h6>Projekt:</h6>
+     <div class="wrapper">
+       <h6>Projekt:</h6>
+       <input type="color" formControlName="colorLabel">
+     </div>
      <mat-form-field appearance="fill">
        <mat-label>Nazwa</mat-label>
        <input matInput formControlName="name">

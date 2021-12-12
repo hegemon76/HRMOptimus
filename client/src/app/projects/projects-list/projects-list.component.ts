@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { ProjectsService } from '../projects.service';
+import { ProjectsService } from '../../_services/projects.service';
 import { Router } from '@angular/router';
 import {
   MatDialog,

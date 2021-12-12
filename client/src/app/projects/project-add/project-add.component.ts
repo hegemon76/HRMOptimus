@@ -5,7 +5,7 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import { ProjectAddSingleFormComponent } from './project-add-single-form/project-add-single-form.component';
-import { ProjectsService } from '../projects.service';
+import { ProjectsService } from '../../_services/projects.service';
 import { formatDate } from '@angular/common';
 import { Router } from '@angular/router';
 import {

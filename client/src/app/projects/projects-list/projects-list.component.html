@@ -15,7 +15,7 @@
           <span class="actions">Akcje</span>
         </div>
         <div class="single-project" *ngFor="let project of projects | filter: searchedProject; let i = index">
-          <p>color</p>
+          <div class="color-label" [ngStyle]="{'background-color': project.colorLabel}"></div>
           <p>{{project.name}}</p>
           <p>{{project.description}}</p>
           <div class="buttons">

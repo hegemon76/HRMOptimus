@@ -5,7 +5,7 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import { EmployeeAddSingleFormComponent } from './employee-add-single-form/employee-add-single-form.component';
-import { EmployeesService } from '../employees.service';
+import { EmployeesService } from '../../_services/employees.service';
 import { formatDate } from '@angular/common';
 import {
   MatDialog,
