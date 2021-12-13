@@ -1,7 +1,7 @@
-<div *ngIf="!isVerifiedUser" class="login-wrapper">
+<div *ngIf="!user" class="login-wrapper">
   <app-login class="login"></app-login>
 </div>
-<div *ngIf="isVerifiedUser" class="root-wrapper" [ngClass]="{ dark: darkMode, light: !darkMode }">
+<div *ngIf="user" class="root-wrapper" [ngClass]="{ dark: darkMode, light: !darkMode }">
   <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
@@ -14,5 +14,3 @@
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
-<!-- <app-sidebar class="sidebar"></app-sidebar>
-<app-main class="main"></app-main> -->
