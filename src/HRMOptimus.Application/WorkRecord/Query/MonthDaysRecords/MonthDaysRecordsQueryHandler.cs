@@ -22,10 +22,9 @@ namespace HRMOptimus.Application.WorkRecord.Query.MonthDaysRecords
 
         public async Task<List<DaysWorkRecordsVm>> Handle(MonthDaysRecordsQuery request, CancellationToken cancellationToken)
         {
+            List<DaysWorkRecordsVm> daysWorksRekords = new List<DaysWorkRecordsVm>();
             var day = request.DateFrom;
             var days = DateTime.DaysInMonth(request.DateFrom.Year, request.DateFrom.Month);
-
-            List<DaysWorkRecordsVm> daysWorksRekords = new List<DaysWorkRecordsVm>();
 
             var workRecords = await _context.WorkRecords
                 .Where(x => (x.WorkStart.Date >= request.DateFrom.Date || x.WorkStart.Date <= request.DateTo.Date) && x.Enabled)
