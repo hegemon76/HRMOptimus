@@ -2,7 +2,8 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { delay } from 'rxjs/operators';
 import { MatSidenav } from '@angular/material/sidenav';
-import { AccountService } from './account/account.service';
+import { AccountService } from './_services/account.service';
+import { UserVm } from '../shared/vm/user.vm';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ import { AccountService } from './account/account.service';
 export class AppComponent {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
+  user: UserVm;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -34,21 +36,7 @@ export class AppComponent {
       });
   }
 
-  isVerifiedUser = false;
-  user: any;
-  logoutWrapperToggled = false;
-
   ngOnInit() {
-    this.checkIsUser();
     this.user = this.accountService.getUser();
-  }
-
-  checkIsUser() {
-    if (
-      localStorage.getItem('user') != null &&
-      localStorage.getItem('user') != undefined
-    ) {
-      this.isVerifiedUser = true;
-    }
   }
 }
