@@ -28,4 +28,8 @@
     <ProjectReference Include="..\..\src\HRMOptimus.WebAPI\HRMOptimus.WebAPI.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Validators\" />
+  </ItemGroup>
+
 </Project>

@@ -4,5 +4,5 @@ using System.Collections.Generic;
 
 namespace HRMOptimus.Application.WorkRecord.Query.MonthDaysRecords
 {
-    public record DaysWorkRecordsVm(List<WorkRecordVm> WorkRecords, DateTime Day, TimeSpan WorkedTime);
+    public record DaysWorkRecordsVm(TimeSpan StartHour, TimeSpan EndHour, DateTime Day, TimeSpan WorkedTime);
 }

@@ -1,20 +1,15 @@
 ﻿using FluentAssertions;
-using HRMOptimus.Application.Common.Interfaces;
 using HRMOptimus.Application.WorkRecord.Command.AddWorkRecord;
 using HRMOptimus.Domain.Entities;
 using HRMOptimus.Domain.Enums;
 using HRMOptimus.Persistance;
 using HRMOptimus.WebAPI.IntegrationTests.Helpers;
-using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -58,7 +53,7 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
             await dbContext.Employees.AddAsync(employee);
             await dbContext.SaveChangesAsync(CancellationToken.None);
 
-            var model = new WorkRecord()
+            var workRecord = new WorkRecord()
             {
                 EmployeeId = employee.Id,
                 Name = "Test",
@@ -66,9 +61,10 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
                 WorkEnd = DateTime.Now.AddMinutes(15),
                 ProjectId = project.Id,
             };
-            await dbContext.WorkRecords.AddAsync(model);
+            await dbContext.WorkRecords.AddAsync(workRecord);
+
             var today = DateTime.Now.Date.ToString();
-            var response = await _client.GetAsync(_baseUrl + "day/2021-12-11");
+            var response = await _client.GetAsync(_baseUrl + "day?" + today);
 
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
         }
@@ -91,7 +87,7 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
             var model = new AddWorkRecordVm()
             {
                 EmployeeId = employee.Id,
-                Name = "Test",
+                Name = "Test1",
                 WorkStart = DateTime.Now,
                 WorkEnd = DateTime.Now.AddMinutes(15),
                 ProjectId = project.Id,
