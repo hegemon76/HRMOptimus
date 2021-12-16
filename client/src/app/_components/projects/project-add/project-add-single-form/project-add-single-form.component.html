@@ -1,0 +1,33 @@
+ <mat-card class="single-project-add">
+   <form [formGroup]="form" action="">
+     <div class="wrapper">
+       <h6>Projekt:</h6>
+       <input type="color" formControlName="colorLabel">
+     </div>
+     <mat-form-field appearance="fill">
+       <mat-label>Nazwa</mat-label>
+       <input matInput formControlName="name">
+     </mat-form-field>
+     <mat-form-field appearance="fill">
+       <mat-label>Opis</mat-label>
+       <input matInput formControlName="description">
+     </mat-form-field>
+     <mat-form-field appearance="fill">
+       <mat-label>Data rozpoczęcia</mat-label>
+       <input matInput [matDatepicker]="pickerStart" formControlName="dateFrom">
+       <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+       <mat-datepicker #pickerStart></mat-datepicker>
+     </mat-form-field>
+     <mat-form-field appearance="fill">
+       <mat-label>Data zakończenia</mat-label>
+       <input matInput [matDatepicker]="pickerEnd" formControlName="dateTo">
+       <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+       <mat-datepicker #pickerEnd></mat-datepicker>
+     </mat-form-field>
+     <mat-form-field appearance="fill">
+       <mat-label>Budżet</mat-label>
+       <input matInput formControlName="hoursBudget">
+     </mat-form-field>
+   </form>
+   <button (click)="remove()"><img src="/assets/images/minus-square-solid.svg" alt=""></button>
+ </mat-card>

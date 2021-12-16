@@ -1,6 +1,7 @@
 ﻿using HRMOptimus.Domain.Enums;
 using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections.Generic;
 
 namespace HRMOptimus.Application.Account.Command.Registration
 {
@@ -36,6 +37,6 @@ namespace HRMOptimus.Application.Account.Command.Registration
         public string Country { get; set; }
 
         //role
-        public string Role { get; set; }
+        public List<UserRoles> Roles { get; set; }
     }
 }
