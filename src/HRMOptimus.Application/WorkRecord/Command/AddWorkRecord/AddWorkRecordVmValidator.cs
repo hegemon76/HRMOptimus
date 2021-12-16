@@ -10,6 +10,7 @@ namespace HRMOptimus.Application.WorkRecord.Command.AddWorkRecord
         public AddWorkRecordVmValidator(IHRMOptimusDbContext dbContext)
         {
             RuleFor(x => x.Name).MinimumLength(5);
+            RuleFor(x => x.Name).NotEmpty();
 
             RuleFor(x => x.ProjectId).Custom((value, context) =>
             {

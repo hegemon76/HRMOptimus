@@ -18,6 +18,9 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
 {
     public class WorkRecordControllerTests : IClassFixture<WebApplicationFactory<Startup>>
     {
+        private Project _project;
+        private Employee _employee;
+        private WorkRecord _workRecord;
         private readonly WebApplicationFactory<Startup> _factory;
         private HttpClient _client;
 
@@ -43,28 +46,22 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
         [Fact]
         public async Task WorkDayRecords_Day_ReturnsOkResult()
         {
-            var scopeFactory = _factory.Services.GetService<IServiceScopeFactory>();
-            using var scope = scopeFactory.CreateScope();
-            var dbContext = scope.ServiceProvider.GetService<HRMOptimusDbContext>();
-
-            var project = new Project() { Name = "test", DateTo = DateTime.Now, DateFrom = DateTime.Now, HoursBudget = 5, HoursWorked = 1 };
-            var employee = new Employee() { FirstName = "test", Gender = Gender.Man, WorkingTime = 168, LeaveDaysLeft = 2 };
-            await dbContext.Projects.AddAsync(project);
-            await dbContext.Employees.AddAsync(employee);
-            await dbContext.SaveChangesAsync(CancellationToken.None);
-
-            var workRecord = new WorkRecord()
-            {
-                EmployeeId = employee.Id,
-                Name = "Test",
-                WorkStart = DateTime.Now,
-                WorkEnd = DateTime.Now.AddMinutes(15),
-                ProjectId = project.Id,
-            };
-            await dbContext.WorkRecords.AddAsync(workRecord);
+            await SeedWorkRecordProjectEmployee();
 
             var today = DateTime.Now.Date.ToString();
             var response = await _client.GetAsync(_baseUrl + "day?" + today);
+
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
+        }
+
+        [Fact]
+        public async Task MonthWorkRecords_TwoDates_ReturnsOkResult()
+        {
+            await SeedWorkRecordProjectEmployee();
+            var firstDate = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd");
+            var secondDate = DateTime.Now.AddDays(+1).ToString("yyyy-MM-dd");
+
+            var response = await _client.GetAsync(_baseUrl + "month?dateFrom=" + firstDate + "&dateTo=" + secondDate);
 
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
         }
@@ -74,29 +71,82 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
         {
             var url = _baseUrl + "add";
 
-            var scopeFactory = _factory.Services.GetService<IServiceScopeFactory>();
-            using var scope = scopeFactory.CreateScope();
-            var dbContext = scope.ServiceProvider.GetService<HRMOptimusDbContext>();
-
-            var project = new Project() { Name = "test", DateTo = DateTime.Now, DateFrom = DateTime.Now, HoursBudget = 5, HoursWorked = 1 };
-            var employee = new Employee() { FirstName = "test", Gender = Gender.Man, WorkingTime = 168, LeaveDaysLeft = 2 };
-            await dbContext.Projects.AddAsync(project);
-            await dbContext.Employees.AddAsync(employee);
-            await dbContext.SaveChangesAsync(CancellationToken.None);
+            await SeedWorkRecordProjectEmployee();
 
             var model = new AddWorkRecordVm()
             {
-                EmployeeId = employee.Id,
+                EmployeeId = _employee.Id,
                 Name = "Test1",
                 WorkStart = DateTime.Now,
                 WorkEnd = DateTime.Now.AddMinutes(15),
-                ProjectId = project.Id,
+                ProjectId = _project.Id,
             };
             var httpContent = model.ToJsonHttpContent();
 
             var response = await _client.PostAsync(url, httpContent);
 
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
+        }
+
+        [Fact]
+        public async Task AddWorkRecord_WithInvalidModel_ReturnsBadRequest()
+        {
+            var url = _baseUrl + "add";
+
+            await SeedWorkRecordProjectEmployee();
+
+            var model = new AddWorkRecordVm()
+            {
+                EmployeeId = _project.Id,
+                WorkStart = DateTime.Now,
+                WorkEnd = DateTime.Now.AddMinutes(15),
+                ProjectId = _employee.Id,
+            };
+            var httpContent = model.ToJsonHttpContent();
+
+            var response = await _client.PostAsync(url, httpContent);
+
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
+        }
+
+        [Fact]
+        public async Task DeleteWorkRecord_ValidId_ReturnsNoContent()
+        {
+            await SeedWorkRecordProjectEmployee();
+
+            var url = _baseUrl + "delete?workRecordId=" + _project.Id;
+
+            var response = await _client.DeleteAsync(url);
+
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+        }
+
+        [Fact]
+        public async Task DeleteWorkRecord_InvalidId_ReturnsNotFound()
+        {
+            var url = _baseUrl + "delete?workRecordId=900";
+
+            await SeedWorkRecordProjectEmployee();
+
+            var response = await _client.DeleteAsync(url);
+
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
+        }
+
+        private async Task SeedWorkRecordProjectEmployee()
+        {
+            var scopeFactory = _factory.Services.GetService<IServiceScopeFactory>();
+            using var scope = scopeFactory.CreateScope();
+            var dbContext = scope.ServiceProvider.GetService<HRMOptimusDbContext>();
+
+            _project = new Project() { Name = "test", DateTo = DateTime.Now, DateFrom = DateTime.Now, HoursBudget = 5, HoursWorked = 1 };
+            _employee = new Employee() { FirstName = "test", Gender = Gender.Man, WorkingTime = 168, LeaveDaysLeft = 2 };
+            await dbContext.Projects.AddAsync(_project);
+            await dbContext.Employees.AddAsync(_employee);
+            _workRecord = new WorkRecord() { EmployeeId = _project.Id, WorkStart = DateTime.Now, WorkEnd = DateTime.Now.AddMinutes(15), ProjectId = _employee.Id };
+            await dbContext.WorkRecords.AddAsync(_workRecord);
+
+            await dbContext.SaveChangesAsync(CancellationToken.None);
         }
     }
 }
