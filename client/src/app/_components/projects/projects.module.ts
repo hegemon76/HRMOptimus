@@ -20,7 +20,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
-import { ColorPickerModule } from 'ngx-color-picker';
 
 @NgModule({
   declarations: [
@@ -42,8 +41,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
     MatInputModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    MatDialogModule,
-    ColorPickerModule
+    MatDialogModule
   ]
 })
 export class ProjectsModule {}

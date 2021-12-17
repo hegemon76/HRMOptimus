@@ -173,3 +173,13 @@
   margin-right: 30px;
   margin-top: 15px;
 }
+
+.test {
+  display: none;
+}
+
+.green {
+  .test {
+    display: block;
+  }
+}
