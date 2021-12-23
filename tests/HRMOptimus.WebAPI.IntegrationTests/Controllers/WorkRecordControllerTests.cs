@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using HRMOptimus.Application.WorkRecord.Command.AddWorkRecord;
+using HRMOptimus.Application.WorkRecord.Command.UpdateWorkRecord;
 using HRMOptimus.Domain.Entities;
 using HRMOptimus.Domain.Enums;
 using HRMOptimus.Persistance;
@@ -110,11 +111,34 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
         }
 
         [Fact]
+        public async Task UpdateWorkRecord_UpdatedWorkRecord_ReturnsOkResult()
+        {
+            var url = _baseUrl + "update";
+
+            await SeedWorkRecordProjectEmployee();
+
+            var model = new UpdateWorkRecordVm()
+            {
+                Id = 1,
+                EmployeeId = _employee.Id,
+                Name = "UpdatedName",
+                WorkStart = DateTime.Now,
+                WorkEnd = DateTime.Now.AddMinutes(15),
+                ProjectId = _project.Id,
+            };
+            var httpContent = model.ToJsonHttpContent();
+
+            var response = await _client.PutAsync(url, httpContent);
+
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
+        }
+
+        [Fact]
         public async Task DeleteWorkRecord_ValidId_ReturnsNoContent()
         {
             await SeedWorkRecordProjectEmployee();
 
-            var url = _baseUrl + "delete?workRecordId=" + _project.Id;
+            var url = _baseUrl + "delete?workRecordId=" + _workRecord.Id;
 
             var response = await _client.DeleteAsync(url);
 
