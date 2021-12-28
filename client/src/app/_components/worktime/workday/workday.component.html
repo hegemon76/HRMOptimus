@@ -11,7 +11,7 @@
     <button class="save" *ngIf="saveChanges===true">Zapisz</button>
   </div>
   <div class="times constForm">
-    <form [formGroup]="form" [ngClass]="{'green' : this.form.touched}" (change)="test(this)">
+    <form [formGroup]="form">
       <mat-form-field class="example-form-field hoursFrom" appearance="fill">
         <mat-label>Godz. od</mat-label>
         <input matInput formControlName="workStart" type="text">
@@ -37,13 +37,12 @@
         <mat-label>Opis</mat-label>
         <input matInput formControlName="dayName" value="">
       </mat-form-field>
-      <button class="test">test</button>
     </form>
     <button class="addEntry" id="{{ id }}" (click)="addEntry()"><i class="fas fa-plus"></i>
     </button>
   </div>
   <div class="times" *ngFor="let day of workDays">
-    <form id="dupeczka" [formGroup]="form" (input)="checkForChanges()" (change)="test(this)">
+    <form id="dupeczka" [formGroup]="form">
       <mat-form-field class="example-form-field hoursFrom" appearance="fill">
         <mat-label>Godz. od</mat-label>
         <input matInput type="text" value="{{day.workStart | date:'hh:mm'}}">
@@ -72,7 +71,6 @@
     </form>
     <button (click)="deleteWorkDayEntry($event)" id="{{day.id}}" class="deleteEntry"><i class="fas fa-times"></i>
     </button>
-    <button class="test">test</button>
   </div>
   <div #parent> </div>
 </div>

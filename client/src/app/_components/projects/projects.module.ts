@@ -20,6 +20,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
+// import { MatChipsModule } from '@angular/material/chips';
+// import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatNativeDateModule,
     MatDatepickerModule,
     MatDialogModule
+    // MatChipsModule,
+    // MatAutocompleteModule
   ]
 })
 export class ProjectsModule {}

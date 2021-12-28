@@ -56,8 +56,6 @@ export class WorkdayComponent implements OnInit {
       workEnd: [''],
       projectName: ['']
     });
-
-    console.log(this.form);
     this.id = this.route.snapshot.paramMap.get('id');
     this.user = this.accountService.getUser();
 
@@ -109,9 +107,5 @@ export class WorkdayComponent implements OnInit {
           this.router.navigate([`worktime/day/${this.id}`]);
         });
       });
-  }
-
-  test(form) {
-    console.log(form);
   }
 }

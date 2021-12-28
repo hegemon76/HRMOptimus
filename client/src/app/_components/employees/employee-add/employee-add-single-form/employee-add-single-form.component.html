@@ -1,5 +1,5 @@
  <mat-card class="single-employyee-add">
-   <form [formGroup]="form" action="">
+   <form [formGroup]="form" action="" (change)="checkValues()">
      <h6>Dane osobowe:</h6>
      <mat-form-field appearance="fill">
        <mat-label>Imię</mat-label>
@@ -77,6 +77,21 @@
      <mat-form-field appearance="fill">
        <mat-label>Hasło</mat-label>
        <input type="password" matInput formControlName="password">
+     </mat-form-field>
+     <mat-form-field class="example-chip-list" appearance="fill" class="roles">
+       <mat-label>Role użytkownika</mat-label>
+       <mat-chip-list #chipList aria-label="Roles selection">
+         <mat-chip *ngFor="let role of roles" (removed)="remove2(role)"> {{role}} <button matChipRemove>
+             <mat-icon>X</mat-icon>
+           </button>
+         </mat-chip>
+         <input placeholder="Dodaj rolę..." #roleInput [formControl]="roleCtrl" [matAutocomplete]="auto"
+           [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+           (matChipInputTokenEnd)="add($event)">
+       </mat-chip-list>
+       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+         <mat-option *ngFor="let role of filteredRoles | async" [value]="role"> {{role}} </mat-option>
+       </mat-autocomplete>
      </mat-form-field>
    </form>
    <button (click)="remove()"><img src="/assets/images/minus-square-solid.svg" alt=""></button>
