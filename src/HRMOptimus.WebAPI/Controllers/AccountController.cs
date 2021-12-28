@@ -29,7 +29,7 @@ namespace HRMOptimus.WebAPI.Controllers
         [Route("api/logout")]
         public async Task<ActionResult<string>> Logout()
         {
-            return await Mediator.Send(new LogoutCommand() { });
+            return await Mediator.Send(new LogoutCommand());
         }
     }
 }
