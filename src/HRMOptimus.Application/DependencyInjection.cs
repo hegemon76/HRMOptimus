@@ -4,6 +4,7 @@ using HRMOptimus.Application.Account.Command.Registration;
 using HRMOptimus.Application.Common.Interfaces;
 using HRMOptimus.Application.Common.Middleware;
 using HRMOptimus.Application.Common.Services;
+using HRMOptimus.Application.Employee.Command.EditEmployee;
 using HRMOptimus.Application.Project.Command.AddProject;
 using HRMOptimus.Application.Project.Command.UpdateProject;
 using HRMOptimus.Application.WorkRecord.Command.AddWorkRecord;
@@ -36,6 +37,7 @@ namespace HRMOptimus.Application
             services.AddScoped<IValidator<AddProjectVm>, AddProjectVmValidator>();
             services.AddScoped<IValidator<AddWorkRecordVm>, AddWorkRecordVmValidator>();
             services.AddScoped<IValidator<UpdateWorkRecordVm>, UpdateWorkRecordVmValidator>();
+            services.AddScoped<IValidator<EditEmployeeVm>, EditEmployeeVmValidator>();
 
             return services;
         }
