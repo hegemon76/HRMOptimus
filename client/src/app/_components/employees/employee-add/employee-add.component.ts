@@ -73,7 +73,7 @@ export class EmployeeAddComponent implements OnInit {
 
   addEmployees() {
     this.components.map(c => {
-      console.log(c);
+      // console.log(c);
       if (c.instance.form.status == 'VALID') {
         const formData = c.instance.form.getRawValue();
         formData.birthDate =

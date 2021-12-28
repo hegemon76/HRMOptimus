@@ -40,7 +40,11 @@ export class EmployeeAddSingleFormComponent implements OnInit {
     this.filteredRoles = this.roleCtrl.valueChanges.pipe(
       startWith(null),
       map((role: string | null) =>
-        role ? this._filter(role) : this.allRoles.slice()
+        role
+          ? this._filter(role)
+          : this.allRoles.filter(role => {
+              return this.roles.indexOf(role) < 0 ? role : null;
+            })
       )
     );
   }
@@ -99,8 +103,10 @@ export class EmployeeAddSingleFormComponent implements OnInit {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-
-    return this.allRoles.filter(role =>
+    const filteredArray = this.allRoles.filter(role => {
+      return this.roles.indexOf(role) < 0 ? role : null;
+    });
+    return filteredArray.filter(role =>
       role.toLowerCase().includes(filterValue)
     );
   }
