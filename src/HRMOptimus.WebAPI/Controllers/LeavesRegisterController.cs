@@ -27,9 +27,9 @@ namespace HRMOptimus.WebAPI.Controllers
             return await Mediator.Send(new GetLeavesRegisterByEmployeeIdQuery() { EmployeeId = employeeId });
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Route("delete")]
-        public async Task<int> DeleteById(DeleteLeaveRegisterVm registerId)
+        public async Task<int> DeleteById([FromBody]DeleteLeaveRegisterVm registerId)
         {
             return await Mediator.Send(new DeleteLeaveRegisterCommand() { DeleteLeaveRegisterVm = registerId });
         }

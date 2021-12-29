@@ -3,5 +3,6 @@
     public class DeleteLeaveRegisterVm
     {
         public int Id { get; set; }
+        public int? EmployeeId { get; set; }
     }
 }

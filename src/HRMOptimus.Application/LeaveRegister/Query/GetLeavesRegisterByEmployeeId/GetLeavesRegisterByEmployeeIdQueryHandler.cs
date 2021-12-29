@@ -27,6 +27,7 @@ namespace HRMOptimus.Application.LeaveRegister.Query.GetLeavesRegisterByEmployee
             {
                 var employee = await _context.Employees.Include(x => x.LeavesRegister)
                     .Include(p => p.Contract)
+                    .Where(x => x.Enabled == true)
                     .FirstOrDefaultAsync(u => u.Id == request.EmployeeId);
 
                 if (employee != null && employee.LeavesRegister != null)
