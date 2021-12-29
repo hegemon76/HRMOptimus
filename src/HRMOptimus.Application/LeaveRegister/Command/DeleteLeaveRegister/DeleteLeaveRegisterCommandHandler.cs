@@ -23,15 +23,19 @@ namespace HRMOptimus.Application.LeaveRegister.Command.DeleteLeaveRegister
             try
             {
                 var leaveRegister = _context.LeavesRegister.FirstOrDefault(x => x.Id == request.DeleteLeaveRegisterVm.Id);
-                var employee = _context.Employees.FirstOrDefault(x => x.Id == _userContextService.GetEmployeeId);
+                int employeeId = _userContextService.GetEmployeeId.Value;
+
+                if (employeeId == 0)
+                    employeeId = (int)request.DeleteLeaveRegisterVm.EmployeeId;
+                var employee = _context.Employees.FirstOrDefault(x => x.Id == employeeId);
 
                 if (leaveRegister.IsApproved == IsApproved.Approved)
-                {
                     employee.LeaveDaysLeft += leaveRegister.Duration;
-                }
+
+                leaveRegister.Enabled = false;
 
                 _context.Employees.Update(employee);
-                _context.LeavesRegister.Remove(leaveRegister);
+                _context.LeavesRegister.Update(leaveRegister);
                 await _context.SaveChangesAsync(cancellationToken);
                 return 1;
             }

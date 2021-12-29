@@ -23,7 +23,8 @@ namespace HRMOptimus.Application.WorkRecord.Command.RemoveWorkRecord
             if (workRecord == null)
                 throw new NotFoundException("There is no work record with Id: " + request.WorkRecordId);
 
-            _context.WorkRecords.Remove(workRecord);
+            workRecord.Enabled = false;
+            
             await _context.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;

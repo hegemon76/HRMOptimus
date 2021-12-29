@@ -27,18 +27,20 @@ namespace HRMOptimus.Application.LeaveRegister.Query.GetLeavesRegisterByEmployee
             {
                 var employee = await _context.Employees.Include(x => x.LeavesRegister)
                     .Include(p => p.Contract)
+                    .Where(x => x.Enabled == true)
                     .FirstOrDefaultAsync(u => u.Id == request.EmployeeId);
 
                 if (employee != null && employee.LeavesRegister != null)
                 {
-                    var leavesRecord = await _context.LeavesRegister.Where(x => x.EmployeeId == employee.Id).Select(x => new LeaveRecord
-                    {
-                        Id = x.Id,
-                        DateFrom = x.DateFrom,
-                        DateTo = x.DateTo,
-                        Duration = x.Duration,
-                        IsApproved = x.IsApproved
-                    }).ToListAsync();
+                    var leavesRecord = await _context.LeavesRegister.Where(x => x.EmployeeId == employee.Id && x.Enabled == true)
+                        .Select(x => new LeaveRecord
+                        {
+                            Id = x.Id,
+                            DateFrom = x.DateFrom,
+                            DateTo = x.DateTo,
+                            Duration = x.Duration,
+                            IsApproved = x.IsApproved
+                        }).ToListAsync();
 
                     var leaves = new LeavesRegisterVm()
                     {
