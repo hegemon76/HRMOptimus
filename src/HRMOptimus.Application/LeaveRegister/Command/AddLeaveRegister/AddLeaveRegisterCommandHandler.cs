@@ -50,7 +50,6 @@ namespace HRMOptimus.Application.LeaveRegister.Command.AddLeaveRegister
                         LeaveRegisterType = request.AddLeaveRegisterVm.LeaveRegisterType
                     };
 
-                    employee.LeaveDaysLeft -= duration;
                     employee.LeavesRegister.Add(leaveRegister);
                     _context.LeavesRegister.Add(leaveRegister);
 

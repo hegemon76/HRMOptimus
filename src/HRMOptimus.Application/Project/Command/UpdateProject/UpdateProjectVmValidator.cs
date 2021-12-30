@@ -15,12 +15,10 @@ namespace HRMOptimus.Application.Project.Command.UpdateProject
                     if (!project)
                         context.AddFailure("Id", "The Project with Id: " + value + " doesn't exist");
                 });
-            RuleFor(x => x.Name).NotEmpty();
-            RuleFor(x => x.DateFrom).NotEmpty();
-            RuleFor(x => x.DateTo).NotEmpty();
-            RuleFor(x => x.Deadline).NotEmpty();
-            RuleFor(x => x.Description).NotEmpty();
-            RuleFor(x => x.HoursBudget).NotEmpty();
+            RuleFor(x => x.Name).NotEmpty().MinimumLength(2);
+            RuleFor(x => x.DateTo).GreaterThan(x => x.DateFrom).NotEmpty();
+            RuleFor(x => x.DateTo).NotEmpty().LessThanOrEqualTo(x => x.Deadline);
+            RuleFor(x => x.HoursBudget).NotEmpty().GreaterThan(0);
         }
     }
 }

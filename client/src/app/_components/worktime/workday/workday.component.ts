@@ -56,7 +56,6 @@ export class WorkdayComponent implements OnInit {
       workEnd: [''],
       projectName: ['']
     });
-
     this.id = this.route.snapshot.paramMap.get('id');
     this.user = this.accountService.getUser();
 

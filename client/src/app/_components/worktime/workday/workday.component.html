@@ -11,7 +11,7 @@
     <button class="save" *ngIf="saveChanges===true">Zapisz</button>
   </div>
   <div class="times constForm">
-    <form [formGroup]="form" action="">
+    <form [formGroup]="form">
       <mat-form-field class="example-form-field hoursFrom" appearance="fill">
         <mat-label>Godz. od</mat-label>
         <input matInput formControlName="workStart" type="text">
@@ -30,8 +30,7 @@
       <mat-form-field appearance="fill" class="project">
         <mat-label>Projekt</mat-label>
         <mat-select formControlName="projectName">
-          <mat-option *ngFor="let project of projects" [value]="project">
-            {{project.name}}</mat-option>
+          <mat-option *ngFor="let project of projects" [value]="project"> {{project.name}}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="fill" class="details">
@@ -43,7 +42,7 @@
     </button>
   </div>
   <div class="times" *ngFor="let day of workDays">
-    <form id="dupeczka" (input)="checkForChanges()">
+    <form id="dupeczka" [formGroup]="form">
       <mat-form-field class="example-form-field hoursFrom" appearance="fill">
         <mat-label>Godz. od</mat-label>
         <input matInput type="text" value="{{day.workStart | date:'hh:mm'}}">
@@ -62,8 +61,7 @@
       <mat-form-field appearance="fill" class="project">
         <mat-label>Projekt</mat-label>
         <mat-select [(value)]="day.selected">
-          <mat-option *ngFor="let project of projects" [value]="project.name">
-            {{project.name}}</mat-option>
+          <mat-option *ngFor="let project of projects" [value]="project.name"> {{project.name}}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="fill" class="details">

@@ -16,7 +16,7 @@ namespace HRMOptimus.Persistance
         {
             services.AddDbContext<HRMOptimusDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("ConnectionStringName")));
-          
+
             services.AddScoped<IHRMOptimusDbContext>(provider => provider.GetService<HRMOptimusDbContext>());
 
             services.AddIdentityCore<ApplicationUser>(cfg =>
@@ -37,7 +37,6 @@ namespace HRMOptimus.Persistance
                        ValidateIssuer = false,
                        ValidateAudience = false,
                    };
-
                });
 
             return services;

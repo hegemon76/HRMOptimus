@@ -8,10 +8,9 @@ namespace HRMOptimus.Application.Account.Command.Registration
     {
         public RegistrationVmValidator(IHRMOptimusDbContext dbContext)
         {
+            #region ApplicationUser
+
             RuleFor(x => x.Email).NotEmpty().EmailAddress();
-            RuleFor(x => x.Password).MinimumLength(8);
-            RuleFor(x => x.FirstName).NotEmpty();
-            RuleFor(x => x.LastName).NotEmpty();
             RuleFor(x => x.Email)
                 .Custom((value, context) =>
                 {
@@ -19,21 +18,20 @@ namespace HRMOptimus.Application.Account.Command.Registration
                     if (emailInUse)
                         context.AddFailure("Email", "That email is taken");
                 });
+
+            RuleFor(x => x.Password).MinimumLength(8);
             RuleFor(x => x.Password)
-                .Custom((value, context) =>
-                {
-                    bool isUpperCase = false;
-                    for (int i = 0; i < value.Length; i++)
-                    {
-                        if (value[i] > 64 && value[i] < 91)
-                        {
-                            isUpperCase = true;
-                            i = value.Length;
-                        }
-                    }
-                    if (!isUpperCase)
-                        context.AddFailure("Password", "Password needs at least 1 upper letter");
-                });
+                .Matches("[A-Z]").WithMessage("'{PropertyName}' must contain one or more capital letters.")
+                .Matches("[a-z]").WithMessage("'{PropertyName}' must contain one or more lowercase letters.")
+                .Matches(@"\d").WithMessage("'{PropertyName}' must contain one or more digits.")
+                .Matches(@"[][""!@$%^#&*(){}:;<>,.?/+_=|'~\\-]").WithMessage("'{PropertyName}' must contain one or more special characters.")
+                .MinimumLength(8);
+            
+            RuleFor(x => x.FirstName).NotEmpty();
+            RuleFor(x => x.LastName).NotEmpty();
+
+            RuleFor(x => x.Roles).NotEmpty();
+            #endregion
         }
     }
 }

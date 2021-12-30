@@ -22,7 +22,7 @@ const routes: Routes = [
       )
   },
   {
-    path: 'vacation',
+    path: 'vacation/:id',
     loadChildren: () =>
       import('./_components/vacation/vacation.module').then(
         m => m.VacationModule
