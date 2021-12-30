@@ -157,13 +157,22 @@ export class VacationComponent implements OnInit {
       if (this.employeeVacation != null) {
         clearInterval(isArraySet);
         this.employeeVacation.map(d => {
-          var leaveStatus;
+          var leaveStatus, leaveRegisterType;
           if (d.isApproved == 2) {
             leaveStatus = 'pending';
           } else if (d.isApproved == 1) {
             leaveStatus = 'rejected';
           } else if (d.isApproved == 0) {
             leaveStatus = 'approved';
+          }
+          if (d.leaveRegisterType === 0) {
+            leaveRegisterType = 'sickleave';
+          } else if (d.leaveRegisterType === 1) {
+            leaveRegisterType = 'casualleave';
+          } else if (d.leaveRegisterType === 2) {
+            leaveRegisterType = 'caringleave';
+          } else if (d.leaveRegisterType === 3) {
+            leaveRegisterType = 'unpaidleave';
           }
           let daysArray = [];
           let push = false;
@@ -177,7 +186,11 @@ export class VacationComponent implements OnInit {
                   this.vacationDaysDeclared++;
                 }
                 daysArray.push(day);
-                this.calendar.setLeaveDay(day.id, leaveStatus);
+                this.calendar.setLeaveDay(
+                  day.id,
+                  leaveStatus,
+                  leaveRegisterType
+                );
               }
               if (day.id == formatDate(d.dateTo, 'ddMMYYYY', 'en-US')) {
                 push = false;
@@ -300,7 +313,6 @@ export class VacationComponent implements OnInit {
     this.vacationService
       .deleteVacation(vacationId, this.employeeId)
       .subscribe(res => {
-        console.log(res);
         this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
           this.router.navigate(['/vacation', this.employeeId]);
         });

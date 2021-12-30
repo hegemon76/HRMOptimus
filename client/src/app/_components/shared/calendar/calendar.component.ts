@@ -9,6 +9,7 @@ interface CalendarItem {
   className: string;
   isWeekend: boolean;
   leaveDay: string;
+  leaveDayType: number;
 }
 
 @Component({
@@ -81,7 +82,7 @@ export class CalendarComponent implements OnInit {
     };
   }
 
-  setLeaveDay(dayId, leaveStatus) {
+  setLeaveDay(dayId, leaveStatus, leaveRegisterType) {
     let newArray = [];
     this.calendar.map(a => {
       newArray = newArray.concat(a);
@@ -91,13 +92,19 @@ export class CalendarComponent implements OnInit {
     });
     if (leaveStatus === 'approved') {
       day.leaveDay = 'approved';
-      day.leaveDayType = 'sickleave';
     } else if (leaveStatus === 'pending') {
       day.leaveDay = 'pending';
-      day.leaveDayType = 'sickleave';
     } else if (leaveStatus === 'rejected') {
       day.leaveDay = 'rejected';
+    }
+    if (leaveRegisterType == 'sickleave') {
       day.leaveDayType = 'sickleave';
+    } else if (leaveRegisterType == 'casualleave') {
+      day.leaveDayType = 'casualleave';
+    } else if (leaveRegisterType == 'caringleave') {
+      day.leaveDayType = 'caringleave';
+    } else if (leaveRegisterType == 'unpaidleave') {
+      day.leaveDayType = 'unpaidleave';
     }
   }
 

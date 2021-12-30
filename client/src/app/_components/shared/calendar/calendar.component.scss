@@ -98,7 +98,54 @@ b {
     border-right: 16px solid #eb346b;
     border-left: 16px solid transparent;
     border-top: 16px solid transparent;
-    // background-color: #eb346b;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+}
+[data-leaveDayType="casualleave"] {
+  position: relative;
+  &:after {
+    display: block;
+    content: "";
+    width: 0;
+    height: 0;
+    border-bottom: 16px solid #8934eb;
+    border-right: 16px solid #8934eb;
+    border-left: 16px solid transparent;
+    border-top: 16px solid transparent;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+}
+[data-leaveDayType="caringleave"] {
+  position: relative;
+  &:after {
+    display: block;
+    content: "";
+    width: 0;
+    height: 0;
+    border-bottom: 16px solid #eba834;
+    border-right: 16px solid #eba834;
+    border-left: 16px solid transparent;
+    border-top: 16px solid transparent;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+}
+[data-leaveDayType="unpaidleave"] {
+  position: relative;
+  &:after {
+    display: block;
+    content: "";
+    width: 0;
+    height: 0;
+    border-bottom: 16px solid #34e5eb;
+    border-right: 16px solid #34e5eb;
+    border-left: 16px solid transparent;
+    border-top: 16px solid transparent;
     position: absolute;
     bottom: 0;
     right: 0;

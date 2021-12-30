@@ -37,10 +37,16 @@ export class DashboardComponent implements OnInit {
       }
     },
     scales: {
-      x: {},
+      x: {
+        grid: {
+          lineWidth: 0
+        }
+      },
       y: {
         max: 12,
-        beginAtZero: true
+        grid: {
+          borderWidth: 0
+        }
       }
     }
   };
@@ -54,6 +60,7 @@ export class DashboardComponent implements OnInit {
     const daysCount = this.daysInMonth(today.getFullYear(), today.getMonth());
     this.setLabels(daysCount);
     this.setData();
+    this.chart.update();
   }
 
   daysInMonth(month, year) {
@@ -83,7 +90,12 @@ export class DashboardComponent implements OnInit {
         console.log(res);
         res.map(h => {
           this.barChartData.datasets[0].data = this.barChartData.datasets[0].data.concat(
-            h.workedTime
+            parseFloat(h.workedTime.split(':')[0]) +
+              parseFloat(h.workedTime.split(':')[1]) / 60
+          );
+          console.log(
+            parseFloat(h.workedTime.split(':')[0]) +
+              parseFloat(h.workedTime.split(':')[1]) / 60
           );
         });
       });

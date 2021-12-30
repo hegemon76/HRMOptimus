@@ -50,6 +50,7 @@ export class VacationService {
     });
   }
   deleteVacation(vacationId, employeeId): Observable<any> {
+    console.log(vacationId, employeeId);
     return this.http.delete(this.deleteVacationUrl, {
       params: {
         id: vacationId,
