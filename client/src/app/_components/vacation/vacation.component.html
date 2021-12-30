@@ -1,10 +1,27 @@
 <div class="vacation-container">
+  <div class="header" *ngIf="employee">
+    <p>Urlopy użytkownika <strong>{{employee.fullName}}</strong></p>
+  </div>
+  <mat-card class="container">
+    <div class="search-wrapper">
+      <mat-form-field appearance="fill">
+        <mat-label>Wybierz pracownika...</mat-label>
+        <input type="select" placeholder="Wybierz pracownika..." aria-label="Number" matInput [matAutocomplete]="auto"
+          [formControl]="myControl">
+      </mat-form-field>
+      <button (click)="changeUser()">Zmień</button>
+    </div>
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let option of filteredOptions  | async" [value]="option"> {{option.firstName}}
+        {{option.lastName}}</mat-option>
+    </mat-autocomplete>
+  </mat-card>
   <mat-card class="container">
     <form [formGroup]="form" (submit)="addVacation()">
       <mat-form-field appearance="fill">
         <mat-label>Typ urlopu</mat-label>
         <mat-select formControlName="leaveRegisterType" required>
-          <mat-option *ngFor="let option of options" [value]="option.value"> {{option.label}} </mat-option>
+          <mat-option *ngFor="let option of typeOptions" [value]="option.value"> {{option.label}} </mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field appearance="fill">
@@ -22,7 +39,7 @@
       <input hidden formControlName="employeeId">
       <button type="submit">Dodaj urlop</button>
     </form>
-    <app-calendar></app-calendar>
+    <app-calendar (changeMonthEmitter)="changeMonth()"></app-calendar>
     <div class="wrapper">
       <div class="limits">
         <h6>Ilość dni urlopowych</h6>
@@ -48,10 +65,9 @@
               <span>do {{vac.dateTo | date:"dd-MM-YYYY"}}</span>
             </div>
             <div class="actions" *ngIf="user.role.includes('HumanResources')">
-              <button (click)="approveVacation(vac.id,employee.employeeId)"><img
-                  src="/assets/images/check-square-solid.svg" alt=""></button>
-              <button (click)="rejectVacation(vac.id,employee.employeeId)"><img
-                  src="/assets/images/minus-square-solid.svg" alt=""></button>
+              <button (click)="approveVacation(vac.id)"><img src="/assets/images/check-square-solid.svg"
+                  alt=""></button>
+              <button (click)="rejectVacation(vac.id)"><img src="/assets/images/minus-square-solid.svg" alt=""></button>
             </div>
           </div>
         </div>
@@ -65,8 +81,7 @@
               <span>do {{vac.dateTo | date:"dd-MM-YYYY"}}</span>
             </div>
             <div class="actions" *ngIf="user.role.includes('HumanResources')">
-              <button (click)="rejectVacation(vac.id,employee.employeeId)"><img
-                  src="/assets/images/minus-square-solid.svg" alt=""></button>
+              <button (click)="rejectVacation(vac.id)"><img src="/assets/images/minus-square-solid.svg" alt=""></button>
             </div>
           </div>
         </div>
@@ -79,9 +94,18 @@
               <span>od {{vac.dateFrom | date:"dd-MM-YYYY"}} </span>
               <span>do {{vac.dateTo | date:"dd-MM-YYYY"}}</span>
             </div>
+            <div class="actions" *ngIf="user.role.includes('HumanResources')">
+              <button (click)="deleteVacation(vac.id)"><img src="/assets/images/minus-square-solid.svg" alt=""></button>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+    <div class="legend">
+      <p class="llabel l1">Chorobowy</p>
+      <p class="llabel l2">Na żądanie</p>
+      <p class="llabel l3">Opiekuńczy</p>
+      <p class="llabel l4">Bezpłatny</p>
     </div>
   </mat-card>
 </div>

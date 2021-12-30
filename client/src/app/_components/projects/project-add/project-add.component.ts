@@ -73,6 +73,7 @@ export class ProjectAddComponent implements OnInit {
 
   addProjects() {
     this.components.map(c => {
+      console.log(c.instance.form);
       if (c.instance.form.status == 'VALID') {
         const formData = c.instance.form.getRawValue();
         formData.dateFrom =

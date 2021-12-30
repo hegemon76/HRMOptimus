@@ -2,5 +2,14 @@
 @import "assets/styles/reset";
 @import "assets/styles/colors.scss";
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+strong {
+  font-weight: bold;
+}
