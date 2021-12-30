@@ -39,14 +39,15 @@ namespace HRMOptimus.Application.LeaveRegister.Query.GetLeavesRegisterByEmployee
                             DateFrom = x.DateFrom,
                             DateTo = x.DateTo,
                             Duration = x.Duration,
-                            IsApproved = x.IsApproved
+                            IsApproved = x.IsApproved,
+                            LeaveRegisterType = x.LeaveRegisterType
                         }).ToListAsync();
 
                     var leaves = new LeavesRegisterVm()
                     {
                         LeaveDaysLeft = (int)employee.LeaveDaysLeft,
                         LeaveDaysByContract = (int)employee.Contract.LeaveDays,
-                        LeaveRecords = leavesRecord
+                        LeaveRecords = leavesRecord,
                     };
 
                     return leaves;
