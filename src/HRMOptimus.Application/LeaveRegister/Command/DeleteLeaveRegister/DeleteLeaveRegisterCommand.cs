@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace HRMOptimus.Application.LeaveRegister.Command.DeleteLeaveRegister
 {
-    public class DeleteLeaveRegisterCommand : IRequest<int>
+    public class DeleteLeaveRegisterCommand : IRequest
     {
-        public DeleteLeaveRegisterVm DeleteLeaveRegisterVm { get; set; }
+        public int Id { get; set; }
+        public int? EmployeeId { get; set; }
     }
 }
