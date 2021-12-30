@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Output, Input } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
+import { Output, Input, EventEmitter } from '@angular/core';
 import * as moment from 'moment';
 
 interface CalendarItem {
@@ -8,6 +8,7 @@ interface CalendarItem {
   dayName: string;
   className: string;
   isWeekend: boolean;
+  leaveDay: string;
 }
 
 @Component({
@@ -18,6 +19,7 @@ interface CalendarItem {
 export class CalendarComponent implements OnInit {
   date = moment().locale('pl');
   calendar: Array<CalendarItem[]> = [];
+  @Output() changeMonthEmitter = new EventEmitter();
 
   constructor() {}
 
@@ -73,14 +75,39 @@ export class CalendarComponent implements OnInit {
       day: data.format('D'),
       dayName,
       className,
-      isWeekend: dayName === 'ndz' || dayName === 'sob'
+      isWeekend: dayName === 'ndz' || dayName === 'sob',
+      leaveDay: null,
+      leaveDayType: null
     };
   }
+
+  setLeaveDay(dayId, leaveStatus) {
+    let newArray = [];
+    this.calendar.map(a => {
+      newArray = newArray.concat(a);
+    });
+    const day = newArray.find(d => {
+      return d.id === dayId;
+    });
+    if (leaveStatus === 'approved') {
+      day.leaveDay = 'approved';
+      day.leaveDayType = 'sickleave';
+    } else if (leaveStatus === 'pending') {
+      day.leaveDay = 'pending';
+      day.leaveDayType = 'sickleave';
+    } else if (leaveStatus === 'rejected') {
+      day.leaveDay = 'rejected';
+      day.leaveDayType = 'sickleave';
+    }
+  }
+
   public nextmonth() {
+    this.changeMonthEmitter.emit();
     this.date.add(1, 'months');
     this.calendar = this.createCalendar(this.date);
   }
   public previousmonth() {
+    this.changeMonthEmitter.emit();
     this.date.subtract(1, 'months');
     this.calendar = this.createCalendar(this.date);
   }

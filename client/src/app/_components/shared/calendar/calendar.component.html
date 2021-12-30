@@ -8,7 +8,8 @@
 <div *ngFor="let calendarItem of calendar; let i = index">
   <div class="flex-container flex-center">
     <div id="{{ day.id }}" class="calendar-days" [class.weekend]="day.isWeekend" [ngClass]="day.className"
-      *ngFor="let day of calendarItem">
+      *ngFor="let day of calendarItem" (click)="setLeaveDay(day.id)" [attr.data-leaveDay]="day.leaveDay"
+      [attr.data-leaveDayType]="day.leaveDayType">
       <span class="day">{{ day.day }}</span>
     </div>
   </div>

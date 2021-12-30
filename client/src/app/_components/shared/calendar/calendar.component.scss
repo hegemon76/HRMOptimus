@@ -15,16 +15,17 @@
   }
 
   &.weekend {
-    background-color: rgb(37, 168, 37);
-    color: white;
-
+    background-color: #b5d3e7 !important;
     .day {
       line-height: 80px;
+    }
+    &:after {
+      content: none !important;
     }
   }
 
   &.weekend:hover {
-    background-color: rgb(56, 197, 56);
+    background-color: #b5d3e7;
   }
 
   .day {
@@ -74,4 +75,32 @@ b {
   font-size: 20px;
   margin-left: 8px;
   margin-right: 8px;
+}
+
+[data-leaveDay="approved"] {
+  background-color: #d9ffbf;
+}
+[data-leaveDay="pending"] {
+  background-color: #fcf4a3;
+}
+[data-leaveDay="rejected"] {
+  background-color: #d38891;
+}
+
+[data-leaveDayType="sickleave"] {
+  position: relative;
+  &:after {
+    display: block;
+    content: "";
+    width: 0;
+    height: 0;
+    border-bottom: 16px solid #eb346b;
+    border-right: 16px solid #eb346b;
+    border-left: 16px solid transparent;
+    border-top: 16px solid transparent;
+    // background-color: #eb346b;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
 }
