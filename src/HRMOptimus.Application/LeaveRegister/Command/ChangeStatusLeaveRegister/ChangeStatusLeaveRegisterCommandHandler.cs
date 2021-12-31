@@ -9,7 +9,7 @@ using HRMOptimus.Domain.Enums;
 
 namespace HRMOptimus.Application.LeaveRegister.Command.ChangeStatusLeaveRegister
 {
-    public class ChangeStatusLeaveRegisterCommandHandler : IRequestHandler<ChangeStatusLeaveRegisterCommand, int>
+    public class ChangeStatusLeaveRegisterCommandHandler : IRequestHandler<ChangeStatusLeaveRegisterCommand, Unit>
     {
         private readonly IHRMOptimusDbContext _context;
 
@@ -17,39 +17,30 @@ namespace HRMOptimus.Application.LeaveRegister.Command.ChangeStatusLeaveRegister
         {
             _context = context;
         }
-        public async Task<int> Handle(ChangeStatusLeaveRegisterCommand request, CancellationToken cancellationToken)
+
+        public async Task<Unit> Handle(ChangeStatusLeaveRegisterCommand request, CancellationToken cancellationToken)
         {
-            try
+            var user = await _context.Employees.Include(x => x.LeavesRegister)
+                .FirstOrDefaultAsync(x => x.Id == request.ChangeStatusLeaveRegisterVm.EmployeeId);
+
+            var leaveRegister = await _context.LeavesRegister.FirstOrDefaultAsync(x => x.Id == request.ChangeStatusLeaveRegisterVm.RecordId);
+
+            if (request.ChangeStatusLeaveRegisterVm.Status == leaveRegister.IsApproved)
+                return Unit.Value;
+
+            if (request.ChangeStatusLeaveRegisterVm.Status != IsApproved.Approved && leaveRegister.IsApproved == IsApproved.Approved)
             {
-                var user = await _context.Employees.Include(x => x.LeavesRegister)
-                    .FirstOrDefaultAsync(x => x.Id == request.ChangeStatusLeaveRegisterVm.EmployeeId);
-
-                var leaveRegister = await _context.LeavesRegister.FirstOrDefaultAsync(x => x.Id == request.ChangeStatusLeaveRegisterVm.RecordId);
-
-                if (user != null && leaveRegister != null)
-                {
-                    if (request.ChangeStatusLeaveRegisterVm.Status == leaveRegister.IsApproved)
-                        return 0;
-
-                    if (request.ChangeStatusLeaveRegisterVm.Status != IsApproved.Approved && leaveRegister.IsApproved == IsApproved.Approved)
-                    {
-                        user.LeaveDaysLeft += leaveRegister.Duration;
-                    }
-                    else if (request.ChangeStatusLeaveRegisterVm.Status == IsApproved.Approved && leaveRegister.IsApproved != IsApproved.Approved)
-                    {
-                        user.LeaveDaysLeft -= leaveRegister.Duration;
-                    }
-
-                    leaveRegister.IsApproved = request.ChangeStatusLeaveRegisterVm.Status;
-                    await _context.SaveChangesAsync(cancellationToken);
-                    return leaveRegister.Id;
-                }
-                return 0;
+                user.LeaveDaysLeft += leaveRegister.Duration;
             }
-            catch (Exception)
+            else if (request.ChangeStatusLeaveRegisterVm.Status == IsApproved.Approved && leaveRegister.IsApproved != IsApproved.Approved)
             {
-                return 0;
+                user.LeaveDaysLeft -= leaveRegister.Duration;
             }
+
+            leaveRegister.IsApproved = request.ChangeStatusLeaveRegisterVm.Status;
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return Unit.Value;
         }
     }
 }

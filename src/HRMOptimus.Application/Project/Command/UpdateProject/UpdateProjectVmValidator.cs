@@ -11,7 +11,7 @@ namespace HRMOptimus.Application.Project.Command.UpdateProject
             RuleFor(x => x.Id)
                 .Custom((value, context) =>
                 {
-                    var project = dbContext.Projects.Any(e => e.Id == value);
+                    var project = dbContext.Projects.Any(e => e.Id == value && e.Enabled);
                     if (!project)
                         context.AddFailure("Id", "The Project with Id: " + value + " doesn't exist");
                 });

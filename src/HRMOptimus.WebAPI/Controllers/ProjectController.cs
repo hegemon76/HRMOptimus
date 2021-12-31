@@ -26,9 +26,9 @@ namespace HRMOptimus.WebAPI.Controllers
         [Route("api/project/addEmployee")]
         public async Task<ActionResult<int>> AddEmployee(AddEmployeeVm model)
         {
-            var id = await Mediator.Send(new AddEmployeeCommand() { AddEmployeeVm = model });
+            await Mediator.Send(new AddEmployeeCommand() { AddEmployeeVm = model });
 
-            return id;
+            return Ok();
         }
 
         [HttpPut]
