@@ -20,50 +20,43 @@ namespace HRMOptimus.Application.LeaveRegister.Command.AddLeaveRegister
 
         public async Task<int> Handle(AddLeaveRegisterCommand request, CancellationToken cancellationToken)
         {
-            try
+            var daysList = Enumerable.Range(0, 1 + request.AddLeaveRegisterVm.LeaveEnd.Date
+                .Subtract(request.AddLeaveRegisterVm.LeaveStart.Date).Days)
+                .Select(offset => request.AddLeaveRegisterVm.LeaveStart.Date.AddDays(offset))
+                .ToArray();
+
+            int duration = 0;
+
+            foreach (var item in daysList)
             {
-                var daysList = Enumerable.Range(0, 1 + request.AddLeaveRegisterVm.LeaveEnd.Date
-                    .Subtract(request.AddLeaveRegisterVm.LeaveStart.Date).Days)
-                    .Select(offset => request.AddLeaveRegisterVm.LeaveStart.Date.AddDays(offset))
-                    .ToArray();
-
-                int duration = 0;
-
-                foreach (var item in daysList)
-                {
-                    if (item.DayOfWeek != DayOfWeek.Saturday && item.DayOfWeek != DayOfWeek.Sunday)
-                        duration += 1;
-                }
-                var employee = await _context.Employees.Include(leaves => leaves.LeavesRegister)
-                    .FirstOrDefaultAsync(x => x.Id == request.AddLeaveRegisterVm.EmployeeId);
-
-                if (employee != null)
-                {
-                    Domain.Entities.LeaveRegister leaveRegister = new Domain.Entities.LeaveRegister()
-                    {
-                        Duration = duration,
-                        DateFrom = request.AddLeaveRegisterVm.LeaveStart.Date,
-                        DateTo = request.AddLeaveRegisterVm.LeaveEnd.Date,
-                        EmployeeId = request.AddLeaveRegisterVm.EmployeeId,
-                        Employee = employee,
-                        IsApproved = IsApproved.UnChecked,
-                        LeaveRegisterType = request.AddLeaveRegisterVm.LeaveRegisterType
-                    };
-
-                    employee.LeavesRegister.Add(leaveRegister);
-                    _context.LeavesRegister.Add(leaveRegister);
-
-                    _context.Employees.Update(employee);
-
-                    await _context.SaveChangesAsync(cancellationToken);
-                    return leaveRegister.Id;
-                }
-                return 0;
+                if (item.DayOfWeek != DayOfWeek.Saturday && item.DayOfWeek != DayOfWeek.Sunday)
+                    duration += 1;
             }
-            catch (Exception)
+            var employee = await _context.Employees.Include(leaves => leaves.LeavesRegister)
+                .FirstOrDefaultAsync(x => x.Id == request.AddLeaveRegisterVm.EmployeeId);
+
+            if (employee != null)
             {
-                return 0;
+                Domain.Entities.LeaveRegister leaveRegister = new Domain.Entities.LeaveRegister()
+                {
+                    Duration = duration,
+                    DateFrom = request.AddLeaveRegisterVm.LeaveStart.Date,
+                    DateTo = request.AddLeaveRegisterVm.LeaveEnd.Date,
+                    EmployeeId = request.AddLeaveRegisterVm.EmployeeId,
+                    Employee = employee,
+                    IsApproved = IsApproved.UnChecked,
+                    LeaveRegisterType = request.AddLeaveRegisterVm.LeaveRegisterType
+                };
+
+                employee.LeavesRegister.Add(leaveRegister);
+                _context.LeavesRegister.Add(leaveRegister);
+
+                _context.Employees.Update(employee);
+
+                await _context.SaveChangesAsync(cancellationToken);
+                return leaveRegister.Id;
             }
+            return 0;
         }
     }
 }
