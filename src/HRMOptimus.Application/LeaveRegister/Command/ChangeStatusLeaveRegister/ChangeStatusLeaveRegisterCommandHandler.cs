@@ -1,11 +1,9 @@
 ﻿using HRMOptimus.Application.Common.Interfaces;
+using HRMOptimus.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using HRMOptimus.Domain.Enums;
 
 namespace HRMOptimus.Application.LeaveRegister.Command.ChangeStatusLeaveRegister
 {
@@ -25,20 +23,20 @@ namespace HRMOptimus.Application.LeaveRegister.Command.ChangeStatusLeaveRegister
 
             var leaveRegister = await _context.LeavesRegister.FirstOrDefaultAsync(x => x.Id == request.ChangeStatusLeaveRegisterVm.RecordId);
 
-            if (request.ChangeStatusLeaveRegisterVm.Status == leaveRegister.IsApproved)
-                return Unit.Value;
-
-            if (request.ChangeStatusLeaveRegisterVm.Status != IsApproved.Approved && leaveRegister.IsApproved == IsApproved.Approved)
+            if (request.ChangeStatusLeaveRegisterVm.Status != leaveRegister.IsApproved)
             {
-                user.LeaveDaysLeft += leaveRegister.Duration;
-            }
-            else if (request.ChangeStatusLeaveRegisterVm.Status == IsApproved.Approved && leaveRegister.IsApproved != IsApproved.Approved)
-            {
-                user.LeaveDaysLeft -= leaveRegister.Duration;
-            }
+                if (request.ChangeStatusLeaveRegisterVm.Status != IsApproved.Approved && leaveRegister.IsApproved == IsApproved.Approved)
+                {
+                    user.LeaveDaysLeft += leaveRegister.Duration;
+                }
+                else if (request.ChangeStatusLeaveRegisterVm.Status == IsApproved.Approved && leaveRegister.IsApproved != IsApproved.Approved)
+                {
+                    user.LeaveDaysLeft -= leaveRegister.Duration;
+                }
 
-            leaveRegister.IsApproved = request.ChangeStatusLeaveRegisterVm.Status;
-            await _context.SaveChangesAsync(cancellationToken);
+                leaveRegister.IsApproved = request.ChangeStatusLeaveRegisterVm.Status;
+                await _context.SaveChangesAsync(cancellationToken);
+            }
 
             return Unit.Value;
         }

@@ -12,12 +12,9 @@ namespace HRMOptimus.Persistance
 {
     public class HRMOptimusDbContext : IdentityDbContext<ApplicationUser>, IHRMOptimusDbContext
     {
-        private readonly IUserContextService _userContextService;
-
-        public HRMOptimusDbContext(DbContextOptions<HRMOptimusDbContext> options, IUserContextService userContextService)
+        public HRMOptimusDbContext(DbContextOptions<HRMOptimusDbContext> options)
             : base(options)
         {
-            _userContextService = userContextService;
         }
 
         public DbSet<Project> Projects { get; set; }
@@ -35,7 +32,7 @@ namespace HRMOptimus.Persistance
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.CreatedBy = _userContextService.GetEmployeeId.ToString();
+                        entry.Entity.CreatedBy = "1";
                         entry.Entity.CreatedOn = DateTime.Now;
                         entry.Entity.Enabled = true;
                         break;
