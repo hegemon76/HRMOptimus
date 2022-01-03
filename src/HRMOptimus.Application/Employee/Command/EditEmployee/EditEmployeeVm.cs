@@ -1,8 +1,5 @@
-﻿using HRMOptimus.Application.Account.Command.Registration;
-using HRMOptimus.Domain.Entities;
-using HRMOptimus.Domain.Enums;
+﻿using HRMOptimus.Domain.Enums;
 using System;
-using System.Collections.Generic;
 
 namespace HRMOptimus.Application.Employee.Command.EditEmployee
 {
@@ -24,6 +21,8 @@ namespace HRMOptimus.Application.Employee.Command.EditEmployee
         public string BuildingNumber { get; set; }
         public string HouseNumber { get; set; }
         public string Country { get; set; }
-        
+
+        //ApplicationUser
+        public string PhoneNumber { get; set; }
     }
 }
