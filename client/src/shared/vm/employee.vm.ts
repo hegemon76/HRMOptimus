@@ -9,6 +9,19 @@ export class EmployeeVm {
   birthDate: string | undefined;
   email: string | undefined;
   phoneNumber: string | undefined;
-  contractName: string | undefined;
   items: any | undefined;
+  address: {
+    street: string | undefined;
+    buildingNumber: string | undefined;
+    houseNumber: string | undefined;
+    zipCode: string | undefined;
+    city: string | undefined;
+    country: string | undefined;
+  };
+  contract: {
+    contractName: string | undefined;
+    contractType: number | undefined;
+    leaveDays: number | undefined;
+  };
+  roles: string[] | undefined;
 }

@@ -22,6 +22,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { ProjectEditComponent } from './project-edit/project-edit.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ProjectAddSingleFormComponent,
     FilterPipe,
     FillProjectsFormDialog,
-    DeleteProjectDialog
+    DeleteProjectDialog,
+    ProjectEditComponent
   ],
   imports: [
     CommonModule,
