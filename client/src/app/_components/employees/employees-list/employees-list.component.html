@@ -18,7 +18,7 @@
         </div>
         <div class="single-employee" *ngFor="let employee of employees | filter: searchedEmployee; let i = index">
           <img [src]="employee.gender == 0 ? '/assets/images/male-avatar.svg' : '/assets/images/female-avatar.svg'">
-          <p>{{employee.fullName}}</p>
+          <p class="fullname" routerLink="details/{{employee.id}}">{{employee.fullName}}</p>
           <p>{{employee.contractName}}</p>
           <a href="mailto:employee.email">{{employee.email}}</a>
           <a href="tel:employee.phoneNumber">{{employee.phoneNumber}}</a>

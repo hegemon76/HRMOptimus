@@ -14,7 +14,8 @@ namespace HRMOptimus.Persistance
     {
         public HRMOptimusDbContext(DbContextOptions<HRMOptimusDbContext> options)
             : base(options)
-        { }
+        {
+        }
 
         public DbSet<Project> Projects { get; set; }
         public DbSet<Address> Addresses { get; set; }

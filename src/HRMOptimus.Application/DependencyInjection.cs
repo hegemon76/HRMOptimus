@@ -5,9 +5,13 @@ using HRMOptimus.Application.Common.Interfaces;
 using HRMOptimus.Application.Common.Middleware;
 using HRMOptimus.Application.Common.Services;
 using HRMOptimus.Application.Employee.Command.EditEmployee;
+using HRMOptimus.Application.LeaveRegister.Command.ChangeStatusLeaveRegister;
+using HRMOptimus.Application.Project.Command.AddEmployee;
 using HRMOptimus.Application.Project.Command.AddProject;
+using HRMOptimus.Application.Project.Command.RemoveProject;
 using HRMOptimus.Application.Project.Command.UpdateProject;
 using HRMOptimus.Application.WorkRecord.Command.AddWorkRecord;
+using HRMOptimus.Application.WorkRecord.Command.RemoveWorkRecord;
 using HRMOptimus.Application.WorkRecord.Command.UpdateWorkRecord;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -38,6 +42,10 @@ namespace HRMOptimus.Application
             services.AddScoped<IValidator<AddWorkRecordVm>, AddWorkRecordVmValidator>();
             services.AddScoped<IValidator<UpdateWorkRecordVm>, UpdateWorkRecordVmValidator>();
             services.AddScoped<IValidator<EditEmployeeVm>, EditEmployeeVmValidator>();
+            services.AddScoped<IValidator<RemoveWorkRecordCommand>, RemoveWorkRecordCommandValidator>();
+            services.AddScoped<IValidator<AddEmployeeVm>, AddEmployeeVmValidator>();
+            services.AddScoped<IValidator<RemoveProjectCommand>, RemoveProjectCommandValidator>();
+            services.AddScoped<IValidator<ChangeStatusLeaveRegisterVm>, ChangeStatusLeaveRegisterVmValidator>();
 
             return services;
         }
