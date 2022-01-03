@@ -8,15 +8,10 @@ namespace HRMOptimus.Application.Account.Command.Login
 {
     public class LoginCommandValidator : AbstractValidator<LoginCommand>
     {
-        public LoginCommandValidator(IHRMOptimusDbContext dbContext, UserManager<ApplicationUser> userManager)
+        public LoginCommandValidator()
         {
             RuleFor(x => x.Email).NotEmpty().EmailAddress();
             RuleFor(x => x.Password).NotEmpty();
-            //RuleFor(x => x.Password).Custom((context, value) =>
-            //  {
-            //      var user = userManager.FindByEmailAsync(request.Email).GetAwaiter();
-            //      var result = userManager.CheckPasswordAsync(user, request.Password);
-            //  });
         }
     }
 }

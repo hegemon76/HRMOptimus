@@ -16,8 +16,6 @@ export class WorktimeService {
 
   addWorkEntry = 'https://localhost:5001/api/workrecord/add';
 
-  editWorkEntry = 'https://localhost:5001/api/workrecord/update';
-
   constructor(private http: HttpClient) { }
 
   getWorkday(id): Observable<any> {
@@ -55,21 +53,6 @@ export class WorktimeService {
 
   addWorkDayRecord(values, emploeeId, value): Observable<any> {
     return this.http.post(this.addWorkEntry, {
-      name: values.dayName,
-      workStart: value + ' ' + values.workStart,
-      workEnd: value + ' ' + values.workEnd,
-      projectId: values.projectName.id,
-      employeeId: emploeeId
-    },
-      {
-        headers: { 'Content-Type': 'application/json' }
-      })
-      .pipe(map((res: any) => res));
-  }
-
-  editWorkDayRecord(id, values, emploeeId, value): Observable<any> {
-    return this.http.put(this.editWorkEntry, {
-      id: id,
       name: values.dayName,
       workStart: value + ' ' + values.workStart,
       workEnd: value + ' ' + values.workEnd,

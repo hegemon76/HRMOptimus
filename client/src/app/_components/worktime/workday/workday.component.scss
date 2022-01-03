@@ -33,6 +33,37 @@
   }
 }
 
+.save {
+  float: right;
+  background-color: #1869ff;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  height: 35px;
+  margin-top: 10px;
+  border-radius: 5px;
+  margin-right: 10px;
+  cursor: pointer;
+  font-size: 12px;
+  width: 70px;
+}
+
+.add {
+  float: right;
+  background-color: #1869ff;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  height: 35px;
+  margin-top: 10px;
+  border-radius: 5px;
+  margin-right: 10px;
+  cursor: pointer;
+  font-size: 12px;
+  width: 150px;
+  display: none;
+}
+
 .workday-wrapper {
   background-color: rgb(255, 255, 255);
   width: auto;
@@ -40,13 +71,18 @@
   padding: 50px;
   border-radius: 10px;
   margin: 50px;
+
+  .constForm {
+    margin-bottom: 50px;
+  }
 }
 
 .day-info {
   width: 1470px;
-  height: 65px;
+  height: auto;
   border-radius: 10px;
   background-color: rgb(238, 231, 231);
+  float: left;
   padding: 5px;
   margin-bottom: 10px;
 
@@ -54,7 +90,7 @@
     color: black;
     padding: 10px;
     width: auto;
-    min-width: 345px;
+    min-width: 260px;
     margin: 10px;
     background: rgb(255, 255, 255);
     border-radius: 5px;
@@ -67,30 +103,16 @@
   }
 }
 
-.addingLegend {
-  background-color: rgb(238, 231, 231);
-  width: 1470px;
-  height: 30px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  text-align: center;
-  line-height: 30px;
-
-  p {
-    font-weight: bold;
-  }
-}
-
 .times {
   width: 1470px;
   border-radius: 10px;
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(238, 231, 231);
+  border-radius: 10px;
   margin-bottom: 10px;
   display: flex;
   padding-top: 25px;
   padding-bottom: 5px;
   padding-left: 20px;
-  border: 3px solid rgb(238, 231, 231);
 
   .mat-form-field {
     margin-left: 10px;
@@ -99,10 +121,6 @@
 
   .hoursFrom {
     width: 150px;
-  }
-
-  #center {
-    text-align: center;
   }
 
   .hoursTo {
@@ -118,14 +136,7 @@
   }
 
   .details {
-    width: 455px;
-    padding-right: 20px;
-  }
-}
-
-.constForm {
-  .details {
-    width: 415px;
+    width: 470px;
   }
 }
 
@@ -133,15 +144,15 @@
   background-color: red;
   color: #fff;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 14px;
   border: 0px;
   border-radius: 5px;
-  width: 55px;
-  height: 55px;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
   margin-left: auto;
-  margin-top: 7px;
   margin-right: 30px;
+  margin-top: 15px;
 }
 
 .deleteEntry:hover {
@@ -152,43 +163,23 @@
   background-color: #1869ff;
   color: #fff;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 14px;
   border: 0px;
   border-radius: 5px;
-  width: 95px;
-  height: 55px;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
   margin-left: auto;
   margin-right: 30px;
-  margin-top: 6px;
+  margin-top: 15px;
 }
 
-.addEntry:hover {
-  background-color: #0058fc;
-}
-
-.save {
-  float: right;
-  background-color: #1869ff;
-  color: #fff;
-  border: none;
-  font-weight: bold;
-  height: 55px;
-  margin-top: 7px;
-  border-radius: 5px;
-  margin-right: 10px;
-  cursor: pointer;
-  font-size: 12px;
-  width: 70px;
+.test {
   display: none;
 }
 
-.visibleButton {
-  .save {
+.green {
+  .test {
     display: block;
   }
-}
-
-.save:hover {
-  background-color: #0058fc;
 }

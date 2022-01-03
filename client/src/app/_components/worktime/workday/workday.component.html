@@ -3,89 +3,74 @@
   <button class="back" routerLink="/worktime"><i class="fas fa-times"></i></button>
 </div>
 <div class="workday-wrapper">
-
-
   <div class="day-info">
     <p><span>Pracownik:</span> {{user.fullName}}</p>
     <p><span>Dzień:</span> {{ id }} </p>
     <p><span>Godziny pracy:</span> 08:00 - 16:00 </p>
     <p><span>Czas pracy:</span> {{durationTime | date:'hh:mm'}} </p>
+    <button class="save" *ngIf="saveChanges===true">Zapisz</button>
   </div>
-
-  <div class="addingLegend">
-    <p>Dodaj wpis</p>
-  </div>
-
   <div class="times constForm">
-    <form [formGroup]="form" action="">
-      <mat-form-field class="example-form-field hoursFrom" appearance="outline">
+    <form [formGroup]="form">
+      <mat-form-field class="example-form-field hoursFrom" appearance="fill">
         <mat-label>Godz. od</mat-label>
-        <input id="center" matInput formControlName="workStart" type="text">
+        <input matInput formControlName="workStart" type="text">
       </mat-form-field>
-      <mat-form-field class="example-form-field hoursTo" appearance="outline">
+      <mat-form-field class="example-form-field hoursTo" appearance="fill">
         <mat-label>Godz. do</mat-label>
-        <input id="center" matInput formControlName="workEnd" type="text">
+        <input matInput formControlName="workEnd" type="text">
       </mat-form-field>
-      <mat-form-field appearance="outline" class="type">
+      <mat-form-field appearance="fill" class="type">
         <mat-label>Tryb</mat-label>
-        <mat-select id="center" formControlName="typeName">
+        <mat-select>
           <mat-option value="zdalna">Praca zdalna</mat-option>
           <mat-option value="biuro">Praca w biurze</mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field appearance="outline" class="project">
+      <mat-form-field appearance="fill" class="project">
         <mat-label>Projekt</mat-label>
-        <mat-select id="center" formControlName="projectName">
-          <mat-option *ngFor="let project of projects" [value]="project">
-            {{project.name}}</mat-option>
+        <mat-select formControlName="projectName">
+          <mat-option *ngFor="let project of projects" [value]="project"> {{project.name}}</mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field class="example-full-width" appearance="outline" class="details">
+      <mat-form-field class="example-full-width" appearance="fill" class="details">
         <mat-label>Opis</mat-label>
-        <input id="center" matInput formControlName="dayName" value="">
+        <input matInput formControlName="dayName" value="">
       </mat-form-field>
     </form>
-    <button class="addEntry" id="{{ id }}" (click)="addEntry()">Dodaj
+    <button class="addEntry" id="{{ id }}" (click)="addEntry()"><i class="fas fa-plus"></i>
     </button>
   </div>
-  <div class="addingLegend">
-    <p>Edytuj wpisy</p>
-  </div>
-  <div #parent></div>
   <div class="times" *ngFor="let day of workDays">
-    <form id="{{day.id}}" [formGroup]="form" action="" (input)="checkForChanges()"
-      [ngClass]="{'visibleButton': this.form.dirty}">
-      <mat-form-field class="example-form-field hoursFrom" appearance="outline">
+    <form id="dupeczka" [formGroup]="form">
+      <mat-form-field class="example-form-field hoursFrom" appearance="fill">
         <mat-label>Godz. od</mat-label>
-        <input matInput id="center" formControlName="workStart" type="text" value="{{day.workStart | date:'hh:mm'}}">
+        <input matInput type="text" value="{{day.workStart | date:'hh:mm'}}">
       </mat-form-field>
-      <mat-form-field class="example-form-field hoursTo" appearance="outline">
+      <mat-form-field class="example-form-field hoursTo" appearance="fill">
         <mat-label>Godz. do</mat-label>
-        <input matInput id="center" formControlName="workEnd" type="text" value="{{day.workStop | date:'hh:mm'}}">
+        <input matInput type="text" value="{{day.workStop | date:'hh:mm'}}">
       </mat-form-field>
-      <mat-form-field appearance="outline" class="type">
+      <mat-form-field appearance="fill" class="type">
         <mat-label>Tryb</mat-label>
-        <mat-select id="center" formControlName="typeName" (selectionChange)="checkForChanges()">
+        <mat-select>
           <mat-option value="zdalna">Praca zdalna</mat-option>
           <mat-option value="biuro">Praca w biurze</mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field appearance="outline" class="project">
+      <mat-form-field appearance="fill" class="project">
         <mat-label>Projekt</mat-label>
-        <mat-select id="center" formControlName="projectName" [(value)]=" day.selected"
-          (selectionChange)="checkForChanges()">
-          <mat-option *ngFor="let project of projects" [value]="project.name">
-            {{project.name}}</mat-option>
+        <mat-select [(value)]="day.selected">
+          <mat-option *ngFor="let project of projects" [value]="project.name"> {{project.name}}</mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field class="example-full-width" appearance="outline" class="details"
-        [ngStyle]="{'width' : saveChanges ? '360px' : '455px'}">
+      <mat-form-field class="example-full-width" appearance="fill" class="details">
         <mat-label>Opis</mat-label>
-        <input id="center" formControlName="dayName" matInput value="{{day.name}}">
+        <input matInput value="{{day.name}}">
       </mat-form-field>
-      <button class="save" (click)="updateWorkdayEntry($event)" id="{{day.id}}">Zapisz</button>
     </form>
-    <button (click)="deleteWorkDayEntry(day.id)" class="deleteEntry"><i class="fas fa-times"></i>
+    <button (click)="deleteWorkDayEntry($event)" id="{{day.id}}" class="deleteEntry"><i class="fas fa-times"></i>
     </button>
   </div>
+  <div #parent> </div>
 </div>

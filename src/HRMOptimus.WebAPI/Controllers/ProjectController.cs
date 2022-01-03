@@ -1,4 +1,5 @@
-﻿using HRMOptimus.Application.Project.Command.AddProject;
+﻿using HRMOptimus.Application.Project.Command.AddEmployee;
+using HRMOptimus.Application.Project.Command.AddProject;
 using HRMOptimus.Application.Project.Command.RemoveProject;
 using HRMOptimus.Application.Project.Command.UpdateProject;
 using HRMOptimus.Application.Project.Query.ProjectDetails;
@@ -19,6 +20,15 @@ namespace HRMOptimus.WebAPI.Controllers
             var id = await Mediator.Send(new AddProjectCommand() { AddProjectVm = model });
 
             return id;
+        }
+
+        [HttpPost]
+        [Route("api/project/addEmployee")]
+        public async Task<ActionResult<int>> AddEmployee(AddEmployeeVm model)
+        {
+            await Mediator.Send(new AddEmployeeCommand() { AddEmployeeVm = model });
+
+            return Ok();
         }
 
         [HttpPut]

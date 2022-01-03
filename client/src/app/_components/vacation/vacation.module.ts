@@ -10,9 +10,19 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DateUnavailableDialog } from './vacation.component';
+import { DatesOverflowedDialog } from './vacation.component';
+import { DateRangeIncorrectDialog } from './vacation.component';
 
 @NgModule({
-  declarations: [VacationComponent],
+  declarations: [
+    VacationComponent,
+    DateUnavailableDialog,
+    DatesOverflowedDialog,
+    DateRangeIncorrectDialog
+  ],
   imports: [
     CommonModule,
     SharedModule,
@@ -25,7 +35,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatAutocompleteModule,
+    MatDialogModule
   ],
   providers: []
 })

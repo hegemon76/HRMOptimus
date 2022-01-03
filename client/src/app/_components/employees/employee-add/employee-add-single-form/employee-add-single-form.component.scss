@@ -26,4 +26,31 @@
       height: 100%;
     }
   }
+  .roles {
+    grid-column: span 2;
+    ::ng-deep {
+      .mat-form-field-flex {
+        background-color: #fff;
+      }
+      .mat-form-field-underline {
+        display: none;
+      }
+      mat-chip {
+        font-size: 12px;
+        padding: 4px 42px 4px 12px;
+      }
+      button {
+        background-color: #d38891;
+        font-weight: bold;
+        opacity: 1;
+        color: #fff;
+        width: 32px;
+        height: 32px;
+        top: 0;
+        right: 0;
+        border-radius: 16px;
+        margin: 0;
+      }
+    }
+  }
 }

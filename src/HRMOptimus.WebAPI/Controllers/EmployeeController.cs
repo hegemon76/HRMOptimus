@@ -1,4 +1,5 @@
 ﻿using HRMOptimus.Application.Common.Models;
+using HRMOptimus.Application.Employee.Command.EditEmployee;
 using HRMOptimus.Application.Employee.Command.RemoveEmployee;
 using HRMOptimus.Application.Employee.Query.EmployeeDetails;
 using HRMOptimus.Application.Employee.Query.Employees;
@@ -35,6 +36,15 @@ namespace HRMOptimus.WebAPI.Controllers
             await Mediator.Send(new RemoveEmployeeCommand() { EmployeeId = employeeId });
 
             return NoContent();
+        }
+
+        [HttpPut]
+        [Route("api/editEmployee")]
+        public async Task<IActionResult> EditEmployee([FromBody] EditEmployeeVm model)
+        {
+            var result = await Mediator.Send(new EditEmployeeCommand() { Employee = model });
+
+            return Ok();
         }
     }
 }

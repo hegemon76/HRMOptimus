@@ -17,7 +17,6 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
     this.checkWebsiteMode();
     this.user = this.accountService.getUser();
-    console.log(this.user);
   }
 
   changeWebsiteMode() {

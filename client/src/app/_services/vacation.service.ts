@@ -12,6 +12,7 @@ export class VacationService {
   getEmployeeVacationsUrl = `${this.baseUrl}leavesRegister/getByEmployeeId`;
   addVacationUrl = `${this.baseUrl}leavesRegister/add`;
   updateVacationUrl = `${this.baseUrl}leavesRegister/changeStatus`;
+  deleteVacationUrl = `${this.baseUrl}leavesRegister/delete`;
 
   constructor(private http: HttpClient) {}
 
@@ -34,6 +35,7 @@ export class VacationService {
     });
   }
   approveVacation(vacationId, employeeId): Observable<any> {
+    console.log(vacationId, employeeId);
     return this.http.put(this.updateVacationUrl, {
       recordId: vacationId,
       employeeId: employeeId,
@@ -45,6 +47,15 @@ export class VacationService {
       recordId: vacationId,
       employeeId: employeeId,
       status: 1
+    });
+  }
+  deleteVacation(vacationId, employeeId): Observable<any> {
+    console.log(vacationId, employeeId);
+    return this.http.delete(this.deleteVacationUrl, {
+      params: {
+        id: vacationId,
+        employeeId: employeeId
+      }
     });
   }
 }

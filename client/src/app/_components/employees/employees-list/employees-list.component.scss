@@ -111,11 +111,10 @@
         text-align: right;
       }
     }
-
-    // .single-employee:hover {
-    //   transform: scale(1.1);
-    //   transition: 0.4s;
-    // }
+  }
+  .fullname {
+    text-decoration: underline;
+    cursor: pointer;
   }
 }
 

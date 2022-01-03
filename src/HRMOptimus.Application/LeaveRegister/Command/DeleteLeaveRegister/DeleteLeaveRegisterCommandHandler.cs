@@ -1,14 +1,13 @@
 ﻿using HRMOptimus.Application.Common.Interfaces;
+using HRMOptimus.Domain.Enums;
 using MediatR;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using HRMOptimus.Domain.Enums;
-using System;
 
 namespace HRMOptimus.Application.LeaveRegister.Command.DeleteLeaveRegister
 {
-    class DeleteLeaveRegisterCommandHandler : IRequestHandler<DeleteLeaveRegisterCommand, int>
+    internal class DeleteLeaveRegisterCommandHandler : IRequestHandler<DeleteLeaveRegisterCommand>
     {
         private readonly IHRMOptimusDbContext _context;
         private readonly IUserContextService _userContextService;
@@ -18,27 +17,24 @@ namespace HRMOptimus.Application.LeaveRegister.Command.DeleteLeaveRegister
             _context = context;
             _userContextService = userContextService;
         }
-        public async Task<int> Handle(DeleteLeaveRegisterCommand request, CancellationToken cancellationToken)
+
+        public async Task<Unit> Handle(DeleteLeaveRegisterCommand request, CancellationToken cancellationToken)
         {
-            try
-            {
-                var leaveRegister = _context.LeavesRegister.FirstOrDefault(x => x.Id == request.DeleteLeaveRegisterVm.Id);
-                var employee = _context.Employees.FirstOrDefault(x => x.Id == _userContextService.GetEmployeeId);
+            var leaveRegister = _context.LeavesRegister.FirstOrDefault(x => x.Id == request.Id);
+            int employeeId = _userContextService.GetEmployeeId.Value;
 
-                if (leaveRegister.IsApproved == IsApproved.Approved)
-                {
-                    employee.LeaveDaysLeft += leaveRegister.Duration;
-                }
+            if (employeeId == 0)
+                employeeId = (int)request.EmployeeId;
 
-                _context.Employees.Update(employee);
-                _context.LeavesRegister.Remove(leaveRegister);
-                await _context.SaveChangesAsync(cancellationToken);
-                return 1;
-            }
-            catch (Exception)
-            {
-                return 0;
-            }
+            var employee = _context.Employees.FirstOrDefault(x => x.Id == employeeId);
+
+            if (leaveRegister.IsApproved == IsApproved.Approved)
+                employee.LeaveDaysLeft += leaveRegister.Duration;
+
+            _context.Employees.Update(employee);
+            _context.LeavesRegister.Remove(leaveRegister);
+            await _context.SaveChangesAsync(cancellationToken);
+            return Unit.Value;
         }
     }
 }

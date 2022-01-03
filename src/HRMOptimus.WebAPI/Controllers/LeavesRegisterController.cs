@@ -3,7 +3,6 @@ using HRMOptimus.Application.LeaveRegister.Command.ChangeStatusLeaveRegister;
 using HRMOptimus.Application.LeaveRegister.Command.DeleteLeaveRegister;
 using HRMOptimus.Application.LeaveRegister.Query.GetLeavesRegisterByEmployeeId;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace HRMOptimus.WebAPI.Controllers
@@ -27,18 +26,22 @@ namespace HRMOptimus.WebAPI.Controllers
             return await Mediator.Send(new GetLeavesRegisterByEmployeeIdQuery() { EmployeeId = employeeId });
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Route("delete")]
-        public async Task<int> DeleteById(DeleteLeaveRegisterVm registerId)
+        public async Task<ActionResult> DeleteById(int id, int employeeId)
         {
-            return await Mediator.Send(new DeleteLeaveRegisterCommand() { DeleteLeaveRegisterVm = registerId });
+            await Mediator.Send(new DeleteLeaveRegisterCommand() { Id = id, EmployeeId = employeeId });
+
+            return NoContent();
         }
 
         [HttpPut]
         [Route("changeStatus")]
-        public async Task<int> ChangeStatusById(ChangeStatusLeaveRegisterVm changeStatus)
+        public async Task<ActionResult> ChangeStatusById(ChangeStatusLeaveRegisterVm changeStatus)
         {
-            return await Mediator.Send(new ChangeStatusLeaveRegisterCommand() { ChangeStatusLeaveRegisterVm = changeStatus });
+            await Mediator.Send(new ChangeStatusLeaveRegisterCommand() { ChangeStatusLeaveRegisterVm = changeStatus });
+
+            return NoContent();
         }
     }
 }
