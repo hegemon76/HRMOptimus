@@ -83,6 +83,6 @@ export class EmployeeDetailsComponent implements OnInit {
   }
 
   changeUser() {
-    this.router.navigate(['/employees/edit', this.myControl.value.id]);
+    this.router.navigate(['/employees/details', this.myControl.value.id]);
   }
 }

@@ -1,31 +1,27 @@
 .employees-wrapper {
   padding: 24px;
   box-sizing: border-box;
+  button {
+    font-weight: bold;
+  }
+  .pb0 {
+    margin-bottom: 24px;
+    padding-bottom: 0;
+  }
   .search-wrapper {
     width: 100%;
-    margin-bottom: 20px;
 
     mat-form-field {
       width: 100%;
+      ::ng-deep {
+        mat-form-field-wrapper {
+          padding-bottom: 0;
+        }
+      }
     }
 
     input {
       width: 100%;
-      // height: 60px;
-      // width: 100%;
-      // border-radius: 10px;
-      // padding: 20px;
-      // border: 1px solid var(--input-border);
-      // outline: 0;
-      // box-shadow: 0 5px 7px -1px rgba(51, 51, 51, 0.23);
-      // color: black;
-      // font-size: 14px;
-      // color: var(--font);
-      // background: var(--single-employee);
-
-      // ::placeholder {
-      //   color: #fff;
-      // }
     }
   }
 
