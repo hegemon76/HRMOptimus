@@ -23,11 +23,26 @@ namespace HRMOptimus.Application.WorkRecord.Query.MonthDaysRecords
         public async Task<List<DaysWorkRecordsVm>> Handle(MonthDaysRecordsQuery request, CancellationToken cancellationToken)
         {
             List<DaysWorkRecordsVm> daysWorksRekords = new List<DaysWorkRecordsVm>();
-            var day = request.DateFrom;
-            var days = DateTime.DaysInMonth(request.DateFrom.Year, request.DateFrom.Month);
+            DateTime firstDay;
+
+            if (request.MonthFromCurrent.HasValue)
+            {
+                firstDay = new DateTime(DateTime.Now.Date.Year, DateTime.Now.Date.Month, 1).AddMonths(request.MonthFromCurrent.Value);
+            }
+            else if (request.Month.HasValue && request.Year.HasValue)
+            {
+                firstDay = new DateTime(request.Year.Value, request.Month.Value, 1);
+            }
+            else
+            {
+                firstDay = new DateTime(DateTime.Now.Date.Year, DateTime.Now.Date.Month, 1);
+            }
+
+            var days = DateTime.DaysInMonth(firstDay.Year, firstDay.Month);
+            var lastDay = new DateTime(firstDay.Year, firstDay.Month, days);
 
             var workRecords = await _context.WorkRecords
-                .Where(x => (x.WorkStart.Date >= request.DateFrom.Date || x.WorkStart.Date <= request.DateTo.Date) && x.Enabled)
+                .Where(x => (x.WorkStart.Date >= firstDay || x.WorkStart.Date <= lastDay) && x.Enabled)
                 .Select(x => new WorkRecordVm(x.Id, x.WorkStart, x.WorkEnd, x.Duration))
                 .ToListAsync();
 
@@ -36,6 +51,7 @@ namespace HRMOptimus.Application.WorkRecord.Query.MonthDaysRecords
                 TimeSpan workedTime = default;
                 TimeSpan startHour = default;
                 TimeSpan endHour = default;
+                var day = new DateTime(firstDay.Year, firstDay.Month, i);
                 var rekordsOfDay = workRecords.Where(x => x.WorkStart.Date == day).ToList();
 
                 foreach (var record in rekordsOfDay)
@@ -45,7 +61,6 @@ namespace HRMOptimus.Application.WorkRecord.Query.MonthDaysRecords
                     workedTime += record.Duration;
                 }
                 daysWorksRekords.Add(new DaysWorkRecordsVm(startHour, endHour, day, workedTime));
-                day = day.AddDays(1);
             }
 
             return daysWorksRekords;
