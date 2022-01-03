@@ -9,7 +9,7 @@ namespace HRMOptimus.Application.Common.Interfaces
     {
         public DbSet<Domain.Entities.Project> Projects { get; set; }
         public DbSet<Address> Addresses { get; set; }
-        public DbSet<Contract> Contracts { get; set; }
+        public DbSet<Domain.Entities.Contract> Contracts { get; set; }
         public DbSet<Domain.Entities.Employee> Employees { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Domain.Entities.LeaveRegister> LeavesRegister { get; set; }
