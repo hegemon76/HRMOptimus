@@ -39,6 +39,7 @@ export class WorkdayComponent implements OnInit {
   form: FormGroup;
   saveChanges = false;
   entriesCount;
+  checkEdit = [];
 
   constructor(
     private workdayService: WorktimeService,
@@ -47,14 +48,15 @@ export class WorkdayComponent implements OnInit {
     private accountService: AccountService,
     private componentFactoryResolver: ComponentFactoryResolver,
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      dayName: [''],
-      workStart: [''],
-      workEnd: [''],
-      projectName: ['']
+      dayName: ['', Validators.required],
+      workStart: ['', Validators.required],
+      workEnd: ['', Validators.required],
+      projectName: ['', Validators.required],
+      typeName: ['', Validators.required]
     });
 
     this.id = this.route.snapshot.paramMap.get('id');
@@ -88,16 +90,16 @@ export class WorkdayComponent implements OnInit {
     this.saveChanges = true;
   }
 
-  deleteWorkDayEntry(event) {
-    var target = event.target || event.srcElement || event.currentTarget;
-    var idAttr = target.attributes.id;
-    var value = idAttr.nodeValue;
-
-    this.workdayService.deleteWorkDayEntries(value).subscribe(() => {
+  deleteWorkDayEntry(id) {
+    this.workdayService.deleteWorkDayEntries(id).subscribe(() => {
       this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
         this.router.navigate([`worktime/day/${this.id}`]);
       });
     });
+  }
+
+  updateWorkdayEntry() {
+
   }
 
   addEntry() {
