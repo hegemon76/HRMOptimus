@@ -1,6 +1,4 @@
-﻿using HRMOptimus.Application.WorkRecord.Query.DayWorkRecords;
-using System;
-using System.Collections.Generic;
+﻿using System;
 
 namespace HRMOptimus.Application.WorkRecord.Query.MonthDaysRecords
 {

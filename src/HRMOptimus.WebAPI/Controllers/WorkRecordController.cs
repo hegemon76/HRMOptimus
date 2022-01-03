@@ -43,9 +43,9 @@ namespace HRMOptimus.WebAPI.Controllers
 
         [HttpGet]
         [Route("month")]
-        public async Task<ActionResult<List<DaysWorkRecordsVm>>> MonthDaysRecords(DateTime dateFrom, DateTime dateTo)
+        public async Task<ActionResult<List<DaysWorkRecordsVm>>> MonthDaysRecords(int monthFromCurrent, int month, int year)
         {
-            var daysWorkRecords = await Mediator.Send(new MonthDaysRecordsQuery() { DateFrom = dateFrom, DateTo = dateTo });
+            var daysWorkRecords = await Mediator.Send(new MonthDaysRecordsQuery() { MonthFromCurrent = monthFromCurrent, Month = month, Year = year });
 
             return daysWorkRecords;
         }
