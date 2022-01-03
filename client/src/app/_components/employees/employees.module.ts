@@ -23,6 +23,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatChipsModule } from '@angular/material/chips';
+import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { MatChipsModule } from '@angular/material/chips';
     DeleteEmployeeDialog,
     EmployeeAddComponent,
     EmployeeAddSingleFormComponent,
-    FillFormDialog
+    FillFormDialog,
+    EmployeeDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -47,7 +50,8 @@ import { MatChipsModule } from '@angular/material/chips';
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatChipsModule
+    MatChipsModule,
+    MatIconModule
   ]
 })
 export class employeesModule {}

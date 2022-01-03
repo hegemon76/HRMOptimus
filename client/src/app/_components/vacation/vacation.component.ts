@@ -245,12 +245,24 @@ export class VacationComponent implements OnInit {
       'T00:00:00';
     let check = false;
     this.employeeVacation.map(v => {
-      if (
-        (start < v.dateFrom && end <= v.dateTo && end >= v.dateFrom) ||
-        (start >= v.dateFrom && end <= v.dateTo) ||
-        (start >= v.dateFrom && end > v.dateTo && start <= v.dateTo) ||
-        (start <= v.dateFrom && end >= v.dateTo)
-      ) {
+      // if (
+      //   (start < v.dateFrom && end <= v.dateTo && end >= v.dateFrom) ||
+      //   (start >= v.dateFrom && end <= v.dateTo) ||
+      //   (start >= v.dateFrom && end > v.dateTo && start <= v.dateTo) ||
+      //   (start <= v.dateFrom && end >= v.dateTo)
+      // )
+      if (start < v.dateFrom && end <= v.dateTo && end >= v.dateFrom) {
+        console.log(1);
+        check = true;
+      } else if (start >= v.dateFrom && end <= v.dateTo) {
+        console.log(2);
+        check = true;
+      } else if (start >= v.dateFrom && end > v.dateTo && start <= v.dateTo) {
+        console.log(3);
+        check = true;
+      } else if (start <= v.dateFrom && end >= v.dateTo) {
+        console.log(4);
+        console.log(this.form.getRawValue().leaveStart);
         check = true;
       } else {
         check = false;
