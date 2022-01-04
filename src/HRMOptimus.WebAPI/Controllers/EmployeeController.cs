@@ -1,4 +1,5 @@
 ﻿using HRMOptimus.Application.Common.Models;
+using HRMOptimus.Application.Contract.Command.EditContract;
 using HRMOptimus.Application.Employee.Command.EditEmployee;
 using HRMOptimus.Application.Employee.Command.RemoveEmployee;
 using HRMOptimus.Application.Employee.Query.EmployeeDetails;
@@ -8,11 +9,12 @@ using System.Threading.Tasks;
 
 namespace HRMOptimus.WebAPI.Controllers
 {
+    [Route("/api")]
     [ApiController]
     public class EmployeeController : BaseController
     {
         [HttpGet]
-        [Route("api/employees")]
+        [Route("employees")]
         public async Task<ActionResult<PageResult<EmployeeVm>>> GetEmployees([FromQuery] SearchQuery searchQuery)
         {
             var employees = await Mediator.Send(new EmployeesQuery() { Query = searchQuery });
@@ -21,7 +23,7 @@ namespace HRMOptimus.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/employee/details/")]
+        [Route("employee/details/")]
         public async Task<ActionResult<EmployeeDetailsVm>> GetEmployee(int? employeeId, string name)
         {
             var employee = await Mediator.Send(new EmployeeDetailsQuery() { EmployeeId = employeeId, Name = name });
@@ -30,7 +32,7 @@ namespace HRMOptimus.WebAPI.Controllers
         }
 
         [HttpDelete]
-        [Route("api/employee/delete/")]
+        [Route("employee/delete/")]
         public async Task<ActionResult> RemoveEmployee(int employeeId)
         {
             await Mediator.Send(new RemoveEmployeeCommand() { EmployeeId = employeeId });
@@ -39,10 +41,19 @@ namespace HRMOptimus.WebAPI.Controllers
         }
 
         [HttpPut]
-        [Route("api/editEmployee")]
+        [Route("editEmployee")]
         public async Task<IActionResult> EditEmployee([FromBody] EditEmployeeVm model)
         {
-            var result = await Mediator.Send(new EditEmployeeCommand() { Employee = model });
+            await Mediator.Send(new EditEmployeeCommand() { Employee = model });
+
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("editContract")]
+        public async Task<IActionResult> EditContract([FromBody] EditContractVm model)
+        {
+            var result = await Mediator.Send(new EditContractCommand() { EditContractVm = model });
 
             return Ok();
         }
