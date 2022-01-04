@@ -13,9 +13,8 @@ namespace HRMOptimus.Application.Employee.Command.EditEmployee
     {
         private readonly IHRMOptimusDbContext _context;
 
-        public EditEmployeeCommandHandler(UserManager<ApplicationUser> userManager, IHRMOptimusDbContext context)
+        public EditEmployeeCommandHandler(IHRMOptimusDbContext context)
         {
-            _userManager = userManager;
             _context = context;
         }
 
