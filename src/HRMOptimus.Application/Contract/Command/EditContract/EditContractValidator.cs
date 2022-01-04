@@ -1,16 +1,19 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
+using HRMOptimus.Application.Common.Interfaces;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HRMOptimus.Application.Contract.Command.EditContract
 {
     public class EditContractValidator : AbstractValidator<EditContractVm>
     {
-        public EditContractValidator()
+        public EditContractValidator(IHRMOptimusDbContext dbContext)
         {
+            RuleFor(x => x.ContractId).NotEmpty().Custom((value, context) =>
+            {
+                var contract = dbContext.Contracts.Any(e => e.Id == value && e.Enabled);
+                if (!contract)
+                    context.AddFailure("Id", "The Contract with Id: " + value + " doesn't exist");
+            });
             RuleFor(x => x.ContractId).NotEmpty();
         }
     }
