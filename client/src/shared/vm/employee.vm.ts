@@ -19,9 +19,11 @@ export class EmployeeVm {
     country: string | undefined;
   };
   contract: {
+    id: number | undefined;
     contractName: string | undefined;
     contractType: number | undefined;
     leaveDays: number | undefined;
   };
+  leaveDaysLeft: number | undefined;
   roles: string[] | undefined;
 }

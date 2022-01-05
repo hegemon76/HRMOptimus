@@ -15,10 +15,11 @@
       <mat-option *ngFor="let option of filteredOptions  | async" [value]="option"> {{option.firstName}}
         {{option.lastName}}</mat-option>
     </mat-autocomplete>
-    <div class="options-wrapper">
-      <button (click)="setFormToDisplay(1)">Edytuj dane</button>
-      <button (click)="setFormToDisplay(2)">Zmień hasło</button>
-      <button (click)="setFormToDisplay(3)">Ustaw uprawnienia</button>
+    <div class="options-wrapper" [ngStyle]="!editedEmployeeEqualsUser && {'grid-template-columns': 'repeat(3,1fr)'}">
+      <button (click)="setFormToDisplay(1)">Edytuj dane osobowe</button>
+      <button (click)="setFormToDisplay(2)">Edytuj dane kontraktowe</button>
+      <button (click)="setFormToDisplay(3)" *ngIf="editedEmployeeEqualsUser">Zmień hasło</button>
+      <button (click)="setFormToDisplay(4)">Ustaw uprawnienia</button>
     </div>
   </mat-card>
   <mat-card class="single-employyee-edit" *ngIf="formToDisplay != null">
@@ -46,10 +47,10 @@
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
       <h6>Dane kontaktowe:</h6>
-      <mat-form-field appearance="fill">
+      <!-- <mat-form-field appearance="fill">
         <mat-label>E-mail</mat-label>
         <input matInput formControlName="email">
-      </mat-form-field>
+      </mat-form-field> -->
       <mat-form-field appearance="fill">
         <mat-label>Telefon</mat-label>
         <input matInput formControlName="phoneNumber">
@@ -79,6 +80,8 @@
         <mat-label>Kraj</mat-label>
         <input matInput formControlName="country">
       </mat-form-field>
+    </form>
+    <form [formGroup]="formContract" action="" *ngIf="formToDisplay == 2">
       <h6>Stanowisko:</h6>
       <mat-form-field appearance="fill">
         <mat-label>Stanowisko</mat-label>
@@ -97,7 +100,7 @@
         <input matInput formControlName="leaveDays">
       </mat-form-field>
     </form>
-    <form [formGroup]="formPassword" action="" *ngIf="formToDisplay == 2">
+    <form [formGroup]="formPassword" action="" *ngIf="formToDisplay == 3">
       <h6>Hasło:</h6>
       <mat-form-field appearance="fill">
         <mat-label>Hasło</mat-label>
@@ -112,7 +115,7 @@
         <input type="password-repeat" matInput formControlName="passwordRepeat">
       </mat-form-field>
     </form>
-    <form [formGroup]="formRoles" action="" *ngIf="formToDisplay == 3">
+    <form [formGroup]="formRoles" action="" *ngIf="formToDisplay == 4">
       <h6>Role użytkownika:</h6>
       <mat-form-field appearance="fill" class="roles">
         <mat-label>Role użytkownika</mat-label>
@@ -131,4 +134,7 @@
       </mat-form-field>
     </form>
   </mat-card>
+  <button class="submit" *ngIf="formToDisplay != null" (click)="formToDisplay == 1 && editEmployee() || formToDisplay == 2 && editEmployeeContract() || formToDisplay == 4
+    && setRoles();openDialog()">ZAPISZ</button>
+  <!-- <button class="submit" *ngIf="formToDisplay != null" (click)="openDialog()">ZAPISZ</button> -->
 </div>

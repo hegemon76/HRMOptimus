@@ -1,4 +1,10 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ElementRef,
+  ViewChild,
+  Inject
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
@@ -9,6 +15,14 @@ import { map, startWith } from 'rxjs/operators';
 import { EmployeeVm } from '../../../../shared/vm/employee.vm';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EmployeesService } from '../../../_services/employees.service';
+import { AccountService } from '../../../_services/account.service';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA
+} from '@angular/material/dialog';
+
+export interface DialogData {}
 
 @Component({
   selector: 'app-employee-edit',
@@ -17,6 +31,7 @@ import { EmployeesService } from '../../../_services/employees.service';
 })
 export class EmployeeEditComponent implements OnInit {
   formData: FormGroup;
+  formContract: FormGroup;
   formPassword: FormGroup;
   formRoles: FormGroup;
   allEmployees: EmployeeVm[];
@@ -40,6 +55,7 @@ export class EmployeeEditComponent implements OnInit {
   areEmployeesLoaded = false;
   isFormLoaded = false;
   formToDisplay = null;
+  editedEmployeeEqualsUser = false;
 
   @ViewChild('roleInput') roleInput: ElementRef<HTMLInputElement>;
 
@@ -47,7 +63,9 @@ export class EmployeeEditComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private employeesService: EmployeesService
+    private employeesService: EmployeesService,
+    private accountService: AccountService,
+    public dialog: MatDialog
   ) {
     this.filteredRoles = this.roleCtrl.valueChanges.pipe(
       startWith(null),
@@ -65,6 +83,7 @@ export class EmployeeEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let user = this.accountService.getUser();
     this.employeesService.getEmployees().subscribe(res => {
       this.allEmployees = res.items;
       this.fillOptions(this.allEmployees);
@@ -74,17 +93,21 @@ export class EmployeeEditComponent implements OnInit {
       .getEmployee(this.route.snapshot.paramMap.get('id'))
       .subscribe(res => {
         this.employee = res;
+        console.log(this.employee);
+
         this.employeeId = this.route.snapshot.paramMap.get('id');
         this.roles = this.employee.roles;
         this.isEmployeeLoaded = true;
-        console.log(this.employee);
+        if (this.employeeId == user.employeeId) {
+          this.editedEmployeeEqualsUser = true;
+        }
 
         this.formData = this.formBuilder.group({
           firstName: [this.employee.firstName, Validators.required],
           lastName: [this.employee.lastName, Validators.required],
           gender: [this.employee.gender, Validators.required],
           birthDate: [this.employee.birthDate, Validators.required],
-          email: [this.employee.email, Validators.required],
+          // email: [this.employee.email, Validators.required],
           phoneNumber: [this.employee.phoneNumber, Validators.required],
           street: [this.employee.address.street, Validators.required],
           buildingNumber: [
@@ -99,7 +122,11 @@ export class EmployeeEditComponent implements OnInit {
           ],
           zipCode: [this.employee.address.zipCode, Validators.required],
           city: [this.employee.address.city, Validators.required],
-          country: [this.employee.address.country, Validators.required],
+          country: [this.employee.address.country, Validators.required]
+        });
+
+        this.formContract = this.formBuilder.group({
+          contractId: this.employee.contract.id,
           contractName: [
             this.employee.contract.contractName,
             Validators.required
@@ -120,8 +147,6 @@ export class EmployeeEditComponent implements OnInit {
         this.formRoles = this.formBuilder.group({
           roles: [this.roles]
         });
-
-        console.log(this.roles);
       });
     setTimeout(() => {
       this.filteredOptions = this.myControl.valueChanges.pipe(
@@ -169,6 +194,14 @@ export class EmployeeEditComponent implements OnInit {
     this.roleCtrl.setValue(null);
   }
 
+  remove2(role: string): void {
+    const index = this.roles.indexOf(role);
+
+    if (index >= 0) {
+      this.roles.splice(index, 1);
+    }
+  }
+
   selected(event: MatAutocompleteSelectedEvent): void {
     this.roles.push(event.option.viewValue);
     this.roleInput.nativeElement.value = '';
@@ -184,4 +217,54 @@ export class EmployeeEditComponent implements OnInit {
       role.toLowerCase().includes(filterValue)
     );
   }
+
+  editEmployee() {
+    this.employeesService
+      .editEmployee(this.formData.getRawValue(), this.employeeId)
+      .subscribe();
+  }
+  editEmployeeContract() {
+    console.log(this.formContract.getRawValue());
+
+    if (
+      this.formContract.getRawValue().leaveDays >=
+      this.employee.contract.leaveDays - this.employee.leaveDaysLeft
+    ) {
+      this.employeesService
+        .editEmployeeContract(
+          this.formContract.getRawValue(),
+          this.employee.contract.id
+        )
+        .subscribe();
+    } else {
+      console.log(
+        'Wartość urlopów nie może być mniejsza niż ilość dni zaakceptowanych urlopów'
+      );
+    }
+  }
+  setRoles() {
+    this.employeesService.setRoles(this.roles, this.employee.email).subscribe();
+  }
+  openDialog() {
+    const dialogRef = this.dialog.open(FormValidDialog);
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.editEmployee();
+      this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/employees/edit/', this.employeeId]);
+      });
+    });
+  }
+}
+
+@Component({
+  selector: 'form-valid-dialog',
+  templateUrl: 'form-valid-dialog.html',
+  styleUrls: ['./employee-edit.component.scss']
+})
+export class FormValidDialog {
+  constructor(
+    public dialogRef: MatDialogRef<FormValidDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ) {}
 }

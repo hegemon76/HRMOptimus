@@ -1,1 +1,3 @@
-<router-outlet class="main-wrapper"></router-outlet>
+<div [@fadeTest]="test ? 'start' : 'end'">
+  <router-outlet #outlet="outlet"></router-outlet>
+</div>
