@@ -11,7 +11,7 @@ namespace HRMOptimus.Application.Employee.Command.EditEmployee
 
         public string LastName { get; set; }
         public DateTime? BirthDate { get; set; }
-        public Gender Gender { get; set; }
+        public Gender? Gender { get; set; }
 
         //address
         public string ZipCode { get; set; }

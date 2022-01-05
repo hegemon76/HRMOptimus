@@ -53,7 +53,7 @@ namespace HRMOptimus.WebAPI.Controllers
         [Route("editContract")]
         public async Task<IActionResult> EditContract([FromBody] EditContractVm model)
         {
-            var result = await Mediator.Send(new EditContractCommand() { EditContractVm = model });
+            await Mediator.Send(new EditContractCommand() { EditContractVm = model });
 
             return Ok();
         }
