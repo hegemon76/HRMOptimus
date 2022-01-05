@@ -44,6 +44,9 @@
   font-size: 20px;
   cursor: pointer;
   margin-top: 7px;
+  &:before {
+    filter: invert(1);
+  }
 }
 
 .flex-container {
@@ -67,7 +70,7 @@ button,
 h4 {
   border: none;
   margin-bottom: 20px;
-  background-color: #fff;
+  background-color: transparent;
 }
 
 b {

@@ -1,6 +1,23 @@
 .single-employyee-add {
   position: relative;
   margin-bottom: 20px;
+  mat-form-field {
+    width: 100%;
+
+    ::ng-deep {
+      .mat-form-field-flex {
+        background-color: var(--input) !important;
+      }
+      input,
+      label {
+        color: var(--input-text) !important;
+        &::placeholder {
+          color: var(--input-text) !important;
+        }
+      }
+    }
+  }
+
   form {
     display: grid;
     grid-template-columns: repeat(4, 1fr);

@@ -156,7 +156,6 @@ export class DashboardComponent implements OnInit {
         res.map(h => {
           hours += parseInt(h.workedTime.split(':')[0]);
           minutes += parseInt(h.workedTime.split(':')[1]);
-          console.log(hours + ' ' + minutes);
           this.barChartData.datasets[0].data = this.barChartData.datasets[0].data.concat(
             parseFloat(h.workedTime.split(':')[0]) +
               parseFloat(h.workedTime.split(':')[1]) / 60
@@ -166,6 +165,9 @@ export class DashboardComponent implements OnInit {
         minutes = minutes % 60;
         this.monthTime = hours + ':' + minutes + 'h';
       });
+    setTimeout(() => {
+      this.chart.update();
+    }, 500);
   }
   getEmployees() {
     this.employeesService.getEmployees().subscribe(res => {

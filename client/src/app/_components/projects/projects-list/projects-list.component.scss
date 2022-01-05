@@ -1,6 +1,24 @@
 .projects-wrapper {
   padding: 24px;
   box-sizing: border-box;
+
+  mat-form-field {
+    width: 100%;
+
+    ::ng-deep {
+      .mat-form-field-flex {
+        background-color: var(--input) !important;
+      }
+      input,
+      label {
+        color: var(--input-text) !important;
+        &::placeholder {
+          color: var(--input-text) !important;
+        }
+      }
+    }
+  }
+
   .search-wrapper {
     width: 100%;
     margin-bottom: 20px;
@@ -37,7 +55,7 @@
       display: grid;
       grid-template-columns: 10% 20% 30% auto;
       align-items: center;
-      background-color: var(--single-employee);
+      background-color: var(--even);
       color: var(--font);
       padding: 10px;
       width: 100%;
@@ -46,7 +64,7 @@
       transition: 0.4s;
 
       &:nth-of-type(odd) {
-        background-color: #f0f0f0;
+        background-color: var(--odd);
       }
 
       .buttons {
@@ -95,7 +113,7 @@
   margin: 20px 0 20px auto;
   display: block;
   border: 0;
-  background-color: var(--main);
+  background-color: var(--buttons);
   color: #fff;
 }
 

@@ -13,9 +13,17 @@
 
     mat-form-field {
       width: 100%;
+
       ::ng-deep {
-        mat-form-field-wrapper {
-          padding-bottom: 0;
+        .mat-form-field-flex {
+          background-color: var(--input) !important;
+        }
+        input,
+        label {
+          color: var(--input-text) !important;
+          &::placeholder {
+            color: var(--input-text) !important;
+          }
         }
       }
     }
@@ -48,7 +56,7 @@
       display: grid;
       grid-template-columns: 10% repeat(3, 20%) 10% auto;
       align-items: center;
-      background-color: var(--single-employee);
+      background-color: var(--even);
       color: var(--font);
       padding: 10px;
       width: 100%;
@@ -59,7 +67,7 @@
       transition: 0.4s;
 
       &:nth-of-type(odd) {
-        background-color: #f0f0f0;
+        background-color: var(--odd);
       }
       img {
         width: 56px;

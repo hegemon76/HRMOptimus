@@ -1,4 +1,4 @@
-<div class="dashboard-container">
+<div class="dashboard-container main-container">
   <mat-card class="container card-1">
     <h6>Czas pracy w obecnym miesiącu</h6>
     <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]=" barChartType">
@@ -9,34 +9,42 @@
     <div *ngFor="let employee of employees" class="single-employee">
       <img [src]="employee.gender == 0 ? '/assets/images/male-avatar.svg' : '/assets/images/female-avatar.svg'">
       <p>{{employee.fullName}}</p>
-      <a href="tel:{{employee.phone}}">
-        <mat-icon> phone</mat-icon>
-      </a>
-      <a href="mailto:{{employee.email}}">
-        <mat-icon> email</mat-icon>
-      </a>
+      <div class="icons">
+        <a href="tel:{{employee.phone}}">
+          <mat-icon> phone</mat-icon>
+        </a>
+        <a href="mailto:{{employee.email}}">
+          <mat-icon> email</mat-icon>
+        </a>
+      </div>
     </div>
   </mat-card>
   <mat-card class="card-3">
     <div class="time">
       <mat-progress-spinner [color]="color" [mode]="mode" [value]="value" diameter="140"></mat-progress-spinner>
       <strong class="counter">{{monthTime}}</strong>
-      <p>Przpracowane godziny</p>
-      <p><strong>({{currentMonth}})</strong></p>
+      <div class="text-wrapper">
+        <p>Przpracowane godziny</p>
+        <p><strong>({{currentMonth}})</strong></p>
+      </div>
     </div>
     <div class="limit">
       <mat-progress-spinner [color]="color" [mode]="mode" [value]="value">
       </mat-progress-spinner>
       <strong class="counter">{{vacationLimit}}</strong>
-      <p>Limit dni urlopowych</p>
-      <p><strong>({{currentYear}})</strong></p>
+      <div class="text-wrapper">
+        <p>Limit dni urlopowych</p>
+        <p><strong>({{currentYear}})</strong></p>
+      </div>
     </div>
     <div class="left">
       <mat-progress-spinner [color]="color2" [mode]="mode" [value]="value2">
       </mat-progress-spinner>
       <strong class="counter">{{vacationLeft}}</strong>
-      <p>Pozostałe dni urlopowe</p>
-      <p><strong>({{currentYear}})</strong></p>
+      <div class="text-wrapper">
+        <p>Pozostałe dni urlopowe</p>
+        <p><strong>({{currentYear}})</strong></p>
+      </div>
     </div>
   </mat-card>
   <mat-card class="card-4">
@@ -45,7 +53,7 @@
       <ng-template swiperSlide *ngFor="let project of projects">
         <div class="single-project">
           <div class="label" [ngStyle]="{backgroundColor: project.colorLabel}"></div>
-          <div class="name">{{project.name}}</div>
+          <div class="name"><span>{{project.name}}</span></div>
         </div>
       </ng-template>
     </swiper>

@@ -22,6 +22,17 @@ body {
   h6 {
     font-size: 18px;
   }
+  a {
+    text-decoration: none;
+    color: initial;
+    cursor: pointer;
+  }
+  input {
+    color: var(--input-text) !important;
+    &:placeholder {
+      color: var(--input-text) !important;
+    }
+  }
   .wrapper-left {
     @include flex;
     justify-content: flex-start;
@@ -41,5 +52,58 @@ body {
   .wrapper-between {
     @include flex;
     justify-content: space-between;
+  }
+  .main-container {
+    width: 100%;
+    height: calc(100% - 80px);
+    padding: 24px;
+    box-sizing: border-box;
+  }
+  mat-card {
+    background-color: var(--mat-card) !important;
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    span,
+    strong,
+    td,
+    mat-card-title,
+    mat-card-subtitle {
+      color: var(--mat-card-text) !important;
+    }
+    .head {
+      background-color: var(--head) !important;
+      span {
+        color: #fff !important;
+      }
+    }
+  }
+  mat-icon {
+    filter: var(--invert);
+  }
+
+  .header {
+    color: var(--mat-card-text);
+  }
+}
+
+mat-form-field {
+  width: 100%;
+
+  ::ng-deep {
+    .mat-form-field-flex {
+      background-color: var(--input) !important;
+    }
+    input,
+    label {
+      color: var(--input-text) !important;
+      &::placeholder {
+        color: var(--input-text) !important;
+      }
+    }
   }
 }

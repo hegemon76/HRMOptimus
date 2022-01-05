@@ -9,16 +9,36 @@
   --hovers: rgba(25, 25, 51, 0.479);
   --single-employee: #fff;
   --input-border: rgb(245, 242, 242);
+  //MAT ITEMS
+  --mat-card: #fff;
+  --mat-card-text: #000;
+  --invert: invert(0);
+  --before-bg: #fff;
+  --head: #0b3675;
+  --input: rgba(0, 0, 0, 0.04);
+  --input-text: initial;
+  --even: #fff;
+  --odd: #f0f0f0;
 }
 [data-theme="dark"] {
   --main: #12191d;
-  --main-contrast: #363636;
+  --main-contrast: #3a3b3c;
   --topbar: rgb(31, 31, 31);
   --font: #fff;
-  --buttons: rgb(2, 196, 2);
+  --buttons: #000;
   --buttons-hover: rgb(0, 230, 0);
   --shadows: rgba(0, 0, 0, 0.2) 0px 7px 29px 0px;
   --hovers: rgba(5, 5, 5, 0.479);
   --single-employee: #4d4d4d;
   --input-border: rgb(133, 133, 133);
+  //MAT ITEMS
+  --mat-card: #12191d;
+  --mat-card-text: #fff;
+  --invert: invert(1);
+  --before-bg: #12191d;
+  --head: transparent;
+  --input: #3a3b3c;
+  --input-text: #fff;
+  --even: #12191d;
+  --odd: #1b2226;
 }
