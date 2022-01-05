@@ -41,20 +41,17 @@ export class ProjectEditComponent implements OnInit {
       .getProjectDetails(this.route.snapshot.paramMap.get('id'))
       .subscribe(res => {
         this.project = res;
-        console.log(this.project);
+        this.form = this.formBuilder.group({
+          colorLabel: [this.project.colorLabel, Validators.required],
+          name: [this.project.name, Validators.required],
+          description: [this.project.description, Validators.required],
+          dateFrom: [this.project.dateFrom, Validators.required],
+          dateTo: [this.project.dateTo, Validators.required],
+          hoursBudget: [this.project.hoursBudget, Validators.required]
+          // projectMembers: [this.employees]
+        });
+        this.isFormLoaded = true;
       });
-    setTimeout(() => {
-      this.form = this.formBuilder.group({
-        colorLabel: [this.project.colorLabel, Validators.required],
-        name: [this.project.name, Validators.required],
-        description: [this.project.description, Validators.required],
-        dateFrom: [this.project.dateFrom, Validators.required],
-        dateTo: [this.project.dateTo, Validators.required],
-        hoursBudget: [this.project.hoursBudget, Validators.required]
-        // projectMembers: [this.employees]
-      });
-      this.isFormLoaded = true;
-    }, 1000);
   }
 
   add(event: MatChipInputEvent): void {
