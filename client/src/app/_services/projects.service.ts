@@ -10,13 +10,36 @@ import { environment } from '../../environments/environment';
 export class ProjectsService {
   baseUrl = environment.baseUrl;
   getProjectsUrl = `${this.baseUrl}projects`;
+  getProjectDetailsUrl = `${this.baseUrl}project/details`;
   addProjectUrl = `${this.baseUrl}project/add`;
+  updateProjectUrl = `${this.baseUrl}project/update`;
   deleteProjectUrl = `${this.baseUrl}project/delete`;
 
   constructor(private http: HttpClient) {}
 
   getProjects(): Observable<any> {
     return this.http.get(this.getProjectsUrl);
+  }
+  getProjectDetails(id): Observable<any> {
+    return this.http.get(this.getProjectDetailsUrl, {
+      params: {
+        projectId: id
+      }
+    });
+  }
+  updateProject(data, id): Observable<any> {
+    console.log(data);
+    console.log(id);
+
+    return this.http.put(this.updateProjectUrl, {
+      id: id,
+      name: data.name,
+      description: data.description,
+      dateFrom: data.dateFrom,
+      dateTo: data.dateTo,
+      hoursBudget: data.hoursBudget,
+      deadline: '2022-01-06T17:28:00.539Z'
+    });
   }
   addProject(form): Observable<any> {
     return this.http.post(this.addProjectUrl, form);

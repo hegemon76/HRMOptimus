@@ -59,18 +59,24 @@
           <h4>Umowa:</h4>
           <table>
             <tr>
-              <td>Nazwa umowy: </td>
+              <td>Stanowisko: </td>
               <td>{{employee.contract.contractName}}</td>
             </tr>
             <tr>
               <td>Data podpisania umowy: </td>
-              <td>{{employee.contract.createdOn | date: 'dd MM YYYY' }}.r</td>
+              <td>{{employee.contract.createdOn | date: 'dd.MM.YYYY' }}r.</td>
             </tr>
             <tr>
               <td>Ilośc dni urlopowych: </td>
               <td>{{employee.contract.leaveDays}} dni</td>
             </tr>
           </table>
+          <h4>Uprawnienia pracownika</h4>
+          <div class="roles">
+            <mat-chip-list aria-label="Fish selection">
+              <mat-chip color="primary" selected *ngFor="let role of employee.roles">{{role}}</mat-chip>
+            </mat-chip-list>
+          </div>
         </div>
       </div>
     </mat-card>

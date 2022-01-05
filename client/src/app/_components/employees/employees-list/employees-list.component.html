@@ -1,11 +1,13 @@
 <div class="employees-wrapper">
-  <mat-card>
+  <mat-card class="pb0">
     <div class="search-wrapper">
       <mat-form-field appearance="fill">
         <mat-label>Szukaj pracownika</mat-label>
         <input matInput placeholder="Szukaj pracownika" name="searchText" [(ngModel)]="searchedEmployee">
       </mat-form-field>
     </div>
+  </mat-card>
+  <mat-card>
     <div class="list-wrapper">
       <div class="employees-list" *ngIf="(employees | filter: searchedEmployee).length > 0">
         <div class="head">

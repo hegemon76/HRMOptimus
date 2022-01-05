@@ -6,6 +6,23 @@
   grid-template-columns: 240px auto 240px;
   align-items: center;
 
+  mat-form-field {
+    width: 100%;
+
+    ::ng-deep {
+      .mat-form-field-flex {
+        background-color: var(--input) !important;
+      }
+      input,
+      label {
+        color: var(--input-text) !important;
+        &::placeholder {
+          color: var(--input-text) !important;
+        }
+      }
+    }
+  }
+
   .search-wrapper {
     width: 100%;
     display: flex;
@@ -23,7 +40,7 @@
       width: 140px;
       height: 60px;
       border: 0;
-      background-color: var(--main);
+      background-color: var(--buttons);
       color: #fff;
       font-weight: bold;
     }
@@ -63,8 +80,7 @@
   .contact-wrapper {
     display: flex;
     flex-direction: column;
-    margin-right: 0;
-    margin-left: auto;
+
     a {
       color: inherit;
       display: block;
@@ -83,7 +99,7 @@
       width: 600px;
       border-collapse: separate;
       border-spacing: 0 1em;
-      margin-bottom: 60px;
+      margin-bottom: 20px;
       tr {
         width: 100%;
         td {

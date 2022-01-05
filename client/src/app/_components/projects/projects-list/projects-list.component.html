@@ -19,7 +19,7 @@
           <p>{{project.name}}</p>
           <p>{{project.description}}</p>
           <div class="buttons" *ngIf="user.role.includes('ProjectManager')">
-            <button class="edit-project" routerLink="details/{{project.id}}"><i class="fas fa-cog"></i></button>
+            <button class="edit-project" routerLink="edit/{{project.id}}"><i class="fas fa-cog"></i></button>
             <button class="delete-project" mat-raised-button (click)="openDialog(project.name, project.id)"><i
                 class="fas fa-minus-circle"></i></button>
           </div>
