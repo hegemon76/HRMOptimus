@@ -1,3 +1,7 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
 .calendar-days {
   width: 140px;
   height: 80px;
