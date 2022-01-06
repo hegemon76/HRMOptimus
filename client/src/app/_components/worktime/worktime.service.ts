@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { compileDeclareInjectableFromMetadata } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -15,6 +16,8 @@ export class WorktimeService {
   deleteWorkDay = 'https://localhost:5001/api/workrecord/delete';
 
   addWorkEntry = 'https://localhost:5001/api/workrecord/add';
+
+  getMonth = 'https://localhost:5001/api/workrecord/month';
 
   constructor(private http: HttpClient) { }
 
@@ -37,6 +40,20 @@ export class WorktimeService {
         headers: {
           'Content-Type': 'application/json'
         },
+      })
+      .pipe(map((res: any) => res));
+  }
+
+  getMonthEntry(dateFrom, dateTo): Observable<any> {
+    return this.http
+      .get(this.getMonth, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        params: {
+          dateFrom: dateFrom,
+          dateTo: dateTo
+        }
       })
       .pipe(map((res: any) => res));
   }
