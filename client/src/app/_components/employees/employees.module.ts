@@ -7,7 +7,10 @@ import {
 import { EmployeesRoutingModule } from './employees-routing.module';
 import { FilterPipe } from './employeesFilter.pipe';
 import { FormsModule } from '@angular/forms';
-import { EmployeeEditComponent } from './employee-edit/employee-edit.component';
+import {
+  EmployeeEditComponent,
+  FormValidDialog
+} from './employee-edit/employee-edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -35,7 +38,8 @@ import { MatIconModule } from '@angular/material/icon';
     EmployeeAddComponent,
     EmployeeAddSingleFormComponent,
     FillFormDialog,
-    EmployeeDetailsComponent
+    EmployeeDetailsComponent,
+    FormValidDialog
   ],
   imports: [
     CommonModule,

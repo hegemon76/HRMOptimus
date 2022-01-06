@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserVm } from '../../../../shared/vm/user.vm';
 import { AccountService } from '../../../_services/account.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -12,7 +13,7 @@ export class SidebarComponent implements OnInit {
   darkMode = true;
   user: UserVm;
 
-  constructor(private accountService: AccountService) {}
+  constructor(private accountService: AccountService, private router: Router) {}
 
   ngOnInit(): void {
     this.checkWebsiteMode();
@@ -46,5 +47,11 @@ export class SidebarComponent implements OnInit {
 
   openSubmenu(e) {
     e.target.parentElement.parentElement.classList.toggle('opened');
+  }
+
+  changeRoute(path: string) {
+    setTimeout(() => {
+      this.router.navigate([path]);
+    }, 400);
   }
 }

@@ -1,31 +1,35 @@
 .employees-wrapper {
   padding: 24px;
   box-sizing: border-box;
+  button {
+    font-weight: bold;
+  }
+  .pb0 {
+    margin-bottom: 24px;
+    padding-bottom: 0;
+  }
   .search-wrapper {
     width: 100%;
-    margin-bottom: 20px;
 
     mat-form-field {
       width: 100%;
+
+      ::ng-deep {
+        .mat-form-field-flex {
+          background-color: var(--input) !important;
+        }
+        input,
+        label {
+          color: var(--input-text) !important;
+          &::placeholder {
+            color: var(--input-text) !important;
+          }
+        }
+      }
     }
 
     input {
       width: 100%;
-      // height: 60px;
-      // width: 100%;
-      // border-radius: 10px;
-      // padding: 20px;
-      // border: 1px solid var(--input-border);
-      // outline: 0;
-      // box-shadow: 0 5px 7px -1px rgba(51, 51, 51, 0.23);
-      // color: black;
-      // font-size: 14px;
-      // color: var(--font);
-      // background: var(--single-employee);
-
-      // ::placeholder {
-      //   color: #fff;
-      // }
     }
   }
 
@@ -52,7 +56,7 @@
       display: grid;
       grid-template-columns: 10% repeat(3, 20%) 10% auto;
       align-items: center;
-      background-color: var(--single-employee);
+      background-color: var(--even);
       color: var(--font);
       padding: 10px;
       width: 100%;
@@ -63,7 +67,7 @@
       transition: 0.4s;
 
       &:nth-of-type(odd) {
-        background-color: #f0f0f0;
+        background-color: var(--odd);
       }
       img {
         width: 56px;

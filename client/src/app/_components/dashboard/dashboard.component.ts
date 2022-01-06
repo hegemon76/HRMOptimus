@@ -24,13 +24,14 @@ export class DashboardComponent implements OnInit {
   config: SwiperOptions = {
     slidesPerView: 1,
     spaceBetween: 50,
-    loop: false,
+    initialSlide: 0,
+    loop: true,
     autoplay: {
       delay: 6000
     }
   };
 
-  monthTime: number = 0;
+  monthTime: string;
   months: string[] = [
     'Styczeń',
     'Luty',
@@ -131,7 +132,7 @@ export class DashboardComponent implements OnInit {
   }
 
   setLabels(daysCount) {
-    for (let i = 1; i < daysCount + 1; i++) {
+    for (let i = 1; i <= daysCount + 1; i++) {
       this.barChartData.labels = this.barChartData.labels.concat(i);
     }
   }
@@ -150,16 +151,23 @@ export class DashboardComponent implements OnInit {
     this.worktimeService
       .getMonthRecords(monthStart, monthEnd)
       .subscribe(res => {
+        let hours = 0;
+        let minutes = 0;
         res.map(h => {
+          hours += parseInt(h.workedTime.split(':')[0]);
+          minutes += parseInt(h.workedTime.split(':')[1]);
           this.barChartData.datasets[0].data = this.barChartData.datasets[0].data.concat(
             parseFloat(h.workedTime.split(':')[0]) +
               parseFloat(h.workedTime.split(':')[1]) / 60
           );
-          this.monthTime +=
-            parseFloat(h.workedTime.split(':')[0]) +
-            parseFloat(h.workedTime.split(':')[1]) / 60;
         });
+        hours += Math.floor(minutes / 60);
+        minutes = minutes % 60;
+        this.monthTime = hours + ':' + minutes + 'h';
       });
+    setTimeout(() => {
+      this.chart.update();
+    }, 500);
   }
   getEmployees() {
     this.employeesService.getEmployees().subscribe(res => {
@@ -180,7 +188,6 @@ export class DashboardComponent implements OnInit {
   setProjects() {
     this.projectsService.getProjects().subscribe(res => {
       this.projects = res;
-      console.log(this.projects);
     });
   }
 }

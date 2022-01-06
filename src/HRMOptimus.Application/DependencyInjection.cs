@@ -4,6 +4,7 @@ using HRMOptimus.Application.Account.Command.Registration;
 using HRMOptimus.Application.Common.Interfaces;
 using HRMOptimus.Application.Common.Middleware;
 using HRMOptimus.Application.Common.Services;
+using HRMOptimus.Application.Contract.Command.EditContract;
 using HRMOptimus.Application.Employee.Command.EditEmployee;
 using HRMOptimus.Application.LeaveRegister.Command.ChangeStatusLeaveRegister;
 using HRMOptimus.Application.Project.Command.AddEmployee;
@@ -46,6 +47,7 @@ namespace HRMOptimus.Application
             services.AddScoped<IValidator<AddEmployeeVm>, AddEmployeeVmValidator>();
             services.AddScoped<IValidator<RemoveProjectCommand>, RemoveProjectCommandValidator>();
             services.AddScoped<IValidator<ChangeStatusLeaveRegisterVm>, ChangeStatusLeaveRegisterVmValidator>();
+            services.AddScoped<IValidator<EditContractVm>, EditContractValidator>();
 
             return services;
         }

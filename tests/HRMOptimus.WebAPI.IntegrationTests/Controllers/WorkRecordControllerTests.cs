@@ -59,10 +59,8 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
         public async Task MonthWorkRecords_TwoDates_ReturnsOkResult()
         {
             await SeedWorkRecordProjectEmployee();
-            var firstDate = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd");
-            var secondDate = DateTime.Now.AddDays(+1).ToString("yyyy-MM-dd");
 
-            var response = await _client.GetAsync(_baseUrl + "month?dateFrom=" + firstDate + "&dateTo=" + secondDate);
+            var response = await _client.GetAsync(_baseUrl + "month");
 
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
         }

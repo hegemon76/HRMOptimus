@@ -1,5 +1,26 @@
 .employee-add-wrapper {
   padding: 24px;
+
+  mat-form-field {
+    width: 100%;
+
+    ::ng-deep {
+      .mat-form-field-flex {
+        background-color: var(--input) !important;
+      }
+      input,
+      label {
+        color: var(--input-text) !important;
+        &::placeholder {
+          color: var(--input-text) !important;
+        }
+      }
+    }
+  }
+
+  button {
+    font-weight: bold;
+  }
   .single-employee-add {
     width: 100%;
   }
@@ -10,7 +31,7 @@
     margin: 0 0 20px auto;
     display: block;
     border: 0;
-    background-color: var(--main);
+    background-color: var(--buttons);
     color: #fff;
     transform: translateY(-40px);
   }

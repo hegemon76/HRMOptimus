@@ -42,8 +42,6 @@ export class EmployeeAddComponent implements OnInit {
     }, 100);
   }
 
-  ngAfterContentInit() {}
-
   addComponent() {
     if (
       this.components.length > 0 &&
