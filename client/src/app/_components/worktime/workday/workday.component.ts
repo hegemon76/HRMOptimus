@@ -40,7 +40,6 @@ export class WorkdayComponent implements OnInit {
   duration = 0;
   durationTime;
   form: FormGroup;
-  saveChanges = false;
   entriesCount;
 
   constructor(
@@ -87,26 +86,6 @@ export class WorkdayComponent implements OnInit {
     this.workdayService.getProjects().subscribe(res => {
       this.projects = res;
     });
-
-    this.workdayService.getMonthEntry(this.id, this.id).subscribe(res => {
-      this.month = res;
-
-
-
-
-      this.datePipe.transform("test", 'YYYY-MM-DD')
-
-
-
-
-      const index = this.month.findIndex(day => day === this.id)
-
-      console.log(index);
-    })
-  }
-
-  checkForChanges() {
-    this.saveChanges = true;
   }
 
   deleteWorkDayEntry(id) {

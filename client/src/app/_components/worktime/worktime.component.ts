@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { toChildArray } from 'preact';
+import { WorktimeService } from '../worktime/worktime.service';
 
 interface CalendarItem {
   id: string;
@@ -8,6 +9,10 @@ interface CalendarItem {
   dayName: string;
   className: string;
   isWeekend: boolean;
+  duration;
+  startHour;
+  endHour;
+  dayFromEndpoint;
 }
 
 @Component({
@@ -22,11 +27,33 @@ export class WorktimeComponent implements OnInit {
   today;
   all = true;
 
-  constructor() { }
+  constructor(
+    private workdayService: WorktimeService,
+  ) { }
+
+  month: [];
 
   ngOnInit(): void {
-    this.calendar = this.createCalendar(this.date);
+
     this.today = moment().format('yyyy-MM-DD');
+
+    this.workdayService.getMonthEntry().subscribe(res => {
+      this.month = res;
+      this.month.map(r => {
+        calendar.push(this.createCalendarItem(clone, 'in-month', value));
+      })
+      this.calendar = this.createCalendar(this.date);
+    })
+  }
+
+  mapDataFromArray(value) {
+    //console.log(value.workedTime, value.startHour, value.endHour, value.day)
+    return {
+      duration: value.workedTime,
+      startHour: value.startHour,
+      endHour: value.endHour,
+      dayFromEndpoint: value.day
+    };
   }
 
   createCalendar(month: moment.Moment) {
@@ -44,25 +71,38 @@ export class WorktimeComponent implements OnInit {
 
     const daysBefore = weekdaysShort.indexOf(startOfMonth);
 
-    const daysAfter =
-      weekdaysShort.length - 1 - weekdaysShort.indexOf(endOfMonth);
+    const daysAfter = weekdaysShort.length - 1 - weekdaysShort.indexOf(endOfMonth);
 
     const clone = month.startOf('months').clone();
+
     if (daysBefore > 0) {
       clone.subtract(daysBefore, 'days');
     }
-    for (let i = 0; i < daysBefore; i++) {
-      calendar.push(this.createCalendarItem(clone, 'previous-month'));
-      clone.add(1, 'days');
-    }
-    for (let i = 0; i < daysInMonth; i++) {
-      calendar.push(this.createCalendarItem(clone, 'in-month'));
-      clone.add(1, 'days');
-    }
-    for (let i = 0; i < daysAfter; i++) {
-      calendar.push(this.createCalendarItem(clone, 'next-month'));
-      clone.add(1, 'days');
-    }
+
+    // for (let i = 0; i < daysBefore; i++) {
+    //   calendar.push(this.createCalendarItem(clone, 'previous-month', value));
+    //   clone.add(1, 'days');
+    // }
+
+    // for (let i = 0; i < daysInMonth; i++) {
+    //   calendar.push(this.createCalendarItem(clone, 'in-month', value));
+    //   clone.add(1, 'days');
+    // }
+
+
+
+
+    // for (let i = 0; i < daysAfter; i++) {
+    //   calendar.push(this.createCalendarItem(clone, 'next-month', value));
+    //   clone.add(1, 'days');
+    // }
+
+    // for (let i = 0; i < calendar.length; i++) {
+    //   calendar[i].duration = this.month[i];
+    // }
+
+
+
     return calendar.reduce(
       (pre: Array<CalendarItem[]>, curr: CalendarItem) => {
         if (pre[pre.length - 1].length < weekdaysShort.length) {
@@ -74,21 +114,30 @@ export class WorktimeComponent implements OnInit {
       },
       [[]]
     );
+
+
   }
-  createCalendarItem(data: moment.Moment, className: string) {
+
+  createCalendarItem(data: moment.Moment, className: string, value) {
     const dayName = data.format('ddd');
     return {
       id: data.format('YYYY') + "-" + data.format('MM') + "-" + data.format('DD'),
       day: data.format('D'),
       dayName,
       className,
-      isWeekend: dayName === 'ndz' || dayName === 'sob'
+      isWeekend: dayName === 'ndz' || dayName === 'sob',
+      duration: value.workedTime,
+      startHour: value.startHour,
+      endHour: value.endHour,
+      dayFromEndpoint: value.day
     };
   }
+
   public nextmonth() {
     this.date.add(1, 'months');
     this.calendar = this.createCalendar(this.date);
   }
+
   public previousmonth() {
     this.date.subtract(1, 'months');
     this.calendar = this.createCalendar(this.date);
