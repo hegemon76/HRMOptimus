@@ -1,6 +1,5 @@
 ﻿using HRMOptimus.Application.Common.Interfaces;
 using MediatR;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,6 +24,7 @@ namespace HRMOptimus.Application.WorkRecord.Command.AddWorkRecord
                 WorkStart = request.AddWorkRecordVm.WorkStart,
                 WorkEnd = request.AddWorkRecordVm.WorkEnd,
                 Duration = duration,
+                IsRemoteWork = request.AddWorkRecordVm.IsRemoteWork,
                 ProjectId = request.AddWorkRecordVm.ProjectId,
                 EmployeeId = request.AddWorkRecordVm.EmployeeId
             };

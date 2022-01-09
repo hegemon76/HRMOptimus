@@ -25,6 +25,7 @@ namespace HRMOptimus.Application.WorkRecord.Command.UpdateWorkRecord
             workRecord.WorkStart = request.UpdateWorkRecordVm.WorkStart;
             workRecord.WorkEnd = request.UpdateWorkRecordVm.WorkEnd;
             workRecord.Duration = duration;
+            workRecord.IsRemoteWork = request.UpdateWorkRecordVm.IsRemoteWork;
             workRecord.ProjectId = request.UpdateWorkRecordVm.ProjectId;
             workRecord.EmployeeId = request.UpdateWorkRecordVm.EmployeeId;
 
