@@ -9,6 +9,7 @@ namespace HRMOptimus.Domain.Entities
         public DateTime WorkStart { get; set; }
         public DateTime WorkEnd { get; set; }
         public TimeSpan Duration { get; set; }
+        public bool IsRemoteWork { get; set; }
         public int ProjectId { get; set; }
         public Project Project { get; set; }
         public int? EmployeeId { get; set; }

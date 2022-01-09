@@ -1,7 +1,5 @@
 ﻿using HRMOptimus.Application.Common.Interfaces;
-using HRMOptimus.Domain.Entities;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;

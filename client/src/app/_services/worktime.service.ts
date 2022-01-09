@@ -96,7 +96,7 @@ export class WorktimeService {
       .pipe(map((res: any) => res));
   }
 
-  addWorkDayRecord(values, emploeeId, value): Observable<any> {
+  addWorkDayRecord(values, emploeeId, value, isRemote): Observable<any> {
     return this.http
       .post(
         this.addWorkEntry,
@@ -104,6 +104,7 @@ export class WorktimeService {
           name: values.dayName,
           workStart: value + ' ' + values.workStart,
           workEnd: value + ' ' + values.workEnd,
+          isRemoteWork: isRemote,
           projectId: values.projectName.id,
           employeeId: emploeeId
         },

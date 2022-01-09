@@ -14,7 +14,6 @@ namespace HRMOptimus.Application.Contract.Command.EditContract
                 if (!contract)
                     context.AddFailure("Id", "The Contract with Id: " + value + " doesn't exist");
             });
-            RuleFor(x => x.ContractId).NotEmpty();
         }
     }
 }

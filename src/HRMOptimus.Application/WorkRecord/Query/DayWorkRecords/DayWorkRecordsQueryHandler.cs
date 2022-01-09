@@ -27,7 +27,7 @@ namespace HRMOptimus.Application.WorkRecord.Query.DayWorkRecords
                 //.Where(x => x.EmployeeId == userId)
                 .Where(x => x.WorkStart.Date == request.DayWork.Date && x.Enabled)
                 .Include(x => x.Project)
-                .Select(x => new WorkRecordDetailsVm(x.Id, x.Name, x.WorkStart, x.WorkEnd, x.Duration, x.Project.Name))
+                .Select(x => new WorkRecordDetailsVm(x.Id, x.Name, x.WorkStart, x.WorkEnd, x.Duration, x.IsRemoteWork, x.Project.Name))
                 .ToListAsync();
 
             return workRecords;
