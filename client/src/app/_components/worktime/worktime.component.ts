@@ -10,10 +10,10 @@ interface CalendarItem {
   dayName: string;
   className: string;
   isWeekend: boolean;
-  duration: any;
-  startHour: any;
-  endHour: any;
-  dayFromEndpoint: any;
+  duration: Date;
+  startHour: Date;
+  endHour: Date;
+  dayFromEndpoint: Date;
 }
 
 @Component({
@@ -21,6 +21,7 @@ interface CalendarItem {
   templateUrl: './worktime.component.html',
   styleUrls: ['./worktime.component.scss']
 })
+
 export class WorktimeComponent implements OnInit {
   date = moment().locale('pl');
   calendar: any[] = [];
@@ -33,13 +34,14 @@ export class WorktimeComponent implements OnInit {
       .weekday(dow)
       .format('ddd')
   );
+
   startOfMonth = this.date.startOf('month').format('ddd');
   endOfMonth = this.date.endOf('months').format('ddd');
   daysBefore = this.weekdaysShort.indexOf(this.startOfMonth);
   daysAfter =
     this.weekdaysShort.length - 1 - this.weekdaysShort.indexOf(this.endOfMonth);
 
-  constructor(private workdayService: WorktimeService) {}
+  constructor(private workdayService: WorktimeService) { }
 
   month: [];
 
