@@ -1,6 +1,6 @@
 <div class="header">
   <span>Edytuj czas pracy</span>
-  <button class="back" routerLink="/worktime"><i class="fas fa-times"></i></button>
+  <button (click)="deleteHistory()" class="back" routerLink="/worktime"><i class="fas fa-times"></i></button>
 </div>
 <div class="workday-wrapper">
   <div class="day-info">
@@ -22,9 +22,8 @@
       </mat-form-field>
       <mat-form-field appearance="fill" class="type">
         <mat-label>Tryb</mat-label>
-        <mat-select>
-          <mat-option value="zdalna">Praca zdalna</mat-option>
-          <mat-option value="biuro">Praca w biurze</mat-option>
+        <mat-select formControlName="typeName">
+          <mat-option *ngFor="let tp of types" [value]="tp.name"> {{tp.name}} </mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field appearance="fill" class="project">
@@ -45,17 +44,16 @@
     <form [formGroup]="form">
       <mat-form-field class="example-form-field hoursFrom" appearance="fill">
         <mat-label>Godz. od</mat-label>
-        <input matInput type="text" value="{{day.workStart | date:'hh:mm'}}">
+        <input matInput type="text" value="{{day.workStart | date:'HH:mm':'pl'}}">
       </mat-form-field>
       <mat-form-field class="example-form-field hoursTo" appearance="fill">
         <mat-label>Godz. do</mat-label>
-        <input matInput type="text" value="{{day.workStop | date:'hh:mm'}}">
+        <input matInput type="text" value="{{day.workStop | date:'HH:mm':'pl'}}">
       </mat-form-field>
       <mat-form-field appearance="fill" class="type">
         <mat-label>Tryb</mat-label>
-        <mat-select>
-          <mat-option value="zdalna">Praca zdalna</mat-option>
-          <mat-option value="biuro">Praca w biurze</mat-option>
+        <mat-select [(value)]="day.type">
+          <mat-option *ngFor="let tp of types" [value]="tp.name"> {{tp.name}} </mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field appearance="fill" class="project">

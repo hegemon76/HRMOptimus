@@ -3,8 +3,6 @@ import {
   OnInit,
   ViewChild,
   ViewContainerRef,
-  ComponentFactoryResolver,
-  ComponentRef,
   Input
 } from '@angular/core';
 import { WorktimeService } from '../../../_services/worktime.service';
@@ -35,6 +33,7 @@ export class WorkdayComponent implements OnInit {
   workDays: [];
   projects: any[];
   month: [];
+  types = [{ name: 'Praca zdalna', value: true }, { name: 'Praca w biurze', value: false }];
   day = {} as Day;
   id;
   user;
@@ -60,7 +59,8 @@ export class WorkdayComponent implements OnInit {
       dayName: [''],
       workStart: [''],
       workEnd: [''],
-      projectName: ['']
+      projectName: [''],
+      typeName: ['']
     });
 
     this.valueDuration = localStorage.getItem('durationOfDay');
@@ -74,9 +74,19 @@ export class WorkdayComponent implements OnInit {
     this.workdayService.getWorkday(this.id).subscribe(res => {
       res.map(r => {
         r['selected'] = r.projectName;
+
+        if (r.isRemoteWork === true) {
+          r['type'] = "Praca zdalna";
+        }
+
+        else {
+          r['type'] = "Praca w biurze";
+        }
       });
 
       this.workDays = res;
+
+      console.log(this.workDays);
 
       this.entriesCount = this.workDays.length;
     });
@@ -94,9 +104,24 @@ export class WorkdayComponent implements OnInit {
     });
   }
 
+  deleteHistory() {
+    localStorage.removeItem('durationOfDay');
+    localStorage.removeItem('timingOfDay');
+  }
+
   addEntry() {
+    let values = this.form.getRawValue();
+    let isRemoteWork;
+
+    if (values.typeName === "Praca zdalna") {
+      isRemoteWork = true;
+    }
+    else {
+      isRemoteWork = false;
+    }
+
     this.workdayService
-      .addWorkDayRecord(this.form.getRawValue(), this.user.employeeId, this.id)
+      .addWorkDayRecord(this.form.getRawValue(), this.user.employeeId, this.id, isRemoteWork)
       .subscribe(() => {
         this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
           this.router.navigate([`worktime/day/${this.id}`]);
