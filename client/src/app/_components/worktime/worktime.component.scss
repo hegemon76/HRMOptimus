@@ -1,9 +1,10 @@
 .wrapper {
   display: grid;
   grid-template-columns: repeat(7, 0.5fr);
-  width: 65%;
+  max-width: 65%;
   margin-left: auto;
   margin-right: auto;
+  width: auto;
 }
 
 .calendar-days {
