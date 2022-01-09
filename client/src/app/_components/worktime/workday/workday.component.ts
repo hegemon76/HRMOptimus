@@ -4,13 +4,15 @@ import {
   ViewChild,
   ViewContainerRef,
   ComponentFactoryResolver,
-  ComponentRef
+  ComponentRef,
+  Input
 } from '@angular/core';
-import { WorktimeService } from '../worktime.service';
+import { WorktimeService } from '../../../_services/worktime.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { AccountService } from '../../../_services/account.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 interface Day {
   id: string;
@@ -23,31 +25,35 @@ interface Day {
 @Component({
   selector: 'app-workday',
   templateUrl: './workday.component.html',
-  styleUrls: ['./workday.component.scss']
+  styleUrls: ['./workday.component.scss'],
+  providers: [DatePipe]
 })
+
 export class WorkdayComponent implements OnInit {
   @ViewChild('parent', { read: ViewContainerRef }) target: ViewContainerRef;
-  private componentRef: ComponentRef<any>;
 
   workDays: [];
   projects: any[];
+  month: [];
   day = {} as Day;
   id;
   user;
   duration = 0;
   durationTime;
   form: FormGroup;
-  saveChanges = false;
   entriesCount;
+  valueDuration;
+  valueTiming;
+
+  @Input() item: string;
 
   constructor(
     private workdayService: WorktimeService,
     private route: ActivatedRoute,
     private router: Router,
     private accountService: AccountService,
-    private componentFactoryResolver: ComponentFactoryResolver,
-    private formBuilder: FormBuilder
-  ) {}
+    private formBuilder: FormBuilder,
+  ) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -56,7 +62,13 @@ export class WorkdayComponent implements OnInit {
       workEnd: [''],
       projectName: ['']
     });
+
+    this.valueDuration = localStorage.getItem('durationOfDay');
+
+    this.valueTiming = localStorage.getItem('timingOfDay');
+
     this.id = this.route.snapshot.paramMap.get('id');
+
     this.user = this.accountService.getUser();
 
     this.workdayService.getWorkday(this.id).subscribe(res => {
@@ -64,16 +76,7 @@ export class WorkdayComponent implements OnInit {
         r['selected'] = r.projectName;
       });
 
-      res.map(a => {
-        this.duration +=
-          parseInt(a.duration.split(':')[0]) * 3600 +
-          parseInt(a.duration.split(':')[1]) * 60 +
-          parseInt(a.duration.split(':')[2]);
-      });
-
       this.workDays = res;
-
-      this.durationTime = new Date(this.duration * 1000);
 
       this.entriesCount = this.workDays.length;
     });
@@ -83,16 +86,8 @@ export class WorkdayComponent implements OnInit {
     });
   }
 
-  checkForChanges() {
-    this.saveChanges = true;
-  }
-
-  deleteWorkDayEntry(event) {
-    var target = event.target || event.srcElement || event.currentTarget;
-    var idAttr = target.attributes.id;
-    var value = idAttr.nodeValue;
-
-    this.workdayService.deleteWorkDayEntries(value).subscribe(() => {
+  deleteWorkDayEntry(id) {
+    this.workdayService.deleteWorkDayEntries(id).subscribe(() => {
       this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
         this.router.navigate([`worktime/day/${this.id}`]);
       });

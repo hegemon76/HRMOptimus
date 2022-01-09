@@ -77,15 +77,15 @@ export class DashboardComponent implements OnInit {
       }
     },
     scales: {
-      x: {
-        grid: {
-          lineWidth: 0
-        }
-      },
       y: {
         max: 12,
         grid: {
           borderWidth: 0
+        }
+      },
+      x: {
+        grid: {
+          lineWidth: 0
         }
       }
     },
@@ -111,7 +111,7 @@ export class DashboardComponent implements OnInit {
     private employeesService: EmployeesService,
     private vacationService: VacationService,
     private projectsService: ProjectsService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.user = this.accountService.getUser();
@@ -149,7 +149,7 @@ export class DashboardComponent implements OnInit {
       'en-US'
     );
     this.worktimeService
-      .getMonthRecords(monthStart, monthEnd)
+      .getMonthEntryDefault()
       .subscribe(res => {
         let hours = 0;
         let minutes = 0;
@@ -158,7 +158,7 @@ export class DashboardComponent implements OnInit {
           minutes += parseInt(h.workedTime.split(':')[1]);
           this.barChartData.datasets[0].data = this.barChartData.datasets[0].data.concat(
             parseFloat(h.workedTime.split(':')[0]) +
-              parseFloat(h.workedTime.split(':')[1]) / 60
+            parseFloat(h.workedTime.split(':')[1]) / 60
           );
         });
         hours += Math.floor(minutes / 60);
@@ -171,7 +171,7 @@ export class DashboardComponent implements OnInit {
   }
   getEmployees() {
     this.employeesService.getEmployees().subscribe(res => {
-      this.employees = res.items.sort(function(a, b) {
+      this.employees = res.items.sort(function (a, b) {
         return b.id - a.id;
       });
     });
