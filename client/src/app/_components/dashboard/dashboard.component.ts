@@ -149,7 +149,7 @@ export class DashboardComponent implements OnInit {
       'en-US'
     );
     this.worktimeService
-      .getMonthRecords(monthStart, monthEnd)
+      .getMonthEntryDefault()
       .subscribe(res => {
         let hours = 0;
         let minutes = 0;

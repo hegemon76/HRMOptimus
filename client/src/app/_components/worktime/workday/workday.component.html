@@ -4,11 +4,11 @@
 </div>
 <div class="workday-wrapper">
   <div class="day-info">
-    <p><span>Pracownik:</span> {{user.fullName}}</p>
+    <p><span>Pracownik:</span> {{user.fullName}} </p>
     <p><span>Dzień:</span> {{ id }} </p>
-    <p><span>Godziny pracy:</span> 08:00 - 16:00 </p>
-    <p><span>Czas pracy:</span> {{durationTime | date:'hh:mm'}} </p>
-    <button class="save">Zapisz</button>
+    <p><span>Godziny pracy:</span> {{valueTiming}}</p>
+    <p><span>Czas pracy:</span> {{valueDuration}} </p>
+    <!-- <button class="save">Zapisz</button> -->
   </div>
   <div class="times constForm">
     <form [formGroup]="form">

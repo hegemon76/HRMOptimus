@@ -2,20 +2,27 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WorktimeService {
-  baseUrl = environment.baseUrl;
-  getWorkdayEntries = 'https://localhost:5001/api/workrecord/day';
-  getProjectsEntries = 'https://localhost:5001/api/projects';
-  deleteWorkDay = 'https://localhost:5001/api/workrecord/delete';
-  addWorkEntry = 'https://localhost:5001/api/workrecord/add';
-  getMonthRecordsUrl = `${this.baseUrl}workrecord/month`;
 
-  constructor(private http: HttpClient) {}
+  getWorkdayEntries = 'https://localhost:5001/api/workrecord/day';
+
+  getProjectsEntries = 'https://localhost:5001/api/projects';
+
+  deleteWorkDay = 'https://localhost:5001/api/workrecord/delete';
+
+  addWorkEntry = 'https://localhost:5001/api/workrecord/add';
+
+  getMonth = 'https://localhost:5001/api/workrecord/month';
+
+  dayDuration: string;
+
+  dayTiming: string;
+
+  constructor(private http: HttpClient) { }
 
   getWorkday(id): Observable<any> {
     return this.http
@@ -30,9 +37,48 @@ export class WorktimeService {
       .pipe(map((res: any) => res));
   }
 
+  setDayDuration(val) {
+    this.dayDuration = val;
+  }
+
+  getDayDuration() {
+    return this.dayDuration;
+  }
+
+  setDayTiming(val) {
+    this.dayTiming = val;
+  }
+
+  getDayTiming() {
+    return this.dayTiming;
+  }
+
   getProjects(): Observable<any> {
     return this.http
       .get(this.getProjectsEntries, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .pipe(map((res: any) => res));
+  }
+
+  getMonthEntry(id): Observable<any> {
+    return this.http
+      .get(this.getMonth, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        params: {
+          monthFromCurrent: id
+        }
+      })
+      .pipe(map((res: any) => res));
+  }
+
+  getMonthEntryDefault(): Observable<any> {
+    return this.http
+      .get(this.getMonth, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -66,13 +112,5 @@ export class WorktimeService {
         }
       )
       .pipe(map((res: any) => res));
-  }
-  getMonthRecords(dayStart, dayEnd): Observable<any> {
-    return this.http.get(this.getMonthRecordsUrl, {
-      params: {
-        dateFrom: dayStart,
-        dayTo: dayEnd
-      }
-    });
   }
 }

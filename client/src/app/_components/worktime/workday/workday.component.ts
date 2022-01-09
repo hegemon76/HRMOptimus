@@ -4,13 +4,14 @@ import {
   ViewChild,
   ViewContainerRef,
   ComponentFactoryResolver,
-  ComponentRef
+  ComponentRef,
+  Input
 } from '@angular/core';
-import { WorktimeService } from '../worktime.service';
+import { WorktimeService } from '../../../_services/worktime.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { AccountService } from '../../../_services/account.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
 interface Day {
@@ -27,9 +28,9 @@ interface Day {
   styleUrls: ['./workday.component.scss'],
   providers: [DatePipe]
 })
+
 export class WorkdayComponent implements OnInit {
   @ViewChild('parent', { read: ViewContainerRef }) target: ViewContainerRef;
-  private componentRef: ComponentRef<any>;
 
   workDays: [];
   projects: any[];
@@ -41,15 +42,17 @@ export class WorkdayComponent implements OnInit {
   durationTime;
   form: FormGroup;
   entriesCount;
+  valueDuration;
+  valueTiming;
+
+  @Input() item: string;
 
   constructor(
     private workdayService: WorktimeService,
     private route: ActivatedRoute,
     private router: Router,
     private accountService: AccountService,
-    private componentFactoryResolver: ComponentFactoryResolver,
     private formBuilder: FormBuilder,
-    private datePipe: DatePipe
   ) { }
 
   ngOnInit(): void {
@@ -60,6 +63,10 @@ export class WorkdayComponent implements OnInit {
       projectName: ['']
     });
 
+    this.valueDuration = localStorage.getItem('durationOfDay');
+
+    this.valueTiming = localStorage.getItem('timingOfDay');
+
     this.id = this.route.snapshot.paramMap.get('id');
 
     this.user = this.accountService.getUser();
@@ -69,16 +76,7 @@ export class WorkdayComponent implements OnInit {
         r['selected'] = r.projectName;
       });
 
-      res.map(a => {
-        this.duration +=
-          parseInt(a.duration.split(':')[0]) * 3600 +
-          parseInt(a.duration.split(':')[1]) * 60 +
-          parseInt(a.duration.split(':')[2]);
-      });
-
       this.workDays = res;
-
-      this.durationTime = new Date(this.duration * 1000);
 
       this.entriesCount = this.workDays.length;
     });

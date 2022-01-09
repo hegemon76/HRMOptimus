@@ -14,24 +14,14 @@
   <p>sob.</p>
   <p>niedz.</p>
 </div>
-<!-- <div *ngFor="let calendarItem of calendar;">
-  <div class="flex-container flex-center">
-    <div id="{{ day.id }}" routerLink="day/{{ day.id }}"
-      [state]="{ id: day.id, name: day.dayName, weekend: day.isWeekend }" class="calendar-days {{day.className}}"
-      [class.weekend]="day.isWeekend" [ngClass]="{'today': day.id === today}" *ngFor="let day of calendarItem">
-      <span class="day">{{ day.dayName }}</span>
-      <p class="hours">08:00 - 16:00</p>
-      <p class="time">(08:00)</p>
-    </div>
-  </div>
-</div> -->
 <div class="wrapper">
   <div *ngFor="let calendarItem of calendar;">
     <div class="flex-container flex-center">
       <div id="{{ calendarItem.id }}" routerLink="day/{{ calendarItem.id }}"
         [state]="{ id: calendarItem.id, name: calendarItem.dayName, weekend: calendarItem.isWeekend }"
         class="calendar-days {{calendarItem.className}}" [class.weekend]="calendarItem.isWeekend"
-        [ngClass]="{'today': calendarItem.id === today,'weekend': calendarItem.isWeekend === true}">
+        [ngClass]="{'today': calendarItem.id === today,'weekend': calendarItem.isWeekend === true}"
+        (click)="setValueToChild(calendarItem.duration, calendarItem.startHour, calendarItem.endHour)">
         <span class="day">{{ calendarItem.dayName }}</span>
         <p class="hours">{{calendarItem.startHour}} - {{calendarItem.endHour}}</p>
         <p class="time">({{calendarItem.duration}})</p>
@@ -44,10 +34,4 @@
   <p>Dzisiaj</p>
   <div class="week box"></div>
   <p>Dzień wolny</p>
-  <div class="vacation box"></div>
-  <p>Urlop</p>
-  <div class="work-on-premise box"></div>
-  <p>Praca biurowa</p>
-  <div class="work-remote box"></div>
-  <p>Praca zdalna</p>
 </div>
