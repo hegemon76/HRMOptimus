@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { AccountService } from '../../../_services/account.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 interface Day {
   id: string;
@@ -23,7 +24,8 @@ interface Day {
 @Component({
   selector: 'app-workday',
   templateUrl: './workday.component.html',
-  styleUrls: ['./workday.component.scss']
+  styleUrls: ['./workday.component.scss'],
+  providers: [DatePipe]
 })
 export class WorkdayComponent implements OnInit {
   @ViewChild('parent', { read: ViewContainerRef }) target: ViewContainerRef;
@@ -31,13 +33,13 @@ export class WorkdayComponent implements OnInit {
 
   workDays: [];
   projects: any[];
+  month: [];
   day = {} as Day;
   id;
   user;
   duration = 0;
   durationTime;
   form: FormGroup;
-  saveChanges = false;
   entriesCount;
 
   constructor(
@@ -46,8 +48,9 @@ export class WorkdayComponent implements OnInit {
     private router: Router,
     private accountService: AccountService,
     private componentFactoryResolver: ComponentFactoryResolver,
-    private formBuilder: FormBuilder
-  ) {}
+    private formBuilder: FormBuilder,
+    private datePipe: DatePipe
+  ) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -56,7 +59,9 @@ export class WorkdayComponent implements OnInit {
       workEnd: [''],
       projectName: ['']
     });
+
     this.id = this.route.snapshot.paramMap.get('id');
+
     this.user = this.accountService.getUser();
 
     this.workdayService.getWorkday(this.id).subscribe(res => {
@@ -83,16 +88,8 @@ export class WorkdayComponent implements OnInit {
     });
   }
 
-  checkForChanges() {
-    this.saveChanges = true;
-  }
-
-  deleteWorkDayEntry(event) {
-    var target = event.target || event.srcElement || event.currentTarget;
-    var idAttr = target.attributes.id;
-    var value = idAttr.nodeValue;
-
-    this.workdayService.deleteWorkDayEntries(value).subscribe(() => {
+  deleteWorkDayEntry(id) {
+    this.workdayService.deleteWorkDayEntries(id).subscribe(() => {
       this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
         this.router.navigate([`worktime/day/${this.id}`]);
       });

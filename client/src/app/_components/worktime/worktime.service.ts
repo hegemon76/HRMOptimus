@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { compileDeclareInjectableFromMetadata } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -7,7 +8,6 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class WorktimeService {
-
   getWorkdayEntries = 'https://localhost:5001/api/workrecord/day';
 
   getProjectsEntries = 'https://localhost:5001/api/projects';
@@ -16,7 +16,9 @@ export class WorktimeService {
 
   addWorkEntry = 'https://localhost:5001/api/workrecord/add';
 
-  constructor(private http: HttpClient) { }
+  getMonth = 'https://localhost:5001/api/workrecord/month';
+
+  constructor(private http: HttpClient) {}
 
   getWorkday(id): Observable<any> {
     return this.http
@@ -36,7 +38,20 @@ export class WorktimeService {
       .get(this.getProjectsEntries, {
         headers: {
           'Content-Type': 'application/json'
+        }
+      })
+      .pipe(map((res: any) => res));
+  }
+
+  getMonthEntry(id): Observable<any> {
+    return this.http
+      .get(this.getMonth, {
+        headers: {
+          'Content-Type': 'application/json'
         },
+        params: {
+          monthFromCurrent: id
+        }
       })
       .pipe(map((res: any) => res));
   }
@@ -52,16 +67,20 @@ export class WorktimeService {
   }
 
   addWorkDayRecord(values, emploeeId, value): Observable<any> {
-    return this.http.post(this.addWorkEntry, {
-      name: values.dayName,
-      workStart: value + ' ' + values.workStart,
-      workEnd: value + ' ' + values.workEnd,
-      projectId: values.projectName.id,
-      employeeId: emploeeId
-    },
-      {
-        headers: { 'Content-Type': 'application/json' }
-      })
+    return this.http
+      .post(
+        this.addWorkEntry,
+        {
+          name: values.dayName,
+          workStart: value + ' ' + values.workStart,
+          workEnd: value + ' ' + values.workEnd,
+          projectId: values.projectName.id,
+          employeeId: emploeeId
+        },
+        {
+          headers: { 'Content-Type': 'application/json' }
+        }
+      )
       .pipe(map((res: any) => res));
   }
 }
