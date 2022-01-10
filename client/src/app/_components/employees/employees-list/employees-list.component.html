@@ -16,7 +16,7 @@
           <span class="position">Stanowisko</span>
           <span class="email">E-mail</span>
           <span class="phone">Telefon</span>
-          <span class="actions" *ngIf="user.role.includes('HumanResources')">Akcje</span>
+          <span class="actions">Akcje</span>
         </div>
         <div class="single-employee" *ngFor="let employee of employees | filter: searchedEmployee; let i = index">
           <img [src]="employee.gender == 0 ? '/assets/images/male-avatar.svg' : '/assets/images/female-avatar.svg'">
@@ -24,10 +24,12 @@
           <p>{{employee.contractName}}</p>
           <a href="mailto:employee.email">{{employee.email}}</a>
           <a href="tel:employee.phoneNumber">{{employee.phoneNumber}}</a>
-          <div class="buttons" *ngIf="user.role.includes('HumanResources')">
-            <button class="edit-user" routerLink="edit/{{employee.id}}" [state]={id:employee.id}><i
+          <div class="buttons">
+            <button class="edit-user" routerLink="edit/{{employee.id}}" [state]={id:employee.id}
+              *ngIf="user.role.includes('HumanResources') || user.role.includes('Administrator') || employee.id == user.employeeId"><i
                 class="fas fa-cog"></i></button>
-            <button class="delete-user" mat-raised-button (click)="openDialog(employee.fullName, employee.id)"><i
+            <button class="delete-user" mat-raised-button (click)="openDialog(employee.fullName, employee.id)"
+              *ngIf="user.role.includes('HumanResources') || user.role.includes('Administrator')"><i
                 class="fas fa-minus-circle"></i></button>
           </div>
         </div>
