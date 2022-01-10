@@ -65,7 +65,7 @@ export class ProjectAddComponent implements OnInit {
   removeComponent(component) {
     const componentIndex = this.components.indexOf(component);
 
-    if (componentIndex !== -1) {
+    if (componentIndex !== -1 && this.components.length > 1) {
       this.container.remove(componentIndex);
       this.components.splice(componentIndex, 1);
     }

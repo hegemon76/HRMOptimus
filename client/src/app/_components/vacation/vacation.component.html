@@ -28,7 +28,7 @@
         <mat-label>Od</mat-label>
         <input formControlName="leaveStart" matInput [matDatepicker]="pickerStart" required>
         <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
-        <mat-datepicker #pickerStart></mat-datepicker>
+        <mat-datepicker #pickerStart firstDayOfWeek="1"></mat-datepicker>
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Do</mat-label>

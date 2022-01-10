@@ -1,4 +1,4 @@
- <mat-card class="single-employyee-add">
+ <mat-card class="single-employee-add">
    <form [formGroup]="form" action="" (change)="checkValues()">
      <h6>Dane osobowe:</h6>
      <mat-form-field appearance="fill">
@@ -94,5 +94,5 @@
        </mat-autocomplete>
      </mat-form-field>
    </form>
-   <button (click)="remove()"><img src="/assets/images/minus-square-solid.svg" alt=""></button>
+   <button class="remove" (click)="remove()"><img src="/assets/images/minus-square-solid.svg" alt=""></button>
  </mat-card>

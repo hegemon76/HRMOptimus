@@ -9,11 +9,12 @@
       <ul class="submenu">
         <li><i routerLink="/employees" class="fas fa-users"></i><span routerLink="/employees" class="text">Lista
             pracowników</span></li>
-        <li *ngIf="user.role.includes('HumanResources')"><i routerLink="/employees/add"
-            class="fas fa-user-plus"></i><span routerLink="/employees/add" class="text">Dodaj pracownika</span></li>
-        <li *ngIf="user.role.includes('HumanResources')"><i routerLink="/employees/edit/{{user.employeeId}}"
-            class="fas fa-user-edit"></i><span routerLink="/employees/edit/{{user.employeeId}}" class="text">Edytuj
-            dane</span></li>
+        <li *ngIf="user.role.includes('HumanResources') || user.role.includes('Administrator')"><i
+            routerLink="/employees/add" class="fas fa-user-plus"></i><span routerLink="/employees/add"
+            class="text">Dodaj pracownika</span></li>
+        <li *ngIf="user.role.includes('HumanResources') || user.role.includes('Administrator')"><i
+            routerLink="/employees/edit/{{user.employeeId}}" class="fas fa-user-edit"></i><span
+            routerLink="/employees/edit/{{user.employeeId}}" class="text">Edytuj dane</span></li>
       </ul>
     </a>
     <a>
@@ -22,8 +23,9 @@
       <ul class="submenu">
         <li><i routerLink="/projects" class="fas fa-list-ul"></i>
           <span routerLink="/projects" class="text">Lista projektów</span></li>
-        <li *ngIf="user.role.includes('ProjectManager')"><i routerLink="/projects/add" class="fas fa-plus"></i><span
-            routerLink="/projects/add" class="text">Dodaj projekt</span></li>
+        <li *ngIf="user.role.includes('ProjectManager') || user.role.includes('Administrator')"><i
+            routerLink="/projects/add" class="fas fa-plus"></i><span routerLink="/projects/add" class="text">Dodaj
+            projekt</span></li>
       </ul>
     </a>
     <a routerLink="/worktime">

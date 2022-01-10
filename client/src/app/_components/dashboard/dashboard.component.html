@@ -5,19 +5,7 @@
     </canvas>
   </mat-card>
   <mat-card class="card-2">
-    <h6> Szybki kontakt </h6>
-    <div *ngFor="let employee of employees" class="single-employee">
-      <img [src]="employee.gender == 0 ? '/assets/images/male-avatar.svg' : '/assets/images/female-avatar.svg'">
-      <p>{{employee.fullName}}</p>
-      <div class="icons">
-        <a href="tel:{{employee.phone}}">
-          <mat-icon> phone</mat-icon>
-        </a>
-        <a href="mailto:{{employee.email}}">
-          <mat-icon> email</mat-icon>
-        </a>
-      </div>
-    </div>
+    <h6> Powiadomienia urlopowe </h6>
   </mat-card>
   <mat-card class="card-3">
     <div class="time">
@@ -49,16 +37,28 @@
   </mat-card>
   <mat-card class="card-4">
     <h6>Twoje projekty</h6>
-    <swiper [config]="config">
-      <ng-template swiperSlide *ngFor="let project of projects">
-        <div class="single-project">
-          <div class="label" [ngStyle]="{backgroundColor: project.colorLabel}"></div>
-          <div class="name"><span>{{project.name}}</span></div>
-        </div>
-      </ng-template>
-    </swiper>
+    <div class="projects-list" *ngFor="let project of projects">
+      <div class="single-project">
+        <div class="label" [ngStyle]="{backgroundColor: project.colorLabel}"></div>
+        <div class="name"><span>{{project.name}}</span></div>
+      </div>
+    </div>
   </mat-card>
   <mat-card class=" card-5">
-    <p> JESZCZE NIE WIEM CO </p>
+    <h6>Wsparcie techniczne</h6>
+    <div class="admins-list" *ngFor="let admin of adminsToDisplay">
+      <div class="single-admin">
+        <img [src]="admin.gender == 0 ? '/assets/images/male-avatar.svg' : '/assets/images/female-avatar.svg'">
+        <p>{{admin.fullName}}</p>
+        <div class="icons">
+          <a href="tel:{{admin.phone}}">
+            <mat-icon> phone</mat-icon>
+          </a>
+          <a href="mailto:{{admin.email}}">
+            <mat-icon> email</mat-icon>
+          </a>
+        </div>
+      </div>
+    </div>
   </mat-card>
 </div>
