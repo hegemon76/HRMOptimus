@@ -36,6 +36,7 @@ export class EmployeesListComponent implements OnInit {
       this.employees = res.items;
     });
     this.user = this.accountService.getUser();
+    console.log(this.user);
   }
 
   openDialog(fN, id) {

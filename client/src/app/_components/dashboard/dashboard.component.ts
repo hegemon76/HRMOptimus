@@ -11,8 +11,7 @@ import { UserVm } from '../../../shared/vm/user.vm';
 import { formatDate } from '@angular/common';
 import { ThemePalette } from '@angular/material/core';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
-import Swiper, { SwiperOptions, Autoplay } from 'swiper';
-Swiper.use([Autoplay]);
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -20,16 +19,6 @@ Swiper.use([Autoplay]);
 })
 export class DashboardComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
-
-  config: SwiperOptions = {
-    slidesPerView: 1,
-    spaceBetween: 50,
-    initialSlide: 0,
-    loop: true,
-    autoplay: {
-      delay: 6000
-    }
-  };
 
   monthTime: string;
   months: string[] = [
@@ -98,6 +87,7 @@ export class DashboardComponent implements OnInit {
 
   barChartType: ChartType = 'bar';
   employees: EmployeeVm[];
+  adminsToDisplay: EmployeeVm[];
   color: ThemePalette = 'primary';
   color2: ThemePalette = 'accent';
   mode: ProgressSpinnerMode = 'determinate';
@@ -111,7 +101,7 @@ export class DashboardComponent implements OnInit {
     private employeesService: EmployeesService,
     private vacationService: VacationService,
     private projectsService: ProjectsService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.user = this.accountService.getUser();
@@ -148,32 +138,41 @@ export class DashboardComponent implements OnInit {
       'yyyy-MM-dd',
       'en-US'
     );
-    this.worktimeService
-      .getMonthEntryDefault()
-      .subscribe(res => {
-        let hours = 0;
-        let minutes = 0;
-        res.map(h => {
-          hours += parseInt(h.workedTime.split(':')[0]);
-          minutes += parseInt(h.workedTime.split(':')[1]);
-          this.barChartData.datasets[0].data = this.barChartData.datasets[0].data.concat(
-            parseFloat(h.workedTime.split(':')[0]) +
+    this.worktimeService.getMonthEntryDefault().subscribe(res => {
+      let hours = 0;
+      let minutes = 0;
+      res.map(h => {
+        hours += parseInt(h.workedTime.split(':')[0]);
+        minutes += parseInt(h.workedTime.split(':')[1]);
+        this.barChartData.datasets[0].data = this.barChartData.datasets[0].data.concat(
+          parseFloat(h.workedTime.split(':')[0]) +
             parseFloat(h.workedTime.split(':')[1]) / 60
-          );
-        });
-        hours += Math.floor(minutes / 60);
-        minutes = minutes % 60;
-        this.monthTime = hours + ':' + minutes + 'h';
+        );
       });
+      hours += Math.floor(minutes / 60);
+      minutes = minutes % 60;
+      this.monthTime = hours + ':' + minutes + 'h';
+    });
     setTimeout(() => {
       this.chart.update();
     }, 500);
   }
   getEmployees() {
+    const resAdmins = [];
     this.employeesService.getEmployees().subscribe(res => {
-      this.employees = res.items.sort(function (a, b) {
+      this.employees = res.items.sort(function(a, b) {
         return b.id - a.id;
       });
+      res.items.map(x => {
+        this.employeesService.getEmployee(x.id).subscribe(r => {
+          console.log(r.roles);
+          if (r.roles.includes('Administrator')) {
+            resAdmins.push(r);
+          }
+        });
+      });
+      this.adminsToDisplay = resAdmins;
+      console.log(this.adminsToDisplay);
     });
   }
   setLimitAndLeft() {

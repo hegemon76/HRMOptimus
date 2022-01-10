@@ -12,13 +12,14 @@
           <span>Etykieta</span>
           <span class="name">Nazwa</span>
           <span class="position">Opis</span>
-          <span class="actions" *ngIf="user.role.includes('ProjectManager')">Akcje</span>
+          <span class="actions"
+            *ngIf="user.role.includes('ProjectManager') || user.role.includes('Administrator')">Akcje</span>
         </div>
         <div class="single-project" *ngFor="let project of projects | filter: searchedProject; let i = index">
           <div class="color-label" [ngStyle]="{'background-color': project.colorLabel}"></div>
           <p>{{project.name}}</p>
           <p>{{project.description}}</p>
-          <div class="buttons" *ngIf="user.role.includes('ProjectManager')">
+          <div class="buttons" *ngIf="user.role.includes('ProjectManager') || user.role.includes('Administrator')">
             <button class="edit-project" routerLink="edit/{{project.id}}"><i class="fas fa-cog"></i></button>
             <button class="delete-project" mat-raised-button (click)="openDialog(project.name, project.id)"><i
                 class="fas fa-minus-circle"></i></button>
@@ -27,5 +28,6 @@
       </div>
     </div>
   </mat-card>
-  <button routerLink="add" class="project-add" *ngIf="user.role.includes('ProjectManager')">Dodaj projekt</button>
+  <button routerLink="add" class="project-add"
+    *ngIf="user.role.includes('ProjectManager') || user.role.includes('Administrator')">Dodaj projekt</button>
 </div>

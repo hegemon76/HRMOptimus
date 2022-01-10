@@ -32,8 +32,6 @@ import { DateRangeIncorrectDialog } from './vacation.component';
     FormsModule,
     ReactiveFormsModule,
     MatDatepickerModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
     MatSelectModule,
     MatProgressSpinnerModule,
     MatAutocompleteModule,

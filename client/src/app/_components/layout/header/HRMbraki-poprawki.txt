@@ -1,0 +1,59 @@
+Frontend:
+
+### GLOBALNE ###
+- responsywność
+- kolorki
+- walidacja formularzy
+- komunikaty
+- dodać odpowiednie bloki w przypadku braku zawartości
+- zmienić locale dla materiala
+- blokowanie zasobów dla nieuprawnionych użytkowników
+
+### PANEL LOGOWANIA ###
+- ujednolicić wygląd do reszty aplikacji
+
+### DASHBOARD ###
+- zamienić "Szybki kontakt" na "Powiadomienia urlopowe"
+- dodać kartę z kontaktem do userów z rolą "Administrator" jako "Wsparcie techniczne"
+
+### LISTA PRACOWNIKÓW ###
+- dodać opcję edycji samego siebie w przypadku braku uprawnień administratorskich
+
+### DODAWANIE PRACOWNIKA ###
+- wyłączyć przycisk "-" w przypadku jednego formularza
+
+### EDYCJA PRACOWNIKA ###
+- podpięcie formularza pod endpoint ze zmianą hasła
+
+### DODAWANIE PROJEKTU ###
+- wyłączyć przycisk "-" w przypadku jednego formularza
+
+### SZCZEGÓŁY PROJEKTU ###
+- dodać widok
+
+### CZAS PRACY (MIESIĄC) ###
+- ujednolicić wygląd do reszty aplikacji
+- dodać funkcjonalność umożliwiającą pracownikowi podgląd przepracowanych godzin w danym miesiącu
+
+### CZAS PRACY (DZIEŃ)
+- ujednolicić wygląd do reszty aplikacji
+- zaimplementować logikę (uniemożliwić dodawanie wpisów jeżeli godziny się pokrywają itp)
+
+### URLOPY ###
+- uniemożliwić pracownikowi deklarowanie urlopu wstecz
+- wyszarzyć dni z poprzedniego/następnego miesiąca
+
+##############################
+
+Backend:
+
+### ACCOUNT ###
+- dodać endpoint ze zmianą maila
+- dodać endpoint ze zmianą hasła
+- POST /api/register powinien wysyłać hasło na odpowiedniego maila
+
+### WORKTIME ###
+- GET /api/workrecord/day oraz GET /api/workrecord/month zwracają rekordy wszystkich pracowników (powinno być zwracać indywidualne rekordy pracownika)
+
+### INNE ###
+- endpoint z powiadomieniami urlopowymi
