@@ -37,8 +37,8 @@
   </mat-card>
   <mat-card class="card-4">
     <h6>Twoje projekty</h6>
-    <div class="projects-list" *ngFor="let project of projects">
-      <div class="single-project">
+    <div class="projects-list">
+      <div class="single-project" *ngFor="let project of projects">
         <div class="label" [ngStyle]="{backgroundColor: project.colorLabel}"></div>
         <div class="name"><span>{{project.name}}</span></div>
       </div>

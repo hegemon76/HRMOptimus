@@ -165,14 +165,15 @@ export class DashboardComponent implements OnInit {
       });
       res.items.map(x => {
         this.employeesService.getEmployee(x.id).subscribe(r => {
-          console.log(r.roles);
+          console.log(r);
+
           if (r.roles.includes('Administrator')) {
             resAdmins.push(r);
+            console.log(resAdmins);
           }
         });
       });
       this.adminsToDisplay = resAdmins;
-      console.log(this.adminsToDisplay);
     });
   }
   setLimitAndLeft() {

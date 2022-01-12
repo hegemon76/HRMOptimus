@@ -64,7 +64,7 @@
               <span>od {{vac.dateFrom | date:"dd-MM-YYYY"}} </span>
               <span>do {{vac.dateTo | date:"dd-MM-YYYY"}}</span>
             </div>
-            <div class="actions" *ngIf="user.role.includes('HumanResources')">
+            <div class="actions" *ngIf="user.role.includes('HumanResources') || user.role.includes('Administrator')">
               <button (click)="approveVacation(vac.id)"><img src="/assets/images/check-square-solid.svg"
                   alt=""></button>
               <button (click)="rejectVacation(vac.id)"><img src="/assets/images/minus-square-solid.svg" alt=""></button>
@@ -108,4 +108,5 @@
       <p class="llabel l4">Bezpłatny</p>
     </div>
   </mat-card>
+  <button (click)="checkIfPastDate()">DATE</button>
 </div>

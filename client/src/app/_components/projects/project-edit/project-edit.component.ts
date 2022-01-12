@@ -96,8 +96,6 @@ export class ProjectEditComponent implements OnInit {
         this.form.getRawValue(),
         this.route.snapshot.paramMap.get('id')
       )
-      .subscribe(res => {
-        console.log(res);
-      });
+      .subscribe(res => console.log(res));
   }
 }

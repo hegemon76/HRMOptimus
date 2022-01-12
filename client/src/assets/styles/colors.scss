@@ -19,6 +19,7 @@
   --input-text: initial;
   --even: #fff;
   --odd: #f0f0f0;
+  --button-filter: none;
 }
 [data-theme="dark"] {
   --main: #12191d;
@@ -41,4 +42,5 @@
   --input-text: #fff;
   --even: #12191d;
   --odd: #1b2226;
+  --button-filter: invert(1);
 }

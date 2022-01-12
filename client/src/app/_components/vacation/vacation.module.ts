@@ -15,13 +15,15 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DateUnavailableDialog } from './vacation.component';
 import { DatesOverflowedDialog } from './vacation.component';
 import { DateRangeIncorrectDialog } from './vacation.component';
+import { DatePastDialog } from './vacation.component';
 
 @NgModule({
   declarations: [
     VacationComponent,
     DateUnavailableDialog,
     DatesOverflowedDialog,
-    DateRangeIncorrectDialog
+    DateRangeIncorrectDialog,
+    DatePastDialog
   ],
   imports: [
     CommonModule,
