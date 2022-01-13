@@ -91,6 +91,26 @@ body {
   }
 }
 
+mat-sidenav-content {
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--main);
+  }
+}
+mat-chip-list {
+  ::ng-deep {
+    mat-icon {
+      font-family: "Poppins", sans-serif !important;
+    }
+  }
+}
+mat-chip {
+  mat-icon {
+    font-family: "Poppins", sans-serif !important;
+  }
+}
 mat-form-field {
   width: 100%;
 

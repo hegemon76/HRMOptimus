@@ -55,7 +55,7 @@ export class EmployeeAddSingleFormComponent implements OnInit {
       lastName: ['', Validators.required],
       gender: ['', Validators.required],
       birthDate: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       phoneNumber: ['', Validators.required],
       street: ['', Validators.required],
       buildingNumber: ['', Validators.required],
@@ -66,7 +66,16 @@ export class EmployeeAddSingleFormComponent implements OnInit {
       contractName: ['', Validators.required],
       contractType: ['', Validators.required],
       leaveDays: ['', Validators.required],
-      password: ['', Validators.required],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern(
+            '^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\\D*\\d)[A-Za-z\\d!$%@#£€*?&]{8,}$'
+          )
+        ]
+      ],
       roles: [this.roles]
     });
   }

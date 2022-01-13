@@ -116,8 +116,7 @@ export class EmployeeEditComponent implements OnInit {
           houseNumber: [
             this.employee.address.houseNumber != 'string'
               ? this.employee.address.houseNumber
-              : '',
-            Validators.required
+              : ''
           ],
           zipCode: [this.employee.address.zipCode, Validators.required],
           city: [this.employee.address.city, Validators.required],

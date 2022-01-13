@@ -16,10 +16,10 @@
         {{option.lastName}}</mat-option>
     </mat-autocomplete>
     <div class="options-wrapper" [ngStyle]="!editedEmployeeEqualsUser && {'grid-template-columns': 'repeat(3,1fr)'}">
-      <button (click)="setFormToDisplay(1)">Edytuj dane osobowe</button>
-      <button (click)="setFormToDisplay(2)">Edytuj dane kontraktowe</button>
-      <button (click)="setFormToDisplay(3)" *ngIf="editedEmployeeEqualsUser">Zmień hasło</button>
-      <button (click)="setFormToDisplay(4)">Ustaw uprawnienia</button>
+      <button (click)="setFormToDisplay(1)">Dane osobowe</button>
+      <button (click)="setFormToDisplay(2)">Dane kontraktowe</button>
+      <button (click)="setFormToDisplay(3)" *ngIf="editedEmployeeEqualsUser">Dane logowania</button>
+      <button (click)="setFormToDisplay(4)">Uprawnienia</button>
     </div>
   </mat-card>
   <mat-card class="single-employyee-edit" *ngIf="formToDisplay != null">
