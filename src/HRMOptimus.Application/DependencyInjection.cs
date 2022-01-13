@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
+using HRMOptimus.Application.Account.Command.ChangeEmail;
+using HRMOptimus.Application.Account.Command.ConfirmEmail;
 using HRMOptimus.Application.Account.Command.Registration;
 using HRMOptimus.Application.Common.Interfaces;
 using HRMOptimus.Application.Common.Middleware;
@@ -36,6 +38,7 @@ namespace HRMOptimus.Application
             {
                 configuration.GetSection("TokenKey").Bind(config);
             });
+            services.AddScoped<EmailService>();
 
             services.AddScoped<IValidator<RegistrationVm>, RegistrationVmValidator>();
             services.AddScoped<IValidator<UpdateProjectVm>, UpdateProjectVmValidator>();
@@ -48,6 +51,8 @@ namespace HRMOptimus.Application
             services.AddScoped<IValidator<RemoveProjectCommand>, RemoveProjectCommandValidator>();
             services.AddScoped<IValidator<ChangeStatusLeaveRegisterVm>, ChangeStatusLeaveRegisterVmValidator>();
             services.AddScoped<IValidator<EditContractVm>, EditContractValidator>();
+            services.AddScoped<IValidator<ChangeEmailVm>, ChangeEmailValidator>();
+            services.AddScoped<IValidator<ConfirmEmailCommand>, ConfirmEmailValidator>();
 
             return services;
         }
