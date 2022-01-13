@@ -25,7 +25,8 @@ namespace HRMOptimus.Persistance
             }
             ).AddRoles<IdentityRole>()
             .AddUserManager<UserManager<ApplicationUser>>()
-            .AddEntityFrameworkStores<HRMOptimusDbContext>();
+            .AddEntityFrameworkStores<HRMOptimusDbContext>()
+            .AddDefaultTokenProviders();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                .AddJwtBearer(options =>

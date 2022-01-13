@@ -7,5 +7,7 @@ namespace HRMOptimus.Domain.Entities
     {
         public int EmployeeId { get; set; }
         public Employee Employee { get; set; }
+        public string NewMail { get; set; }
+        public string NewPassword { get; set; }
     }
 }
