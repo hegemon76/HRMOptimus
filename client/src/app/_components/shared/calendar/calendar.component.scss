@@ -1,6 +1,13 @@
+.calendar {
+  margin: 24px 0;
+  @media (min-width: 1320px) {
+    margin: 0;
+  }
+}
 .calendar-days {
   width: 140px;
-  height: 80px;
+  //height: 80px;
+  height: 45px;
   background: rgb(238, 237, 237);
   padding: 3px;
   margin: 3px;
@@ -11,17 +18,21 @@
 
   &.previous-month,
   &.next-month {
-    color: grey;
+    opacity: 0.2;
   }
 
   &.weekend {
     background-color: #b5d3e7 !important;
     .day {
-      line-height: 80px;
+      // line-height: 80px;
+      line-height: 45px;
     }
     &:after {
       content: none !important;
     }
+  }
+  &.holiday {
+    background-color: #f6bdc0 !important;
   }
 
   &.weekend:hover {
@@ -32,7 +43,21 @@
     font-weight: bold;
     font-size: 14px;
     vertical-align: center;
-    line-height: 80px;
+    // line-height: 80px;
+    line-height: 45px;
+    color: #000 !important;
+  }
+  @media (min-width: 1320px) {
+    width: calc(100% / 7);
+    height: 80px;
+    .day {
+      line-height: 80px;
+    }
+    &.weekend {
+      .day {
+        line-height: 80px;
+      }
+    }
   }
 }
 
@@ -45,7 +70,7 @@
   cursor: pointer;
   margin-top: 7px;
   &:before {
-    filter: invert(1);
+    filter: var(--button-filter);
   }
 }
 
@@ -97,13 +122,25 @@ b {
     content: "";
     width: 0;
     height: 0;
-    border-bottom: 16px solid #eb346b;
-    border-right: 16px solid #eb346b;
-    border-left: 16px solid transparent;
-    border-top: 16px solid transparent;
+    // border-bottom: 16px solid #eb346b;
+    // border-right: 16px solid #eb346b;
+    // border-left: 16px solid transparent;
+    // border-top: 16px solid transparent;
+
+    border-bottom: 8px solid #eb346b;
+    border-right: 8px solid #eb346b;
+    border-left: 8px solid transparent;
+    border-top: 8px solid transparent;
+
     position: absolute;
     bottom: 0;
     right: 0;
+    @media (min-width: 1320px) {
+      border-bottom: 16px solid #eb346b;
+      border-right: 16px solid #eb346b;
+      border-left: 16px solid transparent;
+      border-top: 16px solid transparent;
+    }
   }
 }
 [data-leaveDayType="casualleave"] {
@@ -113,13 +150,25 @@ b {
     content: "";
     width: 0;
     height: 0;
-    border-bottom: 16px solid #8934eb;
-    border-right: 16px solid #8934eb;
-    border-left: 16px solid transparent;
-    border-top: 16px solid transparent;
+    // border-bottom: 16px solid #8934eb;
+    // border-right: 16px solid #8934eb;
+    // border-left: 16px solid transparent;
+    // border-top: 16px solid transparent;
+
+    border-bottom: 8px solid #8934eb;
+    border-right: 8px solid #8934eb;
+    border-left: 8px solid transparent;
+    border-top: 8px solid transparent;
+
     position: absolute;
     bottom: 0;
     right: 0;
+    @media (min-width: 1320px) {
+      border-bottom: 16px solid #8934eb;
+      border-right: 16px solid #8934eb;
+      border-left: 16px solid transparent;
+      border-top: 16px solid transparent;
+    }
   }
 }
 [data-leaveDayType="caringleave"] {
@@ -129,13 +178,25 @@ b {
     content: "";
     width: 0;
     height: 0;
-    border-bottom: 16px solid #eba834;
-    border-right: 16px solid #eba834;
-    border-left: 16px solid transparent;
-    border-top: 16px solid transparent;
+    // border-bottom: 16px solid #eba834;
+    // border-right: 16px solid #eba834;
+    // border-left: 16px solid transparent;
+    // border-top: 16px solid transparent;
+
+    border-bottom: 8px solid #eba834;
+    border-right: 8px solid #eba834;
+    border-left: 8px solid transparent;
+    border-top: 8px solid transparent;
+
     position: absolute;
     bottom: 0;
     right: 0;
+    @media (min-width: 1320px) {
+      border-bottom: 16px solid #eba834;
+      border-right: 16px solid #eba834;
+      border-left: 16px solid transparent;
+      border-top: 16px solid transparent;
+    }
   }
 }
 [data-leaveDayType="unpaidleave"] {
@@ -145,12 +206,24 @@ b {
     content: "";
     width: 0;
     height: 0;
-    border-bottom: 16px solid #34e5eb;
-    border-right: 16px solid #34e5eb;
-    border-left: 16px solid transparent;
-    border-top: 16px solid transparent;
+    // border-bottom: 16px solid #34e5eb;
+    // border-right: 16px solid #34e5eb;
+    // border-left: 16px solid transparent;
+    // border-top: 16px solid transparent;
+
+    border-bottom: 8px solid #34e5eb;
+    border-right: 8px solid #34e5eb;
+    border-left: 8px solid transparent;
+    border-top: 8px solid transparent;
+
     position: absolute;
     bottom: 0;
     right: 0;
+    @media (min-width: 1320px) {
+      border-bottom: 16px solid #34e5eb;
+      border-right: 16px solid #34e5eb;
+      border-left: 16px solid transparent;
+      border-top: 16px solid transparent;
+    }
   }
 }

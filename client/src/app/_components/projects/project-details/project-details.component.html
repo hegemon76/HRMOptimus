@@ -1,1 +1,35 @@
-<p>project-details works!</p>
+    <mat-card class="project-data" *ngIf="isProjectLoaded">
+      <div class="search-wrapper">
+        <mat-form-field appearance="fill">
+          <mat-label>Wybierz projekt...</mat-label>
+          <input type="select" placeholder="Wybierz project..." aria-label="Number" matInput [matAutocomplete]="auto"
+            [formControl]="myControl">
+        </mat-form-field>
+        <button (click)="changeProject()">Zmień</button>
+      </div>
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let option of filteredOptions  | async" [value]="option"> {{option.name}}</mat-option>
+      </mat-autocomplete>
+    </mat-card>
+    <mat-card class="project-data" *ngIf="isProjectLoaded">
+      <div class="project-wrapper">
+        <div class="project-label" [ngStyle]="{'background-color' : project.colorLabel }"></div>
+        <mat-card-title>{{project.name}}</mat-card-title>
+        <h6>Opis</h6>
+        <p class="project-description">{{project.description}}</p>
+        <div class="project-details">
+          <div class="single">
+            <h6>Limit godzinowy</h6>
+            <p class="project-hours-budget">{{project.hoursBudget}}</p>
+          </div>
+          <div class="single">
+            <h6>Data rozpoczęcia</h6>
+            <p class="project-date-from">{{project.dateFrom | date: 'dd-MM-yyyy'}}r.</p>
+          </div>
+          <div class="single">
+            <h6>Data zakończenia</h6>
+            <p class="project-date-to">{{project.dateTo | date: 'dd-MM-yyyy'}}r.</p>
+          </div>
+        </div>
+      </div>
+    </mat-card>

@@ -1,14 +1,13 @@
  <mat-card class="single-project-add">
    <form [formGroup]="form" action="" (change)="checkValues()">
      <div class="wrapper">
-       <h6>Projekt:</h6>
        <input type="color" formControlName="colorLabel">
      </div>
      <mat-form-field appearance="fill">
        <mat-label>Nazwa</mat-label>
        <input matInput formControlName="name">
      </mat-form-field>
-     <mat-form-field appearance="fill">
+     <mat-form-field appearance="fill" class="description">
        <mat-label>Opis</mat-label>
        <input matInput formControlName="description">
      </mat-form-field>
@@ -24,11 +23,11 @@
        <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
        <mat-datepicker #pickerEnd></mat-datepicker>
      </mat-form-field>
-     <mat-form-field appearance="fill">
-       <mat-label>Budżet</mat-label>
+     <mat-form-field appearance="fill" class="budget">
+       <mat-label>Limit godzinowy</mat-label>
        <input matInput formControlName="hoursBudget">
      </mat-form-field>
-     <mat-form-field appearance="fill" class="employees">
+     <!-- <mat-form-field appearance="fill" class="employees">
        <mat-label>Użytkownicy</mat-label>
        <mat-chip-list #chipList aria-label="Employees selection">
          <mat-chip *ngFor="let employee of employees" (removed)="remove2(employee)"> {{employee}} <button matChipRemove>
@@ -42,7 +41,7 @@
        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
          <mat-option *ngFor="let employee of filteredEmployees | async" [value]="employee"> {{employee}} </mat-option>
        </mat-autocomplete>
-     </mat-form-field>
+     </mat-form-field> -->
    </form>
    <button (click)="remove()"><img src="/assets/images/minus-square-solid.svg" alt=""></button>
  </mat-card>

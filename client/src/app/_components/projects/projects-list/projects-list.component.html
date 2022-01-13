@@ -1,24 +1,27 @@
 <div class="projects-wrapper">
   <mat-card>
-    <div class="search-wrapper">
+    <div class="search-wrapper" *ngIf="!isProjectListEmpty">
       <mat-form-field appearance="fill">
         <mat-label>Szukaj projektu</mat-label>
         <input matInput placeholder="Szukaj projektu" name="searchText" [(ngModel)]="searchedProject">
       </mat-form-field>
+    </div>
+    <div class="empty-content" *ngIf="isProjectListEmpty">
+      <h6>Brak wartości do wyświetlenia</h6>
     </div>
     <div class="list-wrapper">
       <div class="projects-list" *ngIf="(projects | filter: searchedProject).length > 0">
         <div class="head">
           <span>Etykieta</span>
           <span class="name">Nazwa</span>
-          <span class="position">Opis</span>
           <span class="actions"
             *ngIf="user.role.includes('ProjectManager') || user.role.includes('Administrator')">Akcje</span>
         </div>
         <div class="single-project" *ngFor="let project of projects | filter: searchedProject; let i = index">
           <div class="color-label" [ngStyle]="{'background-color': project.colorLabel}"></div>
-          <p>{{project.name}}</p>
-          <p>{{project.description}}</p>
+          <a class="project-name" routerLink="details/{{project.id}}">
+            <p>{{project.name}}</p>
+          </a>
           <div class="buttons" *ngIf="user.role.includes('ProjectManager') || user.role.includes('Administrator')">
             <button class="edit-project" routerLink="edit/{{project.id}}"><i class="fas fa-cog"></i></button>
             <button class="delete-project" mat-raised-button (click)="openDialog(project.name, project.id)"><i

@@ -28,6 +28,9 @@ export interface DialogData {}
 })
 export class VacationComponent implements OnInit {
   @ViewChild(CalendarComponent) calendar: CalendarComponent;
+  isDeclaredListEmpty = true;
+  isApprovedListEmpty = true;
+  isRejectedListEmpty = true;
   user: UserVm;
   form: FormGroup;
   allEmployees: EmployeeVm[];
@@ -66,6 +69,7 @@ export class VacationComponent implements OnInit {
   value2;
   isEmployeeLoaded = false;
   areEmployeesLoaded = false;
+  holidays;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -160,10 +164,13 @@ export class VacationComponent implements OnInit {
           var leaveStatus, leaveRegisterType;
           if (d.isApproved == 2) {
             leaveStatus = 'pending';
+            this.isDeclaredListEmpty = false;
           } else if (d.isApproved == 1) {
             leaveStatus = 'rejected';
+            this.isRejectedListEmpty = false;
           } else if (d.isApproved == 0) {
             leaveStatus = 'approved';
+            this.isApprovedListEmpty = false;
           }
           if (d.leaveRegisterType === 0) {
             leaveRegisterType = 'sickleave';
@@ -207,9 +214,9 @@ export class VacationComponent implements OnInit {
       this.form.valid &&
       !this.checkIfAlreadyDeclared() &&
       !this.checkIfOverflowed() &&
-      !this.checkIfRangeIsCorrect()
+      !this.checkIfRangeIsCorrect() &&
+      !this.checkIfPastDate()
     ) {
-      console.log('ok');
       var vacationFormatted = {
         leaveRegisterType: this.form.getRawValue().leaveRegisterType,
         leaveStart:
@@ -234,6 +241,8 @@ export class VacationComponent implements OnInit {
       this.openDatesOverflowedDialog();
     } else if (this.checkIfRangeIsCorrect()) {
       this.openIncorrectRangeDialog();
+    } else if (this.checkIfPastDate()) {
+      this.openPastDialog();
     }
   }
   checkIfAlreadyDeclared(): boolean {
@@ -245,29 +254,31 @@ export class VacationComponent implements OnInit {
       'T00:00:00';
     let check = false;
     this.employeeVacation.map(v => {
-      // if (
-      //   (start < v.dateFrom && end <= v.dateTo && end >= v.dateFrom) ||
-      //   (start >= v.dateFrom && end <= v.dateTo) ||
-      //   (start >= v.dateFrom && end > v.dateTo && start <= v.dateTo) ||
-      //   (start <= v.dateFrom && end >= v.dateTo)
-      // )
-      if (start < v.dateFrom && end <= v.dateTo && end >= v.dateFrom) {
-        console.log(1);
-        check = true;
-      } else if (start >= v.dateFrom && end <= v.dateTo) {
-        console.log(2);
-        check = true;
-      } else if (start >= v.dateFrom && end > v.dateTo && start <= v.dateTo) {
-        console.log(3);
-        check = true;
-      } else if (start <= v.dateFrom && end >= v.dateTo) {
-        console.log(4);
-        console.log(this.form.getRawValue().leaveStart);
+      if (
+        (start < v.dateFrom && end <= v.dateTo && end >= v.dateFrom) ||
+        (start >= v.dateFrom && end <= v.dateTo) ||
+        (start >= v.dateFrom && end > v.dateTo && start <= v.dateTo) ||
+        (start <= v.dateFrom && end >= v.dateTo)
+      ) {
         check = true;
       } else {
         check = false;
       }
     });
+    return check;
+  }
+
+  checkIfPastDate(): boolean {
+    const start =
+      formatDate(this.form.getRawValue().leaveStart, 'YYYY-MM-dd', 'en-US') +
+      'T00:00:00';
+    const today = formatDate(new Date(), 'YYYY-MM-dd', 'en-US') + 'T00:00:00';
+    let check = false;
+    if (start <= today) {
+      check = true;
+    } else {
+      check = false;
+    }
     return check;
   }
 
@@ -339,6 +350,9 @@ export class VacationComponent implements OnInit {
   openIncorrectRangeDialog() {
     const dialogRef = this.dialog.open(DateRangeIncorrectDialog);
   }
+  openPastDialog() {
+    const dialogRef = this.dialog.open(DatePastDialog);
+  }
 }
 
 @Component({
@@ -373,6 +387,18 @@ export class DatesOverflowedDialog {
 export class DateRangeIncorrectDialog {
   constructor(
     public dialogRef: MatDialogRef<DateRangeIncorrectDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ) {}
+}
+
+@Component({
+  selector: 'date-past-dialog',
+  templateUrl: 'date-past-dialog.html',
+  styleUrls: ['./vacation.component.scss']
+})
+export class DatePastDialog {
+  constructor(
+    public dialogRef: MatDialogRef<DatePastDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {}
 }

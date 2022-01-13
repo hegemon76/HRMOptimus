@@ -1,16 +1,18 @@
-<div class="flex-container flex-center">
-  <h4>
-    <button (click)="previousmonth()"><i class="fas fa-angle-left next-btn"></i></button>
-    <b>{{ date.format("MMMM") }} {{ date.format("YYYY") }}</b>
-    <button (click)="nextmonth()"><i class="fas fa-angle-right next-btn"></i></button>
-  </h4>
-</div>
-<div *ngFor="let calendarItem of calendar; let i = index">
+<div class="calendar">
   <div class="flex-container flex-center">
-    <div id="{{ day.id }}" class="calendar-days" [class.weekend]="day.isWeekend" [ngClass]="day.className"
-      *ngFor="let day of calendarItem" (click)="setLeaveDay(day.id)" [attr.data-leaveDay]="day.leaveDay"
-      [attr.data-leaveDayType]="day.leaveDayType">
-      <span class="day">{{ day.day }}</span>
+    <h4>
+      <button (click)="previousmonth()"><i class="fas fa-angle-left next-btn"></i></button>
+      <b>{{ date.format("MMMM") }} {{ date.format("YYYY") }}</b>
+      <button (click)="nextmonth()"><i class="fas fa-angle-right next-btn"></i></button>
+    </h4>
+  </div>
+  <div *ngFor="let calendarItem of calendar; let i = index">
+    <div class="flex-container flex-center">
+      <div id="{{ day.id }}" class="calendar-days" [class.weekend]="day.isWeekend" [class.holiday]="day.isHoliday"
+        [ngClass]="day.className" *ngFor="let day of calendarItem" (click)="setLeaveDay(day.id)"
+        [attr.data-leaveDay]="day.leaveDay" [attr.data-leaveDayType]="day.leaveDayType">
+        <span class="day">{{ day.day }}</span>
+      </div>
     </div>
   </div>
 </div>

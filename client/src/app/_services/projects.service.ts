@@ -29,10 +29,10 @@ export class ProjectsService {
   }
   updateProject(data, id): Observable<any> {
     console.log(data);
-    console.log(id);
 
     return this.http.put(this.updateProjectUrl, {
       id: id,
+      colorLabel: data.colorLabel,
       name: data.name,
       description: data.description,
       dateFrom: data.dateFrom,
