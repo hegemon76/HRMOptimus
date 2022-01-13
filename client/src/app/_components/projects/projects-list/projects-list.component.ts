@@ -22,6 +22,7 @@ export class ProjectsListComponent implements OnInit {
   projects: any;
   searchedProject: string;
   user: UserVm;
+  isProjectListEmpty = true;
 
   constructor(
     private projectsService: ProjectsService,
@@ -38,7 +39,9 @@ export class ProjectsListComponent implements OnInit {
   getProjects() {
     this.projectsService.getProjects().subscribe(res => {
       this.projects = res;
-      console.log(this.projects);
+      if (this.projects.length > 0) {
+        this.isProjectListEmpty = false;
+      }
     });
   }
 
