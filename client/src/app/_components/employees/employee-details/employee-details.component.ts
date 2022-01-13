@@ -42,7 +42,6 @@ export class EmployeeDetailsComponent implements OnInit {
         this.employeeId = this.route.snapshot.paramMap.get('id');
         this.employee = res;
         this.isEmployeeLoaded = true;
-        console.log(this.employee);
       });
 
     this.employessService.getEmployees().subscribe(res => {

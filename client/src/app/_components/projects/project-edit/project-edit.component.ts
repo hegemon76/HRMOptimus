@@ -97,7 +97,7 @@ export class ProjectEditComponent implements OnInit {
         this.route.snapshot.paramMap.get('id')
       )
       .subscribe(res => {
-        console.log(res);
+        this.router.navigate(['/projects']);
       });
   }
 }

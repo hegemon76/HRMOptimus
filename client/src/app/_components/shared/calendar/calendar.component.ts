@@ -1,6 +1,12 @@
+import { formatDate } from '@angular/common';
 import { Component, Injectable, OnInit } from '@angular/core';
 import { Output, Input, EventEmitter } from '@angular/core';
 import * as moment from 'moment';
+import {
+  isHoliday,
+  getHolidaysInYear,
+  getHolidayOnDate
+} from 'poland-public-holidays';
 
 interface CalendarItem {
   id: string;
@@ -20,12 +26,14 @@ interface CalendarItem {
 export class CalendarComponent implements OnInit {
   date = moment().locale('pl');
   calendar: Array<CalendarItem[]> = [];
+  holidays = getHolidaysInYear(new Date().getFullYear());
   @Output() changeMonthEmitter = new EventEmitter();
 
   constructor() {}
 
   ngOnInit(): void {
     this.calendar = this.createCalendar(this.date);
+    console.log(this.holidays);
   }
   createCalendar(month: moment.Moment) {
     const daysInMonth = month.daysInMonth();
@@ -71,12 +79,29 @@ export class CalendarComponent implements OnInit {
   }
   createCalendarItem(data: moment.Moment, className: string) {
     const dayName = data.format('ddd');
+
+    let isHoliday = false;
+
+    const test = formatDate(this.holidays[0].date, 'dd-MM-yyyy', 'en-US');
+    const test2 = formatDate(data.toDate(), 'dd-MM-yyyy', 'en-US');
+
+    this.holidays.map(h => {
+      if (
+        formatDate(h.date, 'dd-MM-yyyy', 'en-US') ==
+        formatDate(data.toDate(), 'dd-MM-yyyy', 'en-US')
+      ) {
+        console.log(data.toDate());
+        isHoliday = true;
+      }
+    });
+
     return {
       id: data.format('DD') + data.format('MM') + data.format('YYYY'),
       day: data.format('D'),
       dayName,
       className,
       isWeekend: dayName === 'ndz' || dayName === 'sob',
+      isHoliday: isHoliday,
       leaveDay: null,
       leaveDayType: null
     };
