@@ -1,8 +1,6 @@
 .project-add-wrapper {
   padding: 24px;
-  .single-employee-add {
-    width: 100%;
-  }
+
   .add-row {
     cursor: pointer;
     width: 200px;
@@ -10,11 +8,12 @@
     margin: 0 0 20px auto;
     display: block;
     border: 0;
-    background-color: var(--main);
+    background-color: var(--buttons);
     color: #fff;
     transform: translateY(-40px);
   }
 }
+
 mat-dialog-actions {
   button {
     margin: 0 0 0 10px;

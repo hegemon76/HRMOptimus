@@ -59,7 +59,7 @@ export class EmployeeAddSingleFormComponent implements OnInit {
       phoneNumber: ['', Validators.required],
       street: ['', Validators.required],
       buildingNumber: ['', Validators.required],
-      houseNumber: ['', Validators.required],
+      houseNumber: [''],
       zipCode: ['', Validators.required],
       city: ['', Validators.required],
       country: ['', Validators.required],

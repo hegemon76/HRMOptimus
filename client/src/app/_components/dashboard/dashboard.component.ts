@@ -19,6 +19,8 @@ import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 })
 export class DashboardComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
+  isChartEmpty = true;
+  isProjectListEmpty = true;
 
   monthTime: string;
   months: string[] = [
@@ -93,7 +95,7 @@ export class DashboardComponent implements OnInit {
   mode: ProgressSpinnerMode = 'determinate';
   value = 100;
   value2;
-  projects: any;
+  projects: any[];
 
   constructor(
     private accountService: AccountService,
@@ -154,24 +156,25 @@ export class DashboardComponent implements OnInit {
       this.monthTime = hours + ':' + minutes + 'h';
     });
     setTimeout(() => {
-      this.chart.update();
+      if (this.chart) {
+        this.chart.update();
+      }
+      const test = this.barChartData.datasets[0].data.some(d => {
+        return d != 0;
+      });
+      if (test) {
+        this.isChartEmpty = false;
+      }
     }, 500);
   }
   getEmployees() {
-    const resAdmins = [];
+    // const resAdmins = [];
     this.employeesService.getEmployees().subscribe(res => {
       this.employees = res.items.sort(function(a, b) {
         return b.id - a.id;
       });
-      res.items.map(x => {
-        this.employeesService.getEmployee(x.id).subscribe(r => {
-          console.log(r);
-
-          if (r.roles.includes('Administrator')) {
-            resAdmins.push(r);
-            console.log(resAdmins);
-          }
-        });
+      const resAdmins = this.employees.filter(f => {
+        return f.roles.includes('Administrator');
       });
       this.adminsToDisplay = resAdmins;
     });
@@ -188,6 +191,9 @@ export class DashboardComponent implements OnInit {
   setProjects() {
     this.projectsService.getProjects().subscribe(res => {
       this.projects = res;
+      if (this.projects.length > 0) {
+        this.isProjectListEmpty = false;
+      }
     });
   }
 }

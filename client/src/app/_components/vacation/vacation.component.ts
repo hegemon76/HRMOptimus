@@ -28,6 +28,9 @@ export interface DialogData {}
 })
 export class VacationComponent implements OnInit {
   @ViewChild(CalendarComponent) calendar: CalendarComponent;
+  isDeclaredListEmpty = true;
+  isApprovedListEmpty = true;
+  isRejectedListEmpty = true;
   user: UserVm;
   form: FormGroup;
   allEmployees: EmployeeVm[];
@@ -66,6 +69,7 @@ export class VacationComponent implements OnInit {
   value2;
   isEmployeeLoaded = false;
   areEmployeesLoaded = false;
+  holidays;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -160,10 +164,13 @@ export class VacationComponent implements OnInit {
           var leaveStatus, leaveRegisterType;
           if (d.isApproved == 2) {
             leaveStatus = 'pending';
+            this.isDeclaredListEmpty = false;
           } else if (d.isApproved == 1) {
             leaveStatus = 'rejected';
+            this.isRejectedListEmpty = false;
           } else if (d.isApproved == 0) {
             leaveStatus = 'approved';
+            this.isApprovedListEmpty = false;
           }
           if (d.leaveRegisterType === 0) {
             leaveRegisterType = 'sickleave';

@@ -93,7 +93,6 @@ export class EmployeeEditComponent implements OnInit {
       .getEmployee(this.route.snapshot.paramMap.get('id'))
       .subscribe(res => {
         this.employee = res;
-        console.log(this.employee);
 
         this.employeeId = this.route.snapshot.paramMap.get('id');
         this.roles = this.employee.roles;
@@ -224,8 +223,6 @@ export class EmployeeEditComponent implements OnInit {
       .subscribe();
   }
   editEmployeeContract() {
-    console.log(this.formContract.getRawValue());
-
     if (
       this.formContract.getRawValue().leaveDays >=
       this.employee.contract.leaveDays - this.employee.leaveDaysLeft

@@ -36,5 +36,6 @@
       </div>
     </div>
   </mat-card>
-  <button routerLink="add" class="employee-add" *ngIf="user.role.includes('HumanResources')">Dodaj pracownika</button>
+  <button routerLink="add" class="employee-add"
+    *ngIf="user.role.includes('HumanResources') || user.role.includes('Administrator')">Dodaj pracownika</button>
 </div>

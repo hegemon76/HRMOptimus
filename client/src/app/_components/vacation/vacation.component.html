@@ -40,6 +40,12 @@
       <button type="submit">Dodaj urlop</button>
     </form>
     <app-calendar (changeMonthEmitter)="changeMonth()"></app-calendar>
+    <div class="legend">
+      <p class="llabel l1">Chorobowy</p>
+      <p class="llabel l2">Na żądanie</p>
+      <p class="llabel l3">Opiekuńczy</p>
+      <p class="llabel l4">Bezpłatny</p>
+    </div>
     <div class="wrapper">
       <div class="limits">
         <h6>Ilość dni urlopowych</h6>
@@ -57,56 +63,67 @@
         </div>
       </div>
       <div class="pending">
-        <h6>Zadeklarowane urlopy</h6>
+        <h6 class="head-h">Zadeklarowane urlopy</h6>
         <div *ngFor="let vac of employeeVacation">
-          <div class="single-vacation" *ngIf="vac.isApproved == 2">
-            <div class="dates">
-              <span>od {{vac.dateFrom | date:"dd-MM-YYYY"}} </span>
-              <span>do {{vac.dateTo | date:"dd-MM-YYYY"}}</span>
-            </div>
-            <div class="actions" *ngIf="user.role.includes('HumanResources') || user.role.includes('Administrator')">
-              <button (click)="approveVacation(vac.id)"><img src="/assets/images/check-square-solid.svg"
-                  alt=""></button>
-              <button (click)="rejectVacation(vac.id)"><img src="/assets/images/minus-square-solid.svg" alt=""></button>
+          <div *ngIf="!isDeclaredListEmpty">
+            <div class="single-vacation" *ngIf="vac.isApproved == 2">
+              <div class="dates">
+                <span>od {{vac.dateFrom | date:"dd-MM-YYYY"}} </span>
+                <span>do {{vac.dateTo | date:"dd-MM-YYYY"}}</span>
+              </div>
+              <div class="actions" *ngIf="user.role.includes('HumanResources') || user.role.includes('Administrator')">
+                <button (click)="approveVacation(vac.id)"><img src="/assets/images/check-square-solid.svg"
+                    alt=""></button>
+                <button (click)="rejectVacation(vac.id)"><img src="/assets/images/minus-square-solid.svg"
+                    alt=""></button>
+              </div>
             </div>
           </div>
+        </div>
+        <div class="empty-content" *ngIf="isDeclaredListEmpty">
+          <h6>Brak wartości do wyświetlenia</h6>
         </div>
       </div>
       <div class="accepted">
-        <h6>Zaakceptowane urlopy</h6>
-        <div *ngFor="let vac of employeeVacation">
-          <div class="single-vacation" *ngIf="vac.isApproved == 0">
-            <div class="dates">
-              <span>od {{vac.dateFrom | date:"dd-MM-YYYY"}} </span>
-              <span>do {{vac.dateTo | date:"dd-MM-YYYY"}}</span>
-            </div>
-            <div class="actions" *ngIf="user.role.includes('HumanResources')">
-              <button (click)="rejectVacation(vac.id)"><img src="/assets/images/minus-square-solid.svg" alt=""></button>
+        <h6 class="head-h">Zaakceptowane urlopy</h6>
+        <div *ngIf="!isApprovedListEmpty">
+          <div *ngFor="let vac of employeeVacation">
+            <div class="single-vacation" *ngIf="vac.isApproved == 0">
+              <div class="dates">
+                <span>od {{vac.dateFrom | date:"dd-MM-YYYY"}} </span>
+                <span>do {{vac.dateTo | date:"dd-MM-YYYY"}}</span>
+              </div>
+              <div class="actions" *ngIf="user.role.includes('HumanResources') || user.role.includes('Administrator')">
+                <button (click)="rejectVacation(vac.id)"><img src="/assets/images/minus-square-solid.svg"
+                    alt=""></button>
+              </div>
             </div>
           </div>
+        </div>
+        <div class="empty-content" *ngIf="isApprovedListEmpty">
+          <h6>Brak wartości do wyświetlenia</h6>
         </div>
       </div>
       <div class="rejected">
-        <h6>Odrzucone urlopy</h6>
-        <div *ngFor="let vac of employeeVacation">
-          <div class="single-vacation" *ngIf="vac.isApproved == 1">
-            <div class="dates">
-              <span>od {{vac.dateFrom | date:"dd-MM-YYYY"}} </span>
-              <span>do {{vac.dateTo | date:"dd-MM-YYYY"}}</span>
-            </div>
-            <div class="actions" *ngIf="user.role.includes('HumanResources')">
-              <button (click)="deleteVacation(vac.id)"><img src="/assets/images/minus-square-solid.svg" alt=""></button>
+        <h6 class="head-h">Odrzucone urlopy</h6>
+        <div *ngIf="!isRejectedListEmpty">
+          <div *ngFor="let vac of employeeVacation">
+            <div class="single-vacation" *ngIf="vac.isApproved == 1">
+              <div class="dates">
+                <span>od {{vac.dateFrom | date:"dd-MM-YYYY"}} </span>
+                <span>do {{vac.dateTo | date:"dd-MM-YYYY"}}</span>
+              </div>
+              <div class="actions" *ngIf="user.role.includes('HumanResources') || user.role.includes('Administrator')">
+                <button (click)="deleteVacation(vac.id)"><img src="/assets/images/minus-square-solid.svg"
+                    alt=""></button>
+              </div>
             </div>
           </div>
         </div>
+        <div class="empty-content" *ngIf="isRejectedListEmpty">
+          <h6>Brak wartości do wyświetlenia</h6>
+        </div>
       </div>
     </div>
-    <div class="legend">
-      <p class="llabel l1">Chorobowy</p>
-      <p class="llabel l2">Na żądanie</p>
-      <p class="llabel l3">Opiekuńczy</p>
-      <p class="llabel l4">Bezpłatny</p>
-    </div>
   </mat-card>
-  <button (click)="checkIfPastDate()">DATE</button>
 </div>

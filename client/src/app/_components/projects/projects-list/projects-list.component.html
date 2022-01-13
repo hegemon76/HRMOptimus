@@ -1,10 +1,13 @@
 <div class="projects-wrapper">
   <mat-card>
-    <div class="search-wrapper">
+    <div class="search-wrapper" *ngIf="!isProjectListEmpty">
       <mat-form-field appearance="fill">
         <mat-label>Szukaj projektu</mat-label>
         <input matInput placeholder="Szukaj projektu" name="searchText" [(ngModel)]="searchedProject">
       </mat-form-field>
+    </div>
+    <div class="empty-content" *ngIf="isProjectListEmpty">
+      <h6>Brak wartości do wyświetlenia</h6>
     </div>
     <div class="list-wrapper">
       <div class="projects-list" *ngIf="(projects | filter: searchedProject).length > 0">
