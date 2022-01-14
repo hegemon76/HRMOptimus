@@ -2,6 +2,8 @@
 using FluentValidation.AspNetCore;
 using HRMOptimus.Application.Account.Command.ChangeEmail;
 using HRMOptimus.Application.Account.Command.ConfirmEmail;
+using HRMOptimus.Application.Account.Command.Password.ChangePassword;
+using HRMOptimus.Application.Account.Command.Password.ConfirmPassword;
 using HRMOptimus.Application.Account.Command.Registration;
 using HRMOptimus.Application.Common.Interfaces;
 using HRMOptimus.Application.Common.Middleware;
@@ -53,6 +55,8 @@ namespace HRMOptimus.Application
             services.AddScoped<IValidator<EditContractVm>, EditContractValidator>();
             services.AddScoped<IValidator<ChangeEmailVm>, ChangeEmailValidator>();
             services.AddScoped<IValidator<ConfirmEmailCommand>, ConfirmEmailValidator>();
+            services.AddScoped<IValidator<ChangePasswordVm>, ChangePasswordValidator>();
+            services.AddScoped<IValidator<ConfirmPasswordCommand>, ConfirmPasswordValidator>();
 
             return services;
         }

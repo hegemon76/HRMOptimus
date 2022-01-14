@@ -2,6 +2,8 @@
 using HRMOptimus.Application.Account.Command.ConfirmEmail;
 using HRMOptimus.Application.Account.Command.Login;
 using HRMOptimus.Application.Account.Command.Logout;
+using HRMOptimus.Application.Account.Command.Password.ChangePassword;
+using HRMOptimus.Application.Account.Command.Password.ConfirmPassword;
 using HRMOptimus.Application.Account.Command.Registration;
 using HRMOptimus.Application.Account.Command.SetRoles;
 using Microsoft.AspNetCore.Mvc;
@@ -59,6 +61,24 @@ namespace HRMOptimus.WebAPI.Controllers
         public async Task<IActionResult> ConfirmEmail(string token)
         {
             await Mediator.Send(new ConfirmEmailCommand() { ConfirmationToken = token });
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("resetPassword")]
+        public async Task<IActionResult> ResetPassword([FromBody] ChangePasswordVm model)
+        {
+            await Mediator.Send(new ChangePasswordCommand() { PasswordVm = model });
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("confirmPasswordReset")]
+        public async Task<IActionResult> ConfirmPassword(string token)
+        {
+            await Mediator.Send(new ConfirmPasswordCommand() { Token = token });
 
             return Ok();
         }
