@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Security.Claims;
 
 namespace HRMOptimus.Application.Common.Interfaces
 {
@@ -7,6 +6,6 @@ namespace HRMOptimus.Application.Common.Interfaces
     {
         public string GetUserId { get; }
         public int? GetEmployeeId { get; }
-        public List<ClaimsPrincipal> Roles { get; }
+        public List<string> GetRoles();
     }
 }
