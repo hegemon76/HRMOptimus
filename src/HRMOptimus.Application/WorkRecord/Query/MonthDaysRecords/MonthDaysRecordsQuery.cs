@@ -8,5 +8,6 @@ namespace HRMOptimus.Application.WorkRecord.Query.MonthDaysRecords
         public int? MonthFromCurrent { get; set; }
         public int? Month { get; set; }
         public int? Year { get; set; }
+        public int? EmployeeId { get; set; }
     }
 }

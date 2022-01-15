@@ -8,16 +8,16 @@ namespace HRMOptimus.Application.WorkRecord.Command.UpdateWorkRecord
     {
         public UpdateWorkRecordVmValidator(IHRMOptimusDbContext dbContext)
         {
-            RuleFor(x => x.Name).MinimumLength(5);
+            RuleFor(x => x.Name).NotEmpty().MinimumLength(5);
 
-            RuleFor(x => x.Id).Custom((value, context) =>
+            RuleFor(x => x.Id).NotEmpty().Custom((value, context) =>
             {
                 var workRecord = dbContext.WorkRecords.Any(e => e.Id == value && e.Enabled);
                 if (!workRecord)
                     context.AddFailure("Id", "The Work Record with Id: " + value + " doesn't exist");
             });
 
-            RuleFor(x => x.ProjectId).Custom((value, context) =>
+            RuleFor(x => x.ProjectId).NotEmpty().Custom((value, context) =>
             {
                 var project = dbContext.Projects.Any(e => e.Id == value && e.Enabled);
                 if (!project)
@@ -25,8 +25,8 @@ namespace HRMOptimus.Application.WorkRecord.Command.UpdateWorkRecord
             });
 
             RuleFor(x => x.WorkStart).NotEmpty();
-            RuleFor(x => x.WorkEnd).NotEmpty();
-            RuleFor(x => x.WorkEnd).GreaterThan(x => x.WorkStart);
+            RuleFor(x => x.IsRemoteWork).NotEmpty();
+            RuleFor(x => x.WorkEnd).NotEmpty().GreaterThan(x => x.WorkStart);
         }
     }
 }
