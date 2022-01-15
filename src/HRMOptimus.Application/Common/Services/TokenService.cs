@@ -35,6 +35,7 @@ namespace HRMOptimus.Application.Common.Services
                 .FirstOrDefault(x => x.Id == userId);
 
             var roles = _userManager.GetRolesAsync(user);
+
             var claims = new List<Claim>();
             claims.Add(new Claim("userId", userId));
             claims.Add(new Claim("employeeId", user.Employee.Id.ToString()));
