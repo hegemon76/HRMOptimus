@@ -23,9 +23,9 @@ namespace HRMOptimus.Application.WorkRecord.Query.MonthDaysRecords
 
         public async Task<List<DaysWorkRecordsVm>> Handle(MonthDaysRecordsQuery request, CancellationToken cancellationToken)
         {
+            var employeeId = _userContextService.GetEmployeeId;
             List<DaysWorkRecordsVm> daysWorksRekords = new List<DaysWorkRecordsVm>();
             DateTime firstDay;
-            var employeeId = _userContextService.GetEmployeeId.Value;
 
             if (request.MonthFromCurrent.HasValue)
             {
