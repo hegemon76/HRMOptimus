@@ -2,12 +2,14 @@
 using HRMOptimus.Application.LeaveRegister.Command.ChangeStatusLeaveRegister;
 using HRMOptimus.Application.LeaveRegister.Command.DeleteLeaveRegister;
 using HRMOptimus.Application.LeaveRegister.Query.GetLeavesRegisterByEmployeeId;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace HRMOptimus.WebAPI.Controllers
 {
     [Route("/api/leavesRegister")]
+    [Authorize]
     [ApiController]
     public class LeavesRegisterController : BaseController
     {

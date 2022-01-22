@@ -12,10 +12,18 @@ namespace HRMOptimus.Persistance
 {
     public class HRMOptimusDbContext : IdentityDbContext<ApplicationUser>, IHRMOptimusDbContext
     {
+        // private readonly IUserContextService _userContextService;
+
         public HRMOptimusDbContext(DbContextOptions<HRMOptimusDbContext> options)
             : base(options)
         {
         }
+
+        //public HRMOptimusDbContext(DbContextOptions<HRMOptimusDbContext> options, IUserContextService userContextService)
+        //    : base(options)
+        //{
+        //    _userContextService = userContextService;
+        //}
 
         public DbSet<Project> Projects { get; set; }
         public DbSet<Address> Addresses { get; set; }
@@ -33,6 +41,7 @@ namespace HRMOptimus.Persistance
                 {
                     case EntityState.Added:
                         entry.Entity.CreatedBy = "1";
+                        //entry.Entity.CreatedBy = _userContextService.GetFullName;
                         entry.Entity.CreatedOn = DateTime.Now;
                         entry.Entity.Enabled = true;
                         break;
@@ -41,12 +50,14 @@ namespace HRMOptimus.Persistance
                         entry.State = EntityState.Modified;
                         entry.Entity.Enabled = false;
                         entry.Entity.LastModifiedOn = DateTime.Now;
+                        // entry.Entity.InactivatedBy = _userContextService.GetFullName;
                         entry.Entity.InactivatedBy = "1";
                         break;
 
                     case EntityState.Modified:
                         entry.State = EntityState.Modified;
                         entry.Entity.LastModifiedBy = "1";
+                        // entry.Entity.LastModifiedBy = _userContextService.GetFullName;
                         entry.Entity.LastModifiedOn = DateTime.Now;
                         break;
                 }
@@ -60,10 +71,10 @@ namespace HRMOptimus.Persistance
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(HRMOptimusDbContext).Assembly);
             modelBuilder.Entity<IdentityRole>().HasData(
-                new IdentityRole { Name = Domain.Enums.UserRoles.Administrator.ToString(), NormalizedName = Domain.Enums.UserRoles.Administrator.ToString() },
-                new IdentityRole { Name = Domain.Enums.UserRoles.User.ToString(), NormalizedName = Domain.Enums.UserRoles.User.ToString() },
-                 new IdentityRole { Name = Domain.Enums.UserRoles.ProjectManager.ToString(), NormalizedName = Domain.Enums.UserRoles.ProjectManager.ToString() },
-                  new IdentityRole { Name = Domain.Enums.UserRoles.HumanResources.ToString(), NormalizedName = Domain.Enums.UserRoles.HumanResources.ToString() }
+                new IdentityRole { Name = nameof(Domain.Enums.UserRoles.Administrator), NormalizedName = nameof(Domain.Enums.UserRoles.Administrator) },
+                new IdentityRole { Name = nameof(Domain.Enums.UserRoles.User), NormalizedName = nameof(Domain.Enums.UserRoles.User) },
+                new IdentityRole { Name = nameof(Domain.Enums.UserRoles.ProjectManager), NormalizedName = nameof(Domain.Enums.UserRoles.ProjectManager) },
+                new IdentityRole { Name = nameof(Domain.Enums.UserRoles.HumanResources), NormalizedName = nameof(Domain.Enums.UserRoles.HumanResources) }
                 );
         }
     }

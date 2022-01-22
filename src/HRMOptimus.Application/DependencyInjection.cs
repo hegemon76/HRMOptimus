@@ -35,11 +35,12 @@ namespace HRMOptimus.Application
             services.AddScoped<RequestTimeMiddleware>();
             services.AddScoped<ErrorHandlingMiddleware>();
             services.AddHttpContextAccessor();
+            services.AddScoped<IDecodeTokenService, DecodeTokenService>();
             services.AddScoped<IUserContextService, UserContextService>();
-            services.AddScoped<TokenService>().Configure<IConfiguration>((config) =>
-            {
-                configuration.GetSection("TokenKey").Bind(config);
-            });
+            services.AddScoped<ICreateTokenService, CreateTokenService>().Configure<IConfiguration>((config) =>
+             {
+                 configuration.GetSection("TokenKey").Bind(config);
+             });
             services.AddScoped<EmailService>();
 
             services.AddScoped<IValidator<RegistrationVm>, RegistrationVmValidator>();

@@ -1,4 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HRMOptimus.Application.Common.Interfaces;
+using HRMOptimus.Application.Common.Services;
+using HRMOptimus.Domain.Entities;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -11,6 +17,12 @@ namespace HRMOptimus.Persistance
     {
         private const string ConnectionStringName = "ConnectionStringName";
         private const string AspNetCoreEnvironment = "ASPNETCORE_ENVIRONMENT";
+        //private readonly IUserContextService _userContextService;
+
+        //public DesignTimeDbContextFactoryBase(IUserContextService userContextService)
+        //{
+        //    _userContextService = userContextService;
+        //}
 
         public TContext CreateDbContext(string[] args)
         {
@@ -19,6 +31,8 @@ namespace HRMOptimus.Persistance
         }
 
         protected abstract TContext CreateNewInstance(DbContextOptions<TContext> options);
+
+        //protected abstract TContext CreateNewInstance(DbContextOptions<TContext> options, IUserContextService userContextService);
 
         private TContext Create(string basePath, string environmentName)
         {
@@ -45,10 +59,10 @@ namespace HRMOptimus.Persistance
             Console.WriteLine($"DesignTimeDbContextFactoryBase.Create(string): Connection string: '{connectionString}'.");
 
             var optionsBuilder = new DbContextOptionsBuilder<TContext>();
-
             optionsBuilder.UseSqlServer(connectionString);
 
             return CreateNewInstance(optionsBuilder.Options);
+            //return CreateNewInstance(optionsBuilder.Options, _userContextService);
         }
     }
 }

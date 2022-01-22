@@ -1,0 +1,14 @@
+~
+uC:\Users\kdura\source\repos\HRMOptimus\tests\HRMOptimus.WebAPI.IntegrationTests\Controllers\AccountControllerTests.csutf-8
+vC:\Users\kdura\source\repos\HRMOptimus\tests\HRMOptimus.WebAPI.IntegrationTests\Controllers\EmployeeControllerTests.csutf-8Ö
+|C:\Users\kdura\source\repos\HRMOptimus\tests\HRMOptimus.WebAPI.IntegrationTests\Controllers\LeavesRegisterControllerTests.csutf-8~
+uC:\Users\kdura\source\repos\HRMOptimus\tests\HRMOptimus.WebAPI.IntegrationTests\Controllers\ProjectControllerTests.csutf-8Å
+xC:\Users\kdura\source\repos\HRMOptimus\tests\HRMOptimus.WebAPI.IntegrationTests\Controllers\WorkRecordControllerTests.csutf-8o
+fC:\Users\kdura\source\repos\HRMOptimus\tests\HRMOptimus.WebAPI.IntegrationTests\FakePolicyEvaluator.csutf-8j
+aC:\Users\kdura\source\repos\HRMOptimus\tests\HRMOptimus.WebAPI.IntegrationTests\FakeUserFilter.csutf-8u
+lC:\Users\kdura\source\repos\HRMOptimus\tests\HRMOptimus.WebAPI.IntegrationTests\Helpers\HttpContentHelper.csutf-8h
+_C:\Users\kdura\source\repos\HRMOptimus\tests\HRMOptimus.WebAPI.IntegrationTests\StartupTests.csutf-8}
+rC:\Users\kdura\.nuget\packages\microsoft.net.test.sdk\16.9.4\build\netcoreapp2.1\Microsoft.NET.Test.Sdk.Program.csutf-8õ
+èC:\Users\kdura\source\repos\HRMOptimus\tests\HRMOptimus.WebAPI.IntegrationTests\obj\Debug\net5.0\.NETCoreApp,Version=v5.0.AssemblyAttributes.csutf-8ü
+ìC:\Users\kdura\source\repos\HRMOptimus\tests\HRMOptimus.WebAPI.IntegrationTests\obj\Debug\net5.0\HRMOptimus.WebAPI.IntegrationTests.AssemblyInfo.csutf-8≤
+¶C:\Users\kdura\source\repos\HRMOptimus\tests\HRMOptimus.WebAPI.IntegrationTests\obj\Debug\net5.0\HRMOptimus.WebAPI.IntegrationTests.MvcApplicationPartsAssemblyInfo.csutf-8

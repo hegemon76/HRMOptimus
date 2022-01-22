@@ -4,6 +4,7 @@ using HRMOptimus.Application.Project.Command.RemoveProject;
 using HRMOptimus.Application.Project.Command.UpdateProject;
 using HRMOptimus.Application.Project.Query.ProjectDetails;
 using HRMOptimus.Application.Project.Query.Projects;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 namespace HRMOptimus.WebAPI.Controllers
 {
     [ApiController]
+    [Authorize]
     public class ProjectController : BaseController
     {
         [HttpPost]

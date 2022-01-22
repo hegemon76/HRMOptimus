@@ -1,0 +1,16 @@
+﻿C:\Users\kdura\source\repos\HRMOptimus\src\HRMOptimus.Domain\Common\EntityBase.cs
+C:\Users\kdura\source\repos\HRMOptimus\src\HRMOptimus.Domain\Common\ValueObject.cs
+C:\Users\kdura\source\repos\HRMOptimus\src\HRMOptimus.Domain\Entities\Address.cs
+C:\Users\kdura\source\repos\HRMOptimus\src\HRMOptimus.Domain\Entities\ApplicationUser.cs
+C:\Users\kdura\source\repos\HRMOptimus\src\HRMOptimus.Domain\Entities\Contract.cs
+C:\Users\kdura\source\repos\HRMOptimus\src\HRMOptimus.Domain\Entities\Employee.cs
+C:\Users\kdura\source\repos\HRMOptimus\src\HRMOptimus.Domain\Entities\LeaveRegister.cs
+C:\Users\kdura\source\repos\HRMOptimus\src\HRMOptimus.Domain\Entities\Project.cs
+C:\Users\kdura\source\repos\HRMOptimus\src\HRMOptimus.Domain\Entities\WorkRecord.cs
+C:\Users\kdura\source\repos\HRMOptimus\src\HRMOptimus.Domain\Enums\ContractType.cs
+C:\Users\kdura\source\repos\HRMOptimus\src\HRMOptimus.Domain\Enums\Gender.cs
+C:\Users\kdura\source\repos\HRMOptimus\src\HRMOptimus.Domain\Enums\IsApproved.cs
+C:\Users\kdura\source\repos\HRMOptimus\src\HRMOptimus.Domain\Enums\LeaveRegisterType.cs
+C:\Users\kdura\source\repos\HRMOptimus\src\HRMOptimus.Domain\Enums\SortDirection.cs
+C:\Users\kdura\source\repos\HRMOptimus\src\HRMOptimus.Domain\Enums\Status.cs
+C:\Users\kdura\source\repos\HRMOptimus\src\HRMOptimus.Domain\Enums\UserRoles.cs

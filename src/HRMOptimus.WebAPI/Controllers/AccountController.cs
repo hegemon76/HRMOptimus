@@ -6,16 +6,20 @@ using HRMOptimus.Application.Account.Command.Password.ChangePassword;
 using HRMOptimus.Application.Account.Command.Password.ConfirmPassword;
 using HRMOptimus.Application.Account.Command.Registration;
 using HRMOptimus.Application.Account.Command.SetRoles;
+using HRMOptimus.Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace HRMOptimus.WebAPI.Controllers
 {
     [Route("/api")]
+    [Authorize]
     [ApiController]
     public class AccountController : BaseController
     {
         [HttpPost]
+        [AllowAnonymous]
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] RegistrationVm model)
         {
@@ -25,6 +29,7 @@ namespace HRMOptimus.WebAPI.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("login")]
         public async Task<ActionResult<LoginVm>> Login([FromBody] LoginCommand dto)
         {
@@ -39,6 +44,7 @@ namespace HRMOptimus.WebAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = nameof(UserRoles.Administrator))]
         [Route("setRoles")]
         public async Task<IActionResult> SetRoles([FromBody] SetRolesVm model)
         {

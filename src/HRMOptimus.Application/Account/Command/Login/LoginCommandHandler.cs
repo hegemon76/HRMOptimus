@@ -11,12 +11,12 @@ namespace HRMOptimus.Application.Account.Command.Login
 {
     public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginVm>
     {
-        private readonly TokenService _tokenService;
+        private readonly ICreateTokenService _tokenService;
 
         private readonly IHRMOptimusDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public LoginCommandHandler(TokenService tokenService, IHRMOptimusDbContext context, UserManager<ApplicationUser> userManager)
+        public LoginCommandHandler(ICreateTokenService tokenService, IHRMOptimusDbContext context, UserManager<ApplicationUser> userManager)
         {
             _tokenService = tokenService;
             _context = context;
@@ -36,7 +36,7 @@ namespace HRMOptimus.Application.Account.Command.Login
                     FirstName = employee.FirstName,
                     LastName = employee.LastName,
                     Gender = employee.Gender,
-                    Token = _tokenService.CreateToken(user.Id, employee.Id.ToString(), employee.FullName, ((int)employee.Gender).ToString())
+                    Token = _tokenService.CreateToken(user.Id)
                 };
             }
             return null;

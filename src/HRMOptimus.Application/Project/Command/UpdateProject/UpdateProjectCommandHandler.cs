@@ -1,5 +1,4 @@
-﻿using HRMOptimus.Application.Common.Exceptions;
-using HRMOptimus.Application.Common.Interfaces;
+﻿using HRMOptimus.Application.Common.Interfaces;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;

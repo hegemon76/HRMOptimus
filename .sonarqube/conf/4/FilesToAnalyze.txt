@@ -1,0 +1,6 @@
+﻿C:\Users\kdura\source\repos\HRMOptimus\src\HRMOptimus.DemoDataSeeder\Commands\SeedUsers.cs
+C:\Users\kdura\source\repos\HRMOptimus\src\HRMOptimus.DemoDataSeeder\Common\Interfaces\ICustomiseCommand.cs
+C:\Users\kdura\source\repos\HRMOptimus\src\HRMOptimus.DemoDataSeeder\Customizations\DemoDataSeederCustomization.cs
+C:\Users\kdura\source\repos\HRMOptimus\src\HRMOptimus.DemoDataSeeder\DependencyInjection.cs
+C:\Users\kdura\source\repos\HRMOptimus\src\HRMOptimus.DemoDataSeeder\Program.cs
+C:\Users\kdura\source\repos\HRMOptimus\src\HRMOptimus.DemoDataSeeder\appsettings.json
