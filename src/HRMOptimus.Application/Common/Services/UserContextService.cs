@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Net.Http.Headers;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 
 namespace HRMOptimus.Application.Common.Services
@@ -11,21 +12,18 @@ namespace HRMOptimus.Application.Common.Services
     public class UserContextService : IUserContextService
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IDecodeTokenService _decodeTokenService;
         private ApplicationUser _applicationUser;
+        private string FullName { get; set; }
 
-        public UserContextService(IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager,
-                                  IDecodeTokenService decodeTokenService)
+        public UserContextService(IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
-            _decodeTokenService = decodeTokenService;
             var token = httpContextAccessor.HttpContext?.Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
-            if (!string.IsNullOrWhiteSpace(token))
-                _applicationUser = _decodeTokenService.decodeToken(token, userManager);
+            decodeToken(token);
         }
 
         public string GetUserId => _applicationUser != null ? null : _applicationUser.Id;
-        public string GetFullName => _applicationUser != null ? null : _decodeTokenService.FullName;
+        public string GetFullName => string.IsNullOrWhiteSpace(FullName) ? null : FullName;
         public int? GetEmployeeId => _applicationUser != null ? _applicationUser.EmployeeId : null;
 
         public List<string> GetRoles()
@@ -34,6 +32,23 @@ namespace HRMOptimus.Application.Common.Services
                         _userManager.GetRolesAsync(_applicationUser).Result.ToList() : new List<string>();
 
             return roles;
+        }
+
+        private void decodeToken(string token)
+        {
+            if (!string.IsNullOrWhiteSpace(token))
+            {
+                var handler = new JwtSecurityTokenHandler();
+                var jsonToken = handler.ReadJwtToken(token);
+
+                FullName = jsonToken.Payload.First(claim => claim.Key == "fullName").Value.ToString();
+                var userId = jsonToken.Payload.First(claim => claim.Key == "userId").Value.ToString();
+
+                if (userId != null)
+                {
+                    _applicationUser = _userManager.FindByIdAsync(userId).Result;
+                }
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using HRMOptimus.Domain.Enums;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Http;
@@ -13,6 +14,13 @@ namespace HRMOptimus.WebAPI.IntegrationTests
         public Task<AuthenticateResult> AuthenticateAsync(AuthorizationPolicy policy, HttpContext context)
         {
             var claimsPrincipal = new ClaimsPrincipal();
+            claimsPrincipal.AddIdentity(new ClaimsIdentity(
+                new[]
+                {
+                    new Claim("userId",1.ToString()),
+                    new Claim(ClaimTypes.Role,UserRoles.User.ToString())
+                }
+            ));
             var ticket = new AuthenticationTicket(claimsPrincipal, "Test");
             var result = AuthenticateResult.Success(ticket);
 

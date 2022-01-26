@@ -5,6 +5,7 @@ using HRMOptimus.Domain.Entities;
 using HRMOptimus.Domain.Enums;
 using HRMOptimus.Persistance;
 using HRMOptimus.WebAPI.IntegrationTests.Helpers;
+using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,6 +37,7 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
                     {
                         var dbContextOptions = services.SingleOrDefault(service => service.ServiceType == typeof(DbContextOptions<HRMOptimusDbContext>));
                         services.Remove(dbContextOptions);
+                        services.AddSingleton<IPolicyEvaluator, FakePolicyEvaluator>();
 
                         services.AddDbContext<HRMOptimusDbContext>(options => options.UseInMemoryDatabase("HRMOptimusDb"));
                     });

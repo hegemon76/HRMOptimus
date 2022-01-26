@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
+﻿using HRMOptimus.Domain.Enums;
+using Microsoft.AspNetCore.Mvc.Filters;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace HRMOptimus.WebAPI.IntegrationTests
             claimsPrincipal.AddIdentity(new ClaimsIdentity(
                 new[]
                 {
-                    new Claim(ClaimTypes.Role, "1"),
+                    new Claim(ClaimTypes.Role, UserRoles.User.ToString()),
                  }));
 
             context.HttpContext.User = claimsPrincipal;
