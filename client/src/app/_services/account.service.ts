@@ -4,6 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { UserVm } from '../../shared/vm/user.vm';
 import { environment } from '../../environments/environment';
+import jwt_decode from "jwt-decode";
+import { stringify } from 'querystring';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,21 +15,20 @@ export class AccountService {
   loginUrl: string = `${this.baseUrl}login`;
   logoutUrl: string = `${this.baseUrl}logut`;
   user: UserVm;
-  tokenAuth;
 
   constructor(private http: HttpClient) { }
 
   tryLogin(form): Observable<any> {
     return this.http.post(this.loginUrl, form).pipe(
       map((res: any) => {
-        try {
-          this.user = JSON.parse(atob(res.token.split('.')[1]));
-          localStorage.setItem('user', atob(res.token.split('.')[1]));
+        if (res.token != "") {
+          this.user = JSON.parse(window.atob(res.token.split('.')[1]));
+          localStorage.setItem('user', window.atob(res.token.split('.')[1]));
           localStorage.setItem('token', res.token);
+          var decodedToken = jwt_decode(res.token);
+          var fullName = decodedToken['fullName'];
+          localStorage.setItem('fullName', fullName);
           window.location.reload();
-          this.tokenAuth = localStorage.getItem('token');
-        } catch {
-          console.log('nope');
         }
       })
     );

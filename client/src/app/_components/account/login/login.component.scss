@@ -13,6 +13,20 @@ form {
   min-height: 100px;
 }
 
+.validate {
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+
+  span {
+    color: red !important;
+    margin-left: auto;
+    font-size: 20px;
+    font-weight: bold;
+    text-shadow: none;
+  }
+}
+
 .logo {
   background: url("/assets/images/logo-alt.svg") 0 0 no-repeat;
   display: block;

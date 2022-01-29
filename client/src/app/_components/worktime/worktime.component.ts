@@ -49,7 +49,7 @@ export class WorktimeComponent implements OnInit {
   ngOnInit(): void {
     this.today = moment().format('yyyy-MM-DD');
     this.fillCalendar();
-    console.log(this.calendar);
+
   }
 
   fillCalendar() {
@@ -78,6 +78,8 @@ export class WorktimeComponent implements OnInit {
             this.month.slice(0, this.daysAfter).map(r => {
               this.calendar.push(this.createCalendarItem('next-month', r));
             });
+
+            console.log(this.month);
           });
       });
     });

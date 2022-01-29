@@ -14,10 +14,11 @@ export class HeaderComponent implements OnInit {
   constructor(
     private accountService: AccountService,
     private breakpointObserver: BreakpointObserver
-  ) {}
+  ) { }
 
   user: UserVm;
   logoutWrapperToggled = false;
+  fullName = localStorage.getItem('fullName');
 
   ngOnInit(): void {
     this.user = this.accountService.getUser();
