@@ -29,14 +29,13 @@ export class EmployeesListComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private accountService: AccountService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.employeesService.getEmployees().subscribe(res => {
       this.employees = res.items;
     });
     this.user = this.accountService.getUser();
-    console.log(this.user);
   }
 
   openDialog(fN, id) {
@@ -67,5 +66,5 @@ export class DeleteEmployeeDialog {
   constructor(
     public dialogRef: MatDialogRef<DeleteEmployeeDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
-  ) {}
+  ) { }
 }

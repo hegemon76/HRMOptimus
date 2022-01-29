@@ -12,8 +12,9 @@ export class AccountService {
   loginUrl: string = `${this.baseUrl}login`;
   logoutUrl: string = `${this.baseUrl}logut`;
   user: UserVm;
+  tokenAuth;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   tryLogin(form): Observable<any> {
     return this.http.post(this.loginUrl, form).pipe(
@@ -23,6 +24,7 @@ export class AccountService {
           localStorage.setItem('user', atob(res.token.split('.')[1]));
           localStorage.setItem('token', res.token);
           window.location.reload();
+          this.tokenAuth = localStorage.getItem('token');
         } catch {
           console.log('nope');
         }
