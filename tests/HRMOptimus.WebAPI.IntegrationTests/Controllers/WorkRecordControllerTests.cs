@@ -76,7 +76,6 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
 
             var model = new AddWorkRecordVm()
             {
-                EmployeeId = _employee.Id,
                 Name = "Test1",
                 WorkStart = DateTime.Now,
                 WorkEnd = DateTime.Now.AddMinutes(15),
@@ -98,7 +97,6 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
 
             var model = new AddWorkRecordVm()
             {
-                EmployeeId = _project.Id,
                 WorkStart = DateTime.Now,
                 WorkEnd = DateTime.Now.AddMinutes(15),
                 ProjectId = _employee.Id,
