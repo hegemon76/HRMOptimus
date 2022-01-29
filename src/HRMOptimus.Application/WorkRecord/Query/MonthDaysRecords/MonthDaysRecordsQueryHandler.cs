@@ -82,7 +82,7 @@ namespace HRMOptimus.Application.WorkRecord.Query.MonthDaysRecords
                 daysWorksRekords.Add(new DaysWorkRecordsVm(startHour, endHour, day, workedTime));
             }
 
-            return new MonthWorkRecordsVm(workedTimeFromAllDays, daysWorksRekords);
+            return new MonthWorkRecordsVm(workedTimeFromAllDays.ToString(), daysWorksRekords);
         }
     }
 }

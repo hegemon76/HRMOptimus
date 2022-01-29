@@ -81,10 +81,11 @@
   width: 1470px;
   height: auto;
   border-radius: 10px;
-  background-color: rgb(238, 231, 231);
+  background-color: rgb(255, 255, 255);
   float: left;
   padding: 5px;
   margin-bottom: 10px;
+  border: solid gray 1px;
 
   p {
     color: black;
@@ -96,6 +97,7 @@
     border-radius: 5px;
     float: left;
     text-align: center;
+    border: solid gray 1px;
 
     span {
       font-weight: bold;
@@ -106,13 +108,14 @@
 .times {
   width: 1470px;
   border-radius: 10px;
-  background-color: rgb(238, 231, 231);
+  background-color: rgb(255, 255, 255);
   border-radius: 10px;
   margin-bottom: 10px;
   display: flex;
   padding-top: 25px;
   padding-bottom: 5px;
   padding-left: 20px;
+  border: solid gray 1px;
 
   .mat-form-field {
     margin-left: 10px;
@@ -136,7 +139,7 @@
   }
 
   .details {
-    width: 470px;
+    width: 430px;
   }
 }
 
@@ -147,8 +150,8 @@
   font-size: 14px;
   border: 0px;
   border-radius: 5px;
-  width: 30px;
-  height: 30px;
+  width: 70px;
+  height: 35px;
   cursor: pointer;
   margin-left: auto;
   margin-right: 30px;
@@ -166,8 +169,8 @@
   font-size: 14px;
   border: 0px;
   border-radius: 5px;
-  width: 30px;
-  height: 30px;
+  width: 70px;
+  height: 35px;
   cursor: pointer;
   margin-left: auto;
   margin-right: 30px;

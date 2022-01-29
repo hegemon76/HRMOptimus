@@ -45,11 +45,12 @@ export class WorktimeComponent implements OnInit {
   constructor(private workdayService: WorktimeService) { }
 
   month: [];
+  onlyMonth: [];
+  worktimeSummary;
 
   ngOnInit(): void {
     this.today = moment().format('yyyy-MM-DD');
     this.fillCalendar();
-
   }
 
   fillCalendar() {
@@ -62,19 +63,25 @@ export class WorktimeComponent implements OnInit {
       1 -
       this.weekdaysShort.indexOf(this.endOfMonth);
     this.workdayService.getMonthEntry(this.currentMonth - 1).subscribe(res => {
-      this.month = res;
+      this.month = res.daysWorkRecords;
       this.month.slice(-this.daysBefore).map(r => {
         this.calendar.push(this.createCalendarItem('previous-month', r));
       });
       this.workdayService.getMonthEntry(this.currentMonth).subscribe(res => {
-        this.month = res;
+        this.month = res.daysWorkRecords;
+        this.worktimeSummary = res.workFromAllDays;
+        var dd: number = this.worktimeSummary.split('.')[0] * 24;
+        var hh: number = this.worktimeSummary.split(':')[0].split('.')[1];
+        var mm: number = this.worktimeSummary.split(':')[1];
+        var hours = Number(hh) + Number(dd);
+        this.worktimeSummary = hours + " godzin " + mm + " minut";
         this.month.map(r => {
           this.calendar.push(this.createCalendarItem('in-month', r));
         });
         this.workdayService
           .getMonthEntry(this.currentMonth + 1)
           .subscribe(res => {
-            this.month = res;
+            this.month = res.daysWorkRecords;
             this.month.slice(0, this.daysAfter).map(r => {
               this.calendar.push(this.createCalendarItem('next-month', r));
             });

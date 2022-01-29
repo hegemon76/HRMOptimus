@@ -27,19 +27,6 @@
 
   &.weekend {
     background-color: rgb(137, 241, 137);
-    // color: white;
-
-    // .day {
-    //   line-height: 80px;
-    // }
-
-    // .hours {
-    //   display: none;
-    // }
-
-    // .time {
-    //   display: none;
-    // }
   }
 
   &.today {
@@ -152,7 +139,7 @@ b {
   height: auto;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 30px;
+  margin-top: 20px;
 
   .box {
     width: 15px;
@@ -170,18 +157,17 @@ b {
   }
 
   .week {
-    background-color: rgb(37, 168, 37);
+    background-color: rgb(137, 241, 137);
   }
+}
 
-  .vacation {
-    background-color: cornflowerblue;
-  }
+.summary {
+  width: auto;
+  text-align: center;
+  margin-top: 25px;
 
-  .work-on-premise {
-    background-color: rgb(226, 164, 105);
-  }
-
-  .work-remote {
-    background-color: rgb(209, 240, 160);
+  span {
+    font-weight: bold;
+    margin-left: 5px;
   }
 }
