@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace HRMOptimus.Application.WorkRecord.Query.MonthDaysRecords
 {
-    public class MonthDaysRecordsQueryHandler : IRequestHandler<MonthDaysRecordsQuery, List<DaysWorkRecordsVm>>
+    public class MonthDaysRecordsQueryHandler : IRequestHandler<MonthDaysRecordsQuery, MonthWorkRecordsVm>
     {
         private readonly IHRMOptimusDbContext _context;
         private readonly IUserContextService _userContextService;
@@ -21,7 +21,7 @@ namespace HRMOptimus.Application.WorkRecord.Query.MonthDaysRecords
             _userContextService = userContextService;
         }
 
-        public async Task<List<DaysWorkRecordsVm>> Handle(MonthDaysRecordsQuery request, CancellationToken cancellationToken)
+        public async Task<MonthWorkRecordsVm> Handle(MonthDaysRecordsQuery request, CancellationToken cancellationToken)
         {
             var employeeId = _userContextService.GetEmployeeId.Value;
             List<DaysWorkRecordsVm> daysWorksRekords = new List<DaysWorkRecordsVm>();
@@ -79,10 +79,10 @@ namespace HRMOptimus.Application.WorkRecord.Query.MonthDaysRecords
                 }
                 workedTimeFromAllDays += workedTime;
 
-                daysWorksRekords.Add(new DaysWorkRecordsVm(startHour, endHour, day, workedTime, workedTimeFromAllDays));
+                daysWorksRekords.Add(new DaysWorkRecordsVm(startHour, endHour, day, workedTime));
             }
 
-            return daysWorksRekords;
+            return new MonthWorkRecordsVm(workedTimeFromAllDays, daysWorksRekords);
         }
     }
 }
