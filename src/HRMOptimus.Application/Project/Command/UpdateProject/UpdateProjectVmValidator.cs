@@ -17,7 +17,6 @@ namespace HRMOptimus.Application.Project.Command.UpdateProject
                 });
             RuleFor(x => x.Name).NotEmpty().MinimumLength(2);
             RuleFor(x => x.DateTo).GreaterThan(x => x.DateFrom).NotEmpty();
-            RuleFor(x => x.Deadline).GreaterThanOrEqualTo(x => x.DateTo);
             RuleFor(x => x.HoursBudget).NotEmpty().GreaterThan(0);
         }
     }
