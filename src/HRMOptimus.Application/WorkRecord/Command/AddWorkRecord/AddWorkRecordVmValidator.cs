@@ -20,7 +20,7 @@ namespace HRMOptimus.Application.WorkRecord.Command.AddWorkRecord
 
             RuleFor(x => x.WorkStart).NotEmpty();
             RuleFor(x => x.WorkEnd).NotEmpty().GreaterThan(x => x.WorkStart);
-            RuleFor(x => x.IsRemoteWork).NotEmpty();
+            RuleFor(x => x.IsRemoteWork).NotNull();
         }
     }
 }
