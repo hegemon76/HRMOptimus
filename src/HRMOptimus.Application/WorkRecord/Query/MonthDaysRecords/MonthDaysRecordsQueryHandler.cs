@@ -26,6 +26,7 @@ namespace HRMOptimus.Application.WorkRecord.Query.MonthDaysRecords
             var employeeId = _userContextService.GetEmployeeId.Value;
             List<DaysWorkRecordsVm> daysWorksRekords = new List<DaysWorkRecordsVm>();
             DateTime firstDay;
+            TimeSpan workedTimeFromAllDays = default;
 
             if (request.MonthFromCurrent.HasValue)
             {
@@ -76,7 +77,9 @@ namespace HRMOptimus.Application.WorkRecord.Query.MonthDaysRecords
                     endHour = endHour < record.WorkStop.TimeOfDay || startHour == default ? record.WorkStop.TimeOfDay : endHour;
                     workedTime += record.Duration;
                 }
-                daysWorksRekords.Add(new DaysWorkRecordsVm(startHour, endHour, day, workedTime));
+                workedTimeFromAllDays += workedTime;
+
+                daysWorksRekords.Add(new DaysWorkRecordsVm(startHour, endHour, day, workedTime, workedTimeFromAllDays));
             }
 
             return daysWorksRekords;
