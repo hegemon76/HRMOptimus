@@ -69,12 +69,17 @@ export class WorktimeComponent implements OnInit {
       });
       this.workdayService.getMonthEntry(this.currentMonth).subscribe(res => {
         this.month = res.daysWorkRecords;
-        this.worktimeSummary = res.workFromAllDays;
-        var dd: number = this.worktimeSummary.split('.')[0] * 24;
-        var hh: number = this.worktimeSummary.split(':')[0].split('.')[1];
-        var mm: number = this.worktimeSummary.split(':')[1];
-        var hours = Number(hh) + Number(dd);
-        this.worktimeSummary = hours + " godzin " + mm + " minut";
+        let hours = 0;
+        let minutes = 0;
+        res.daysWorkRecords.map(h => {
+          hours += parseInt(h.workedTime.split(':')[0]);
+          minutes += parseInt(h.workedTime.split(':')[1]);
+          parseFloat(h.workedTime.split(':')[0]) +
+            parseFloat(h.workedTime.split(':')[1]) / 60
+        });
+        hours += Math.floor(minutes / 60);
+        minutes = minutes % 60;
+        this.worktimeSummary = hours + ' godz. ' + minutes + ' min. ';
         this.month.map(r => {
           this.calendar.push(this.createCalendarItem('in-month', r));
         });
@@ -85,8 +90,6 @@ export class WorktimeComponent implements OnInit {
             this.month.slice(0, this.daysAfter).map(r => {
               this.calendar.push(this.createCalendarItem('next-month', r));
             });
-
-            console.log(this.month);
           });
       });
     });

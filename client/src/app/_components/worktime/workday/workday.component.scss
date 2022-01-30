@@ -1,38 +1,3 @@
-.header {
-  width: 100%;
-  height: 50px;
-  line-height: 50px;
-  border-bottom: 1px solid rgb(212, 212, 212);
-  border-top: 1px solid rgb(212, 212, 212);
-
-  span {
-    font-size: 18px;
-    font-weight: bold;
-    width: 300px;
-    line-height: 50px;
-    margin-left: 20px;
-    color: rgb(58, 58, 58);
-  }
-
-  .back {
-    width: 30px;
-    height: 30px;
-    border: none;
-    font-weight: bold;
-    font-size: 24px;
-    color: rgb(58, 58, 58);
-    margin-right: 10px;
-    cursor: pointer;
-    margin-top: 10px;
-    line-height: 10px;
-    float: right;
-  }
-
-  .back:hover {
-    color: red;
-  }
-}
-
 .save {
   float: right;
   background-color: #1869ff;
@@ -65,39 +30,41 @@
 }
 
 .workday-wrapper {
-  background-color: rgb(255, 255, 255);
+  background-color: var(--before-bg);
   width: auto;
   height: auto;
   padding: 50px;
-  border-radius: 10px;
+  border-radius: 5px;
   margin: 50px;
+}
 
-  .constForm {
-    margin-bottom: 50px;
+.addTimeWork {
+  width: 100%;
+  height: 50px;
+  background-color: var(--head);
+  color: #fff;
+  line-height: 50px;
+  margin-bottom: 10px;
+  font-weight: bold;
+
+  span {
+    margin-left: 15px;
   }
 }
 
 .day-info {
-  width: 1470px;
   height: auto;
-  border-radius: 10px;
-  background-color: rgb(255, 255, 255);
-  float: left;
+  background-color: var(--head);
+  color: var(--font);
   padding: 5px;
   margin-bottom: 10px;
-  border: solid gray 1px;
 
   p {
-    color: black;
+    color: var(--font);
     padding: 10px;
     width: auto;
-    min-width: 260px;
     margin: 10px;
-    background: rgb(255, 255, 255);
-    border-radius: 5px;
-    float: left;
-    text-align: center;
-    border: solid gray 1px;
+    background: var(--before-bg);
 
     span {
       font-weight: bold;
@@ -105,84 +72,106 @@
   }
 }
 
+.constForm {
+  border: none !important;
+
+  .details {
+    width: 488px !important;
+    margin-right: 10px;
+    margin-top: 20px;
+  }
+}
+
 .times {
-  width: 1470px;
-  border-radius: 10px;
-  background-color: rgb(255, 255, 255);
-  border-radius: 10px;
+  color: var(--font);
+  background-color: var(--before-bg);
   margin-bottom: 10px;
   display: flex;
-  padding-top: 25px;
-  padding-bottom: 5px;
-  padding-left: 20px;
-  border: solid gray 1px;
-
-  .mat-form-field {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
+  border-bottom: 5px solid var(--head);
+  margin-bottom: 5px;
 
   .hoursFrom {
     width: 150px;
+    margin-right: 10px;
+    margin-top: 20px;
   }
 
   .hoursTo {
     width: 150px;
+    margin-right: 10px;
+    margin-top: 20px;
   }
 
   .type {
     width: 250px;
+    margin-right: 10px;
+    margin-top: 20px;
   }
 
   .project {
     width: 250px;
+    margin-right: 10px;
+    margin-top: 20px;
   }
 
   .details {
-    width: 430px;
+    width: 358px;
+    margin-right: 10px;
+    margin-top: 20px;
   }
 }
 
 .deleteEntry {
-  background-color: red;
+  cursor: pointer;
+  margin-top: 21px;
+  width: 120px;
+  height: 58px;
+  border: 0;
+  background-color: var(--buttons);
   color: #fff;
   font-weight: bold;
-  font-size: 14px;
-  border: 0px;
-  border-radius: 5px;
-  width: 70px;
-  height: 35px;
-  cursor: pointer;
-  margin-left: auto;
-  margin-right: 30px;
-  margin-top: 15px;
 }
 
-.deleteEntry:hover {
-  background-color: rgb(209, 0, 0);
+.editEntry {
+  cursor: pointer;
+  margin-top: 21px;
+  width: 120px;
+  height: 58px;
+  border: 0;
+  background-color: var(--buttons);
+  color: #fff;
+  font-weight: bold;
+  margin-right: 10px;
 }
 
 .addEntry {
-  background-color: #1869ff;
+  cursor: pointer;
+  margin-top: 21px;
+  width: 120px;
+  height: 58px;
+  border: 0;
+  background-color: var(--buttons);
   color: #fff;
   font-weight: bold;
-  font-size: 14px;
-  border: 0px;
-  border-radius: 5px;
-  width: 70px;
-  height: 35px;
-  cursor: pointer;
-  margin-left: auto;
-  margin-right: 30px;
-  margin-top: 15px;
 }
 
-.test {
-  display: none;
-}
+mat-form-field {
+  ::ng-deep {
+    .mat-form-field-flex {
+      background-color: var(--input) !important;
+    }
 
-.green {
-  .test {
-    display: block;
+    input,
+    label {
+      color: var(--input-text) !important;
+
+      &::placeholder {
+        color: var(--input-text) !important;
+      }
+    }
   }
+}
+
+::ng-deep .mat-select-value {
+  color: var(--input-text) !important;
 }
