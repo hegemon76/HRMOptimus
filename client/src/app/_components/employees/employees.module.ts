@@ -8,6 +8,7 @@ import { EmployeesRoutingModule } from './employees-routing.module';
 import { FilterPipe } from './employeesFilter.pipe';
 import { FormsModule } from '@angular/forms';
 import {
+  CheckEmailDialog,
   EmployeeEditComponent,
   FormValidDialog
 } from './employee-edit/employee-edit.component';
@@ -24,7 +25,6 @@ import {
 import { EmployeeAddSingleFormComponent } from './employee-add/employee-add-single-form/employee-add-single-form.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-// import { MatNativeDateModule } from '@angular/material/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
 import { MatIconModule } from '@angular/material/icon';
@@ -39,7 +39,8 @@ import { MatIconModule } from '@angular/material/icon';
     EmployeeAddSingleFormComponent,
     FillFormDialog,
     EmployeeDetailsComponent,
-    FormValidDialog
+    FormValidDialog,
+    CheckEmailDialog
   ],
   imports: [
     CommonModule,
@@ -53,7 +54,6 @@ import { MatIconModule } from '@angular/material/icon';
     MatInputModule,
     MatSelectModule,
     MatDatepickerModule,
-    // MatNativeDateModule,
     MatChipsModule,
     MatIconModule
   ]

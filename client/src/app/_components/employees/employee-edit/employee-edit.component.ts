@@ -305,6 +305,9 @@ export class EmployeeEditComponent implements OnInit {
       });
     });
   }
+  openCheckEmailDialog() {
+    const dialogRef = this.dialog.open(CheckEmailDialog);
+  }
   emailTaken(): ValidatorFn {
     return (control: AbstractControl) => {
       return this.emails.includes(control.value) ? { emailTaken: true } : null;
@@ -326,7 +329,7 @@ export class EmployeeEditComponent implements OnInit {
       this.accountService
         .updateEmail(this.user.userId, this.formEmail.controls.emailNew.value)
         .subscribe(res => {
-          console.log(res);
+          this.openCheckEmailDialog();
         });
     }
   }
@@ -338,7 +341,7 @@ export class EmployeeEditComponent implements OnInit {
       this.accountService
         .updatePassword(this.formPassword.controls.passwordNew.value)
         .subscribe(res => {
-          console.log(res);
+          this.openCheckEmailDialog();
         });
     }
   }
@@ -352,6 +355,18 @@ export class EmployeeEditComponent implements OnInit {
 export class FormValidDialog {
   constructor(
     public dialogRef: MatDialogRef<FormValidDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ) {}
+}
+
+@Component({
+  selector: 'check-email-dialog',
+  templateUrl: 'check-email-dialog.html',
+  styleUrls: ['./employee-edit.component.scss']
+})
+export class CheckEmailDialog {
+  constructor(
+    public dialogRef: MatDialogRef<CheckEmailDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {}
 }

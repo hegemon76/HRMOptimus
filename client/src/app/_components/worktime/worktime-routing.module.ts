@@ -9,6 +9,10 @@ const routes: Routes = [
     component: WorktimeComponent
   },
   {
+    path: ':employeeId',
+    component: WorktimeComponent
+  },
+  {
     path: 'day/:id',
     component: WorkdayComponent
   }

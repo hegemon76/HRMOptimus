@@ -62,14 +62,15 @@ export class WorktimeService {
       .pipe(map((res: any) => res));
   }
 
-  getMonthEntry(id): Observable<any> {
+  getMonthEntry(month, id): Observable<any> {
     return this.http
       .get(this.getMonth, {
         headers: {
           'Content-Type': 'application/json'
         },
         params: {
-          monthFromCurrent: id
+          monthFromCurrent: month,
+          employeeId: id
         }
       })
       .pipe(map((res: any) => res));
