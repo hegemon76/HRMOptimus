@@ -4,6 +4,8 @@ using HRMOptimus.Domain.Entities;
 using HRMOptimus.Domain.Enums;
 using HRMOptimus.Persistance;
 using HRMOptimus.WebAPI.IntegrationTests.Helpers;
+using Microsoft.AspNetCore.Authorization.Policy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,6 +36,7 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
                     {
                         var dbContextOptions = services.SingleOrDefault(service => service.ServiceType == typeof(DbContextOptions<HRMOptimusDbContext>));
                         services.Remove(dbContextOptions);
+                        services.AddSingleton<IPolicyEvaluator, FakePolicyEvaluator>();
 
                         services.AddDbContext<HRMOptimusDbContext>(options => options.UseInMemoryDatabase("HRMOptimusDb"));
                     });
@@ -46,7 +49,7 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
         //public async Task Register_WithValidModel_ReturnsOkResult()
         //{
         //    var url = _baseUrl + "register";
-
+        //    // await SeedRoles();
         //    var model = new RegistrationVm()
         //    {
         //        Email = "test@email.com",
@@ -81,6 +84,23 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
 
         //    _user = new Employee() { Name = "testName", DateTo = DateTime.Now, DateFrom = DateTime.Now, HoursBudget = 5, HoursWorked = 1 };
         //    await dbContext.Projects.AddAsync(_project);
+
+        //    await dbContext.SaveChangesAsync(CancellationToken.None);
+        //}
+
+        //private async Task SeedRoles()
+        //{
+        //    var scopeFactory = _factory.Services.GetService<IServiceScopeFactory>();
+        //    using var scope = scopeFactory.CreateScope();
+        //    var dbContext = scope.ServiceProvider.GetService<HRMOptimusDbContext>();
+
+        //    var roles = new List<IdentityRole>();
+        //    roles.Add(new IdentityRole { Name = UserRoles.Administrator.ToString(), NormalizedName = UserRoles.Administrator.ToString() });
+        //    roles.Add(new IdentityRole { Name = nameof(UserRoles.User), NormalizedName = nameof(UserRoles.User) });
+        //    roles.Add(new IdentityRole { Name = nameof(UserRoles.HumanResources), NormalizedName = nameof(UserRoles.HumanResources) });
+        //    roles.Add(new IdentityRole { Name = nameof(UserRoles.ProjectManager), NormalizedName = nameof(UserRoles.ProjectManager) });
+
+        //    await dbContext.IdentityRoles.AddRangeAsync(roles);
 
         //    await dbContext.SaveChangesAsync(CancellationToken.None);
         //}

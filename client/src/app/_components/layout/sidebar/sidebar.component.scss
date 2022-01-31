@@ -22,16 +22,19 @@ mat-nav-list {
     height: 100%;
     background-position: center;
   }
+
   span {
     display: flex;
     align-items: center;
     width: 100%;
     height: 100%;
   }
+
   i {
     text-align: left;
     min-width: 32px;
   }
+
   .submenu {
     li {
       padding-left: 20px;
@@ -41,9 +44,7 @@ mat-nav-list {
   }
 }
 
-::ng-deep
-  .mat-slide-toggle.mat-checked:not(.mat-disabled)
-  .mat-slide-toggle-bar {
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
   background-color: #fff;
 }
 
@@ -52,10 +53,15 @@ mat-nav-list {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+
     i {
       display: flex;
       justify-content: center;
       margin: 0;
     }
   }
+}
+
+:host ::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+  background-color: rgb(24, 136, 42);
 }

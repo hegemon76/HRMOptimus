@@ -32,14 +32,16 @@ namespace HRMOptimus.Application.Employee.Query.AdminEmployees
                 .Result.AsQueryable().ToList();
 
             var employees = new List<AdminEmployeesVm>();
-            foreach (var item in users)
+
+            foreach (var user in users)
             {
-                var employee = _context.Employees.Include(x => x.Contract).Include(x => x.Contract)
-                    .Where(x => x.Id == item.EmployeeId)
-                     .Select(x => new AdminEmployeesVm(x.Id,
-                     x.FirstName, x.LastName
-             , x.FullName, x.Gender, x.BirthDate, item.Email,
-             item.PhoneNumber, x.Contract.ContractName)).Single();
+                var employee = await _context.Employees.Include(x => x.Contract).Include(x => x.Contract)
+                    .Where(x => x.Id == user.EmployeeId)
+                    .Select(x => new AdminEmployeesVm(x.Id,
+                     x.FirstName, x.LastName, x.FullName,
+                     x.Gender, x.BirthDate, user.Email,
+                     user.PhoneNumber, x.Contract.ContractName)).SingleOrDefaultAsync();
+
                 employees.Add(employee);
             }
 

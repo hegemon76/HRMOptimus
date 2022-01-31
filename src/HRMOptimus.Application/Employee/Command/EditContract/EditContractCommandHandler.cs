@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HRMOptimus.Application.Contract.Command.EditContract
+namespace HRMOptimus.Application.Employee.Command.EditContract
 {
     public class EditContractCommandHandler : IRequestHandler<EditContractCommand, Unit>
     {

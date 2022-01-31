@@ -4,6 +4,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { UserVm } from '../../shared/vm/user.vm';
 import { environment } from '../../environments/environment';
+import jwt_decode from "jwt-decode";
+import { stringify } from 'querystring';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -15,18 +18,19 @@ export class AccountService {
   confirmEmailUrl: string = `${this.baseUrl}confirmEmail`;
   user: UserVm;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   tryLogin(form): Observable<any> {
     return this.http.post(this.loginUrl, form).pipe(
       map((res: any) => {
-        try {
-          this.user = JSON.parse(atob(res.token.split('.')[1]));
-          localStorage.setItem('user', atob(res.token.split('.')[1]));
+        if (res.token != "") {
+          this.user = JSON.parse(window.atob(res.token.split('.')[1]));
+          localStorage.setItem('user', window.atob(res.token.split('.')[1]));
           localStorage.setItem('token', res.token);
+          var decodedToken = jwt_decode(res.token);
+          var fullName = decodedToken['fullName'];
+          localStorage.setItem('fullName', fullName);
           window.location.reload();
-        } catch {
-          console.log('nope');
         }
       })
     );

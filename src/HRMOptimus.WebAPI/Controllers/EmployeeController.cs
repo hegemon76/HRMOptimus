@@ -1,10 +1,12 @@
 ﻿using HRMOptimus.Application.Common.Models;
-using HRMOptimus.Application.Contract.Command.EditContract;
+using HRMOptimus.Application.Employee.Command.EditContract;
 using HRMOptimus.Application.Employee.Command.EditEmployee;
 using HRMOptimus.Application.Employee.Command.RemoveEmployee;
 using HRMOptimus.Application.Employee.Query.AdminEmployees;
 using HRMOptimus.Application.Employee.Query.EmployeeDetails;
 using HRMOptimus.Application.Employee.Query.Employees;
+using HRMOptimus.Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,6 +15,7 @@ namespace HRMOptimus.WebAPI.Controllers
 {
     [Route("/api")]
     [ApiController]
+    [Authorize]
     public class EmployeeController : BaseController
     {
         [HttpGet]
@@ -28,7 +31,7 @@ namespace HRMOptimus.WebAPI.Controllers
         [Route("adminEmployees")]
         public async Task<ActionResult<List<AdminEmployeesVm>>> GetAdminEmployees()
         {
-            var employees = await Mediator.Send(new GetAllAdminEmployeesQuery() { });
+            var employees = await Mediator.Send(new GetAllAdminEmployeesQuery());
 
             return employees;
         }
@@ -43,6 +46,7 @@ namespace HRMOptimus.WebAPI.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Administrator, HumanResources")]
         [Route("employee/delete/")]
         public async Task<ActionResult> RemoveEmployee(int employeeId)
         {
@@ -52,6 +56,7 @@ namespace HRMOptimus.WebAPI.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Administrator, HumanResources")]
         [Route("editEmployee")]
         public async Task<IActionResult> EditEmployee([FromBody] EditEmployeeVm model)
         {
@@ -61,6 +66,7 @@ namespace HRMOptimus.WebAPI.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Administrator, HumanResources")]
         [Route("editContract")]
         public async Task<IActionResult> EditContract([FromBody] EditContractVm model)
         {

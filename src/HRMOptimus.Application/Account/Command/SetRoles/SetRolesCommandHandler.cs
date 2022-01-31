@@ -1,6 +1,4 @@
-﻿using HRMOptimus.Application.Common.Interfaces;
-using HRMOptimus.Domain.Entities;
-using HRMOptimus.Domain.Enums;
+﻿using HRMOptimus.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
@@ -11,19 +9,17 @@ namespace HRMOptimus.Application.Account.Command.SetRoles
 {
     public class SetRolesCommandHandler : IRequestHandler<SetRolesCommand, Unit>
     {
-        private readonly IHRMOptimusDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public SetRolesCommandHandler(IHRMOptimusDbContext context, UserManager<ApplicationUser> userManager)
+        public SetRolesCommandHandler(UserManager<ApplicationUser> userManager)
         {
-            _context = context;
             _userManager = userManager;
         }
 
         public async Task<Unit> Handle(SetRolesCommand request, CancellationToken cancellationToken)
         {
             var employee = _userManager.FindByNameAsync(request.AddToRoleVm.Email);
-        
+
             if (employee.Result != null)
             {
                 var userRoles = _userManager.GetRolesAsync(employee.Result).Result;

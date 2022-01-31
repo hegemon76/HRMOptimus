@@ -18,10 +18,10 @@ namespace HRMOptimus.Application.Employee.Command.EditEmployee
 
         public async Task<Unit> Handle(EditEmployeeCommand request, CancellationToken cancellationToken)
         {
-            var user = _context.Employees
+            var user = await _context.Employees
                 .Include(a => a.Address)
                 .Include(app => app.ApplicationUser)
-                .FirstOrDefault(x => x.Id == request.Employee.EmployeeId);
+                .FirstOrDefaultAsync(x => x.Id == request.Employee.EmployeeId);
 
             var updatedApplicationUser = user.ApplicationUser;
             updatedApplicationUser.PhoneNumber =
