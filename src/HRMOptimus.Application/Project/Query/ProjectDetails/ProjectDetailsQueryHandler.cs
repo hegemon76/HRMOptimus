@@ -24,9 +24,6 @@ namespace HRMOptimus.Application.Project.Query.ProjectDetails
                 .Include(x => x.ProjectMembers)
                 .FirstOrDefaultAsync(x => x.Id == request.ProjectId);
 
-            if (project == null)
-                throw new NotFoundException("There is no project with Id: " + request.ProjectId);
-
             return new ProjectDetailsVm(project.Name, project.Description, project.HoursBudget, project.HoursWorked, project.DateFrom,
                 project.DateTo, project.Deadline, project.ProjectMembers, project.ColorLabel);
         }

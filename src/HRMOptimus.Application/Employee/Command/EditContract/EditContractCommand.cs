@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace HRMOptimus.Application.Contract.Command.EditContract
+namespace HRMOptimus.Application.Employee.Command.EditContract
 {
     public class EditContractCommand : IRequest
     {

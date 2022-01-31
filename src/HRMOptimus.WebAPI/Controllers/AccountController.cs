@@ -19,7 +19,7 @@ namespace HRMOptimus.WebAPI.Controllers
     public class AccountController : BaseController
     {
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Administrator, HumanResources")]
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] RegistrationVm model)
         {
@@ -44,7 +44,7 @@ namespace HRMOptimus.WebAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = nameof(UserRoles.Administrator))]
+        [Authorize(Roles = "Administrator")]
         [Route("setRoles")]
         public async Task<IActionResult> SetRoles([FromBody] SetRolesVm model)
         {

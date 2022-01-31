@@ -1,16 +1,12 @@
 ﻿using FluentValidation;
 using HRMOptimus.Application.Common.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HRMOptimus.Application.Project.Command.AddEmployee
+namespace HRMOptimus.Application.Project.Command.AddEmployeeToProject
 {
-    public class AddEmployeeVmValidator : AbstractValidator<AddEmployeeVm>
+    public class AddEmployeeToProjectCommandValidator : AbstractValidator<AddEmployeeToProjectCommand>
     {
-        public AddEmployeeVmValidator(IHRMOptimusDbContext dbContext)
+        public AddEmployeeToProjectCommandValidator(IHRMOptimusDbContext dbContext)
         {
             RuleFor(x => x.ProjectId)
                .Custom((value, context) =>

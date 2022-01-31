@@ -23,14 +23,14 @@ namespace HRMOptimus.Application.LeaveRegister.Command.AddLeaveRegister
             var daysList = Enumerable.Range(0, 1 + request.AddLeaveRegisterVm.LeaveEnd.Date
                 .Subtract(request.AddLeaveRegisterVm.LeaveStart.Date).Days)
                 .Select(offset => request.AddLeaveRegisterVm.LeaveStart.Date.AddDays(offset))
-                .ToArray();
+                .ToList();
 
             int duration = 0;
 
             foreach (var item in daysList)
             {
                 if (item.DayOfWeek != DayOfWeek.Saturday && item.DayOfWeek != DayOfWeek.Sunday)
-                    duration += 1;
+                    duration++;
             }
             var employee = await _context.Employees.Include(leaves => leaves.LeavesRegister)
                 .FirstOrDefaultAsync(x => x.Id == request.AddLeaveRegisterVm.EmployeeId);

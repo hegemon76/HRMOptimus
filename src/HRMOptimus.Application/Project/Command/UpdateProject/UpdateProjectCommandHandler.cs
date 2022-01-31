@@ -23,7 +23,6 @@ namespace HRMOptimus.Application.Project.Command.UpdateProject
             project.DateTo = request.UpdateProjectVm.DateTo;
             project.Deadline = request.UpdateProjectVm.Deadline;
             project.Description = request.UpdateProjectVm.Description;
-            project.ProjectMembers = request.UpdateProjectVm.ProjectMembers;
             project.HoursBudget = request.UpdateProjectVm.HoursBudget;
             project.ColorLabel = request.UpdateProjectVm.ColorLabel;
 
