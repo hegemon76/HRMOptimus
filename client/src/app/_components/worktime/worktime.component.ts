@@ -4,6 +4,8 @@ import { toChildArray } from 'preact';
 import { WorktimeService } from '../../_services/worktime.service';
 import { formatDate, Time } from '@angular/common';
 import { DatePipe } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { EmployeesService } from '../../_services/employees.service';
 
 interface CalendarItem {
   id: string;
@@ -23,7 +25,6 @@ interface CalendarItem {
   styleUrls: ['./worktime.component.scss'],
   providers: [DatePipe]
 })
-
 export class WorktimeComponent implements OnInit {
   date = moment().locale('pl');
   calendar: any[] = [];
@@ -40,16 +41,40 @@ export class WorktimeComponent implements OnInit {
   startOfMonth = this.date.startOf('month').format('ddd');
   endOfMonth = this.date.endOf('months').format('ddd');
   daysBefore = this.weekdaysShort.indexOf(this.startOfMonth);
-  daysAfter = this.weekdaysShort.length - 1 - this.weekdaysShort.indexOf(this.endOfMonth);
+  daysAfter =
+    this.weekdaysShort.length - 1 - this.weekdaysShort.indexOf(this.endOfMonth);
 
-  constructor(private workdayService: WorktimeService) { }
+  constructor(
+    private workdayService: WorktimeService,
+    private route: ActivatedRoute,
+    private employeesService: EmployeesService
+  ) {}
 
   month: [];
   onlyMonth: [];
   worktimeSummary;
+  employee;
+  userId;
 
   ngOnInit(): void {
     this.today = moment().format('yyyy-MM-DD');
+    if (this.route.snapshot.paramMap.get('employeeId')) {
+      this.userId = this.route.snapshot.paramMap.get('employeeId');
+      this.employeesService
+        .getEmployee(this.route.snapshot.paramMap.get('employeeId'))
+        .subscribe(res => {
+          this.employee = res;
+        });
+    } else {
+      this.userId = JSON.parse(localStorage.getItem('user')).employeeId;
+      this.employeesService
+        .getEmployee(JSON.parse(localStorage.getItem('user')).employeeId)
+        .subscribe(res => {
+          this.employee = res;
+        });
+    }
+    console.log(this.employee);
+
     this.fillCalendar();
   }
 
@@ -62,37 +87,41 @@ export class WorktimeComponent implements OnInit {
       this.weekdaysShort.length -
       1 -
       this.weekdaysShort.indexOf(this.endOfMonth);
-    this.workdayService.getMonthEntry(this.currentMonth - 1).subscribe(res => {
-      this.month = res.daysWorkRecords;
-      this.month.slice(-this.daysBefore).map(r => {
-        this.calendar.push(this.createCalendarItem('previous-month', r));
-      });
-      this.workdayService.getMonthEntry(this.currentMonth).subscribe(res => {
+    this.workdayService
+      .getMonthEntry(this.currentMonth - 1, this.userId)
+      .subscribe(res => {
         this.month = res.daysWorkRecords;
-        let hours = 0;
-        let minutes = 0;
-        res.daysWorkRecords.map(h => {
-          hours += parseInt(h.workedTime.split(':')[0]);
-          minutes += parseInt(h.workedTime.split(':')[1]);
-          parseFloat(h.workedTime.split(':')[0]) +
-            parseFloat(h.workedTime.split(':')[1]) / 60
-        });
-        hours += Math.floor(minutes / 60);
-        minutes = minutes % 60;
-        this.worktimeSummary = hours + ' godz. ' + minutes + ' min. ';
-        this.month.map(r => {
-          this.calendar.push(this.createCalendarItem('in-month', r));
+        this.month.slice(-this.daysBefore).map(r => {
+          this.calendar.push(this.createCalendarItem('previous-month', r));
         });
         this.workdayService
-          .getMonthEntry(this.currentMonth + 1)
+          .getMonthEntry(this.currentMonth, this.userId)
           .subscribe(res => {
             this.month = res.daysWorkRecords;
-            this.month.slice(0, this.daysAfter).map(r => {
-              this.calendar.push(this.createCalendarItem('next-month', r));
+            let hours = 0;
+            let minutes = 0;
+            res.daysWorkRecords.map(h => {
+              hours += parseInt(h.workedTime.split(':')[0]);
+              minutes += parseInt(h.workedTime.split(':')[1]);
+              parseFloat(h.workedTime.split(':')[0]) +
+                parseFloat(h.workedTime.split(':')[1]) / 60;
             });
+            hours += Math.floor(minutes / 60);
+            minutes = minutes % 60;
+            this.worktimeSummary = hours + ' godz. ' + minutes + ' min. ';
+            this.month.map(r => {
+              this.calendar.push(this.createCalendarItem('in-month', r));
+            });
+            this.workdayService
+              .getMonthEntry(this.currentMonth + 1, this.userId)
+              .subscribe(res => {
+                this.month = res.daysWorkRecords;
+                this.month.slice(0, this.daysAfter).map(r => {
+                  this.calendar.push(this.createCalendarItem('next-month', r));
+                });
+              });
           });
       });
-    });
   }
 
   createCalendar(month: moment.Moment) {
@@ -148,7 +177,7 @@ export class WorktimeComponent implements OnInit {
 
   setValueToChild(val, val2, val3) {
     this.workdayService.setDayDuration(val);
-    let newVal = val2 + " - " + val3;
+    let newVal = val2 + ' - ' + val3;
     this.workdayService.setDayTiming(newVal);
     localStorage.setItem('durationOfDay', val);
     localStorage.setItem('timingOfDay', newVal);
