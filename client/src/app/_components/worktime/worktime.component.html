@@ -1,4 +1,7 @@
 <div class="flex-container flex-center">
+  <div class="header" *ngIf="employee">
+    <p>Urlopy użytkownika <strong>{{employee.fullName}}</strong></p>
+  </div>
   <h4>
     <button (click)="previousmonth()"><i class="fas fa-angle-left next-btn"></i></button>
     <b>{{ date.format("MMMM") }} {{ date.format("YYYY") }}</b>
