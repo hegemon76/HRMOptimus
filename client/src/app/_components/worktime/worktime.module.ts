@@ -7,11 +7,24 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatCardModule } from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [WorktimeComponent, WorkdayComponent],
-  imports: [CommonModule, WorktimeRoutingModule, MatSelectModule, MatInputModule, MatIconModule, MatExpansionModule, FormsModule, ReactiveFormsModule]
+  imports: [
+    CommonModule,
+    WorktimeRoutingModule,
+    MatSelectModule,
+    MatInputModule,
+    MatIconModule,
+    MatExpansionModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatAutocompleteModule
+  ]
 })
-export class WorktimeModule { }
+export class WorktimeModule {}

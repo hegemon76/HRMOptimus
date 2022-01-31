@@ -4,8 +4,12 @@ import { toChildArray } from 'preact';
 import { WorktimeService } from '../../_services/worktime.service';
 import { formatDate, Time } from '@angular/common';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { EmployeesService } from '../../_services/employees.service';
+import { EmployeeVm } from '../../../shared/vm/employee.vm';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 interface CalendarItem {
   id: string;
@@ -47,16 +51,30 @@ export class WorktimeComponent implements OnInit {
   constructor(
     private workdayService: WorktimeService,
     private route: ActivatedRoute,
-    private employeesService: EmployeesService
-  ) {}
+    private employeesService: EmployeesService,
+    private router: Router
+  ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
+      return false;
+    };
+  }
 
   month: [];
   onlyMonth: [];
   worktimeSummary;
   employee;
   userId;
+  allEmployees: EmployeeVm[];
+  myControl = new FormControl();
+  searchedEmployee: string;
+  options: any[] = [];
+  filteredOptions: Observable<EmployeeVm[]>;
 
   ngOnInit(): void {
+    this.employeesService.getEmployees().subscribe(res => {
+      this.allEmployees = res.items;
+      this.fillOptions(this.allEmployees);
+    });
     this.today = moment().format('yyyy-MM-DD');
     if (this.route.snapshot.paramMap.get('employeeId')) {
       this.userId = this.route.snapshot.paramMap.get('employeeId');
@@ -73,8 +91,13 @@ export class WorktimeComponent implements OnInit {
           this.employee = res;
         });
     }
-    console.log(this.employee);
-
+    setTimeout(() => {
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(''),
+        map(value => (typeof value === 'string' ? value : value.name)),
+        map(name => (name ? this.optionsFilter(name) : this.options.slice()))
+      );
+    }, 1000);
     this.fillCalendar();
   }
 
@@ -125,7 +148,6 @@ export class WorktimeComponent implements OnInit {
   }
 
   createCalendar(month: moment.Moment) {
-    console.log(this.date);
     const clone = month.startOf('months').clone();
 
     if (this.daysBefore > 0) {
@@ -181,5 +203,28 @@ export class WorktimeComponent implements OnInit {
     this.workdayService.setDayTiming(newVal);
     localStorage.setItem('durationOfDay', val);
     localStorage.setItem('timingOfDay', newVal);
+  }
+
+  changeUser() {
+    this.router.navigate(['/worktime/', this.myControl.value.id]);
+  }
+  displayFn(option: EmployeeVm): string {
+    return option ? option.firstName + ' ' + option.lastName : '';
+  }
+  fillOptions(res) {
+    res.map(e => {
+      this.options.push({
+        firstName: e.firstName,
+        lastName: e.lastName,
+        id: e.id
+      });
+    });
+  }
+  optionsFilter(name: string): EmployeeVm[] {
+    const filterValue = name.toLowerCase();
+
+    return this.options.filter(option =>
+      option.firstName.toLowerCase().includes(filterValue)
+    );
   }
 }

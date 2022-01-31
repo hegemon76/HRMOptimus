@@ -70,8 +70,6 @@ export class EmployeesService {
     });
   }
   setRoles(roles, email): Observable<any> {
-    console.log(roles + ' ' + email);
-
     return this.http.post(this.setRolesUrl, {
       email: email,
       userRoles: roles

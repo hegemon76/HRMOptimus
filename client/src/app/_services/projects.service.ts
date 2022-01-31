@@ -28,8 +28,6 @@ export class ProjectsService {
     });
   }
   updateProject(data, id): Observable<any> {
-    console.log(data);
-
     return this.http.put(this.updateProjectUrl, {
       id: id,
       colorLabel: data.colorLabel,

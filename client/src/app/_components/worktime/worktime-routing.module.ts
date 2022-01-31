@@ -15,6 +15,10 @@ const routes: Routes = [
   {
     path: 'day/:id',
     component: WorkdayComponent
+  },
+  {
+    path: ':employeeId/day/:id',
+    component: WorkdayComponent
   }
 ];
 

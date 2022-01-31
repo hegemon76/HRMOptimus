@@ -73,7 +73,6 @@ export class ProjectAddComponent implements OnInit {
 
   addProjects() {
     this.components.map(c => {
-      console.log(c.instance.form);
       if (c.instance.form.status == 'VALID') {
         const formData = c.instance.form.getRawValue();
         formData.dateFrom =
@@ -83,7 +82,6 @@ export class ProjectAddComponent implements OnInit {
           formatDate(formData.dateTo, 'YYYY-MM-dd', 'en-US') + 'T00:00:00.000Z';
         formData.deadline =
           formatDate(formData.dateTo, 'YYYY-MM-dd', 'en-US') + 'T00:00:00.000Z';
-        console.log(formData);
         this.projectsService.addProject(formData).subscribe(() => {
           this.router.navigate(['/projects']);
         });

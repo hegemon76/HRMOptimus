@@ -33,11 +33,10 @@
         <input matInput formControlName="dayName" value="">
       </mat-form-field>
     </form>
-    <button class="addEntry" id="{{ id }}" (click)="addEntry()">Dodaj
-    </button>
+    <button class="addEntry" id="{{ id }}" (click)="addEntry()">Dodaj </button>
   </div>
   <div class="addTimeWork"><span>Edytuj czas pracy</span></div>
-  <div class="times" *ngFor="let day of workDays">
+  <!-- <div class="times" *ngFor="let day of workDays">
     <form [formGroup]="form">
       <mat-form-field class="example-form-field hoursFrom" appearance="fill">
         <mat-label>Godz. od</mat-label>
@@ -63,11 +62,13 @@
         <mat-label>Opis</mat-label>
         <input matInput value="{{day.name}}">
       </mat-form-field>
+      <button id="{{day.id}}" class="editEntry" (click)="updateWorkRecord()">Edytuj </button>
     </form>
-    <button id="{{day.id}}" class="editEntry">Edytuj
-    </button>
-    <button (click)="deleteWorkDayEntry(day.id)" id="{{day.id}}" class="deleteEntry">Usuń
-    </button>
-  </div>
+    <button id="{{day.id}}" class="editEntry" (click)="updateWorkRecord()">Edytuj </button>
+    <button (click)="deleteWorkDayEntry(day.id)" id="{{day.id}}" class="deleteEntry">Usuń </button>
+  </div> -->
+  <form [formGroup]="forms" class="times" *ngFor="let item of forms.get('items')['controls']; let i = index;">
+    <p>{{item.projectName}}</p>
+  </form>
   <div #parent> </div>
 </div>

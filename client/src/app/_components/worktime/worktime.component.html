@@ -1,7 +1,23 @@
-<div class="flex-container flex-center">
+<div class="cont">
   <div class="header" *ngIf="employee">
     <p>Urlopy użytkownika <strong>{{employee.fullName}}</strong></p>
   </div>
+  <mat-card class="container">
+    <div class="search-wrapper">
+      <mat-form-field appearance="fill">
+        <mat-label>Wybierz pracownika...</mat-label>
+        <input type="select" placeholder="Wybierz pracownika..." aria-label="Number" matInput [matAutocomplete]="auto"
+          [formControl]="myControl">
+      </mat-form-field>
+      <button (click)="changeUser()">Zmień</button>
+    </div>
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let option of filteredOptions  | async" [value]="option"> {{option.firstName}}
+        {{option.lastName}}</mat-option>
+    </mat-autocomplete>
+  </mat-card>
+</div>
+<div class="flex-container flex-center">
   <h4>
     <button (click)="previousmonth()"><i class="fas fa-angle-left next-btn"></i></button>
     <b>{{ date.format("MMMM") }} {{ date.format("YYYY") }}</b>
@@ -17,7 +33,7 @@
   <p>sob.</p>
   <p>niedz.</p>
 </div>
-<div class="wrapper flex-container flex-center">
+<div class="wrapper flex-container flex-center grd">
   <div *ngFor="let calendarItem of calendar;">
     <div class="flex-container flex-center">
       <div id="{{ calendarItem.id }}" routerLink="day/{{ calendarItem.id }}"
