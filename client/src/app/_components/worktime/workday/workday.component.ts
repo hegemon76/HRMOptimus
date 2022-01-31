@@ -9,7 +9,7 @@ import { WorktimeService } from '../../../_services/worktime.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { AccountService } from '../../../_services/account.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
 interface Day {
@@ -26,14 +26,16 @@ interface Day {
   styleUrls: ['./workday.component.scss'],
   providers: [DatePipe]
 })
-
 export class WorkdayComponent implements OnInit {
   @ViewChild('parent', { read: ViewContainerRef }) target: ViewContainerRef;
 
   workDays: [];
   projects: any[];
   month: [];
-  types = [{ name: 'Praca zdalna', value: true }, { name: 'Praca w biurze', value: false }];
+  types = [
+    { name: 'Praca zdalna', value: true },
+    { name: 'Praca w biurze', value: false }
+  ];
   day = {} as Day;
   id;
   user;
@@ -44,6 +46,8 @@ export class WorkdayComponent implements OnInit {
   valueDuration;
   valueTiming;
   fullName = localStorage.getItem('fullName');
+  forms: FormGroup;
+  records: FormArray;
 
   @Input() item: string;
 
@@ -52,8 +56,8 @@ export class WorkdayComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private accountService: AccountService,
-    private formBuilder: FormBuilder,
-  ) { }
+    private formBuilder: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -62,6 +66,10 @@ export class WorkdayComponent implements OnInit {
       workEnd: [''],
       projectName: [''],
       typeName: ['']
+    });
+
+    this.forms = this.formBuilder.group({
+      items: this.formBuilder.array([])
     });
 
     this.valueDuration = localStorage.getItem('durationOfDay');
@@ -77,17 +85,18 @@ export class WorkdayComponent implements OnInit {
         r['selected'] = r.projectName;
 
         if (r.isRemoteWork === true) {
-          r['type'] = "Praca zdalna";
-        }
-
-        else {
-          r['type'] = "Praca w biurze";
+          r['type'] = 'Praca zdalna';
+        } else {
+          r['type'] = 'Praca w biurze';
         }
       });
 
       this.workDays = res;
-
-      console.log(this.workDays);
+      res.map(d => {
+        this.records = this.forms.get('items') as FormArray;
+        this.records.push(this.getEntry(d));
+        console.log(this.records);
+      });
 
       this.entriesCount = this.workDays.length;
     });
@@ -114,19 +123,37 @@ export class WorkdayComponent implements OnInit {
     let values = this.form.getRawValue();
     let isRemoteWork;
 
-    if (values.typeName === "Praca zdalna") {
+    if (values.typeName === 'Praca zdalna') {
       isRemoteWork = true;
-    }
-    else {
+    } else {
       isRemoteWork = false;
     }
 
     this.workdayService
-      .addWorkDayRecord(this.form.getRawValue(), this.user.employeeId, this.id, isRemoteWork)
+      .addWorkDayRecord(
+        this.form.getRawValue(),
+        this.user.employeeId,
+        this.id,
+        isRemoteWork
+      )
       .subscribe(() => {
         this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
           this.router.navigate([`worktime/day/${this.id}`]);
         });
       });
+  }
+
+  getEntry(d) {
+    return this.formBuilder.group({
+      dayName: d.dayName,
+      workStart: d.workStart,
+      workEnd: d.workStop,
+      projectName: d.projectName,
+      typeName: d.type
+    });
+  }
+
+  updateWorkRecord() {
+    console.log(this.target);
   }
 }

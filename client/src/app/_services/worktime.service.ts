@@ -17,6 +17,8 @@ export class WorktimeService {
 
   getMonth = 'https://localhost:5001/api/workrecord/month';
 
+  updateWorkRecordUrl = 'https://localhost:5001/api/workrecord/update';
+
   dayDuration: string;
 
   dayTiming: string;
@@ -124,6 +126,14 @@ export class WorktimeService {
           headers: { 'Content-Type': 'application/json' }
         }
       )
+      .pipe(map((res: any) => res));
+  }
+
+  updateWorkRecord(formData): Observable<any> {
+    return this.http
+      .put(this.updateWorkRecordUrl, {
+        formData
+      })
       .pipe(map((res: any) => res));
   }
 }

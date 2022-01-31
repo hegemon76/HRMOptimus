@@ -144,8 +144,6 @@ export class DashboardComponent implements OnInit {
     this.worktimeService
       .getMonthEntryTest(this.user.employeeId)
       .subscribe(res => {
-        console.log(res);
-
         let hours = 0;
         let minutes = 0;
         res.daysWorkRecords.map(h => {

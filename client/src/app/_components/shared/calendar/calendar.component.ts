@@ -33,7 +33,6 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit(): void {
     this.calendar = this.createCalendar(this.date);
-    console.log(this.holidays);
   }
   createCalendar(month: moment.Moment) {
     const daysInMonth = month.daysInMonth();
@@ -90,7 +89,6 @@ export class CalendarComponent implements OnInit {
         formatDate(h.date, 'dd-MM-yyyy', 'en-US') ==
         formatDate(data.toDate(), 'dd-MM-yyyy', 'en-US')
       ) {
-        console.log(data.toDate());
         isHoliday = true;
       }
     });

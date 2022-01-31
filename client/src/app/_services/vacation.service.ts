@@ -35,7 +35,6 @@ export class VacationService {
     });
   }
   approveVacation(vacationId, employeeId): Observable<any> {
-    console.log(vacationId, employeeId);
     return this.http.put(this.updateVacationUrl, {
       recordId: vacationId,
       employeeId: employeeId,
@@ -50,7 +49,6 @@ export class VacationService {
     });
   }
   deleteVacation(vacationId, employeeId): Observable<any> {
-    console.log(vacationId, employeeId);
     return this.http.delete(this.deleteVacationUrl, {
       params: {
         id: vacationId,

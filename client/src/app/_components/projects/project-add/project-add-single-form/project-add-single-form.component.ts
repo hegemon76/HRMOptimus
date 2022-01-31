@@ -61,7 +61,6 @@ export class ProjectAddSingleFormComponent implements OnInit {
     });
 
     this.employeesService.getEmployees().subscribe(res => {
-      console.log(res);
       res.items.map(e => {
         this.allEmployees.push(e.fullName);
       });
@@ -106,9 +105,5 @@ export class ProjectAddSingleFormComponent implements OnInit {
     return filteredArray.filter(employee =>
       employee.toLowerCase().includes(filterValue)
     );
-  }
-
-  checkValues() {
-    console.log(this.form.getRawValue());
   }
 }
