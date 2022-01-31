@@ -11,14 +11,18 @@ import { AccountService } from '../app/_services/account.service';
 
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
+  constructor(private login: AccountService) {}
 
-  constructor(private login: AccountService) { }
-
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-
+  intercept(
+    request: HttpRequest<unknown>,
+    next: HttpHandler
+  ): Observable<HttpEvent<unknown>> {
     request = request.clone({
-      headers: request.headers.set('Authorization', `Bearer ${localStorage.getItem('token')}`),
-    })
+      headers: request.headers.set(
+        'Authorization',
+        `Bearer ${localStorage.getItem('token')}`
+      )
+    });
     return next.handle(request);
   }
 }
@@ -26,5 +30,5 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 export const AuthInterceptorProvider = {
   provide: HTTP_INTERCEPTORS,
   useClass: AuthenticationInterceptor,
-  multi: true,
+  multi: true
 };

@@ -7,7 +7,6 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class WorktimeService {
-
   getWorkdayEntries = 'https://localhost:5001/api/workrecord/day';
 
   getProjectsEntries = 'https://localhost:5001/api/projects';
@@ -22,7 +21,7 @@ export class WorktimeService {
 
   dayTiming: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getWorkday(id): Observable<any> {
     return this.http
@@ -71,6 +70,18 @@ export class WorktimeService {
         },
         params: {
           monthFromCurrent: id
+        }
+      })
+      .pipe(map((res: any) => res));
+  }
+  getMonthEntryTest(id): Observable<any> {
+    return this.http
+      .get(this.getMonth, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        params: {
+          employeeId: id
         }
       })
       .pipe(map((res: any) => res));

@@ -135,7 +135,7 @@
         <mat-label>Powtórz hasło</mat-label>
         <input type="password-repeat" matInput formControlName="passwordRepeat">
       </mat-form-field>
-      <button class="submit">ZAPISZ</button>
+      <button class="submit" (click)="updatePassword()">ZAPISZ</button>
     </form>
     <form [formGroup]="formRoles" action="" *ngIf="formToDisplay == 4">
       <h6>Role użytkownika:</h6>

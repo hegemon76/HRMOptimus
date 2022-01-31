@@ -21,7 +21,8 @@ namespace HRMOptimus.Application.Common.Services
 
             using var smtp = new SmtpClient();
             smtp.Connect("smtp.mailtrap.io", 587, SecureSocketOptions.StartTls);
-            smtp.Authenticate("5c55bad3ff10bf", "c79cabb73c312d");
+            //smtp.Authenticate("5c55bad3ff10bf", "c79cabb73c312d");
+            smtp.Authenticate("d7cbfe59b1dce0", "e57280990c9f41");
             smtp.Send(email);
             smtp.Disconnect(true);
         }

@@ -330,6 +330,18 @@ export class EmployeeEditComponent implements OnInit {
         });
     }
   }
+  updatePassword() {
+    if (
+      this.formPassword.controls.passwordNew.value ===
+      this.formPassword.controls.passwordRepeat.value
+    ) {
+      this.accountService
+        .updatePassword(this.formPassword.controls.passwordNew.value)
+        .subscribe(res => {
+          console.log(res);
+        });
+    }
+  }
 }
 
 @Component({
