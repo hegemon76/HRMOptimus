@@ -22,7 +22,8 @@ namespace HRMOptimus.Application.Common.Services
             decodeToken(token);
         }
 
-        public string GetUserId => _applicationUser != null ? null : _applicationUser.Id;
+        //public string GetUserId => _applicationUser != null ? null : _applicationUser.Id;
+        public string GetUserId => _applicationUser != null ? _applicationUser.Id : null;
         public string GetFullName => string.IsNullOrWhiteSpace(FullName) ? null : FullName;
         public int? GetEmployeeId => _applicationUser != null ? _applicationUser.EmployeeId : null;
 

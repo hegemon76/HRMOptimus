@@ -4,6 +4,7 @@ import { delay } from 'rxjs/operators';
 import { MatSidenav } from '@angular/material/sidenav';
 import { AccountService } from './_services/account.service';
 import { UserVm } from '../shared/vm/user.vm';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -38,5 +39,12 @@ export class AppComponent {
 
   ngOnInit() {
     this.user = this.accountService.getUser();
+    if (!this.user && window.location.pathname != '/') {
+      window.location.pathname = '/';
+    }
+  }
+
+  toggleSidenav() {
+    this.sidenav.toggle();
   }
 }

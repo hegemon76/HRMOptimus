@@ -103,7 +103,7 @@ export class DashboardComponent implements OnInit {
     private employeesService: EmployeesService,
     private vacationService: VacationService,
     private projectsService: ProjectsService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.user = this.accountService.getUser();
@@ -140,21 +140,26 @@ export class DashboardComponent implements OnInit {
       'yyyy-MM-dd',
       'en-US'
     );
-    this.worktimeService.getMonthEntryDefault().subscribe(res => {
-      let hours = 0;
-      let minutes = 0;
-      res.daysWorkRecords.map(h => {
-        hours += parseInt(h.workedTime.split(':')[0]);
-        minutes += parseInt(h.workedTime.split(':')[1]);
-        this.barChartData.datasets[0].data = this.barChartData.datasets[0].data.concat(
-          parseFloat(h.workedTime.split(':')[0]) +
-          parseFloat(h.workedTime.split(':')[1]) / 60
-        );
+    // this.worktimeService.getMonthEntryDefault().subscribe(res => {
+    this.worktimeService
+      .getMonthEntryTest(this.user.employeeId)
+      .subscribe(res => {
+        console.log(res);
+
+        let hours = 0;
+        let minutes = 0;
+        res.daysWorkRecords.map(h => {
+          hours += parseInt(h.workedTime.split(':')[0]);
+          minutes += parseInt(h.workedTime.split(':')[1]);
+          this.barChartData.datasets[0].data = this.barChartData.datasets[0].data.concat(
+            parseFloat(h.workedTime.split(':')[0]) +
+              parseFloat(h.workedTime.split(':')[1]) / 60
+          );
+        });
+        hours += Math.floor(minutes / 60);
+        minutes = minutes % 60;
+        this.monthTime = hours + ':' + minutes + 'h';
       });
-      hours += Math.floor(minutes / 60);
-      minutes = minutes % 60;
-      this.monthTime = hours + ':' + minutes + 'h';
-    });
     setTimeout(() => {
       if (this.chart) {
         this.chart.update();
@@ -168,15 +173,13 @@ export class DashboardComponent implements OnInit {
     }, 500);
   }
   getEmployees() {
-    // const resAdmins = [];
     this.employeesService.getEmployees().subscribe(res => {
-      this.employees = res.items.sort(function (a, b) {
+      this.employees = res.items.sort(function(a, b) {
         return b.id - a.id;
       });
-      const resAdmins = this.employees.filter(f => {
-        return f.roles.includes('Administrator');
-      });
-      this.adminsToDisplay = resAdmins;
+    });
+    this.employeesService.getAdminEmployees().subscribe(res => {
+      this.adminsToDisplay = res;
     });
   }
   setLimitAndLeft() {

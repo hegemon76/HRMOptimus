@@ -41,7 +41,7 @@ namespace HRMOptimus.Application.Account.Command.Password.ChangePassword
             byte[] tokenGeneratedBytes = Encoding.UTF8.GetBytes(token);
             var codeEncoded = WebEncoders.Base64UrlEncode(tokenGeneratedBytes);
 
-            //_emailService.SendEmail(codeEncoded);
+            _emailService.SendEmail(codeEncoded);
 
             _dbContext.ApplicationUsers.Update(appUser);
             await _dbContext.SaveChangesAsync(cancellationToken);

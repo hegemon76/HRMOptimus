@@ -1,6 +1,8 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { DashboardComponent } from './_components/dashboard/dashboard.component';
+import { EmailChangeComponent } from './_components/account/email-change/email-change.component';
+import { PasswordChangeComponent } from './_components/account/password-change/password-change.component';
 
 const routes: Routes = [
   {
@@ -34,7 +36,9 @@ const routes: Routes = [
       import('./_components/projects/projects.module').then(
         m => m.ProjectsModule
       )
-  }
+  },
+  { path: 'emailChange/:emailToken', component: EmailChangeComponent },
+  { path: 'passwordChange/:passwordToken', component: PasswordChangeComponent }
 ];
 
 @NgModule({
