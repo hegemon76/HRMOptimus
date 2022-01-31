@@ -2,7 +2,7 @@
 using HRMOptimus.Application.Common.Interfaces;
 using System.Linq;
 
-namespace HRMOptimus.Application.Contract.Command.EditContract
+namespace HRMOptimus.Application.Employee.Command.EditContract
 {
     public class EditContractValidator : AbstractValidator<EditContractVm>
     {

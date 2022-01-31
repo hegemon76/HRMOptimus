@@ -15,7 +15,7 @@
       <mat-progress-spinner [color]="color" [mode]="mode" [value]="value" diameter="140"></mat-progress-spinner>
       <strong class="counter">{{monthTime}}</strong>
       <div class="text-wrapper">
-        <p>Przpracowane godziny</p>
+        <p>Przepracowane godziny</p>
         <p><strong>({{currentMonth}})</strong></p>
       </div>
     </div>
@@ -43,7 +43,7 @@
     <div class="projects-list" *ngIf="!isProjectListEmpty">
       <div class="single-project" *ngFor="let project of projects">
         <div class="label" [ngStyle]="{backgroundColor: project.colorLabel}"></div>
-        <div class="name"><span>{{project.name}}</span></div>
+        <div class="name"><a href="/projects/details/{{project.id}}"><span>{{project.name}}</span></a></div>
       </div>
     </div>
     <div class="empty-content" *ngIf="isProjectListEmpty">

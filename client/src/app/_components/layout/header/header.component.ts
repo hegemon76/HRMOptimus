@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AccountService } from '../../../_services/account.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
@@ -11,6 +11,10 @@ import { UserVm } from '../../../../shared/vm/user.vm';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  @Output('toggleSidenav') toggleSidenav: EventEmitter<
+    any
+  > = new EventEmitter();
+
   constructor(
     private accountService: AccountService,
     private breakpointObserver: BreakpointObserver
@@ -18,6 +22,7 @@ export class HeaderComponent implements OnInit {
 
   user: UserVm;
   logoutWrapperToggled = false;
+  fullName = localStorage.getItem('fullName');
 
   ngOnInit(): void {
     this.user = this.accountService.getUser();
@@ -28,4 +33,8 @@ export class HeaderComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
+
+  toggleSidenavNew() {
+    this.toggleSidenav.emit();
+  }
 }

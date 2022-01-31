@@ -1,15 +1,11 @@
-<div class="header">
-  <span>Edytuj czas pracy</span>
-  <button (click)="deleteHistory()" class="back" routerLink="/worktime"><i class="fas fa-times"></i></button>
-</div>
 <div class="workday-wrapper">
   <div class="day-info">
-    <p><span>Pracownik:</span> {{user.fullName}} </p>
+    <p><span>Pracownik:</span> {{fullName}} </p>
     <p><span>Dzień:</span> {{ id }} </p>
     <p><span>Godziny pracy:</span> {{valueTiming}}</p>
     <p><span>Czas pracy:</span> {{valueDuration}} </p>
-    <!-- <button class="save">Zapisz</button> -->
   </div>
+  <div class="addTimeWork"><span>Dodaj czas pracy</span></div>
   <div class="times constForm">
     <form [formGroup]="form">
       <mat-form-field class="example-form-field hoursFrom" appearance="fill">
@@ -37,9 +33,10 @@
         <input matInput formControlName="dayName" value="">
       </mat-form-field>
     </form>
-    <button class="addEntry" id="{{ id }}" (click)="addEntry()"><i class="fas fa-plus"></i>
+    <button class="addEntry" id="{{ id }}" (click)="addEntry()">Dodaj
     </button>
   </div>
+  <div class="addTimeWork"><span>Edytuj czas pracy</span></div>
   <div class="times" *ngFor="let day of workDays">
     <form [formGroup]="form">
       <mat-form-field class="example-form-field hoursFrom" appearance="fill">
@@ -67,7 +64,9 @@
         <input matInput value="{{day.name}}">
       </mat-form-field>
     </form>
-    <button (click)="deleteWorkDayEntry(day.id)" id="{{day.id}}" class="deleteEntry"><i class="fas fa-times"></i>
+    <button id="{{day.id}}" class="editEntry">Edytuj
+    </button>
+    <button (click)="deleteWorkDayEntry(day.id)" id="{{day.id}}" class="deleteEntry">Usuń
     </button>
   </div>
   <div #parent> </div>

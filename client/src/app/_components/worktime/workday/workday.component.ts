@@ -43,6 +43,7 @@ export class WorkdayComponent implements OnInit {
   entriesCount;
   valueDuration;
   valueTiming;
+  fullName = localStorage.getItem('fullName');
 
   @Input() item: string;
 

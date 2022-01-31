@@ -1,14 +1,19 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
+using HRMOptimus.Application.Account.Command.ChangeEmail;
+using HRMOptimus.Application.Account.Command.ConfirmEmail;
+using HRMOptimus.Application.Account.Command.Password.ChangePassword;
+using HRMOptimus.Application.Account.Command.Password.ConfirmPassword;
 using HRMOptimus.Application.Account.Command.Registration;
 using HRMOptimus.Application.Common.Interfaces;
 using HRMOptimus.Application.Common.Middleware;
 using HRMOptimus.Application.Common.Services;
-using HRMOptimus.Application.Contract.Command.EditContract;
+using HRMOptimus.Application.Employee.Command.EditContract;
 using HRMOptimus.Application.Employee.Command.EditEmployee;
 using HRMOptimus.Application.LeaveRegister.Command.ChangeStatusLeaveRegister;
-using HRMOptimus.Application.Project.Command.AddEmployee;
+using HRMOptimus.Application.Project.Command.AddEmployeeToProject;
 using HRMOptimus.Application.Project.Command.AddProject;
+using HRMOptimus.Application.Project.Command.RemoveEmployeeFromProject;
 using HRMOptimus.Application.Project.Command.RemoveProject;
 using HRMOptimus.Application.Project.Command.UpdateProject;
 using HRMOptimus.Application.WorkRecord.Command.AddWorkRecord;
@@ -31,11 +36,13 @@ namespace HRMOptimus.Application
             services.AddScoped<RequestTimeMiddleware>();
             services.AddScoped<ErrorHandlingMiddleware>();
             services.AddHttpContextAccessor();
+            services.AddScoped<IDecodeTokenService, DecodeTokenService>();
             services.AddScoped<IUserContextService, UserContextService>();
-            services.AddScoped<TokenService>().Configure<IConfiguration>((config) =>
-            {
-                configuration.GetSection("TokenKey").Bind(config);
-            });
+            services.AddScoped<ICreateTokenService, CreateTokenService>().Configure<IConfiguration>((config) =>
+             {
+                 configuration.GetSection("TokenKey").Bind(config);
+             });
+            services.AddScoped<EmailService>();
 
             services.AddScoped<IValidator<RegistrationVm>, RegistrationVmValidator>();
             services.AddScoped<IValidator<UpdateProjectVm>, UpdateProjectVmValidator>();
@@ -44,10 +51,15 @@ namespace HRMOptimus.Application
             services.AddScoped<IValidator<UpdateWorkRecordVm>, UpdateWorkRecordVmValidator>();
             services.AddScoped<IValidator<EditEmployeeVm>, EditEmployeeVmValidator>();
             services.AddScoped<IValidator<RemoveWorkRecordCommand>, RemoveWorkRecordCommandValidator>();
-            services.AddScoped<IValidator<AddEmployeeVm>, AddEmployeeVmValidator>();
+            services.AddScoped<IValidator<AddEmployeeToProjectCommand>, AddEmployeeToProjectCommandValidator>();
+            services.AddScoped<IValidator<RemoveEmployeeFromProjectCommand>, RemoveEmployeeFromProjectCommandValidator>();
             services.AddScoped<IValidator<RemoveProjectCommand>, RemoveProjectCommandValidator>();
             services.AddScoped<IValidator<ChangeStatusLeaveRegisterVm>, ChangeStatusLeaveRegisterVmValidator>();
             services.AddScoped<IValidator<EditContractVm>, EditContractValidator>();
+            services.AddScoped<IValidator<ChangeEmailVm>, ChangeEmailValidator>();
+            services.AddScoped<IValidator<ConfirmEmailCommand>, ConfirmEmailValidator>();
+            services.AddScoped<IValidator<ChangePasswordVm>, ChangePasswordValidator>();
+            services.AddScoped<IValidator<ConfirmPasswordCommand>, ConfirmPasswordValidator>();
 
             return services;
         }

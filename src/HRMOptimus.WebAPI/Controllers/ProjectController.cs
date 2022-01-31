@@ -1,9 +1,11 @@
-﻿using HRMOptimus.Application.Project.Command.AddEmployee;
+﻿using HRMOptimus.Application.Project.Command.AddEmployeeToProject;
 using HRMOptimus.Application.Project.Command.AddProject;
+using HRMOptimus.Application.Project.Command.RemoveEmployeeFromProject;
 using HRMOptimus.Application.Project.Command.RemoveProject;
 using HRMOptimus.Application.Project.Command.UpdateProject;
 using HRMOptimus.Application.Project.Query.ProjectDetails;
 using HRMOptimus.Application.Project.Query.Projects;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,9 +13,11 @@ using System.Threading.Tasks;
 namespace HRMOptimus.WebAPI.Controllers
 {
     [ApiController]
+    [Authorize]
     public class ProjectController : BaseController
     {
         [HttpPost]
+        [Authorize(Roles = "Administrator, ProjectManager")]
         [Route("api/project/add")]
         public async Task<ActionResult<int>> AddProject(AddProjectVm model)
         {
@@ -23,15 +27,27 @@ namespace HRMOptimus.WebAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administrator, ProjectManager")]
         [Route("api/project/addEmployee")]
-        public async Task<ActionResult<int>> AddEmployee(AddEmployeeVm model)
+        public async Task<ActionResult> AddEmployeeToProject(int projectId, int employeeId)
         {
-            await Mediator.Send(new AddEmployeeCommand() { AddEmployeeVm = model });
+            await Mediator.Send(new AddEmployeeToProjectCommand() { EmployeeId = employeeId, ProjectId = projectId });
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Authorize(Roles = "Administrator, ProjectManager")]
+        [Route("api/project/removeEmployeeFromProject")]
+        public async Task<ActionResult> RemoveEmployeeFromProject(int projectId, int employeeId)
+        {
+            await Mediator.Send(new RemoveEmployeeFromProjectCommand() { EmployeeId = employeeId, ProjectId = projectId });
 
             return Ok();
         }
 
         [HttpPut]
+        [Authorize(Roles = "Administrator, ProjectManager")]
         [Route("api/project/update")]
         public async Task<ActionResult> UpdateProject(UpdateProjectVm model)
         {
@@ -59,6 +75,7 @@ namespace HRMOptimus.WebAPI.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Administrator, ProjectManager")]
         [Route("api/project/delete/")]
         public async Task<ActionResult> RemoveProject(int projectId)
         {

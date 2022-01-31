@@ -18,6 +18,7 @@ import { DashboardModule } from './_components/dashboard/dashboard.module';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { CustomDateAdapter } from './custom-date-adapter';
 import { MatNativeDateModule } from '@angular/material/core';
+import { AuthInterceptorProvider } from './authentication.interceptor';
 
 @NgModule({
   declarations: [
@@ -43,8 +44,9 @@ import { MatNativeDateModule } from '@angular/material/core';
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pl-PL' },
-    { provide: DateAdapter, useClass: CustomDateAdapter }
+    { provide: DateAdapter, useClass: CustomDateAdapter },
+    AuthInterceptorProvider
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

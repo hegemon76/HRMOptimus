@@ -14,18 +14,20 @@ namespace HRMOptimus.Persistance
     {
         public static IServiceCollection AddPersistance(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<HRMOptimusDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("ConnectionStringName")));
-
-            services.AddScoped<IHRMOptimusDbContext>(provider => provider.GetService<HRMOptimusDbContext>());
-
             services.AddIdentityCore<ApplicationUser>(cfg =>
             {
                 cfg.User.RequireUniqueEmail = true;
             }
             ).AddRoles<IdentityRole>()
-            .AddUserManager<UserManager<ApplicationUser>>()
-            .AddEntityFrameworkStores<HRMOptimusDbContext>();
+            .AddEntityFrameworkStores<HRMOptimusDbContext>()
+            .AddDefaultTokenProviders();
+
+            services.AddDbContext<HRMOptimusDbContext>(options =>
+            {
+                options.UseSqlServer(configuration.GetConnectionString("ConnectionStringName"));
+            });
+
+            services.AddScoped<IHRMOptimusDbContext>(provider => provider.GetService<HRMOptimusDbContext>());
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                .AddJwtBearer(options =>

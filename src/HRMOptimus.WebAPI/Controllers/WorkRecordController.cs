@@ -3,6 +3,7 @@ using HRMOptimus.Application.WorkRecord.Command.RemoveWorkRecord;
 using HRMOptimus.Application.WorkRecord.Command.UpdateWorkRecord;
 using HRMOptimus.Application.WorkRecord.Query.DayWorkRecords;
 using HRMOptimus.Application.WorkRecord.Query.MonthDaysRecords;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 namespace HRMOptimus.WebAPI.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/workrecord/")]
     public class WorkRecordController : BaseController
     {
@@ -43,9 +45,10 @@ namespace HRMOptimus.WebAPI.Controllers
 
         [HttpGet]
         [Route("month")]
-        public async Task<ActionResult<List<DaysWorkRecordsVm>>> MonthDaysRecords(int monthFromCurrent, int month, int year)
+        public async Task<ActionResult<MonthWorkRecordsVm>> MonthDaysRecords(int monthFromCurrent, int month, int year, int employeeId)
         {
-            var daysWorkRecords = await Mediator.Send(new MonthDaysRecordsQuery() { MonthFromCurrent = monthFromCurrent, Month = month, Year = year });
+            var daysWorkRecords = await Mediator.Send(new MonthDaysRecordsQuery()
+            { MonthFromCurrent = monthFromCurrent, Month = month, Year = year, EmployeeId = employeeId });
 
             return daysWorkRecords;
         }

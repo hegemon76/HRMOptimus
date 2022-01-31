@@ -20,12 +20,13 @@
   --odd: #f0f0f0;
   --button-filter: none;
 }
+
 [data-theme="dark"] {
   --main: #12191d;
   --main-contrast: #3a3b3c;
   --topbar: rgb(31, 31, 31);
   --font: #fff;
-  --buttons: #000;
+  --buttons: rgb(24, 136, 42);
   --buttons-hover: rgb(0, 230, 0);
   --shadows: rgba(0, 0, 0, 0.2) 0px 7px 29px 0px;
   --hovers: rgba(5, 5, 5, 0.479);
@@ -35,10 +36,11 @@
   --mat-card-text: #fff;
   --invert: invert(1);
   --before-bg: #12191d;
-  --head: #000;
+  --head: rgb(61, 61, 61);
   --input: #3a3b3c;
   --input-text: #fff;
   --even: #12191d;
   --odd: #1b2226;
   --button-filter: invert(1);
+  --legend:
 }

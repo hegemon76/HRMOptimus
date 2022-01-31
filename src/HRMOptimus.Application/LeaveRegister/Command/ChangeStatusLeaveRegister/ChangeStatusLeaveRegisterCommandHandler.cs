@@ -18,8 +18,7 @@ namespace HRMOptimus.Application.LeaveRegister.Command.ChangeStatusLeaveRegister
 
         public async Task<Unit> Handle(ChangeStatusLeaveRegisterCommand request, CancellationToken cancellationToken)
         {
-            var user = await _context.Employees.Include(x => x.LeavesRegister)
-                .FirstOrDefaultAsync(x => x.Id == request.ChangeStatusLeaveRegisterVm.EmployeeId);
+            var user = await _context.Employees.FirstOrDefaultAsync(x => x.Id == request.ChangeStatusLeaveRegisterVm.EmployeeId);
 
             var leaveRegister = await _context.LeavesRegister.FirstOrDefaultAsync(x => x.Id == request.ChangeStatusLeaveRegisterVm.RecordId);
 

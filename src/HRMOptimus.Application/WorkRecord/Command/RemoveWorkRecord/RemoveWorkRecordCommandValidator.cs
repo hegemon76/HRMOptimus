@@ -8,7 +8,7 @@ namespace HRMOptimus.Application.WorkRecord.Command.RemoveWorkRecord
     {
         public RemoveWorkRecordCommandValidator(IHRMOptimusDbContext dbContext)
         {
-            RuleFor(x => x.WorkRecordId).Custom((value, context) =>
+            RuleFor(x => x.WorkRecordId).NotEmpty().Custom((value, context) =>
             {
                 var workRecord = dbContext.WorkRecords.Any(e => e.Id == value && e.Enabled);
                 if (!workRecord)

@@ -17,7 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FilterPipe } from './projectsFilter.pipe';
 import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+// import { MatNativeDateModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatChipsModule } from '@angular/material/chips';
@@ -43,7 +43,7 @@ import { ProjectEditComponent } from './project-edit/project-edit.component';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatNativeDateModule,
+    // MatNativeDateModule,
     MatDatepickerModule,
     MatDialogModule,
     MatChipsModule,

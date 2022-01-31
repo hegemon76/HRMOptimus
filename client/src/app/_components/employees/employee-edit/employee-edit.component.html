@@ -16,10 +16,13 @@
         {{option.lastName}}</mat-option>
     </mat-autocomplete>
     <div class="options-wrapper" [ngStyle]="!editedEmployeeEqualsUser && {'grid-template-columns': 'repeat(3,1fr)'}">
-      <button (click)="setFormToDisplay(1)">Dane osobowe</button>
-      <button (click)="setFormToDisplay(2)">Dane kontraktowe</button>
+      <button (click)="setFormToDisplay(1)"
+        *ngIf="editedEmployeeEqualsUser || user.role.includes('ProjectManager') || user.role.includes('Administrator')">Dane
+        osobowe</button>
+      <button (click)="setFormToDisplay(2)"
+        *ngIf="user.role.includes('ProjectManager') || user.role.includes('Administrator')">Dane kontraktowe</button>
       <button (click)="setFormToDisplay(3)" *ngIf="editedEmployeeEqualsUser">Dane logowania</button>
-      <button (click)="setFormToDisplay(4)">Uprawnienia</button>
+      <button (click)="setFormToDisplay(4)" *ngIf="user.role.includes('Administrator')">Uprawnienia</button>
     </div>
   </mat-card>
   <mat-card class="single-employyee-edit" *ngIf="formToDisplay != null">
@@ -100,6 +103,24 @@
         <input matInput formControlName="leaveDays">
       </mat-form-field>
     </form>
+    <form [formGroup]="formEmail" action="" *ngIf="formToDisplay == 3">
+      <h6>Email:</h6>
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput formControlName="email">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Nowy email</mat-label>
+        <input type="email-new" matInput formControlName="emailNew">
+        <mat-error *ngIf="formEmail.controls.emailNew.hasError('emailTaken')"> Mail już zajęty </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Powtórz email</mat-label>
+        <input type="email-repeat" matInput formControlName="emailRepeat">
+        <mat-error *ngIf="formEmail.controls.emailRepeat.hasError('emailMatch')"> Maile muszą się zgadzać</mat-error>
+      </mat-form-field>
+      <button class="submit" (click)="updateEmail()">ZAPISZ</button>
+    </form>
     <form [formGroup]="formPassword" action="" *ngIf="formToDisplay == 3">
       <h6>Hasło:</h6>
       <mat-form-field appearance="fill">
@@ -114,6 +135,7 @@
         <mat-label>Powtórz hasło</mat-label>
         <input type="password-repeat" matInput formControlName="passwordRepeat">
       </mat-form-field>
+      <button class="submit" (click)="updatePassword()">ZAPISZ</button>
     </form>
     <form [formGroup]="formRoles" action="" *ngIf="formToDisplay == 4">
       <h6>Role użytkownika:</h6>
@@ -134,7 +156,7 @@
       </mat-form-field>
     </form>
   </mat-card>
-  <button class="submit" *ngIf="formToDisplay != null" (click)="formToDisplay == 1 && editEmployee() || formToDisplay == 2 && editEmployeeContract() || formToDisplay == 4
+  <button class="submit" *ngIf="formToDisplay != null && formToDisplay != 3" (click)="formToDisplay == 1 && editEmployee() || formToDisplay == 2 && editEmployeeContract() || formToDisplay == 4
     && setRoles();openDialog()">ZAPISZ</button>
   <!-- <button class="submit" *ngIf="formToDisplay != null" (click)="openDialog()">ZAPISZ</button> -->
 </div>

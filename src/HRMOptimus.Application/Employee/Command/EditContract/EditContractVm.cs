@@ -1,6 +1,6 @@
 ﻿using HRMOptimus.Domain.Enums;
 
-namespace HRMOptimus.Application.Contract.Command.EditContract
+namespace HRMOptimus.Application.Employee.Command.EditContract
 {
     public class EditContractVm
     {

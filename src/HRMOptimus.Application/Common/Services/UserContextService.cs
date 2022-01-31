@@ -1,39 +1,55 @@
 ﻿using HRMOptimus.Application.Common.Interfaces;
+using HRMOptimus.Domain.Entities;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Net.Http.Headers;
-using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
 
 namespace HRMOptimus.Application.Common.Services
 {
     public class UserContextService : IUserContextService
     {
-        private readonly string _token;
-        private int? _employeeId;
-        private string _userId;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private ApplicationUser _applicationUser;
+        private string FullName { get; set; }
 
-        public UserContextService(IHttpContextAccessor httpContextAccessor)
+        public UserContextService(IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager)
         {
-            _token = httpContextAccessor.HttpContext.Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
-            if (!string.IsNullOrWhiteSpace(_token))
-                decodeToken();
+            _userManager = userManager;
+            var token = httpContextAccessor.HttpContext?.Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
+            decodeToken(token);
         }
 
-        private void decodeToken()
+        //public string GetUserId => _applicationUser != null ? null : _applicationUser.Id;
+        public string GetUserId => _applicationUser != null ? _applicationUser.Id : null;
+        public string GetFullName => string.IsNullOrWhiteSpace(FullName) ? null : FullName;
+        public int? GetEmployeeId => _applicationUser != null ? _applicationUser.EmployeeId : null;
+
+        public List<string> GetRoles()
         {
-            var handler = new JwtSecurityTokenHandler();
-            var jsonToken = handler.ReadJwtToken(_token);
-            _employeeId = int.Parse(jsonToken.Payload.First(claim => claim.Key == "employeeId").Value.ToString());
-            _userId = jsonToken.Payload.First(claim => claim.Key == "userId").Value.ToString();
+            var roles = _applicationUser != null ?
+                        _userManager.GetRolesAsync(_applicationUser).Result.ToList() : new List<string>();
+
+            return roles;
         }
 
-        public string GetUserId => string.IsNullOrWhiteSpace(_userId) ? null : _userId;
+        private void decodeToken(string token)
+        {
+            if (!string.IsNullOrWhiteSpace(token))
+            {
+                var handler = new JwtSecurityTokenHandler();
+                var jsonToken = handler.ReadJwtToken(token);
 
-        public int? GetEmployeeId => _employeeId == 0 || _employeeId == null ? 0 : (int)_employeeId;
+                FullName = jsonToken.Payload.First(claim => claim.Key == "fullName").Value.ToString();
+                var userId = jsonToken.Payload.First(claim => claim.Key == "userId").Value.ToString();
 
-        public List<ClaimsPrincipal> Roles { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+                if (userId != null)
+                {
+                    _applicationUser = _userManager.FindByIdAsync(userId).Result;
+                }
+            }
+        }
     }
 }

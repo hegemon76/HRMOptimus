@@ -21,10 +21,8 @@ namespace HRMOptimus.Application.LeaveRegister.Command.DeleteLeaveRegister
         public async Task<Unit> Handle(DeleteLeaveRegisterCommand request, CancellationToken cancellationToken)
         {
             var leaveRegister = _context.LeavesRegister.FirstOrDefault(x => x.Id == request.Id);
-            int employeeId = _userContextService.GetEmployeeId.Value;
 
-            if (employeeId == 0)
-                employeeId = (int)request.EmployeeId;
+            var employeeId = _userContextService.GetEmployeeId.Value;
 
             var employee = _context.Employees.FirstOrDefault(x => x.Id == employeeId);
 

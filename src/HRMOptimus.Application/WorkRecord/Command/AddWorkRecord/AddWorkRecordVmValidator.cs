@@ -9,10 +9,9 @@ namespace HRMOptimus.Application.WorkRecord.Command.AddWorkRecord
     {
         public AddWorkRecordVmValidator(IHRMOptimusDbContext dbContext)
         {
-            RuleFor(x => x.Name).MinimumLength(5);
-            RuleFor(x => x.Name).NotEmpty();
+            RuleFor(x => x.Name).NotEmpty().MinimumLength(5);
 
-            RuleFor(x => x.ProjectId).Custom((value, context) =>
+            RuleFor(x => x.ProjectId).NotEmpty().Custom((value, context) =>
             {
                 var project = dbContext.Projects.Any(e => e.Id == value && e.Enabled);
                 if (!project)
@@ -20,8 +19,8 @@ namespace HRMOptimus.Application.WorkRecord.Command.AddWorkRecord
             });
 
             RuleFor(x => x.WorkStart).NotEmpty();
-            RuleFor(x => x.WorkEnd).NotEmpty();
-            RuleFor(x => x.WorkEnd).GreaterThan(x => x.WorkStart);
+            RuleFor(x => x.WorkEnd).NotEmpty().GreaterThan(x => x.WorkStart);
+            RuleFor(x => x.IsRemoteWork).NotNull();
         }
     }
 }

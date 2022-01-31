@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace HRMOptimus.Application.Project.Command.UpdateProject
 {
@@ -13,6 +12,5 @@ namespace HRMOptimus.Application.Project.Command.UpdateProject
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
         public DateTime? Deadline { get; set; }
-        public ICollection<Domain.Entities.Employee> ProjectMembers { get; set; }
     }
 }

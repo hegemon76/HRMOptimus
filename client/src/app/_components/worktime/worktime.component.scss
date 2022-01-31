@@ -1,20 +1,22 @@
 .wrapper {
-  display: grid;
-  grid-template-columns: repeat(7, 0.5fr);
-  max-width: 65%;
+  display: grid !important;
+  grid-template-columns: repeat(7, 150px);
   margin-left: auto;
   margin-right: auto;
   width: auto;
+  align-items: center;
+  justify-content: center;
 }
 
 .calendar-days {
   width: 140px;
+  min-width: 72px;
   height: 80px;
   background: rgb(231, 231, 231);
   margin-top: 7px;
   margin-bottom: 7px;
-  margin-left: 0px;
-  margin-right: 0px;
+  margin-left: auto;
+  margin-right: auto;
   border-radius: 10px;
   text-align: center;
   cursor: pointer;
@@ -26,24 +28,11 @@
   }
 
   &.weekend {
-    background-color: rgb(37, 168, 37);
-    color: white;
-
-    .day {
-      line-height: 80px;
-    }
-
-    .hours {
-      display: none;
-    }
-
-    .time {
-      display: none;
-    }
+    background-color: rgb(137, 241, 137);
   }
 
   &.today {
-    border: 2px solid rgb(117, 117, 117);
+    border: 2px solid rgb(221, 195, 48);
   }
 
   &.weekend:hover {
@@ -137,6 +126,7 @@ b {
     font-weight: bold;
     margin: 0px auto;
     text-align: center;
+    color: var(--font);
   }
 }
 
@@ -152,7 +142,8 @@ b {
   height: auto;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 30px;
+  margin-top: 20px;
+  color: var(--font);
 
   .box {
     width: 15px;
@@ -166,22 +157,22 @@ b {
   }
 
   .today {
-    background-color: rgb(117, 117, 117);
+    background-color: rgb(221, 195, 48);
   }
 
   .week {
-    background-color: rgb(37, 168, 37);
+    background-color: rgb(137, 241, 137);
   }
+}
 
-  .vacation {
-    background-color: cornflowerblue;
-  }
+.summary {
+  width: auto;
+  text-align: center;
+  margin-top: 25px;
+  color: var(--font);
 
-  .work-on-premise {
-    background-color: rgb(226, 164, 105);
-  }
-
-  .work-remote {
-    background-color: rgb(209, 240, 160);
+  span {
+    font-weight: bold;
+    margin-left: 5px;
   }
 }
