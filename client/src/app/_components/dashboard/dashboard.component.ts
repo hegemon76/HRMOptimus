@@ -168,15 +168,13 @@ export class DashboardComponent implements OnInit {
     }, 500);
   }
   getEmployees() {
-    // const resAdmins = [];
     this.employeesService.getEmployees().subscribe(res => {
       this.employees = res.items.sort(function(a, b) {
         return b.id - a.id;
       });
-      const resAdmins = this.employees.filter(f => {
-        return f.roles.includes('Administrator');
-      });
-      this.adminsToDisplay = resAdmins;
+    });
+    this.employeesService.getAdminEmployees().subscribe(res => {
+      this.adminsToDisplay = res;
     });
   }
   setLimitAndLeft() {

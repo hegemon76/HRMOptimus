@@ -5,7 +5,12 @@ import {
   ViewChild,
   Inject
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ValidatorFn
+} from '@angular/forms';
 import { Observable } from 'rxjs';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FormControl } from '@angular/forms';
@@ -21,6 +26,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA
 } from '@angular/material/dialog';
+import { AbstractControl } from '@angular/forms';
 
 export interface DialogData {}
 
@@ -32,6 +38,7 @@ export interface DialogData {}
 export class EmployeeEditComponent implements OnInit {
   formData: FormGroup;
   formContract: FormGroup;
+  formEmail: FormGroup;
   formPassword: FormGroup;
   formRoles: FormGroup;
   allEmployees: EmployeeVm[];
@@ -56,6 +63,10 @@ export class EmployeeEditComponent implements OnInit {
   isFormLoaded = false;
   formToDisplay = null;
   editedEmployeeEqualsUser = false;
+  user;
+  emails: string[] = [];
+  isEmailTaken: boolean;
+  emailPlaceholder: string;
 
   @ViewChild('roleInput') roleInput: ElementRef<HTMLInputElement>;
 
@@ -83,7 +94,13 @@ export class EmployeeEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let user = this.accountService.getUser();
+    this.employeesService.getEmployees().subscribe(res => {
+      res.items.map(r => {
+        this.emails.push(r.email);
+      });
+    });
+    this.user = this.accountService.getUser();
+
     this.employeesService.getEmployees().subscribe(res => {
       this.allEmployees = res.items;
       this.fillOptions(this.allEmployees);
@@ -97,7 +114,7 @@ export class EmployeeEditComponent implements OnInit {
         this.employeeId = this.route.snapshot.paramMap.get('id');
         this.roles = this.employee.roles;
         this.isEmployeeLoaded = true;
-        if (this.employeeId == user.employeeId) {
+        if (this.employeeId == this.user.employeeId) {
           this.editedEmployeeEqualsUser = true;
         }
 
@@ -106,7 +123,6 @@ export class EmployeeEditComponent implements OnInit {
           lastName: [this.employee.lastName, Validators.required],
           gender: [this.employee.gender, Validators.required],
           birthDate: [this.employee.birthDate, Validators.required],
-          // email: [this.employee.email, Validators.required],
           phoneNumber: [this.employee.phoneNumber, Validators.required],
           street: [this.employee.address.street, Validators.required],
           buildingNumber: [
@@ -136,10 +152,45 @@ export class EmployeeEditComponent implements OnInit {
           leaveDays: [this.employee.contract.leaveDays, Validators.required]
         });
 
+        this.formEmail = this.formBuilder.group({
+          email: [this.employee.email, [Validators.required, Validators.email]],
+          emailNew: [
+            '',
+            [Validators.required, Validators.email, this.emailTaken()]
+          ],
+          emailRepeat: [
+            '',
+            [
+              Validators.required,
+              Validators.email,
+              this.emailTaken(),
+              this.emailMatch()
+            ]
+          ]
+        });
+
         this.formPassword = this.formBuilder.group({
           password: ['', Validators.required],
-          passwordNew: ['', Validators.required],
-          passwordRepeat: ['', Validators.required]
+          passwordNew: [
+            '',
+            [
+              Validators.required,
+              Validators.minLength(8),
+              Validators.pattern(
+                '^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\\D*\\d)[A-Za-z\\d!$%@#£€*?&]{8,}$'
+              )
+            ]
+          ],
+          passwordRepeat: [
+            '',
+            [
+              Validators.required,
+              Validators.minLength(8),
+              Validators.pattern(
+                '^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\\D*\\d)[A-Za-z\\d!$%@#£€*?&]{8,}$'
+              )
+            ]
+          ]
         });
 
         this.formRoles = this.formBuilder.group({
@@ -153,6 +204,9 @@ export class EmployeeEditComponent implements OnInit {
         map(name => (name ? this.optionsFilter(name) : this.options.slice()))
       );
       this.isFormLoaded = true;
+      this.formEmail.valueChanges.subscribe(() => {
+        this.emailPlaceholder = this.formEmail.controls.emailNew.value;
+      });
     }, 1000);
   }
   changeUser() {
@@ -250,6 +304,31 @@ export class EmployeeEditComponent implements OnInit {
         this.router.navigate(['/employees/edit/', this.employeeId]);
       });
     });
+  }
+  emailTaken(): ValidatorFn {
+    return (control: AbstractControl) => {
+      return this.emails.includes(control.value) ? { emailTaken: true } : null;
+    };
+  }
+  emailMatch(): ValidatorFn {
+    return (control: AbstractControl) => {
+      return this.emailPlaceholder != control.value
+        ? { emailMatch: true }
+        : null;
+    };
+  }
+
+  updateEmail() {
+    if (
+      this.formEmail.controls.emailNew.value ===
+      this.formEmail.controls.emailRepeat.value
+    ) {
+      this.accountService
+        .updateEmail(this.user.userId, this.formEmail.controls.emailNew.value)
+        .subscribe(res => {
+          console.log(res);
+        });
+    }
   }
 }
 

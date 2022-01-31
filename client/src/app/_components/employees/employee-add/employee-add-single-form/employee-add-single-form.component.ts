@@ -6,13 +6,20 @@ import {
   ElementRef,
   ViewChild
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
 import { Observable } from 'rxjs';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { map, startWith } from 'rxjs/operators';
+import { EmployeesService } from '../../../../_services/employees.service';
+import { AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-employee-add-single-form',
@@ -34,9 +41,15 @@ export class EmployeeAddSingleFormComponent implements OnInit {
     'HumanResources'
   ];
 
+  emails: string[] = [];
+  isEmailTaken: boolean;
+
   @ViewChild('roleInput') roleInput: ElementRef<HTMLInputElement>;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private employeesService: EmployeesService
+  ) {
     this.filteredRoles = this.roleCtrl.valueChanges.pipe(
       startWith(null),
       map((role: string | null) =>
@@ -50,12 +63,17 @@ export class EmployeeAddSingleFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.employeesService.getEmployees().subscribe(res => {
+      res.items.map(r => {
+        this.emails.push(r.email);
+      });
+    });
     this.form = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       gender: ['', Validators.required],
       birthDate: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email, this.emailTaken()]],
       phoneNumber: ['', Validators.required],
       street: ['', Validators.required],
       buildingNumber: ['', Validators.required],
@@ -78,6 +96,7 @@ export class EmployeeAddSingleFormComponent implements OnInit {
       ],
       roles: [this.roles]
     });
+    console.log(this.form.controls.email);
   }
 
   remove() {
@@ -120,7 +139,17 @@ export class EmployeeAddSingleFormComponent implements OnInit {
     );
   }
 
-  checkValues() {
-    console.log(this.form.getRawValue());
+  // checkValues() {
+  //   if (this.emails.includes(this.form.controls.email.value)) {
+  //     this.isEmailTaken = true;
+  //   } else {
+  //     this.isEmailTaken = false;
+  //   }
+  // }
+
+  emailTaken(): ValidatorFn {
+    return (control: AbstractControl) => {
+      return this.emails.includes(control.value) ? { emailTaken: true } : null;
+    };
   }
 }

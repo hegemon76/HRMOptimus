@@ -8,7 +8,8 @@ import { environment } from '../../environments/environment';
 })
 export class EmployeesService {
   baseUrl = environment.baseUrl;
-  getEmployeesurl = `${this.baseUrl}employees?PageNumber=1&PageSize=1000&SortBy=FullName&SortDirection=1`;
+  getEmployeesUrl = `${this.baseUrl}employees?PageNumber=1&PageSize=1000&SortBy=FullName&SortDirection=1`;
+  getAdminEmployeesUrl = `${this.baseUrl}adminEmployees`;
   getEmployeeUrl = `${this.baseUrl}employee/details`;
   deleteEmployeeUrl = `${this.baseUrl}employee/delete`;
   addEmployeeUrl = `${this.baseUrl}register`;
@@ -19,7 +20,10 @@ export class EmployeesService {
   constructor(private http: HttpClient) {}
 
   getEmployees(): Observable<any> {
-    return this.http.get(this.getEmployeesurl);
+    return this.http.get(this.getEmployeesUrl);
+  }
+  getAdminEmployees(): Observable<any> {
+    return this.http.get(this.getAdminEmployeesUrl);
   }
 
   getEmployee(id): Observable<any> {

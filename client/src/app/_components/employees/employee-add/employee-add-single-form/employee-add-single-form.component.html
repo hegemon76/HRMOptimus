@@ -1,44 +1,55 @@
  <mat-card class="single-employee-add">
-   <form [formGroup]="form" action="" (change)="checkValues()">
+   <!-- <form [formGroup]="form" action="" (change)="checkValues()"> -->
+   <form [formGroup]="form" action="">
      <h6>Dane osobowe:</h6>
      <mat-form-field appearance="fill">
        <mat-label>Imię</mat-label>
-       <input matInput formControlName="firstName">
+       <input required matInput formControlName="firstName">
+       <mat-error> Pole wymagane </mat-error>
      </mat-form-field>
      <mat-form-field appearance="fill">
        <mat-label>Nazwisko</mat-label>
-       <input matInput formControlName="lastName">
+       <input required matInput formControlName="lastName">
+       <mat-error> Pole wymagane </mat-error>
      </mat-form-field>
      <mat-form-field appearance="fill">
        <mat-label>Płeć</mat-label>
-       <mat-select formControlName="gender">
+       <mat-select required formControlName="gender">
          <mat-option value="0">Mężczyzna</mat-option>
          <mat-option value="1">Kobieta</mat-option>
        </mat-select>
+       <mat-error> Pole wymagane </mat-error>
      </mat-form-field>
      <mat-form-field appearance="fill">
        <mat-label>Data urodzenia</mat-label>
-       <input matInput [matDatepicker]="picker" formControlName="birthDate">
+       <input required matInput [matDatepicker]="picker" formControlName="birthDate">
        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
        <mat-datepicker #picker></mat-datepicker>
+       <mat-error> Pole wymagane </mat-error>
      </mat-form-field>
      <h6>Dane kontaktowe:</h6>
      <mat-form-field appearance="fill">
        <mat-label>E-mail</mat-label>
-       <input matInput formControlName="email">
+       <input required matInput formControlName="email">
+       <mat-error *ngIf="form.controls.email.hasError('required')"> Pole wymagane </mat-error>
+       <mat-error *ngIf="form.controls.email.hasError('email')"> Wprowaź poprawny adres email</mat-error>
+       <mat-error *ngIf="form.controls.email.hasError('emailTaken')"> Podany email jest zajęty</mat-error>
      </mat-form-field>
      <mat-form-field appearance="fill">
        <mat-label>Telefon</mat-label>
-       <input matInput formControlName="phoneNumber">
+       <input required matInput formControlName="phoneNumber">
+       <mat-error> Pole wymagane </mat-error>
      </mat-form-field>
      <h6>Adres:</h6>
      <mat-form-field appearance="fill">
        <mat-label>Ulica</mat-label>
-       <input matInput formControlName="street">
+       <input required matInput formControlName="street">
+       <mat-error> Pole wymagane </mat-error>
      </mat-form-field>
      <mat-form-field appearance="fill">
        <mat-label>Numer Budynku</mat-label>
-       <input matInput formControlName="buildingNumber">
+       <input required matInput formControlName="buildingNumber">
+       <mat-error> Pole wymagane </mat-error>
      </mat-form-field>
      <mat-form-field appearance="fill">
        <mat-label>Numer mieszkania</mat-label>
@@ -46,37 +57,47 @@
      </mat-form-field>
      <mat-form-field appearance="fill">
        <mat-label>Kod pocztowy</mat-label>
-       <input matInput formControlName="zipCode">
+       <input required matInput formControlName="zipCode">
+       <mat-error> Pole wymagane </mat-error>
      </mat-form-field>
      <mat-form-field appearance="fill">
        <mat-label>Miejscowość</mat-label>
-       <input matInput formControlName="city">
+       <input required matInput formControlName="city">
+       <mat-error> Pole wymagane </mat-error>
      </mat-form-field>
      <mat-form-field appearance="fill">
        <mat-label>Kraj</mat-label>
-       <input matInput formControlName="country">
+       <input required matInput formControlName="country">
+       <mat-error> Pole wymagane </mat-error>
      </mat-form-field>
      <h6>Stanowisko:</h6>
      <mat-form-field appearance="fill">
        <mat-label>Stanowisko</mat-label>
-       <input matInput formControlName="contractName">
+       <input required matInput formControlName="contractName">
+       <mat-error> Pole wymagane </mat-error>
      </mat-form-field>
      <mat-form-field appearance="fill">
        <mat-label>Rodzaj umowy</mat-label>
-       <mat-select formControlName="contractType">
+       <mat-select required formControlName="contractType">
          <mat-option value="0">Umowa zlecenie</mat-option>
          <mat-option value="1">Umowa o pracę</mat-option>
          <mat-option value="2">B2B</mat-option>
        </mat-select>
+       <mat-error> Pole wymagane </mat-error>
      </mat-form-field>
      <mat-form-field appearance="fill">
        <mat-label>Ilość dni urlopowych</mat-label>
-       <input matInput formControlName="leaveDays">
+       <input required matInput formControlName="leaveDays">
+       <mat-error> Pole wymagane </mat-error>
      </mat-form-field>
      <h6>Hasło:</h6>
      <mat-form-field appearance="fill">
        <mat-label>Hasło</mat-label>
-       <input type="password" matInput formControlName="password">
+       <input required type="password" matInput formControlName="password">
+       <mat-error *ngIf="form.controls.password.hasError('required')"> Pole wymagane </mat-error>
+       <mat-error *ngIf="form.controls.password.hasError('minlength')"> Hasło musi mieć conajmniej 8 znaków </mat-error>
+       <mat-error *ngIf="form.controls.password.hasError('pattern')"> Hasło musi zawierać małą literę, dużą literę,
+         cyfrę oraz znak specjalny </mat-error>
      </mat-form-field>
      <mat-form-field appearance="fill" class="roles">
        <mat-label>Role użytkownika</mat-label>
@@ -85,13 +106,14 @@
              <mat-icon>X</mat-icon>
            </button>
          </mat-chip>
-         <input placeholder="Dodaj rolę..." #roleInput [formControl]="roleCtrl" [matAutocomplete]="auto"
+         <input required placeholder="Dodaj rolę..." #roleInput [formControl]="roleCtrl" [matAutocomplete]="auto"
            [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
            (matChipInputTokenEnd)="add($event)">
        </mat-chip-list>
        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
          <mat-option *ngFor="let role of filteredRoles | async" [value]="role"> {{role}} </mat-option>
        </mat-autocomplete>
+       <mat-error> Pole wymagane, musi posiadać małą i dużą literę, cyfrę oraz znak specjalny </mat-error>
      </mat-form-field>
    </form>
    <button class="remove" (click)="remove()"><img src="/assets/images/minus-square-solid.svg" alt=""></button>

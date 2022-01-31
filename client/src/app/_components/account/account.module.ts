@@ -5,9 +5,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { LogoutComponent } from './logout/logout.component';
+import { EmailChangeComponent } from './email-change/email-change.component';
 
 @NgModule({
-  declarations: [RegisterComponent, LoginComponent, LogoutComponent],
+  declarations: [RegisterComponent, LoginComponent, LogoutComponent, EmailChangeComponent],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule],
   exports: [LoginComponent, LogoutComponent, RegisterComponent]
 })
