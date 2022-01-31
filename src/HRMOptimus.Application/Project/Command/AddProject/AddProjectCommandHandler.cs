@@ -23,7 +23,6 @@ namespace HRMOptimus.Application.Project.Command.AddProject
                 DateTo = request.AddProjectVm.DateTo,
                 Deadline = request.AddProjectVm.Deadline,
                 Description = request.AddProjectVm.Description,
-                ProjectMembers = request.AddProjectVm.ProjectMembers,
                 HoursBudget = request.AddProjectVm.HoursBudget,
                 ColorLabel = request.AddProjectVm.ColorLabel,
             };
