@@ -96,7 +96,6 @@ export class EmployeeAddSingleFormComponent implements OnInit {
       ],
       roles: [this.roles]
     });
-    console.log(this.form.controls.email);
   }
 
   remove() {

@@ -35,10 +35,8 @@ export class ProjectDetailsComponent implements OnInit {
     this.getProjectDetails();
 
     this.projectsService.getProjects().subscribe(res => {
-      console.log(res);
       this.allProjects = res;
       this.fillOptions(this.allProjects);
-      console.log(this.options);
       this.areProjectsLoaded = true;
     });
 
