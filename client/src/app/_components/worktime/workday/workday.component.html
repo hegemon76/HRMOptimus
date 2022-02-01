@@ -1,6 +1,6 @@
-<div class="workday-wrapper">
+<div class="workday-wrapper" *ngIf="user">
   <div class="day-info">
-    <p><span>Pracownik:</span> {{fullName}} </p>
+    <p><span>Pracownik:</span> {{user.fullName}} </p>
     <p><span>Dzień:</span> {{ id }} </p>
     <p><span>Godziny pracy:</span> {{valueTiming}}</p>
     <p><span>Czas pracy:</span> {{valueDuration}} </p>

@@ -17,10 +17,9 @@
     </mat-autocomplete>
     <div class="options-wrapper" [ngStyle]="!editedEmployeeEqualsUser && {'grid-template-columns': 'repeat(3,1fr)'}">
       <button (click)="setFormToDisplay(1)"
-        *ngIf="editedEmployeeEqualsUser || user.role.includes('ProjectManager') || user.role.includes('Administrator')">Dane
-        osobowe</button>
+        *ngIf="user.role.includes('HumanResources') || user.role.includes('Administrator')">Dane osobowe</button>
       <button (click)="setFormToDisplay(2)"
-        *ngIf="user.role.includes('ProjectManager') || user.role.includes('Administrator')">Dane kontraktowe</button>
+        *ngIf="user.role.includes('HumanResources') || user.role.includes('Administrator')">Dane kontraktowe</button>
       <button (click)="setFormToDisplay(3)" *ngIf="editedEmployeeEqualsUser">Dane logowania</button>
       <button (click)="setFormToDisplay(4)" *ngIf="user.role.includes('Administrator')">Uprawnienia</button>
     </div>
@@ -50,10 +49,6 @@
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
       <h6>Dane kontaktowe:</h6>
-      <!-- <mat-form-field appearance="fill">
-        <mat-label>E-mail</mat-label>
-        <input matInput formControlName="email">
-      </mat-form-field> -->
       <mat-form-field appearance="fill">
         <mat-label>Telefon</mat-label>
         <input matInput formControlName="phoneNumber">
@@ -158,5 +153,4 @@
   </mat-card>
   <button class="submit" *ngIf="formToDisplay != null && formToDisplay != 3" (click)="formToDisplay == 1 && editEmployee() || formToDisplay == 2 && editEmployeeContract() || formToDisplay == 4
     && setRoles();openDialog()">ZAPISZ</button>
-  <!-- <button class="submit" *ngIf="formToDisplay != null" (click)="openDialog()">ZAPISZ</button> -->
 </div>
