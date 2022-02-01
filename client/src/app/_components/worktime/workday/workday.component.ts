@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { AccountService } from '../../../_services/account.service';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { formatDate } from '@angular/common';
 
 interface Day {
   id: string;
@@ -46,8 +47,7 @@ export class WorkdayComponent implements OnInit {
   valueDuration;
   valueTiming;
   fullName = localStorage.getItem('fullName');
-  forms: FormGroup;
-  records: FormArray;
+  formTemplate: FormGroup;
 
   @Input() item: string;
 
@@ -56,8 +56,17 @@ export class WorkdayComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private accountService: AccountService,
-    private formBuilder: FormBuilder
-  ) {}
+    private formBuilder: FormBuilder,
+    private datePipe: DatePipe
+  ) {
+    this.formTemplate = this.formBuilder.group({
+      records: this.formBuilder.array([])
+    });
+  }
+
+  get records(): FormArray {
+    return this.formTemplate.controls.records as FormArray;
+  }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -66,10 +75,6 @@ export class WorkdayComponent implements OnInit {
       workEnd: [''],
       projectName: [''],
       typeName: ['']
-    });
-
-    this.forms = this.formBuilder.group({
-      items: this.formBuilder.array([])
     });
 
     this.valueDuration = localStorage.getItem('durationOfDay');
@@ -92,10 +97,21 @@ export class WorkdayComponent implements OnInit {
       });
 
       this.workDays = res;
-      res.map(d => {
-        this.records = this.forms.get('items') as FormArray;
-        this.records.push(this.getEntry(d));
-        console.log(this.records);
+
+      res.map(r => {
+        this.records.push(
+          this.formBuilder.group({
+            id: r.id,
+            day: r.workStart.split('T')[0],
+            workStart: [this.datePipe.transform(r.workStart, 'HH:mm')],
+            workEnd: [this.datePipe.transform(r.workStop, 'HH:mm')],
+            type: r.type,
+            projectName: r.projectName,
+            projectId: r.projectId,
+            name: r.name,
+            employeeId: this.user.employeeId
+          })
+        );
       });
 
       this.entriesCount = this.workDays.length;
@@ -106,7 +122,8 @@ export class WorkdayComponent implements OnInit {
     });
   }
 
-  deleteWorkDayEntry(id) {
+  deleteWorkDayEntry(i) {
+    const id = this.formTemplate.getRawValue().records[i].id;
     this.workdayService.deleteWorkDayEntries(id).subscribe(() => {
       this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
         this.router.navigate([`worktime/day/${this.id}`]);
@@ -143,17 +160,14 @@ export class WorkdayComponent implements OnInit {
       });
   }
 
-  getEntry(d) {
-    return this.formBuilder.group({
-      dayName: d.dayName,
-      workStart: d.workStart,
-      workEnd: d.workStop,
-      projectName: d.projectName,
-      typeName: d.type
-    });
-  }
+  updateWorkRecord(i) {
+    const recordToEdit = this.formTemplate.getRawValue().records[i];
+    this.formTemplate.getRawValue().records[i].type === 'Praca zdalna'
+      ? (recordToEdit['isRemoteWork'] = true)
+      : (recordToEdit['isRemoteWork'] = false);
+    recordToEdit.workStart = recordToEdit.day + 'T' + recordToEdit.workStart;
+    recordToEdit.workEnd = recordToEdit.day + 'T' + recordToEdit.workEnd;
 
-  updateWorkRecord() {
-    console.log(this.target);
+    this.workdayService.updateWorkRecord(recordToEdit).subscribe();
   }
 }

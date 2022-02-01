@@ -69,6 +69,7 @@ export class WorktimeComponent implements OnInit {
   searchedEmployee: string;
   options: any[] = [];
   filteredOptions: Observable<EmployeeVm[]>;
+  cm: number = 0;
 
   ngOnInit(): void {
     this.employeesService.getEmployees().subscribe(res => {
@@ -110,15 +111,16 @@ export class WorktimeComponent implements OnInit {
       this.weekdaysShort.length -
       1 -
       this.weekdaysShort.indexOf(this.endOfMonth);
+
     this.workdayService
-      .getMonthEntry(this.currentMonth - 1, this.userId)
+      .getMonthEntry(this.cm - 1, this.userId)
       .subscribe(res => {
         this.month = res.daysWorkRecords;
         this.month.slice(-this.daysBefore).map(r => {
           this.calendar.push(this.createCalendarItem('previous-month', r));
         });
         this.workdayService
-          .getMonthEntry(this.currentMonth, this.userId)
+          .getMonthEntry(this.cm, this.userId)
           .subscribe(res => {
             this.month = res.daysWorkRecords;
             let hours = 0;
@@ -136,7 +138,7 @@ export class WorktimeComponent implements OnInit {
               this.calendar.push(this.createCalendarItem('in-month', r));
             });
             this.workdayService
-              .getMonthEntry(this.currentMonth + 1, this.userId)
+              .getMonthEntry(this.cm + 1, this.userId)
               .subscribe(res => {
                 this.month = res.daysWorkRecords;
                 this.month.slice(0, this.daysAfter).map(r => {
@@ -186,12 +188,14 @@ export class WorktimeComponent implements OnInit {
   }
 
   public nextmonth() {
+    this.cm++;
     this.date.add(1, 'months');
     this.currentMonth = this.currentMonth + 1;
     this.fillCalendar();
   }
 
   public previousmonth() {
+    this.cm--;
     this.date.subtract(1, 'months');
     this.currentMonth = this.currentMonth - 1;
     this.fillCalendar();
