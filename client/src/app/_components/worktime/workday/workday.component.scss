@@ -175,3 +175,10 @@ mat-form-field {
 ::ng-deep .mat-select-value {
   color: var(--input-text) !important;
 }
+
+.single {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 12px;
+  margin: 12px 0;
+}

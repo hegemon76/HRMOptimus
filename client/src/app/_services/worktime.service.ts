@@ -77,18 +77,6 @@ export class WorktimeService {
       })
       .pipe(map((res: any) => res));
   }
-  getMonthEntryTest(id): Observable<any> {
-    return this.http
-      .get(this.getMonth, {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        params: {
-          employeeId: id
-        }
-      })
-      .pipe(map((res: any) => res));
-  }
 
   getMonthEntryDefault(): Observable<any> {
     return this.http
@@ -132,7 +120,13 @@ export class WorktimeService {
   updateWorkRecord(formData): Observable<any> {
     return this.http
       .put(this.updateWorkRecordUrl, {
-        formData
+        id: formData.id,
+        name: formData.name,
+        workStart: formData.workStart,
+        workEnd: formData.workEnd,
+        isRemoteWork: formData.isRemoteWork,
+        projectId: formData.projectId,
+        employeeId: formData.employeeId
       })
       .pipe(map((res: any) => res));
   }

@@ -108,7 +108,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.accountService.getUser();
     const today = new Date();
-    const daysCount = this.daysInMonth(today.getFullYear(), today.getMonth());
+    const daysCount = this.daysInMonth(today.getMonth(), today.getFullYear());
     this.setLabels(daysCount);
     this.setData();
     if (this.chart) {
@@ -120,11 +120,13 @@ export class DashboardComponent implements OnInit {
   }
 
   daysInMonth(month, year) {
-    return new Date(year, month, 0).getDate();
+    console.log(new Date(year, month, 0).getDate());
+
+    return new Date(year, month + 1, 0).getDate();
   }
 
   setLabels(daysCount) {
-    for (let i = 1; i <= daysCount + 1; i++) {
+    for (let i = 1; i <= daysCount; i++) {
       this.barChartData.labels = this.barChartData.labels.concat(i);
     }
   }
@@ -140,9 +142,10 @@ export class DashboardComponent implements OnInit {
       'yyyy-MM-dd',
       'en-US'
     );
-    // this.worktimeService.getMonthEntryDefault().subscribe(res => {
+    console.log(monthStart + ' ' + monthEnd);
+
     this.worktimeService
-      .getMonthEntryTest(this.user.employeeId)
+      .getMonthEntry(0, this.user.employeeId)
       .subscribe(res => {
         let hours = 0;
         let minutes = 0;
