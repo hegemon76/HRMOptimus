@@ -22,7 +22,7 @@ namespace HRMOptimus.Application.Common.Middleware
             await next.Invoke(context);
             _stoper.Stop();
 
-            if (_stoper.ElapsedMilliseconds > 4000)
+            if (_stoper.ElapsedMilliseconds > 2000)
                 _loger.LogWarning($"The request: {context.Request.Method} at {context.Request.Path} took {_stoper.ElapsedMilliseconds / 1000} s");
         }
     }

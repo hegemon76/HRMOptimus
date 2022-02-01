@@ -35,8 +35,8 @@
     </form>
     <button class="addEntry" id="{{ id }}" (click)="addEntry()">Dodaj </button>
   </div>
-  <div class="addTimeWork"><span>Edytuj czas pracy</span></div>
-  <!-- <div class="times" *ngFor="let day of workDays">
+  <!-- <div class="addTimeWork"><span>Edytuj czas pracy</span></div>
+  <div class="times" *ngFor="let day of workDays">
     <form [formGroup]="form">
       <mat-form-field class="example-form-field hoursFrom" appearance="fill">
         <mat-label>Godz. od</mat-label>
@@ -62,13 +62,48 @@
         <mat-label>Opis</mat-label>
         <input matInput value="{{day.name}}">
       </mat-form-field>
-      <button id="{{day.id}}" class="editEntry" (click)="updateWorkRecord()">Edytuj </button>
     </form>
     <button id="{{day.id}}" class="editEntry" (click)="updateWorkRecord()">Edytuj </button>
     <button (click)="deleteWorkDayEntry(day.id)" id="{{day.id}}" class="deleteEntry">Usuń </button>
   </div> -->
-  <form [formGroup]="forms" class="times" *ngFor="let item of forms.get('items')['controls']; let i = index;">
-    <p>{{item.projectName}}</p>
-  </form>
+  <div>
+    <form action="" [formGroup]="formTemplate">
+      <div formArrayName="records">
+        <div *ngFor="let record of records.controls;let i = index">
+          <div class="single" [formGroupName]="i">
+            <input type="hidden" formControlName="id">
+            <input type="hidden" formControlName="day">
+            <mat-form-field class="example-form-field hoursFrom" appearance="fill">
+              <mat-label>Godz. od</mat-label>
+              <input matInput type="text" formControlName="workStart">
+            </mat-form-field>
+            <mat-form-field class="example-form-field hoursTo" appearance="fill">
+              <mat-label>Godz. do</mat-label>
+              <input matInput type="text" formControlName="workEnd">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="type">
+              <mat-label>Tryb</mat-label>
+              <mat-select formControlName="type">
+                <mat-option *ngFor="let tp of types" [value]="tp.name"> {{tp.name}} </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="project">
+              <mat-label>Projekt</mat-label>
+              <mat-select formControlName="projectName">
+                <mat-option *ngFor="let project of projects" [value]="project.name"> {{project.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <input type="hidden" formControlName="projectId">
+            <mat-form-field class="example-full-width" appearance="fill" class="details">
+              <mat-label>Opis</mat-label>
+              <input matInput formControlName="name">
+            </mat-form-field>
+            <button class="editEntry" (click)="updateWorkRecord(i)">Edytuj </button>
+            <button (click)="deleteWorkDayEntry(i)" class="deleteEntry">Usuń </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
   <div #parent> </div>
 </div>

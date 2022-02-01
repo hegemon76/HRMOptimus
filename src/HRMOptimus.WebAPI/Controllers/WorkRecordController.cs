@@ -36,9 +36,9 @@ namespace HRMOptimus.WebAPI.Controllers
 
         [HttpGet]
         [Route("day")]
-        public async Task<ActionResult<List<WorkRecordDetailsVm>>> WorkDayRecords(DateTime dayWork)
+        public async Task<ActionResult<List<WorkRecordDetailsVm>>> WorkDayRecords(DateTime dayWork, int? employeeId)
         {
-            var dayWorkRecords = await Mediator.Send(new DayWorkRecordsQuery() { DayWork = dayWork });
+            var dayWorkRecords = await Mediator.Send(new DayWorkRecordsQuery() { DayWork = dayWork, EmployeeId = employeeId });
 
             return dayWorkRecords;
         }
