@@ -25,14 +25,15 @@ export class WorktimeService {
 
   constructor(private http: HttpClient) {}
 
-  getWorkday(id): Observable<any> {
+  getWorkday(id, employeeId): Observable<any> {
     return this.http
       .get(this.getWorkdayEntries, {
         headers: {
           'Content-Type': 'application/json'
         },
         params: {
-          dayWork: id
+          dayWork: id,
+          employeeId: employeeId
         }
       })
       .pipe(map((res: any) => res));
@@ -125,8 +126,8 @@ export class WorktimeService {
         workStart: formData.workStart,
         workEnd: formData.workEnd,
         isRemoteWork: formData.isRemoteWork,
-        projectId: formData.projectId,
-        employeeId: formData.employeeId
+        projectId: parseInt(formData.projectId),
+        employeeId: parseInt(formData.employeeId)
       })
       .pipe(map((res: any) => res));
   }

@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { AccountService } from '../../../_services/account.service';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { formatDate } from '@angular/common';
+import { EmployeesService } from '../../../_services/employees.service';
 
 interface Day {
   id: string;
@@ -48,6 +48,9 @@ export class WorkdayComponent implements OnInit {
   valueTiming;
   fullName = localStorage.getItem('fullName');
   formTemplate: FormGroup;
+  eId: number = this.route.snapshot.paramMap.get('employeeId')
+    ? parseInt(this.route.snapshot.paramMap.get('employeeId'))
+    : JSON.parse(localStorage.getItem('user')).employeeId;
 
   @Input() item: string;
 
@@ -57,7 +60,8 @@ export class WorkdayComponent implements OnInit {
     private router: Router,
     private accountService: AccountService,
     private formBuilder: FormBuilder,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private employeesService: EmployeesService
   ) {
     this.formTemplate = this.formBuilder.group({
       records: this.formBuilder.array([])
@@ -83,9 +87,17 @@ export class WorkdayComponent implements OnInit {
 
     this.id = this.route.snapshot.paramMap.get('id');
 
-    this.user = this.accountService.getUser();
+    if (this.route.snapshot.paramMap.get('employeeId')) {
+      this.employeesService
+        .getEmployee(this.route.snapshot.paramMap.get('employeeId'))
+        .subscribe(res => {
+          this.user = res;
+        });
+    } else {
+      this.user = this.accountService.getUser();
+    }
 
-    this.workdayService.getWorkday(this.id).subscribe(res => {
+    this.workdayService.getWorkday(this.id, this.eId).subscribe(res => {
       res.map(r => {
         r['selected'] = r.projectName;
 
@@ -162,11 +174,15 @@ export class WorkdayComponent implements OnInit {
 
   updateWorkRecord(i) {
     const recordToEdit = this.formTemplate.getRawValue().records[i];
-    this.formTemplate.getRawValue().records[i].type === 'Praca zdalna'
+    recordToEdit.type === 'Praca zdalna'
       ? (recordToEdit['isRemoteWork'] = true)
       : (recordToEdit['isRemoteWork'] = false);
     recordToEdit.workStart = recordToEdit.day + 'T' + recordToEdit.workStart;
     recordToEdit.workEnd = recordToEdit.day + 'T' + recordToEdit.workEnd;
+
+    console.log(recordToEdit.type === 'Praca zdalna');
+
+    console.log(recordToEdit);
 
     this.workdayService.updateWorkRecord(recordToEdit).subscribe();
   }
