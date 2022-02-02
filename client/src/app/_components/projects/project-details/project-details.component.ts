@@ -54,6 +54,8 @@ export class ProjectDetailsComponent implements OnInit {
       .getProjectDetails(this.route.snapshot.paramMap.get('id'))
       .subscribe(res => {
         this.project = res;
+        console.log(this.project);
+
         this.isProjectLoaded = true;
       });
   }

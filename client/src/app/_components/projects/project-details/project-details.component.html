@@ -30,6 +30,15 @@
             <h6>Data zakończenia</h6>
             <p class="project-date-to">{{project.dateTo | date: 'dd-MM-yyyy'}}r.</p>
           </div>
+          <div class="single">
+            <h6>Przypisani pracownicy</h6>
+            <div class="employees">
+              <mat-chip-list>
+                <mat-chip color="primary" selected *ngFor="let employee of project.projectMembers">{{employee.fullName}}
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+          </div>
         </div>
       </div>
     </mat-card>

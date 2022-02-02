@@ -9,18 +9,6 @@
 }
 
 .calendar-days {
-  width: 140px;
-  min-width: 72px;
-  height: 80px;
-  background: rgb(231, 231, 231);
-  margin-top: 7px;
-  margin-bottom: 7px;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 10px;
-  text-align: center;
-  cursor: pointer;
-  font-weight: bold;
 
   &.previous-month,
   &.next-month {
@@ -44,7 +32,7 @@
     font-size: 14px;
     display: inline-block;
     vertical-align: middle;
-    line-height: 35px;
+    line-height: 20px;
   }
 
   .hours {
@@ -82,16 +70,11 @@ h4 {
   font-weight: bold;
 }
 
-#main {
-  margin-top: 40px;
-}
-
 button,
 h4 {
   border: none;
   background: var(--main-contrast);
   margin-bottom: 20px;
-  margin-top: 35px;
   color: var(--font);
 }
 
@@ -177,11 +160,10 @@ b {
   }
 }
 
-///
-
 .cont {
   padding: 24px;
   box-sizing: border-box;
+
   mat-form-field {
     width: 100%;
 
@@ -189,9 +171,11 @@ b {
       .mat-form-field-flex {
         background-color: var(--input) !important;
       }
+
       input,
       label {
         color: var(--input-text) !important;
+
         &::placeholder {
           color: var(--input-text) !important;
         }
@@ -220,6 +204,7 @@ b {
     width: 100%;
     height: 81px;
   }
+
   button {
     width: 100%;
     height: 60px;
@@ -230,18 +215,22 @@ b {
     margin-top: 0;
     margin-bottom: 0;
   }
+
   @media (min-width: 1320px) {
     height: 60px;
     flex-direction: row;
+
     mat-form-field {
       width: calc(100% - 150px);
       height: 81px;
       margin-bottom: 20px;
     }
+
     button {
       width: 140px;
     }
   }
+
   .other-data {
     display: grid;
   }
@@ -257,11 +246,54 @@ b {
   .calendar-days {
     width: 100%;
     min-width: unset;
-    height: 45px;
+    height: 80px !important;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    background: rgb(231, 231, 231);
+    border-radius: 10px;
+
+
+
+    &.previous-month,
+    &.next-month {
+      color: rgb(190, 190, 190);
+    }
+
+    &.weekend {
+      background-color: rgb(137, 241, 137);
+    }
+
+    &.today {
+      border: 2px solid rgb(221, 195, 48);
+    }
+
+    &.weekend:hover {
+      background-color: rgb(56, 197, 56);
+    }
+
+    .day {
+      font-weight: bold;
+      font-size: 14px;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 20px;
+    }
+
+    .hours {
+      font-size: 10px;
+      color: gray;
+    }
+
+    .time {
+      font-size: 10px;
+      color: gray;
+    }
+
+
+
+
 
     .hours,
     .time {
@@ -270,6 +302,7 @@ b {
 
     @media (min-width: 600px) {
       height: 80px;
+
       .hours,
       .time {
         display: inline;

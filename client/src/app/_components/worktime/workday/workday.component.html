@@ -1,6 +1,6 @@
 <div class="workday-wrapper" *ngIf="user">
   <div class="day-info">
-    <p><span>Pracownik:</span> {{user.fullName}} </p>
+    <p><span>Pracownik:</span> {{fullName}} </p>
     <p><span>Dzień:</span> {{ id }} </p>
     <p><span>Godziny pracy:</span> {{valueTiming}}</p>
     <p><span>Czas pracy:</span> {{valueDuration}} </p>
@@ -35,37 +35,6 @@
     </form>
     <button class="addEntry" id="{{ id }}" (click)="addEntry()">Dodaj </button>
   </div>
-  <!-- <div class="addTimeWork"><span>Edytuj czas pracy</span></div>
-  <div class="times" *ngFor="let day of workDays">
-    <form [formGroup]="form">
-      <mat-form-field class="example-form-field hoursFrom" appearance="fill">
-        <mat-label>Godz. od</mat-label>
-        <input matInput type="text" value="{{day.workStart | date:'HH:mm':'pl'}}">
-      </mat-form-field>
-      <mat-form-field class="example-form-field hoursTo" appearance="fill">
-        <mat-label>Godz. do</mat-label>
-        <input matInput type="text" value="{{day.workStop | date:'HH:mm':'pl'}}">
-      </mat-form-field>
-      <mat-form-field appearance="fill" class="type">
-        <mat-label>Tryb</mat-label>
-        <mat-select [(value)]="day.type">
-          <mat-option *ngFor="let tp of types" [value]="tp.name"> {{tp.name}} </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field appearance="fill" class="project">
-        <mat-label>Projekt</mat-label>
-        <mat-select [(value)]="day.selected">
-          <mat-option *ngFor="let project of projects" [value]="project.name"> {{project.name}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field class="example-full-width" appearance="fill" class="details">
-        <mat-label>Opis</mat-label>
-        <input matInput value="{{day.name}}">
-      </mat-form-field>
-    </form>
-    <button id="{{day.id}}" class="editEntry" (click)="updateWorkRecord()">Edytuj </button>
-    <button (click)="deleteWorkDayEntry(day.id)" id="{{day.id}}" class="deleteEntry">Usuń </button>
-  </div> -->
   <div>
     <form action="" [formGroup]="formTemplate">
       <div formArrayName="records">
