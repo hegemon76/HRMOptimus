@@ -5,6 +5,7 @@ using HRMOptimus.Application.Project.Command.RemoveProject;
 using HRMOptimus.Application.Project.Command.UpdateProject;
 using HRMOptimus.Application.Project.Query.ProjectDetails;
 using HRMOptimus.Application.Project.Query.Projects;
+using HRMOptimus.Application.Project.Query.ProjectsEmployee;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -66,10 +67,20 @@ namespace HRMOptimus.WebAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Administrator, ProjectManager")]
         [Route("api/projects")]
         public async Task<ActionResult<List<ProjectVm>>> GetProjects()
         {
             var projects = await Mediator.Send(new ProjectsQuery());
+
+            return projects;
+        }
+
+        [HttpGet]
+        [Route("api/projectsEmployee")]
+        public async Task<ActionResult<List<ProjectVm>>> GetProjectsEmployee()
+        {
+            var projects = await Mediator.Send(new ProjectsEmployeeQuery());
 
             return projects;
         }
