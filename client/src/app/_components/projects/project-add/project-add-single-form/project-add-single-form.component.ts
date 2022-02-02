@@ -28,26 +28,16 @@ export class ProjectAddSingleFormComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   employeeCtrl = new FormControl();
   filteredEmployees: Observable<string[]>;
-  employees: string[] = [];
-  allEmployees: string[] = [];
+  employees: any[] = [];
+  allEmployees: any[] = [];
+  employeesIds: any[] = [];
 
   @ViewChild('employeeInput') employeeInput: ElementRef<HTMLInputElement>;
 
   constructor(
     private formBuilder: FormBuilder,
     private employeesService: EmployeesService
-  ) {
-    this.filteredEmployees = this.employeeCtrl.valueChanges.pipe(
-      startWith(null),
-      map((employee: string | null) =>
-        employee
-          ? this._filter(employee)
-          : this.allEmployees.filter(employee => {
-              return this.employees.indexOf(employee) < 0 ? employee : null;
-            })
-      )
-    );
-  }
+  ) {}
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -57,18 +47,40 @@ export class ProjectAddSingleFormComponent implements OnInit {
       dateFrom: ['', Validators.required],
       dateTo: ['', Validators.required],
       hoursBudget: ['', Validators.required],
-      projectMembers: [this.employees]
+      employees: [this.employeesIds]
     });
 
     this.employeesService.getEmployees().subscribe(res => {
-      res.items.map(e => {
-        this.allEmployees.push(e.fullName);
-      });
+      this.allEmployees = res.items;
     });
+
+    setTimeout(() => {
+      this.filteredEmployees = this.employeeCtrl.valueChanges.pipe(
+        startWith(null),
+        map(employee =>
+          employee
+            ? this._filter(employee)
+            : this.allEmployees.filter(employee => {
+                return this.employees.indexOf(employee) < 0 ? employee : null;
+              })
+        )
+      );
+    }, 1000);
   }
 
   remove() {
     this.rm.emit();
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    const filteredArray = this.allEmployees.filter(employee => {
+      return this.employees.indexOf(employee) < 0 ? employee : null;
+    });
+    const test = filteredArray.filter(employee =>
+      employee.fullName.toLowerCase().includes(filterValue)
+    );
+    return test;
   }
 
   add(event: MatChipInputEvent): void {
@@ -93,17 +105,21 @@ export class ProjectAddSingleFormComponent implements OnInit {
 
   selected(event: MatAutocompleteSelectedEvent): void {
     this.employees.push(event.option.viewValue);
+    this.addEmployeesToProject(event.option.viewValue);
     this.employeeInput.nativeElement.value = '';
     this.employeeCtrl.setValue(null);
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    const filteredArray = this.allEmployees.filter(employee => {
-      return this.employees.indexOf(employee) < 0 ? employee : null;
+  addEmployeesToProject(val) {
+    this.allEmployees.find(empl => {
+      empl.fullName == val
+        ? (this.employeesIds = [...this.employeesIds, empl.id])
+        : false;
     });
-    return filteredArray.filter(employee =>
-      employee.toLowerCase().includes(filterValue)
-    );
+    this.form.controls.employees.setValue(this.employeesIds);
+  }
+
+  test() {
+    console.log(this.form.getRawValue());
   }
 }

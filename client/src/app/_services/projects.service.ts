@@ -14,6 +14,8 @@ export class ProjectsService {
   addProjectUrl = `${this.baseUrl}project/add`;
   updateProjectUrl = `${this.baseUrl}project/update`;
   deleteProjectUrl = `${this.baseUrl}project/delete`;
+  addEmployeesToProjectUrl = `${this.baseUrl}project/addEmployee`;
+  removeEmployeeFromProjectUrl = `${this.baseUrl}project/removeEmployeeFromProject`;
 
   constructor(private http: HttpClient) {}
 
@@ -40,7 +42,37 @@ export class ProjectsService {
     });
   }
   addProject(form): Observable<any> {
-    return this.http.post(this.addProjectUrl, form);
+    console.log(form);
+
+    return this.http.post(this.addProjectUrl, {
+      name: form.name,
+      description: form.description,
+      hoursBudget: form.hoursBudget,
+      colorLabel: form.colorLabel,
+      dateFrom: form.dateFrom,
+      deadline: form.deadline,
+      dateTo: form.dateTo
+    });
+  }
+  addEmployeesToProject(id, employeeId): Observable<any> {
+    return this.http.post(
+      this.addEmployeesToProjectUrl,
+      {},
+      {
+        params: {
+          projectId: id,
+          employeeId: employeeId
+        }
+      }
+    );
+  }
+  removeEmployeeFromProject(id, employeeId): Observable<any> {
+    return this.http.delete(this.removeEmployeeFromProjectUrl, {
+      params: {
+        projectId: id,
+        employeeId: employeeId
+      }
+    });
   }
   removeProject(id): Observable<any> {
     return this.http.delete(this.deleteProjectUrl, {
