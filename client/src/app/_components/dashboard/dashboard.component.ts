@@ -157,7 +157,7 @@ export class DashboardComponent implements OnInit {
       'en-US'
     );
 
-    this.worktimeService.getMonthEntry(0, this.user.nameid).subscribe(res => {
+    this.worktimeService.getEmployeeMonthEntry(0).subscribe(res => {
       let hours = 0;
       let minutes = 0;
       res.daysWorkRecords.map(h => {
