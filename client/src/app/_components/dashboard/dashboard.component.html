@@ -38,21 +38,9 @@
       </div>
     </div>
   </mat-card>
-  <!-- <mat-card class="card-4">
+  <div class="card-4">
     <h6>Twoje projekty</h6>
-    <div class="projects-list" *ngIf="!isProjectListEmpty">
-      <div class="single-project" *ngFor="let project of projects">
-        <div class="label" [ngStyle]="{backgroundColor: project.colorLabel}"></div>
-        <div class="name"><a href="/projects/details/{{project.id}}"><span>{{project.name}}</span></a></div>
-      </div>
-    </div>
-    <div class="empty-content" *ngIf="isProjectListEmpty">
-      <h6>Brak danych do wyświetlenia</h6>
-    </div>
-  </mat-card> -->
-  <div class="card-4" *ngIf="!isProjectListEmpty">
-    <h6>Twoje projekty</h6>
-    <swiper [config]="config">
+    <swiper [config]="config" *ngIf="!isProjectListEmpty">
       <ng-template swiperSlide *ngFor="let project of projects">
         <mat-card>
           <div class="label" [ngStyle]="{'backgroundColor': project.colorLabel}">
@@ -61,6 +49,9 @@
         </mat-card>
       </ng-template>
     </swiper>
+    <div class="empty-content" *ngIf="isProjectListEmpty">
+      <h6>Brak danych do wyświetlenia</h6>
+    </div>
   </div>
   <mat-card class=" card-5">
     <h6>Wsparcie techniczne</h6>

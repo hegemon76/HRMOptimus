@@ -11,9 +11,9 @@
           <mat-label>Nazwa</mat-label>
           <input matInput formControlName="name">
         </mat-form-field>
-        <mat-form-field appearance="fill" class="description">
-          <mat-label>Opis</mat-label>
-          <input matInput formControlName="description">
+        <mat-form-field appearance="fill" class="budget">
+          <mat-label>Limit godzinny</mat-label>
+          <input matInput formControlName="hoursBudget">
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Data rozpoczęcia</mat-label>
@@ -27,9 +27,9 @@
           <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
           <mat-datepicker #pickerEnd></mat-datepicker>
         </mat-form-field>
-        <mat-form-field appearance="fill" class="budget">
-          <mat-label>Limit godzinny</mat-label>
-          <input matInput formControlName="hoursBudget">
+        <mat-form-field appearance="fill" class="description">
+          <mat-label>Opis</mat-label>
+          <textarea matInput formControlName="description"></textarea>
         </mat-form-field>
         <mat-form-field appearance="fill" class="employees">
           <mat-label>Użytkownicy</mat-label>
@@ -51,5 +51,4 @@
       </form>
     </mat-card>
     <button (click)="updateProject()">ZAPISZ</button>
-    <button (click)="test()">TEST</button>
   </div>

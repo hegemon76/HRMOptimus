@@ -27,6 +27,7 @@ import {
   MAT_DIALOG_DATA
 } from '@angular/material/dialog';
 import { AbstractControl } from '@angular/forms';
+import { RolesEmptyDialog } from '../employee-add/employee-add.component';
 
 export interface DialogData {}
 
@@ -123,7 +124,15 @@ export class EmployeeEditComponent implements OnInit {
           lastName: [this.employee.lastName, Validators.required],
           gender: [this.employee.gender, Validators.required],
           birthDate: [this.employee.birthDate, Validators.required],
-          phoneNumber: [this.employee.phoneNumber, Validators.required],
+          phoneNumber: [
+            this.employee.phoneNumber,
+            [
+              Validators.required,
+              Validators.pattern(
+                '^[+]?[(]?[0-9]{0,4}[)]?[-s.]?[0-9]{3}?[-s.]?[0-9]{3}[-s.]?[0-9]{3,6}$'
+              )
+            ]
+          ],
           street: [this.employee.address.street, Validators.required],
           buildingNumber: [
             this.employee.address.buildingNumber,
@@ -153,7 +162,10 @@ export class EmployeeEditComponent implements OnInit {
         });
 
         this.formEmail = this.formBuilder.group({
-          email: [this.employee.email, [Validators.required, Validators.email]],
+          email: [
+            { value: this.employee.email, disabled: true },
+            [Validators.required, Validators.email, this.emailTaken()]
+          ],
           emailNew: [
             '',
             [Validators.required, Validators.email, this.emailTaken()]
@@ -170,7 +182,16 @@ export class EmployeeEditComponent implements OnInit {
         });
 
         this.formPassword = this.formBuilder.group({
-          password: ['', Validators.required],
+          password: [
+            '',
+            [
+              Validators.required,
+              Validators.minLength(8),
+              Validators.pattern(
+                '^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\\D*\\d)[A-Za-z\\d!$%@#£€*?&]{8,}$'
+              )
+            ]
+          ],
           passwordNew: [
             '',
             [
@@ -273,7 +294,9 @@ export class EmployeeEditComponent implements OnInit {
   editEmployee() {
     this.employeesService
       .editEmployee(this.formData.getRawValue(), this.employeeId)
-      .subscribe();
+      .subscribe(res => {
+        this.openDialog();
+      });
   }
   editEmployeeContract() {
     if (
@@ -285,18 +308,25 @@ export class EmployeeEditComponent implements OnInit {
           this.formContract.getRawValue(),
           this.employee.contract.id
         )
-        .subscribe();
+        .subscribe(res => {
+          this.openDialog();
+        });
     } else {
-      console.log(
-        'Wartość urlopów nie może być mniejsza niż ilość dni zaakceptowanych urlopów'
-      );
+      this.openLeaveDaysIncorrectDialog();
     }
   }
   setRoles() {
-    this.employeesService.setRoles(this.roles, this.employee.email).subscribe();
-    const user = JSON.parse(localStorage.getItem('user'));
-    user.role = this.roles;
-    localStorage.setItem('user', JSON.stringify(user));
+    if (this.roles.length > 0) {
+      this.employeesService
+        .setRoles(this.roles, this.employee.email)
+        .subscribe();
+      const user = JSON.parse(localStorage.getItem('user'));
+      user.role = this.roles;
+      localStorage.setItem('user', JSON.stringify(user));
+      this.openDialog();
+    } else {
+      this.openRolesDialog();
+    }
   }
   openDialog() {
     const dialogRef = this.dialog.open(FormValidDialog);
@@ -348,6 +378,13 @@ export class EmployeeEditComponent implements OnInit {
         });
     }
   }
+
+  openRolesDialog() {
+    const dialogRef = this.dialog.open(RolesEmptyDialog);
+  }
+  openLeaveDaysIncorrectDialog() {
+    const dialogRef = this.dialog.open(LeaveDaysIncorrectDialog);
+  }
 }
 
 @Component({
@@ -370,6 +407,18 @@ export class FormValidDialog {
 export class CheckEmailDialog {
   constructor(
     public dialogRef: MatDialogRef<CheckEmailDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ) {}
+}
+
+@Component({
+  selector: 'leave-days-incorrect-dialog',
+  templateUrl: 'leave-days-incorrect-dialog.html',
+  styleUrls: ['./employee-edit.component.scss']
+})
+export class LeaveDaysIncorrectDialog {
+  constructor(
+    public dialogRef: MatDialogRef<LeaveDaysIncorrectDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {}
 }

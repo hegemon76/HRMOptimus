@@ -94,8 +94,11 @@ export class DashboardComponent implements OnInit {
     spaceBetween: 24,
     navigation: false,
     breakpoints: {
-      766: {
+      800: {
         slidesPerView: 3
+      },
+      1320: {
+        slidesPerView: 4
       }
     }
   };
