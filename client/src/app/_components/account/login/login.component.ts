@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private accountService: AccountService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -24,11 +24,13 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.accountService.tryLogin(this.form.getRawValue()).subscribe(() => {
-      window.location.reload();
-    },
+    this.accountService.tryLogin(this.form.getRawValue()).subscribe(
+      () => {
+        window.location.reload();
+      },
       error => {
         this.validateLogin = true;
-      });
+      }
+    );
   }
 }

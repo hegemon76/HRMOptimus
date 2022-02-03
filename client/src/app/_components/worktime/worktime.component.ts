@@ -6,6 +6,7 @@ import { formatDate, Time } from '@angular/common';
 import { DatePipe } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EmployeesService } from '../../_services/employees.service';
+import { AccountService } from '../../_services/account.service';
 import { EmployeeVm } from '../../../shared/vm/employee.vm';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -52,7 +53,8 @@ export class WorktimeComponent implements OnInit {
     private workdayService: WorktimeService,
     private route: ActivatedRoute,
     private employeesService: EmployeesService,
-    private router: Router
+    private router: Router,
+    private accountService: AccountService
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function() {
       return false;
@@ -63,6 +65,7 @@ export class WorktimeComponent implements OnInit {
   onlyMonth: [];
   worktimeSummary;
   employee;
+  user;
   userId;
   allEmployees: EmployeeVm[];
   myControl = new FormControl();
@@ -72,6 +75,7 @@ export class WorktimeComponent implements OnInit {
   cm: number = 0;
 
   ngOnInit(): void {
+    this.user = this.accountService.getUser();
     this.employeesService.getEmployees().subscribe(res => {
       this.allEmployees = res.items;
       this.fillOptions(this.allEmployees);
@@ -85,9 +89,9 @@ export class WorktimeComponent implements OnInit {
           this.employee = res;
         });
     } else {
-      this.userId = JSON.parse(localStorage.getItem('user')).employeeId;
+      this.userId = JSON.parse(localStorage.getItem('user')).nameid;
       this.employeesService
-        .getEmployee(JSON.parse(localStorage.getItem('user')).employeeId)
+        .getEmployee(JSON.parse(localStorage.getItem('user')).nameid)
         .subscribe(res => {
           this.employee = res;
         });
@@ -112,41 +116,86 @@ export class WorktimeComponent implements OnInit {
       1 -
       this.weekdaysShort.indexOf(this.endOfMonth);
 
-    this.workdayService
-      .getMonthEntry(this.cm - 1, this.userId)
-      .subscribe(res => {
+    this.getEntries();
+  }
+
+  getEntries() {
+    if (
+      this.user.role.includes('Administrator') ||
+      this.user.role.includes('Human Resources')
+    ) {
+      this.workdayService
+        .getMonthEntry(this.cm - 1, this.userId)
+        .subscribe(res => {
+          this.month = res.daysWorkRecords;
+          this.month.slice(-this.daysBefore).map(r => {
+            this.calendar.push(this.createCalendarItem('previous-month', r));
+          });
+          this.workdayService
+            .getMonthEntry(this.cm, this.userId)
+            .subscribe(res => {
+              console.log(res);
+
+              this.month = res.daysWorkRecords;
+              let hours = 0;
+              let minutes = 0;
+              res.daysWorkRecords.map(h => {
+                hours += parseInt(h.workedTime.split(':')[0]);
+                minutes += parseInt(h.workedTime.split(':')[1]);
+                parseFloat(h.workedTime.split(':')[0]) +
+                  parseFloat(h.workedTime.split(':')[1]) / 60;
+              });
+              hours += Math.floor(minutes / 60);
+              minutes = minutes % 60;
+              this.worktimeSummary = hours + ' godz. ' + minutes + ' min. ';
+              this.month.map(r => {
+                this.calendar.push(this.createCalendarItem('in-month', r));
+              });
+              this.workdayService
+                .getMonthEntry(this.cm + 1, this.userId)
+                .subscribe(res => {
+                  this.month = res.daysWorkRecords;
+                  this.month.slice(0, this.daysAfter).map(r => {
+                    this.calendar.push(
+                      this.createCalendarItem('next-month', r)
+                    );
+                  });
+                });
+            });
+        });
+    } else {
+      this.workdayService.getEmployeeMonthEntry(this.cm - 1).subscribe(res => {
         this.month = res.daysWorkRecords;
         this.month.slice(-this.daysBefore).map(r => {
           this.calendar.push(this.createCalendarItem('previous-month', r));
         });
-        this.workdayService
-          .getMonthEntry(this.cm, this.userId)
-          .subscribe(res => {
-            this.month = res.daysWorkRecords;
-            let hours = 0;
-            let minutes = 0;
-            res.daysWorkRecords.map(h => {
-              hours += parseInt(h.workedTime.split(':')[0]);
-              minutes += parseInt(h.workedTime.split(':')[1]);
-              parseFloat(h.workedTime.split(':')[0]) +
-                parseFloat(h.workedTime.split(':')[1]) / 60;
-            });
-            hours += Math.floor(minutes / 60);
-            minutes = minutes % 60;
-            this.worktimeSummary = hours + ' godz. ' + minutes + ' min. ';
-            this.month.map(r => {
-              this.calendar.push(this.createCalendarItem('in-month', r));
-            });
-            this.workdayService
-              .getMonthEntry(this.cm + 1, this.userId)
-              .subscribe(res => {
-                this.month = res.daysWorkRecords;
-                this.month.slice(0, this.daysAfter).map(r => {
-                  this.calendar.push(this.createCalendarItem('next-month', r));
-                });
-              });
+        this.workdayService.getEmployeeMonthEntry(this.cm).subscribe(res => {
+          this.month = res.daysWorkRecords;
+          let hours = 0;
+          let minutes = 0;
+          res.daysWorkRecords.map(h => {
+            hours += parseInt(h.workedTime.split(':')[0]);
+            minutes += parseInt(h.workedTime.split(':')[1]);
+            parseFloat(h.workedTime.split(':')[0]) +
+              parseFloat(h.workedTime.split(':')[1]) / 60;
           });
+          hours += Math.floor(minutes / 60);
+          minutes = minutes % 60;
+          this.worktimeSummary = hours + ' godz. ' + minutes + ' min. ';
+          this.month.map(r => {
+            this.calendar.push(this.createCalendarItem('in-month', r));
+          });
+          this.workdayService
+            .getEmployeeMonthEntry(this.cm + 1)
+            .subscribe(res => {
+              this.month = res.daysWorkRecords;
+              this.month.slice(0, this.daysAfter).map(r => {
+                this.calendar.push(this.createCalendarItem('next-month', r));
+              });
+            });
+        });
       });
+    }
   }
 
   createCalendar(month: moment.Moment) {

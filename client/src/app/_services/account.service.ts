@@ -25,14 +25,15 @@ export class AccountService {
   tryLogin(form): Observable<any> {
     return this.http.post(this.loginUrl, form).pipe(
       map((res: any) => {
+        console.log(res);
+
         if (res.token != '') {
           this.user = JSON.parse(window.atob(res.token.split('.')[1]));
           localStorage.setItem('user', window.atob(res.token.split('.')[1]));
           localStorage.setItem('token', res.token);
           var decodedToken = jwt_decode(res.token);
-          var fullName = decodedToken['fullName'];
+          var fullName = decodedToken['unique_name'];
           localStorage.setItem('fullName', fullName);
-          window.location.reload();
         }
       })
     );

@@ -26,7 +26,7 @@
           <a href="tel:employee.phoneNumber">{{employee.phoneNumber}}</a>
           <div class="buttons">
             <button class="edit-user" routerLink="edit/{{employee.id}}" [state]={id:employee.id}
-              *ngIf="user.role.includes('HumanResources') || user.role.includes('Administrator') || employee.id == user.employeeId"><i
+              *ngIf="user.role.includes('HumanResources') || user.role.includes('Administrator') || employee.id == user.nameid"><i
                 class="fas fa-cog"></i></button>
             <button class="delete-user" mat-raised-button (click)="openDialog(employee.fullName, employee.id)"
               *ngIf="user.role.includes('HumanResources') || user.role.includes('Administrator')"><i

@@ -114,7 +114,7 @@ export class EmployeeEditComponent implements OnInit {
         this.employeeId = this.route.snapshot.paramMap.get('id');
         this.roles = this.employee.roles;
         this.isEmployeeLoaded = true;
-        if (this.employeeId == this.user.employeeId) {
+        if (this.employeeId == this.user.nameid) {
           this.editedEmployeeEqualsUser = true;
         }
 
@@ -294,6 +294,9 @@ export class EmployeeEditComponent implements OnInit {
   }
   setRoles() {
     this.employeesService.setRoles(this.roles, this.employee.email).subscribe();
+    const user = JSON.parse(localStorage.getItem('user'));
+    user.role = this.roles;
+    localStorage.setItem('user', JSON.stringify(user));
   }
   openDialog() {
     const dialogRef = this.dialog.open(FormValidDialog);

@@ -11,6 +11,8 @@ import { UserVm } from '../../../shared/vm/user.vm';
 import { formatDate } from '@angular/common';
 import { ThemePalette } from '@angular/material/core';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
+import SwiperCore, { SwiperOptions } from 'swiper';
+import 'swiper/scss';
 
 @Component({
   selector: 'app-dashboard',
@@ -87,6 +89,17 @@ export class DashboardComponent implements OnInit {
     }
   };
 
+  config: SwiperOptions = {
+    slidesPerView: 1,
+    spaceBetween: 24,
+    navigation: false,
+    breakpoints: {
+      766: {
+        slidesPerView: 3
+      }
+    }
+  };
+
   barChartType: ChartType = 'bar';
   employees: EmployeeVm[];
   adminsToDisplay: EmployeeVm[];
@@ -120,8 +133,6 @@ export class DashboardComponent implements OnInit {
   }
 
   daysInMonth(month, year) {
-    console.log(new Date(year, month, 0).getDate());
-
     return new Date(year, month + 1, 0).getDate();
   }
 
@@ -142,25 +153,22 @@ export class DashboardComponent implements OnInit {
       'yyyy-MM-dd',
       'en-US'
     );
-    console.log(monthStart + ' ' + monthEnd);
 
-    this.worktimeService
-      .getMonthEntry(0, this.user.employeeId)
-      .subscribe(res => {
-        let hours = 0;
-        let minutes = 0;
-        res.daysWorkRecords.map(h => {
-          hours += parseInt(h.workedTime.split(':')[0]);
-          minutes += parseInt(h.workedTime.split(':')[1]);
-          this.barChartData.datasets[0].data = this.barChartData.datasets[0].data.concat(
-            parseFloat(h.workedTime.split(':')[0]) +
-              parseFloat(h.workedTime.split(':')[1]) / 60
-          );
-        });
-        hours += Math.floor(minutes / 60);
-        minutes = minutes % 60;
-        this.monthTime = hours + ':' + minutes + 'h';
+    this.worktimeService.getMonthEntry(0, this.user.nameid).subscribe(res => {
+      let hours = 0;
+      let minutes = 0;
+      res.daysWorkRecords.map(h => {
+        hours += parseInt(h.workedTime.split(':')[0]);
+        minutes += parseInt(h.workedTime.split(':')[1]);
+        this.barChartData.datasets[0].data = this.barChartData.datasets[0].data.concat(
+          parseFloat(h.workedTime.split(':')[0]) +
+            parseFloat(h.workedTime.split(':')[1]) / 60
+        );
       });
+      hours += Math.floor(minutes / 60);
+      minutes = minutes % 60;
+      this.monthTime = hours + ':' + minutes + 'h';
+    });
     setTimeout(() => {
       if (this.chart) {
         this.chart.update();
@@ -185,7 +193,7 @@ export class DashboardComponent implements OnInit {
   }
   setLimitAndLeft() {
     this.vacationService
-      .getEmployeeVacations(this.user.employeeId)
+      .getEmployeeVacations(this.user.nameid)
       .subscribe(res => {
         this.vacationLimit = res.leaveDaysByContract;
         this.vacationLeft = res.leaveDaysLeft;
@@ -193,8 +201,9 @@ export class DashboardComponent implements OnInit {
       });
   }
   setProjects() {
-    this.projectsService.getProjects().subscribe(res => {
+    this.projectsService.getEmployeeProjects().subscribe(res => {
       this.projects = res;
+
       if (this.projects.length > 0) {
         this.isProjectListEmpty = false;
       }

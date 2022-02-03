@@ -10,6 +10,7 @@ import { environment } from '../../environments/environment';
 export class ProjectsService {
   baseUrl = environment.baseUrl;
   getProjectsUrl = `${this.baseUrl}projects`;
+  getEmployeeProjectsUrl = `${this.baseUrl}projectsEmployee`;
   getProjectDetailsUrl = `${this.baseUrl}project/details`;
   addProjectUrl = `${this.baseUrl}project/add`;
   updateProjectUrl = `${this.baseUrl}project/update`;
@@ -21,6 +22,9 @@ export class ProjectsService {
 
   getProjects(): Observable<any> {
     return this.http.get(this.getProjectsUrl);
+  }
+  getEmployeeProjects(): Observable<any> {
+    return this.http.get(this.getEmployeeProjectsUrl);
   }
   getProjectDetails(id): Observable<any> {
     return this.http.get(this.getProjectDetailsUrl, {

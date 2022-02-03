@@ -118,8 +118,4 @@ export class ProjectAddSingleFormComponent implements OnInit {
     });
     this.form.controls.employees.setValue(this.employeesIds);
   }
-
-  test() {
-    console.log(this.form.getRawValue());
-  }
 }
