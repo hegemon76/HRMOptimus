@@ -72,7 +72,10 @@ export class EmployeeAddComponent implements OnInit {
 
   addEmployees() {
     this.components.map(c => {
-      if (c.instance.form.status == 'VALID') {
+      if (
+        c.instance.form.status == 'VALID' &&
+        c.instance.form.getRawValue().roles.length > 0
+      ) {
         const formData = c.instance.form.getRawValue();
         formData.birthDate =
           formatDate(formData.birthDate, 'YYYY-MM-dd', 'en-US') +
@@ -80,12 +83,18 @@ export class EmployeeAddComponent implements OnInit {
         this.employeesService.addEmployee(formData).subscribe(() => {
           this.router.navigate(['/employees']);
         });
+      } else if (c.instance.form.getRawValue().roles.length == 0) {
+        this.openRolesDialog();
       }
     });
   }
 
   openDialog() {
     const dialogRef = this.dialog.open(FillFormDialog);
+  }
+
+  openRolesDialog() {
+    const dialogRef = this.dialog.open(RolesEmptyDialog);
   }
 }
 
@@ -97,6 +106,18 @@ export class EmployeeAddComponent implements OnInit {
 export class FillFormDialog {
   constructor(
     public dialogRef: MatDialogRef<FillFormDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ) {}
+}
+
+@Component({
+  selector: 'roles-empty-dialog',
+  templateUrl: 'roles-empty-dialog.html',
+  styleUrls: ['./employee-add.component.scss']
+})
+export class RolesEmptyDialog {
+  constructor(
+    public dialogRef: MatDialogRef<RolesEmptyDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {}
 }
