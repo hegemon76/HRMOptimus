@@ -41,22 +41,24 @@ export class AppComponent {
 
   ngOnInit() {
     this.user = this.accountService.getUser();
+    console.log(typeof this.user.role);
+
     this.employeesService.getEmployee(this.user.nameid).subscribe(res => {
+      console.log(res);
+
       const checkRoles = res.roles.sort((a, b) => {
         return a < b;
       });
-      const storageRoles = this.user.role.sort((a, b) => {
-        return a < b;
-      });
-      if (JSON.stringify(storageRoles) !== JSON.stringify(checkRoles)) {
-        console.log('ding');
-
-        const updatedUser = this.user;
-        updatedUser.role = checkRoles;
-        localStorage.setItem('user', JSON.stringify(updatedUser));
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
+      let storageRoles;
+      if (Array.isArray(this.user.role)) {
+        storageRoles = this.user.role.sort((a, b) => {
+          return a < b;
+        });
+      } else {
+        storageRoles = this.user.role;
+      }
+      if (storageRoles != checkRoles) {
+        this.accountService.logoutUser();
       }
     });
 
