@@ -5,6 +5,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { AccountService } from './_services/account.service';
 import { UserVm } from '../shared/vm/user.vm';
 import { Router } from '@angular/router';
+import { EmployeesService } from './_services/employees.service';
 
 @Component({
   selector: 'app-root',
@@ -15,11 +16,12 @@ import { Router } from '@angular/router';
 export class AppComponent {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
-  user: UserVm;
+  user: any;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private employeesService: EmployeesService
   ) {}
 
   ngAfterViewInit() {
@@ -39,6 +41,25 @@ export class AppComponent {
 
   ngOnInit() {
     this.user = this.accountService.getUser();
+    this.employeesService.getEmployee(this.user.nameid).subscribe(res => {
+      const checkRoles = res.roles.sort((a, b) => {
+        return a < b;
+      });
+      const storageRoles = this.user.role.sort((a, b) => {
+        return a < b;
+      });
+      if (JSON.stringify(storageRoles) !== JSON.stringify(checkRoles)) {
+        console.log('ding');
+
+        const updatedUser = this.user;
+        updatedUser.role = checkRoles;
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      }
+    });
+
     if (!this.user && window.location.pathname != '/') {
       window.location.pathname = '/';
     }

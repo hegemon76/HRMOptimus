@@ -21,7 +21,7 @@
       <button (click)="setFormToDisplay(2)"
         *ngIf="user.role.includes('HumanResources') || user.role.includes('Administrator')">Dane kontraktowe</button>
       <button (click)="setFormToDisplay(3)" *ngIf="editedEmployeeEqualsUser">Dane logowania</button>
-      <button (click)="setFormToDisplay(4)" *ngIf="user.role.includes('Administrator')">Uprawnienia</button>
+      <button (click)="setFormToDisplay(4)">Uprawnienia</button>
     </div>
   </mat-card>
   <mat-card class="single-employyee-edit" *ngIf="formToDisplay != null">

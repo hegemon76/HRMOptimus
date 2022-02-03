@@ -2,7 +2,7 @@
   <div class="header" *ngIf="employee">
     <p>Urlopy użytkownika <strong>{{employee.fullName}}</strong></p>
   </div>
-  <mat-card class="container">
+  <mat-card class="container" *ngIf="user.role.includes('HumanResources') || user.role.includes('Administrator')">
     <div class="search-wrapper">
       <mat-form-field appearance="fill">
         <mat-label>Wybierz pracownika...</mat-label>

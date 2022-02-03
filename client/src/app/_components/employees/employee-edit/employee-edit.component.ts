@@ -317,26 +317,32 @@ export class EmployeeEditComponent implements OnInit {
   }
   setRoles() {
     if (this.roles.length > 0) {
+      if (this.user.nameid == this.employeeId) {
+        const user = JSON.parse(localStorage.getItem('user'));
+        user.role = this.roles;
+        localStorage.setItem('user', JSON.stringify(user));
+      }
       this.employeesService
         .setRoles(this.roles, this.employee.email)
-        .subscribe();
-      const user = JSON.parse(localStorage.getItem('user'));
-      user.role = this.roles;
-      localStorage.setItem('user', JSON.stringify(user));
-      this.openDialog();
+        .subscribe(res => {
+          this.openDialog();
+        });
     } else {
       this.openRolesDialog();
     }
   }
   openDialog() {
     const dialogRef = this.dialog.open(FormValidDialog);
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.editEmployee();
-      this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
-        this.router.navigate(['/employees/edit/', this.employeeId]);
-      });
+    this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/employees/edit/', this.employeeId]);
     });
+
+    // dialogRef.afterClosed().subscribe(result => {
+    //   this.editEmployee();
+    //   this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
+    //     this.router.navigate(['/employees/edit/', this.employeeId]);
+    //   });
+    // });
   }
   openCheckEmailDialog() {
     const dialogRef = this.dialog.open(CheckEmailDialog);
