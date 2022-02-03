@@ -74,7 +74,15 @@ export class EmployeeAddSingleFormComponent implements OnInit {
       gender: ['', Validators.required],
       birthDate: ['', Validators.required],
       email: ['', [Validators.required, Validators.email, this.emailTaken()]],
-      phoneNumber: ['', Validators.required],
+      phoneNumber: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            '^[+]?[(]?[0-9]{0,4}[)]?[-s.]?[0-9]{3}?[-s.]?[0-9]{3}[-s.]?[0-9]{3,6}$'
+          )
+        ]
+      ],
       street: ['', Validators.required],
       buildingNumber: ['', Validators.required],
       houseNumber: [''],
@@ -138,13 +146,9 @@ export class EmployeeAddSingleFormComponent implements OnInit {
     );
   }
 
-  // checkValues() {
-  //   if (this.emails.includes(this.form.controls.email.value)) {
-  //     this.isEmailTaken = true;
-  //   } else {
-  //     this.isEmailTaken = false;
-  //   }
-  // }
+  checkValues() {
+    console.log(this.form.getRawValue());
+  }
 
   emailTaken(): ValidatorFn {
     return (control: AbstractControl) => {

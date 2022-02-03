@@ -10,7 +10,8 @@ import { FormsModule } from '@angular/forms';
 import {
   CheckEmailDialog,
   EmployeeEditComponent,
-  FormValidDialog
+  FormValidDialog,
+  LeaveDaysIncorrectDialog
 } from './employee-edit/employee-edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -20,7 +21,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {
   EmployeeAddComponent,
-  FillFormDialog
+  FillFormDialog,
+  RolesEmptyDialog
 } from './employee-add/employee-add.component';
 import { EmployeeAddSingleFormComponent } from './employee-add/employee-add-single-form/employee-add-single-form.component';
 import { MatSelectModule } from '@angular/material/select';
@@ -40,7 +42,9 @@ import { MatIconModule } from '@angular/material/icon';
     FillFormDialog,
     EmployeeDetailsComponent,
     FormValidDialog,
-    CheckEmailDialog
+    CheckEmailDialog,
+    RolesEmptyDialog,
+    LeaveDaysIncorrectDialog
   ],
   imports: [
     CommonModule,
