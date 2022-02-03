@@ -17,12 +17,12 @@ namespace HRMOptimus.Persistance
     {
         private const string ConnectionStringName = "ConnectionStringName";
         private const string AspNetCoreEnvironment = "ASPNETCORE_ENVIRONMENT";
-        //private readonly IUserContextService _userContextService;
+        private readonly IUserContextService _userContextService;
 
-        //public DesignTimeDbContextFactoryBase(IUserContextService userContextService)
-        //{
-        //    _userContextService = userContextService;
-        //}
+        public DesignTimeDbContextFactoryBase(IUserContextService userContextService)
+        {
+            _userContextService = userContextService;
+        }
 
         public TContext CreateDbContext(string[] args)
         {
@@ -30,9 +30,7 @@ namespace HRMOptimus.Persistance
             return Create(basePath, Environment.GetEnvironmentVariable(AspNetCoreEnvironment));
         }
 
-        protected abstract TContext CreateNewInstance(DbContextOptions<TContext> options);
-
-        //protected abstract TContext CreateNewInstance(DbContextOptions<TContext> options, IUserContextService userContextService);
+        protected abstract TContext CreateNewInstance(DbContextOptions<TContext> options, IUserContextService userContextService);
 
         private TContext Create(string basePath, string environmentName)
         {
@@ -61,8 +59,7 @@ namespace HRMOptimus.Persistance
             var optionsBuilder = new DbContextOptionsBuilder<TContext>();
             optionsBuilder.UseSqlServer(connectionString);
 
-            return CreateNewInstance(optionsBuilder.Options);
-            //return CreateNewInstance(optionsBuilder.Options, _userContextService);
+            return CreateNewInstance(optionsBuilder.Options, _userContextService);
         }
     }
 }

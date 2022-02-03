@@ -13,8 +13,8 @@
             routerLink="/employees/add" class="fas fa-user-plus"></i><span routerLink="/employees/add"
             class="text">Dodaj pracownika</span></li>
         <li *ngIf="user.role.includes('HumanResources') || user.role.includes('Administrator')"><i
-            routerLink="/employees/edit/{{user.employeeId}}" class="fas fa-user-edit"></i><span
-            routerLink="/employees/edit/{{user.employeeId}}" class="text">Edytuj dane</span></li>
+            routerLink="/employees/edit/{{user.nameid}}" class="fas fa-user-edit"></i><span
+            routerLink="/employees/edit/{{user.nameid}}" class="text">Edytuj dane</span></li>
       </ul>
     </a>
     <a>
@@ -31,7 +31,7 @@
     <a routerLink="/worktime">
       <li><i class="far fa-calendar-alt"></i> Czas pracy</li>
     </a>
-    <a routerLink="/vacation/{{user.employeeId}}">
+    <a routerLink="/vacation/{{user.nameid}}">
       <li><i class="fas fa-plane"></i>Urlopy</li>
     </a>
     <a class="dark-mode">

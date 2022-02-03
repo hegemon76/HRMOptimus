@@ -2,6 +2,7 @@
 using FluentValidation.AspNetCore;
 using HRMOptimus.Application.Account.Command.ChangeEmail;
 using HRMOptimus.Application.Account.Command.ConfirmEmail;
+using HRMOptimus.Application.Account.Command.Login;
 using HRMOptimus.Application.Account.Command.Password.ChangePassword;
 using HRMOptimus.Application.Account.Command.Password.ConfirmPassword;
 using HRMOptimus.Application.Account.Command.Registration;
@@ -16,6 +17,7 @@ using HRMOptimus.Application.Project.Command.AddProject;
 using HRMOptimus.Application.Project.Command.RemoveEmployeeFromProject;
 using HRMOptimus.Application.Project.Command.RemoveProject;
 using HRMOptimus.Application.Project.Command.UpdateProject;
+using HRMOptimus.Application.Project.Query.ProjectDetails;
 using HRMOptimus.Application.WorkRecord.Command.AddWorkRecord;
 using HRMOptimus.Application.WorkRecord.Command.RemoveWorkRecord;
 using HRMOptimus.Application.WorkRecord.Command.UpdateWorkRecord;
@@ -36,7 +38,6 @@ namespace HRMOptimus.Application
             services.AddScoped<RequestTimeMiddleware>();
             services.AddScoped<ErrorHandlingMiddleware>();
             services.AddHttpContextAccessor();
-            services.AddScoped<IDecodeTokenService, DecodeTokenService>();
             services.AddScoped<IUserContextService, UserContextService>();
             services.AddScoped<ICreateTokenService, CreateTokenService>().Configure<IConfiguration>((config) =>
              {
@@ -60,6 +61,8 @@ namespace HRMOptimus.Application
             services.AddScoped<IValidator<ConfirmEmailCommand>, ConfirmEmailValidator>();
             services.AddScoped<IValidator<ChangePasswordVm>, ChangePasswordValidator>();
             services.AddScoped<IValidator<ConfirmPasswordCommand>, ConfirmPasswordValidator>();
+            services.AddScoped<IValidator<LoginCommand>, LoginCommandValidator>();
+            services.AddScoped<IValidator<ProjectDetailsQuery>, ProjectDetailsQueryValidator>();
 
             return services;
         }

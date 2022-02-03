@@ -12,18 +12,13 @@ namespace HRMOptimus.Persistance
 {
     public class HRMOptimusDbContext : IdentityDbContext<ApplicationUser>, IHRMOptimusDbContext
     {
-        // private readonly IUserContextService _userContextService;
+        private readonly IUserContextService _userContextService;
 
-        public HRMOptimusDbContext(DbContextOptions<HRMOptimusDbContext> options)
+        public HRMOptimusDbContext(DbContextOptions<HRMOptimusDbContext> options, IUserContextService userContextService)
             : base(options)
         {
+            _userContextService = userContextService;
         }
-
-        //public HRMOptimusDbContext(DbContextOptions<HRMOptimusDbContext> options, IUserContextService userContextService)
-        //    : base(options)
-        //{
-        //    _userContextService = userContextService;
-        //}
 
         public DbSet<Project> Projects { get; set; }
         public DbSet<Address> Addresses { get; set; }
@@ -40,9 +35,10 @@ namespace HRMOptimus.Persistance
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.CreatedBy = "1";
-                        //entry.Entity.CreatedBy = _userContextService.GetFullName;
+                        entry.Entity.CreatedBy = _userContextService.GetEmployeeName;
                         entry.Entity.CreatedOn = DateTime.Now;
+                        entry.Entity.LastModifiedOn = DateTime.Now;
+                        entry.Entity.LastModifiedBy = _userContextService.GetEmployeeName;
                         entry.Entity.Enabled = true;
                         break;
 
@@ -50,14 +46,14 @@ namespace HRMOptimus.Persistance
                         entry.State = EntityState.Modified;
                         entry.Entity.Enabled = false;
                         entry.Entity.LastModifiedOn = DateTime.Now;
-                        // entry.Entity.InactivatedBy = _userContextService.GetFullName;
-                        entry.Entity.InactivatedBy = "1";
+                        entry.Entity.LastModifiedBy = _userContextService.GetEmployeeName;
+                        entry.Entity.InactivatedBy = _userContextService.GetEmployeeName;
+                        entry.Entity.InactivatedOn = DateTime.Now;
                         break;
 
                     case EntityState.Modified:
                         entry.State = EntityState.Modified;
-                        entry.Entity.LastModifiedBy = "1";
-                        // entry.Entity.LastModifiedBy = _userContextService.GetFullName;
+                        entry.Entity.LastModifiedBy = _userContextService.GetEmployeeName;
                         entry.Entity.LastModifiedOn = DateTime.Now;
                         break;
                 }

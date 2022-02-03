@@ -1,5 +1,4 @@
 ﻿using HRMOptimus.Application.Common.Interfaces;
-using HRMOptimus.Application.Project.Query.ProjectDetails;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -22,7 +21,7 @@ namespace HRMOptimus.Application.Project.Query.Projects
         {
             var projects = await _context.Projects
                 .Where(x => x.Enabled)
-                .Select(x => new ProjectVm(x.Id, x.Name, x.Description, x.HoursBudget, x.DateFrom, x.DateTo, x.ColorLabel))
+                .Select(x => new ProjectVm(x.Id, x.Name, x.Description, x.HoursBudget, x.HoursWorked, x.DateFrom, x.DateTo, x.ColorLabel))
                 .ToListAsync();
 
             return projects;

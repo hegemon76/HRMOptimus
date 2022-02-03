@@ -10,6 +10,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace HRMOptimus.Application.Common.Services
 {
@@ -26,23 +27,22 @@ namespace HRMOptimus.Application.Common.Services
             _userManager = userManager;
         }
 
-        public string CreateToken(string userId)
+        public async Task<string> CreateToken(string userId)
         {
-            var user = _context.ApplicationUsers
+            var user = await _context.ApplicationUsers
                 .Include(x => x.Employee)
-                .FirstOrDefault(x => x.Id == userId);
+                .FirstOrDefaultAsync(x => x.Id == userId);
 
-            var roles = _userManager.GetRolesAsync(user);
+            var roles = await _userManager.GetRolesAsync(user);
 
             var claims = new List<Claim>();
-            claims.Add(new Claim("userId", userId));
-            claims.Add(new Claim("employeeId", user.Employee.Id.ToString()));
-            claims.Add(new Claim("fullName", user.Employee.FullName));
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Employee.Id.ToString()));
+            claims.Add(new Claim(ClaimTypes.Name, user.Employee.FullName));
             claims.Add(new Claim("gender", ((int)user.Employee.Gender).ToString()));
 
-            foreach (var role in roles.Result)
+            foreach (var role in roles)
             {
-                claims.Add(new Claim("role", role));
+                claims.Add(new Claim(ClaimTypes.Role, role));
             }
 
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);

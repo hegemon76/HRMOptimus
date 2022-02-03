@@ -49,4 +49,4 @@ import { AuthInterceptorProvider } from './authentication.interceptor';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

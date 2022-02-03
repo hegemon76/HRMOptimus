@@ -2,18 +2,22 @@
 using HRMOptimus.Application.Common.Interfaces;
 using HRMOptimus.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
+using System.Linq;
 
 namespace HRMOptimus.Application.Account.Command.ConfirmEmail
 {
     public class ConfirmEmailValidator : AbstractValidator<ConfirmEmailCommand>
     {
-        public ConfirmEmailValidator(UserManager<ApplicationUser> userManager, IUserContextService userService)
+        public ConfirmEmailValidator(UserManager<ApplicationUser> userManager, IHRMOptimusDbContext dbContext, IUserContextService userService)
         {
             RuleFor(x => x.ConfirmationToken)
             .Custom((value, context) =>
             {
-                var userId = userService.GetUserId;
-                var user = userManager.FindByIdAsync(userId).Result;
+                var employeeId = userService.GetEmployeeId;
+
+                var user = dbContext.ApplicationUsers
+                    .FirstOrDefault(x => x.EmployeeId == employeeId);
+
                 if (user == null)
                     context.AddFailure("User not found");
 

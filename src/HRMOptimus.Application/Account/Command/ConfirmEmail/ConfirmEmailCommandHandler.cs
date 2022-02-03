@@ -1,8 +1,10 @@
-﻿using HRMOptimus.Application.Common.Interfaces;
+﻿using HRMOptimus.Application.Common.Exceptions;
+using HRMOptimus.Application.Common.Interfaces;
 using HRMOptimus.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Text;
 using System.Threading;
@@ -26,13 +28,16 @@ namespace HRMOptimus.Application.Account.Command.ConfirmEmail
 
         public async Task<Unit> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
         {
-            var userId = _userService.GetUserId;
-            var user = _userManager.FindByIdAsync(userId).Result;
+            var employeeId = _userService.GetEmployeeId;
+
+            var user = await _dbContext.ApplicationUsers
+                .FirstOrDefaultAsync(x => x.EmployeeId == employeeId);
 
             if (request.ConfirmationToken == null)
                 throw new Exception("Token not provided");
-            if (userId == null)
-                throw new Exception("User not found");
+
+            if (employeeId == null)
+                throw new NotFoundException("User not found");
 
             var codeDecodedBytes = WebEncoders.Base64UrlDecode(request.ConfirmationToken);
             var codeDecoded = Encoding.UTF8.GetString(codeDecodedBytes);

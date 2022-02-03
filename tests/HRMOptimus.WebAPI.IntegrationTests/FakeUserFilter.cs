@@ -13,7 +13,9 @@ namespace HRMOptimus.WebAPI.IntegrationTests
             claimsPrincipal.AddIdentity(new ClaimsIdentity(
                 new[]
                 {
-                    new Claim(ClaimTypes.Role, UserRoles.User.ToString()),
+                    new Claim(ClaimTypes.Role, UserRoles.Administrator.ToString()),
+                    new Claim(ClaimTypes.Name, "Test"),
+                    new Claim(ClaimTypes.NameIdentifier, "1"),
                  }));
 
             context.HttpContext.User = claimsPrincipal;

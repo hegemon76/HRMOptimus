@@ -37,6 +37,7 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
                         var dbContextOptions = services.SingleOrDefault(service => service.ServiceType == typeof(DbContextOptions<HRMOptimusDbContext>));
                         services.Remove(dbContextOptions);
                         services.AddSingleton<IPolicyEvaluator, FakePolicyEvaluator>();
+                        services.AddMvc(option => option.Filters.Add(new FakeUserFilter()));
 
                         services.AddDbContext<HRMOptimusDbContext>(options => options.UseInMemoryDatabase("HRMOptimusDb"));
                     });
