@@ -2,7 +2,7 @@
   <div class="header" *ngIf="employee">
     <p>Czas pracy użytkownika <strong>{{employee.fullName}}</strong></p>
   </div>
-  <mat-card class="container" *ngIf="user.role.includes('Administrator') || user.role.includes('Human Resources')">
+  <mat-card class="container" *ngIf="user.role.includes('Administrator') || user.role.includes('HumanResources')">
     <div class="search-wrapper">
       <mat-form-field appearance="fill">
         <mat-label>Wybierz pracownika...</mat-label>
