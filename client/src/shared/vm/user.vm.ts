@@ -1,7 +1,7 @@
 import { Gender } from '../enums/gender';
 export class UserVm {
-  employeeId: number | undefined;
-  fullName: string | undefined;
+  nameid: number | undefined;
+  unique_name: string | undefined;
   gender: Gender | undefined;
   token: string | undefined;
   role: string | undefined;

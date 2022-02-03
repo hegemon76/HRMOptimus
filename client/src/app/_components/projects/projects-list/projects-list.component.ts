@@ -32,17 +32,31 @@ export class ProjectsListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getProjects();
     this.user = this.accountService.getUser();
+    this.getProjects();
   }
 
   getProjects() {
-    this.projectsService.getProjects().subscribe(res => {
-      this.projects = res;
-      if (this.projects.length > 0) {
-        this.isProjectListEmpty = false;
-      }
-    });
+    console.log(this.user);
+
+    if (
+      this.user.role.includes('Administrator') ||
+      this.user.role.includes('Project Manager')
+    ) {
+      this.projectsService.getProjects().subscribe(res => {
+        this.projects = res;
+        if (this.projects.length > 0) {
+          this.isProjectListEmpty = false;
+        }
+      });
+    } else {
+      this.projectsService.getEmployeeProjects().subscribe(res => {
+        this.projects = res;
+        if (this.projects.length > 0) {
+          this.isProjectListEmpty = false;
+        }
+      });
+    }
   }
 
   removeProject(id) {

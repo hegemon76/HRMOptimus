@@ -15,6 +15,8 @@ export class WorktimeService {
 
   addWorkEntry = 'https://localhost:5001/api/workrecord/add';
 
+  getAdminMonth = 'https://localhost:5001/api/workrecord/monthAdmin';
+
   getMonth = 'https://localhost:5001/api/workrecord/month';
 
   updateWorkRecordUrl = 'https://localhost:5001/api/workrecord/update';
@@ -67,13 +69,26 @@ export class WorktimeService {
 
   getMonthEntry(month, id): Observable<any> {
     return this.http
-      .get(this.getMonth, {
+      .get(this.getAdminMonth, {
         headers: {
           'Content-Type': 'application/json'
         },
         params: {
           monthFromCurrent: month,
           employeeId: id
+        }
+      })
+      .pipe(map((res: any) => res));
+  }
+
+  getEmployeeMonthEntry(month): Observable<any> {
+    return this.http
+      .get(this.getMonth, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        params: {
+          monthFromCurrent: month
         }
       })
       .pipe(map((res: any) => res));

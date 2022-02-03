@@ -12,6 +12,7 @@ import { AccountService } from '../../../_services/account.service';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { EmployeesService } from '../../../_services/employees.service';
+import { ProjectsService } from '../../../_services/projects.service';
 
 interface Day {
   id: string;
@@ -61,7 +62,8 @@ export class WorkdayComponent implements OnInit {
     private accountService: AccountService,
     private formBuilder: FormBuilder,
     private datePipe: DatePipe,
-    private employeesService: EmployeesService
+    private employeesService: EmployeesService,
+    private projectsService: ProjectsService
   ) {
     this.formTemplate = this.formBuilder.group({
       records: this.formBuilder.array([])
@@ -121,7 +123,7 @@ export class WorkdayComponent implements OnInit {
             projectName: r.projectName,
             projectId: r.projectId,
             name: r.name,
-            employeeId: this.user.employeeId
+            employeeId: this.user.nameid
           })
         );
       });
@@ -129,7 +131,7 @@ export class WorkdayComponent implements OnInit {
       this.entriesCount = this.workDays.length;
     });
 
-    this.workdayService.getProjects().subscribe(res => {
+    this.projectsService.getEmployeeProjects().subscribe(res => {
       this.projects = res;
     });
   }
@@ -161,7 +163,7 @@ export class WorkdayComponent implements OnInit {
     this.workdayService
       .addWorkDayRecord(
         this.form.getRawValue(),
-        this.user.employeeId,
+        this.user.nameid,
         this.id,
         isRemoteWork
       )

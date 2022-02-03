@@ -92,7 +92,7 @@ export class ProjectAddComponent implements OnInit {
                 console.log(res);
               });
           });
-          // this.router.navigate(['/projects']);
+          this.router.navigate(['/projects']);
         });
       }
     });
