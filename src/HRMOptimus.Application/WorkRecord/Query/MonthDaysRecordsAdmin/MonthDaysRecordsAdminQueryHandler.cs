@@ -1,4 +1,5 @@
 ﻿using HRMOptimus.Application.Common.Interfaces;
+using HRMOptimus.Application.WorkRecord.Query.MonthDaysRecords;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -7,22 +8,20 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HRMOptimus.Application.WorkRecord.Query.MonthDaysRecords
+namespace HRMOptimus.Application.WorkRecord.Query.MonthDaysRecordsAdmin
 {
-    public class MonthDaysRecordsQueryHandler : IRequestHandler<MonthDaysRecordsQuery, MonthWorkRecordsVm>
+    public class MonthDaysRecordsAdminQueryHandler : IRequestHandler<MonthDaysRecordsAdminQuery, MonthWorkRecordsVm>
     {
         private readonly IHRMOptimusDbContext _context;
-        private readonly IUserContextService _userContextService;
 
-        public MonthDaysRecordsQueryHandler(IHRMOptimusDbContext context, IUserContextService userContextService)
+        public MonthDaysRecordsAdminQueryHandler(IHRMOptimusDbContext context)
         {
             _context = context;
-            _userContextService = userContextService;
         }
 
-        public async Task<MonthWorkRecordsVm> Handle(MonthDaysRecordsQuery request, CancellationToken cancellationToken)
+        public async Task<MonthWorkRecordsVm> Handle(MonthDaysRecordsAdminQuery request, CancellationToken cancellationToken)
         {
-            var employeeId = _userContextService.GetEmployeeId.Value;
+            var employeeId = request.EmployeeId;
             List<DaysWorkRecordsVm> daysWorksRekords = new List<DaysWorkRecordsVm>();
             DateTime firstDay;
             TimeSpan workedTimeFromAllDays = default;
@@ -45,8 +44,7 @@ namespace HRMOptimus.Application.WorkRecord.Query.MonthDaysRecords
 
             var workRecords = await _context.WorkRecords
                 .Where(x => (x.WorkStart.Date >= firstDay || x.WorkStart.Date <= lastDay)
-                 && x.EmployeeId == employeeId
-                 && x.Enabled)
+                 && x.EmployeeId == employeeId && x.Enabled)
                 .Select(x => new WorkRecordVm(x.Id, x.WorkStart, x.WorkEnd, x.Duration))
                 .ToListAsync();
 

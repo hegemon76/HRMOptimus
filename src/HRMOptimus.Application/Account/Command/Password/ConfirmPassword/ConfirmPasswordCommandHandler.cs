@@ -3,6 +3,7 @@ using HRMOptimus.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,8 +26,10 @@ namespace HRMOptimus.Application.Account.Command.Password.ConfirmPassword
 
         public async Task<Unit> Handle(ConfirmPasswordCommand request, CancellationToken cancellationToken)
         {
-            var userId = _userService.GetUserId;
-            var user = _userManager.FindByIdAsync(userId).Result;
+            var employeeId = _userService.GetEmployeeId;
+
+            var user = await _dbContext.ApplicationUsers
+                .FirstOrDefaultAsync(x => x.EmployeeId == employeeId);
 
             var codeDecodedBytes = WebEncoders.Base64UrlDecode(request.Token);
             var codeDecoded = Encoding.UTF8.GetString(codeDecodedBytes);

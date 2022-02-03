@@ -7,6 +7,5 @@ namespace HRMOptimus.Application.WorkRecord.Query.DayWorkRecords
     public class DayWorkRecordsQuery : IRequest<List<WorkRecordDetailsVm>>
     {
         public DateTime DayWork { get; set; }
-        public int? EmployeeId { get; set; }
     }
 }

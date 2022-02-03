@@ -4,6 +4,7 @@ using HRMOptimus.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,22 +29,25 @@ namespace HRMOptimus.Application.Account.Command.Password.ChangePassword
             _emailService = emailService;
             _dbContext = dbContext;
         }
+
         public async Task<Unit> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
         {
-            var userId = _userService.GetUserId;
-            var appUser = _userManager.FindByIdAsync(userId).Result;
-            
-            var newPassword = _userManager.PasswordHasher.HashPassword(appUser, request.PasswordVm.NewPassword);
-            appUser.NewPassword = newPassword;
+            var employeeId = _userService.GetEmployeeId;
 
-            var token = _userManager.GeneratePasswordResetTokenAsync(appUser).Result;
+            var user = await _dbContext.ApplicationUsers
+                .FirstOrDefaultAsync(x => x.EmployeeId == employeeId);
+
+            var newPassword = _userManager.PasswordHasher.HashPassword(user, request.PasswordVm.NewPassword);
+            user.NewPassword = newPassword;
+
+            var token = _userManager.GeneratePasswordResetTokenAsync(user).Result;
 
             byte[] tokenGeneratedBytes = Encoding.UTF8.GetBytes(token);
             var codeEncoded = WebEncoders.Base64UrlEncode(tokenGeneratedBytes);
 
             _emailService.SendEmail(codeEncoded);
 
-            _dbContext.ApplicationUsers.Update(appUser);
+            _dbContext.ApplicationUsers.Update(user);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;

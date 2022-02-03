@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System.Security.Claims;
 
 namespace HRMOptimus.Application.Common.Interfaces
 {
     public interface IUserContextService
     {
-        string GetUserId { get; }
+        ClaimsPrincipal User { get; }
+        string GetEmployeeName { get; }
         int? GetEmployeeId { get; }
-        string GetFullName { get; }
-
-        List<string> GetRoles();
     }
 }

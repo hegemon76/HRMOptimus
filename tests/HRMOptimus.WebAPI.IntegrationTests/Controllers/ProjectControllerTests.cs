@@ -35,6 +35,7 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
                         var dbContextOptions = services.SingleOrDefault(service => service.ServiceType == typeof(DbContextOptions<HRMOptimusDbContext>));
                         services.Remove(dbContextOptions);
                         services.AddSingleton<IPolicyEvaluator, FakePolicyEvaluator>();
+                        services.AddMvc(option => option.Filters.Add(new FakeUserFilter()));
 
                         services.AddDbContext<HRMOptimusDbContext>(options => options.UseInMemoryDatabase("HRMOptimusDb"));
                     });
@@ -86,9 +87,9 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
         [Fact]
         public async Task UpdateProject_UpdatedProject_ReturnsOk()
         {
-            var url = _baseUrl + "update?projectId=1";
-
             await SeedProject();
+
+            var url = _baseUrl + "update";
 
             var model = new UpdateProjectVm()
             {
@@ -96,7 +97,8 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
                 Name = "NewtestName",
                 DateTo = DateTime.Now.AddDays(2),
                 DateFrom = DateTime.Now,
-                Deadline = DateTime.Now.AddDays(2),
+                Deadline = DateTime.Now.AddDays(3),
+                ColorLabel = "ss",
                 HoursBudget = 5
             };
 
@@ -110,9 +112,9 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
         [Fact]
         public async Task UpdateProject_InvalidUpdatedProject_ReturnsBadRequest()
         {
-            var url = _baseUrl + "update?projectId=1";
-
             await SeedProject();
+
+            var url = _baseUrl + "update?projectId=1";
 
             var model = new UpdateProjectVm()
             {
@@ -132,9 +134,9 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
         [Fact]
         public async Task GetProjectDetails_ValidId_ReturnsOKResult()
         {
-            var url = _baseUrl + "details?projectId=1";
-
             await SeedProject();
+
+            var url = _baseUrl + "details?projectId=1";
 
             var response = await _client.GetAsync(url);
 
@@ -144,9 +146,9 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
         [Fact]
         public async Task GetProjectDetails_InvalidId_ReturnsNotFound()
         {
-            var url = _baseUrl + "details?projectId=900";
-
             await SeedProject();
+
+            var url = _baseUrl + "details?projectId=900";
 
             var response = await _client.GetAsync(url);
 
@@ -156,9 +158,9 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
         [Fact]
         public async Task GetProjects_ReturnsOKResult()
         {
-            var url = "api/projects";
-
             await SeedProject();
+
+            var url = "api/projects";
 
             var response = await _client.GetAsync(url);
 
@@ -168,9 +170,9 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
         [Fact]
         public async Task RemoveProject_ValidId_ReturnsNoContent()
         {
-            var url = _baseUrl + "delete?projectId=1";
-
             await SeedProject();
+
+            var url = _baseUrl + "delete?projectId=1";
 
             var response = await _client.DeleteAsync(url);
 
@@ -180,9 +182,9 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
         [Fact]
         public async Task RemoveProject_InvalidId_ReturnsNotFound()
         {
-            var url = _baseUrl + "delete?projectId=900";
-
             await SeedProject();
+
+            var url = _baseUrl + "delete?projectId=900";
 
             var response = await _client.DeleteAsync(url);
 
@@ -195,7 +197,7 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
             using var scope = scopeFactory.CreateScope();
             var dbContext = scope.ServiceProvider.GetService<HRMOptimusDbContext>();
 
-            _project = new Project() { Name = "testName", DateTo = DateTime.Now, DateFrom = DateTime.Now, HoursBudget = 5, HoursWorked = 1 };
+            _project = new Project() { Name = "testName", DateTo = DateTime.Now.AddDays(2), DateFrom = DateTime.Now, HoursBudget = 5, HoursWorked = 1 };
             await dbContext.Projects.AddAsync(_project);
 
             await dbContext.SaveChangesAsync(CancellationToken.None);

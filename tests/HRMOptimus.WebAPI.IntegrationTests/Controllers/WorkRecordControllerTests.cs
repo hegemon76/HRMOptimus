@@ -38,6 +38,7 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
                         var dbContextOptions = services.SingleOrDefault(service => service.ServiceType == typeof(DbContextOptions<HRMOptimusDbContext>));
                         services.Remove(dbContextOptions);
                         services.AddSingleton<IPolicyEvaluator, FakePolicyEvaluator>();
+                        services.AddMvc(option => option.Filters.Add(new FakeUserFilter()));
 
                         services.AddDbContext<HRMOptimusDbContext>(options => options.UseInMemoryDatabase("HRMOptimusDb"));
                     });
@@ -79,6 +80,7 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
                 Name = "Test1",
                 WorkStart = DateTime.Now,
                 WorkEnd = DateTime.Now.AddMinutes(15),
+                IsRemoteWork = false,
                 ProjectId = _project.Id,
             };
             var httpContent = model.ToJsonHttpContent();
@@ -121,6 +123,7 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
                 EmployeeId = _employee.Id,
                 Name = "UpdatedName",
                 WorkStart = DateTime.Now,
+                IsRemoteWork = false,
                 WorkEnd = DateTime.Now.AddMinutes(15),
                 ProjectId = _project.Id,
             };
@@ -165,7 +168,7 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
             _employee = new Employee() { FirstName = "test", Gender = Gender.Man, WorkingTime = 168, LeaveDaysLeft = 2 };
             await dbContext.Projects.AddAsync(_project);
             await dbContext.Employees.AddAsync(_employee);
-            _workRecord = new WorkRecord() { EmployeeId = _project.Id, WorkStart = DateTime.Now, WorkEnd = DateTime.Now.AddMinutes(15), ProjectId = _employee.Id };
+            _workRecord = new WorkRecord() { Employee = _employee, WorkStart = DateTime.Now, WorkEnd = DateTime.Now.AddMinutes(15), IsRemoteWork = true, Project = _project };
             await dbContext.WorkRecords.AddAsync(_workRecord);
 
             await dbContext.SaveChangesAsync(CancellationToken.None);
