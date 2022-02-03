@@ -38,7 +38,7 @@ namespace HRMOptimus.Application.Account.Command.ChangeEmail
             byte[] tokenGeneratedBytes = Encoding.UTF8.GetBytes(token);
             var codeEncoded = WebEncoders.Base64UrlEncode(tokenGeneratedBytes);
 
-            _emailService.SendEmail(codeEncoded);
+            _emailService.SendResetEmailRequest(codeEncoded);
 
             await _context.SaveChangesAsync(cancellationToken);
 

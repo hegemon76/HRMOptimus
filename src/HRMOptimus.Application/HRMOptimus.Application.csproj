@@ -31,4 +31,19 @@
   <ItemGroup>
     <ProjectReference Include="..\HRMOptimus.Domain\HRMOptimus.Domain.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Common\Resources\MailService\mail_end.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Common\Resources\MailService\mail_start.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Common\Resources\MailService\password_end.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Common\Resources\MailService\password_start.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
