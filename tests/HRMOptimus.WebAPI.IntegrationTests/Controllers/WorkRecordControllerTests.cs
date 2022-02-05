@@ -69,6 +69,18 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
         }
 
         [Fact]
+        public async Task DeleteWorkRecord_ValidId_ReturnsNoContent()
+        {
+            await SeedWorkRecordProjectEmployee();
+
+            var url = _baseUrl + "delete?workRecordId=" + _workRecord.Id;
+
+            var response = await _client.DeleteAsync(url);
+
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+        }
+
+        [Fact]
         public async Task AddWorkRecord_WithValidModel_ReturnsOkResultWithId()
         {
             var url = _baseUrl + "add";
@@ -135,19 +147,7 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
         }
 
         [Fact]
-        public async Task DeleteWorkRecord_ValidId_ReturnsNoContent()
-        {
-            await SeedWorkRecordProjectEmployee();
-
-            var url = _baseUrl + "delete?workRecordId=" + _workRecord.Id;
-
-            var response = await _client.DeleteAsync(url);
-
-            response.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
-        }
-
-        [Fact]
-        public async Task DeleteWorkRecord_InvalidId_ReturnsNotFound()
+        public async Task DeleteWorkRecord_InvalidId_ReturnsBadRequest()
         {
             var url = _baseUrl + "delete?workRecordId=900";
 
@@ -155,7 +155,7 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
 
             var response = await _client.DeleteAsync(url);
 
-            response.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
         }
 
         private async Task SeedWorkRecordProjectEmployee()
