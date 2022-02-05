@@ -15,7 +15,7 @@ namespace HRMOptimus.Application.Project.Query.ProjectDetails
                     var project = dbContext.Projects.Any(e => e.Id == value && e.Enabled);
 
                     if (!project)
-                        throw new NotFoundException("The project not found");
+                        context.AddFailure("WorkRecordId", "Record not found");
                 });
         }
     }

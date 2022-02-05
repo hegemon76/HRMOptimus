@@ -1,5 +1,7 @@
+using HRMOptimus.Domain.Entities;
 using HRMOptimus.Persistance;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,9 +24,11 @@ namespace HRMOptimus.WebAPI
                 try
                 {
                     var context = services.GetRequiredService<HRMOptimusDbContext>();
+                    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                     if (context.Database.IsSqlServer())
                     {
                         await context.Database.MigrateAsync();
+                        // await Faker.SeedEmployees(context, userManager);
                     }
                 }
                 catch (Exception e)

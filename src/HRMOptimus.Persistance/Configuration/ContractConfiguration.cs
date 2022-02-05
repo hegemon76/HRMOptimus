@@ -9,7 +9,7 @@ namespace HRMOptimus.Persistance.Configuration
         {
             builder.Property(t => t.ContractName)
                 .HasMaxLength(50)
-                .IsRequired(false);
+                .IsRequired(true);
             builder.Property(t => t.LeaveDays)
                 .HasPrecision(18, 2);
             builder.Property(t => t.Payment)

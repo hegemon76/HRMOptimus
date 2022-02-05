@@ -9,7 +9,7 @@ namespace HRMOptimus.Persistance.Configuration
         {
             builder.Property(t => t.Name)
                 .HasMaxLength(150)
-                .IsRequired(false);
+                .IsRequired(true);
         }
     }
 }

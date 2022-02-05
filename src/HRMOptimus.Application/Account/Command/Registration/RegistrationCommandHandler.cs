@@ -21,7 +21,7 @@ namespace HRMOptimus.Application.Account.Command.Registration
 
         public async Task<Unit> Handle(RegistrationCommand request, CancellationToken cancellationToken)
         {
-           Domain.Entities.Contract contract = new Domain.Entities.Contract()
+            Contract contract = new Contract()
             {
                 ContractName = request.Registration.ContractName,
                 LeaveDays = request.Registration.LeaveDays,
