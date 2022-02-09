@@ -158,7 +158,10 @@ export class EmployeeEditComponent implements OnInit {
             this.employee.contract.contractType,
             Validators.required
           ],
-          leaveDays: [this.employee.contract.leaveDays, Validators.required]
+          leaveDays: [
+            this.employee.contract.leaveDays,
+            [Validators.required, this.leaveDaysOverflowed()]
+          ]
         });
 
         this.formEmail = this.formBuilder.group({
@@ -356,6 +359,14 @@ export class EmployeeEditComponent implements OnInit {
     return (control: AbstractControl) => {
       return this.emailPlaceholder != control.value
         ? { emailMatch: true }
+        : null;
+    };
+  }
+  leaveDaysOverflowed(): ValidatorFn {
+    return (control: AbstractControl) => {
+      return control.value <
+        this.employee.contract.leaveDays - this.employee.leaveDaysLeft
+        ? { leaveDaysOverflowed: true }
         : null;
     };
   }
