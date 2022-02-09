@@ -110,7 +110,9 @@
       <mat-form-field appearance="fill">
         <mat-label>Ilość dni urlopowych</mat-label>
         <input required matInput formControlName="leaveDays">
-        <mat-error> Pole wymagane </mat-error>
+        <mat-error *ngIf="formContract.controls.leaveDays.hasError('required')"> Pole wymagane </mat-error>
+        <mat-error *ngIf="formContract.controls.leaveDays.hasError('leaveDaysOverflowed')"> Wartość urlopów nie może być
+          mniejsza niż ilość dni zaakceptowanych urlopów </mat-error>
       </mat-form-field>
     </form>
     <form [formGroup]="formEmail" action="" *ngIf="formToDisplay == 3">

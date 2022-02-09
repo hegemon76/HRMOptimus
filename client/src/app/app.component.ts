@@ -41,29 +41,31 @@ export class AppComponent {
 
   ngOnInit() {
     this.user = this.accountService.getUser();
-    console.log(typeof this.user.role);
 
-    this.employeesService.getEmployee(this.user.nameid).subscribe(res => {
-      console.log(res);
-
-      const checkRoles = res.roles.sort((a, b) => {
-        return a < b;
-      });
-      let storageRoles;
-      if (Array.isArray(this.user.role)) {
-        storageRoles = this.user.role.sort((a, b) => {
+    if (this.user) {
+      this.employeesService.getEmployee(this.user.nameid).subscribe(res => {
+        console.log(res);
+        const checkRoles = res.roles.sort((a, b) => {
           return a < b;
         });
-      } else {
-        storageRoles = this.user.role;
-      }
-      if (storageRoles != checkRoles) {
-        this.accountService.logoutUser();
-      }
-    });
 
-    if (!this.user && window.location.pathname != '/') {
-      window.location.pathname = '/';
+        let storageRoles = [];
+        if (Array.isArray(this.user.role)) {
+          storageRoles = this.user.role.sort((a, b) => {
+            return a < b;
+          });
+        } else {
+          storageRoles.push(this.user.role);
+        }
+
+        if (JSON.stringify(storageRoles) != JSON.stringify(checkRoles)) {
+          this.accountService.logoutUser();
+        }
+      });
+
+      if (!this.user && window.location.pathname != '/') {
+        window.location.pathname = '/';
+      }
     }
   }
 
