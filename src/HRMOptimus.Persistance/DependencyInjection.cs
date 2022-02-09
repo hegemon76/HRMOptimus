@@ -40,6 +40,7 @@ namespace HRMOptimus.Persistance
                        ValidateAudience = false,
                    };
                });
+            services.AddScoped<Faker>();
 
             return services;
         }

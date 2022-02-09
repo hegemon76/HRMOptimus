@@ -13,7 +13,7 @@ namespace HRMOptimus.Application.WorkRecord.Command.RemoveWorkRecord
             {
                 var workRecord = dbContext.WorkRecords.Any(e => e.Id == value && e.Enabled);
                 if (!workRecord)
-                    throw new NotFoundException("The WorkRecord not found");
+                    context.AddFailure("WorkRecordId", "Record not found" );
             });
         }
     }

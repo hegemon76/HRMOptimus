@@ -35,8 +35,8 @@ namespace HRMOptimus.Persistance
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.CreatedBy = _userContextService.GetEmployeeName;
                         entry.Entity.CreatedOn = DateTime.Now;
+                        entry.Entity.CreatedBy = _userContextService.GetEmployeeName;
                         entry.Entity.LastModifiedOn = DateTime.Now;
                         entry.Entity.LastModifiedBy = _userContextService.GetEmployeeName;
                         entry.Entity.Enabled = true;
@@ -47,14 +47,14 @@ namespace HRMOptimus.Persistance
                         entry.Entity.Enabled = false;
                         entry.Entity.LastModifiedOn = DateTime.Now;
                         entry.Entity.LastModifiedBy = _userContextService.GetEmployeeName;
-                        entry.Entity.InactivatedBy = _userContextService.GetEmployeeName;
                         entry.Entity.InactivatedOn = DateTime.Now;
+                        entry.Entity.InactivatedBy = _userContextService.GetEmployeeName;
                         break;
 
                     case EntityState.Modified:
                         entry.State = EntityState.Modified;
-                        entry.Entity.LastModifiedBy = _userContextService.GetEmployeeName;
                         entry.Entity.LastModifiedOn = DateTime.Now;
+                        entry.Entity.LastModifiedBy = _userContextService.GetEmployeeName;
                         break;
                 }
             }

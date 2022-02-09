@@ -144,7 +144,7 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
         }
 
         [Fact]
-        public async Task GetProjectDetails_InvalidId_ReturnsNotFound()
+        public async Task GetProjectDetails_InvalidId_ReturnsBadRequest()
         {
             await SeedProject();
 
@@ -152,7 +152,7 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
 
             var response = await _client.GetAsync(url);
 
-            response.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
         }
 
         [Fact]
@@ -180,7 +180,7 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
         }
 
         [Fact]
-        public async Task RemoveProject_InvalidId_ReturnsNotFound()
+        public async Task RemoveProject_InvalidId_ReturnsBadRequest()
         {
             await SeedProject();
 
@@ -188,7 +188,7 @@ namespace HRMOptimus.WebAPI.IntegrationTests.Controllers
 
             var response = await _client.DeleteAsync(url);
 
-            response.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
         }
 
         private async Task SeedProject()
